@@ -5,6 +5,13 @@
  */
 package zeugnis;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Properties;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -15,14 +22,15 @@ import java.util.logging.Logger;
  * @author juergen
  */
 public class Testimony {
-    
+
     private final static Logger parent = Logger.getLogger("zeugnis");
     private final static Logger logger = Logger.getLogger(Testimony.class.getName());
     private ConsoleHandler consoleHandler = null;
     private DialogHandler dialogHandler = null;
-    
+    private Properties config = null;
+
     public Testimony() {
-        
+
         try {
             // Default Logging
 
@@ -42,13 +50,37 @@ public class Testimony {
         } catch (SecurityException ex) {
             ex.printStackTrace();
         }
-        
+
+        // Create a default config.properties in the directory where the jarfile is placed
+        // if the config.properties does not already exist.
+        try {
+            File jarFile = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+            String jarPath = jarFile.getParent();
+            File configFile = new File(jarPath + File.separator + "config.properties");
+            config = new Properties();
+
+            if (configFile.exists()) {
+                config.load(new FileReader(configFile));
+
+            } else {
+                config.setProperty("installDir", jarPath);
+                config.setProperty("startDerby", "0");
+                config.setProperty("derbyUser", "zeugnis");
+                config.setProperty("derbyPassword", "zeugnis");
+                config.store(new FileWriter(configFile),
+                        "Default Config created at " + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
+            }
+
+        } catch (IOException ex) {
+            logger.severe(ex.getLocalizedMessage());
+        }
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Gui().setVisible(true);
             }
         });
-        
+
     }
 
     /**
@@ -57,5 +89,5 @@ public class Testimony {
     public static void main(String[] args) {
         new Testimony();
     }
-    
+
 }
