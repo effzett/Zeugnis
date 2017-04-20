@@ -22,10 +22,12 @@ import javax.swing.table.TableCellEditor;
  *
  * @author juergen
  */
+
 public class PdfCellEditor extends AbstractCellEditor implements TableCellEditor {
 
     private final static Logger logger = Logger.getLogger(PdfCellEditor.class.getName());
     private Object value = null;
+
 
     public Component getTableCellEditorComponent(JTable table,
             Object value,
