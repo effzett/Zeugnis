@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListCellRenderer;
 import static javax.swing.SwingConstants.CENTER;
@@ -31,14 +32,13 @@ public class Gui extends javax.swing.JFrame {
     private final static Logger logger = Logger.getLogger(Gui.class.getName());
     private GuiTest guiTest = null;
     private JComboBox markComboBox = null;
-    
-            
+
     /**
      * Creates new form Gui
      */
     public Gui() {
         guiTest = new GuiTest();
-        
+
         // Objects for the ComboBox
         Object[] comboBoxContent = new Object[]{
             "Zeile1",
@@ -50,13 +50,13 @@ public class Gui extends javax.swing.JFrame {
             new ImageIcon(getClass().getResource("/zeugnis/pics/dreiviertel.png")),
             new ImageIcon(getClass().getResource("/zeugnis/pics/voll.png"))
         };
-        
+
         markComboBox = new JComboBox(comboBoxContent);
         markComboBox.setRenderer(new ComboBoxRenderer());
-                
+
         initComponents();
     }
-     
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -105,6 +105,7 @@ public class Gui extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -302,7 +303,20 @@ public class Gui extends javax.swing.JFrame {
         jMenu2.setText("Bearbeiten");
 
         jMenuItem2.setText("Neues Schuljahr anlegen");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addSchoolYear(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
+
+        jMenuItem3.setText("Neue Klasse anlegen");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addClass(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
 
         jMenuBar1.add(jMenu2);
 
@@ -348,7 +362,7 @@ public class Gui extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-          
+
     private void addRow(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRow
         String datePattern = "dd.MM.yyyy";
         SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
@@ -356,6 +370,44 @@ public class Gui extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.addRow(row);
     }//GEN-LAST:event_addRow
+
+    private void addSchoolYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSchoolYear
+        String result = (String) JOptionPane.showInputDialog(
+                this,
+                "Tragen Sie das Schuljahr im Format yyyy/yy (z.B 2015/16) ein",
+                "Neues Schuljahr anlegen",
+                JOptionPane.PLAIN_MESSAGE);
+
+        if ((result != null) && (result.length() > 0)) {
+
+            if (result.matches("[0-9]{4}/[0-9]{2}")) {
+
+            } else {
+                logger.warning("Der eingegebene Wert entspricht nicht dem Format yyyy/yy (z.B 2015/16)");
+            }
+
+        }
+
+    }//GEN-LAST:event_addSchoolYear
+
+    private void addClass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClass
+         String result = (String) JOptionPane.showInputDialog(
+                this,
+                "Es wird eine neue Klasse zum Schuljahr " + (String)jComboBox1.getSelectedItem() + " angelegt\n" +
+                "Es wird das Format [0-9][a-z] (z.b 1a) erwartet.",
+                "Neuw Klasse anlegen",
+                JOptionPane.PLAIN_MESSAGE);
+
+        if ((result != null) && (result.length() > 0)) {
+
+            if (result.matches("[0-9]{1}[a-z]{1}")) {
+
+            } else {
+                logger.warning("Der eingegebene Wert entspricht nicht dem Format [0-9][a-z] (z.B 1a)");
+            }
+
+        }
+    }//GEN-LAST:event_addClass
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -378,6 +430,7 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -393,7 +446,7 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
-class ComboBoxRenderer extends JLabel
+    class ComboBoxRenderer extends JLabel
             implements ListCellRenderer {
 
         public ComboBoxRenderer() {
@@ -418,8 +471,6 @@ class ComboBoxRenderer extends JLabel
                 setForeground(list.getForeground());
             }
 
-         
-
             if (value instanceof java.lang.String) {
                 setText((String) value);
                 setIcon(null);
@@ -429,10 +480,6 @@ class ComboBoxRenderer extends JLabel
             } else {
                 logger.severe("Unerwartetes Object beim rendern der ComboBox");
             }
-            
-            
-          
-            
 
             return this;
         }
@@ -440,4 +487,3 @@ class ComboBoxRenderer extends JLabel
     }
 
 }
-
