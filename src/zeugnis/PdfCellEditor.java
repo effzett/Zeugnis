@@ -41,11 +41,11 @@ public class PdfCellEditor extends AbstractCellEditor implements TableCellEditor
 
         ZeugnisPDF zeugnisPDF = new ZeugnisPDF();
         
-        JOptionPane.showMessageDialog(null,
+/* JOptionPane.showMessageDialog(null,
                 "Methode zum PDF erzeugen noch nicht implementiert.",
                 "",
                 JOptionPane.INFORMATION_MESSAGE);
-               
+*/               
         return new JLabel(new ImageIcon(getClass().getResource("pdf.png")));
     }
 
