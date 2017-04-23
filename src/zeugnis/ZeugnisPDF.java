@@ -56,7 +56,8 @@ public class ZeugnisPDF  {
         String Geboren   = "geboren am 01.01.2000 in Brelingen";
         String Tage      = "versäumte Unterrichtstage im 1. und 2. Halbjahr: 2 davon unentschuldigt: 0";
         String Lernentwicklung = "Lernentwicklung (kurz!)\nInteressen\nLernstand Deutsch\nLernstand Mathe\nVeränderungsprozesse\nKnackpunkte";
-        
+        String Unterschriften = "Unterschriften";
+        String Header2 = "Seite 2 des Grundschulzeugnisses von " + Name + "(" + Geboren + ")" + "Ausstellungsdatum";
         PdfWriter writer = null;
         Document doc=new Document(PageSize.A4,50,50,20,30);
         writer=PdfWriter.getInstance(doc,new FileOutputStream(new File("MustermannMax.pdf")));
@@ -154,8 +155,17 @@ public class ZeugnisPDF  {
         cell1Lernentwicklung = new PdfPCell(new Phrase(Lernentwicklung,NORMAL_FONT));
         cell1Lernentwicklung.setColspan(3);
         cell1Lernentwicklung.setHorizontalAlignment(Element.ALIGN_LEFT);
-        cell1Lernentwicklung.setFixedHeight(200f);
+        cell1Lernentwicklung.setFixedHeight(300f);
         //cell1Lernentwicklung.setBorder(Rectangle.NO_BORDER);
+        
+        // Unterschriften
+        PdfPCell cell1Unterschriften;
+        cell1Unterschriften = new PdfPCell(new Phrase(Unterschriften,SMALL_FONT));
+        //cell1Unterschriften.setColspan(3);
+        cell1Unterschriften.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell1Unterschriften.setVerticalAlignment(Element.ALIGN_BOTTOM);
+        cell1Unterschriften.setFixedHeight(80f);
+        cell1Unterschriften.setBorder(Rectangle.NO_BORDER);
         
         table1.addCell(cell1Logo);
         table1.addCell(cell1Adresse);
@@ -167,10 +177,29 @@ public class ZeugnisPDF  {
         table1.addCell(cell1Geboren);
         table1.addCell(cell1Tage);
         table1.addCell(cell1Lernentwicklung);
+        table1.addCell(cell1Unterschriften);
+        table1.addCell(cell1Unterschriften);
+        table1.addCell(cell1Unterschriften);
         
         
         doc.add(table1);
       
+        doc.newPage();
+        
+        // Seite 2
+        // Tablestruktur aufbauen...
+        PdfPTable table2 = new PdfPTable(4);
+        table2.setWidthPercentage(100);
+        
+        PdfPCell cell2Header;
+        cell2Header = new PdfPCell(new Phrase(Header2,SMALL_FONT));
+        cell2Header.setColspan(4);
+        cell2Header.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2Header.setBorder(Rectangle.NO_BORDER);
+ 
+        table2.addCell(cell2Header);
+        doc.add(table2);
+        
         doc.addTitle("Zeugnis");
         doc.addAuthor("Grundschule Brelingen");
         doc.addCreationDate();
