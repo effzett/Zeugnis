@@ -32,6 +32,7 @@ import java.util.logging.Logger;
  */
 public class ZeugnisPDF  {
     private static final Font NORMAL_FONT=new Font(Font.FontFamily.HELVETICA,12,Font.NORMAL);
+    private static final Font BIGGER_FONT=new Font(Font.FontFamily.HELVETICA,14,Font.NORMAL);
     private static final Font BIG_FONT=new Font(Font.FontFamily.HELVETICA,36,Font.BOLD);
     private static final Font NORMAL_BOLD_FONT=new Font(Font.FontFamily.HELVETICA,12,Font.BOLD);
     private static final Font NORMAL_FONT_RED=new Font(Font.FontFamily.HELVETICA,12,Font.NORMAL,BaseColor.RED);
@@ -73,7 +74,13 @@ public class ZeugnisPDF  {
         Paragraph paraZeugnis = new Paragraph("Zeugnis",BIG_FONT);
         paraZeugnis.setLeading(0, 2);
         paraZeugnis.setAlignment(Element.ALIGN_CENTER);
-        PdfPTable table = new PdfPTable(1);
+        
+        // Subtitle
+        String filling="                  ";
+        Paragraph paraSubTitle = new Paragraph(Schuljahr+filling + Halbjahr+filling+Klasse,BIGGER_FONT);
+        paraSubTitle.setLeading(0, 2);
+        
+       PdfPTable table = new PdfPTable(1);
         table.setWidthPercentage(100);
         PdfPCell cell = new PdfPCell();
         cell.setMinimumHeight(50);
@@ -82,6 +89,7 @@ public class ZeugnisPDF  {
         cell.setBorder(Rectangle.NO_BORDER);
         cell.addElement(paraLogo);
         cell.addElement(paraZeugnis);
+        cell.addElement(paraSubTitle);
         
         table.addCell(cell);
         
