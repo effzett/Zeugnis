@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package zeugnis;
- import com.itextpdf.text.BaseColor;
+
+import java.io.IOException;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -27,14 +29,14 @@ import java.util.logging.Logger;
  *
  * @author internet
  */
-public class ZeugnisPDF {
+public class ZeugnisPDF  {
     private static final Font NORMAL_FONT=new Font(Font.FontFamily.HELVETICA,12,Font.NORMAL);
     private static final Font BIG_FONT=new Font(Font.FontFamily.HELVETICA,36,Font.BOLD);
     private static final Font NORMAL_BOLD_FONT=new Font(Font.FontFamily.HELVETICA,12,Font.BOLD);
     private static final Font NORMAL_FONT_RED=new Font(Font.FontFamily.HELVETICA,12,Font.NORMAL,BaseColor.RED);
  
     
-    public ZeugnisPDF(){
+    public ZeugnisPDF() throws IOException, DocumentException, DocumentException{
         // Schueler ist Max Mustermann, nur zum Layout testen
         // Der richtige Ctor ist mit Parameter CreatePDF(int idSchueler)
         // und Daten werden aus Datenbanken geholt...
@@ -51,11 +53,7 @@ public class ZeugnisPDF {
         
         PdfWriter writer = null;
         Document doc=new Document(PageSize.A4,50,30,50,30);
-        try {
-            writer=PdfWriter.getInstance(doc,new FileOutputStream(new File("MustermannMax.pdf")));
-        } catch (FileNotFoundException | DocumentException ex) {
-            Logger.getLogger(PdfCellEditor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        writer=PdfWriter.getInstance(doc,new FileOutputStream(new File("MustermannMax.pdf")));
         doc.open();
         
         Paragraph paraLogo = new Paragraph("Logo und Schuladresse",NORMAL_FONT);
@@ -76,18 +74,12 @@ public class ZeugnisPDF {
         
         table.addCell(cell);
         
-        try {
-            doc.add(table);
-        } catch (DocumentException ex) {
-            Logger.getLogger(PdfCellEditor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        doc.addTitle("iText Test");
-        doc.addAuthor("wer auch immer");
+        doc.add(table);
+        doc.addTitle("Zeugnis");
+        doc.addAuthor("Grundschule Brelingen");
         doc.addCreationDate();
-        doc.addSubject("Hello World");
+        doc.addSubject("Zeugnis");
         doc.close();
         writer.close();
     }
-    
-
 }
