@@ -53,21 +53,25 @@ public class ZeugnisPDF  {
         String Lernentwicklung;  // aus der DB ?????
         
         PdfWriter writer = null;
-        Document doc=new Document(PageSize.A4,50,30,50,30);
+        Document doc=new Document(PageSize.A4,50,30,20,30);
         writer=PdfWriter.getInstance(doc,new FileOutputStream(new File("MustermannMax.pdf")));
         doc.open();
         
         // Logo
+        double moremargin=doc.getPageSize().getWidth()*0.05;
         Image img = Image.getInstance("OtherFiles/GSBrelingen.jpg");
-        float scaler = ((doc.getPageSize().getWidth() - doc.leftMargin() - doc.rightMargin()) / img.getWidth()) * 100;
+        float scaler = ((doc.getPageSize().getWidth() - doc.leftMargin() - doc.rightMargin()- (float)moremargin) / img.getWidth()) * 100;
         img.scalePercent(scaler);
         doc.add(img);
       
+        // Logo
         Paragraph paraLogo = new Paragraph("Grundschule Brelingen, Schulstraße 10, 30900 Wedemark",NORMAL_FONT);
         paraLogo.setLeading(0, 1);
         paraLogo.setAlignment(Element.ALIGN_CENTER);
+        
+        //Zeugnis
         Paragraph paraZeugnis = new Paragraph("Zeugnis",BIG_FONT);
-        paraZeugnis.setLeading(0, 1);
+        paraZeugnis.setLeading(0, 2);
         paraZeugnis.setAlignment(Element.ALIGN_CENTER);
         PdfPTable table = new PdfPTable(1);
         table.setWidthPercentage(100);
