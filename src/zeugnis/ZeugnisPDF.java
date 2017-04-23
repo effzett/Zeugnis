@@ -7,6 +7,7 @@ package zeugnis;
 
 import java.io.IOException;
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -56,7 +57,13 @@ public class ZeugnisPDF  {
         writer=PdfWriter.getInstance(doc,new FileOutputStream(new File("MustermannMax.pdf")));
         doc.open();
         
-        Paragraph paraLogo = new Paragraph("Logo und Schuladresse",NORMAL_FONT);
+        // Logo
+        Image img = Image.getInstance("OtherFiles/GSBrelingen.jpg");
+        float scaler = ((doc.getPageSize().getWidth() - doc.leftMargin() - doc.rightMargin()) / img.getWidth()) * 100;
+        img.scalePercent(scaler);
+        doc.add(img);
+      
+        Paragraph paraLogo = new Paragraph("Grundschule Brelingen, Schulstraße 10, 30900 Wedemark",NORMAL_FONT);
         paraLogo.setLeading(0, 1);
         paraLogo.setAlignment(Element.ALIGN_CENTER);
         Paragraph paraZeugnis = new Paragraph("Zeugnis",BIG_FONT);

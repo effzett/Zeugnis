@@ -5,11 +5,13 @@
  */
 package zeugnis;
 
+import com.itextpdf.text.DocumentException;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.EventObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,14 +41,20 @@ public class PdfCellEditor extends AbstractCellEditor implements TableCellEditor
             int row,
             int column) {
 
-        ZeugnisPDF zeugnisPDF = new ZeugnisPDF();
-        
-/* JOptionPane.showMessageDialog(null,
-                "Methode zum PDF erzeugen noch nicht implementiert.",
-                "",
-                JOptionPane.INFORMATION_MESSAGE);
-*/               
+        try {
+            ZeugnisPDF zeugnisPDF = new ZeugnisPDF();
+        } catch (IOException ex) {
+            Logger.getLogger(PdfCellEditor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(PdfCellEditor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        /* JOptionPane.showMessageDialog(null,
+            "Methode zum PDF erzeugen noch nicht implementiert.",
+            "",
+            JOptionPane.INFORMATION_MESSAGE);
+         */
         return new JLabel(new ImageIcon(getClass().getResource("pdf.png")));
+
     }
 
     @Override
