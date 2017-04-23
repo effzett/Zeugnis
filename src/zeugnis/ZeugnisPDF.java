@@ -19,12 +19,14 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
+import static com.itextpdf.text.pdf.PdfName.URL;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -56,13 +58,14 @@ public class ZeugnisPDF  {
         String Lernentwicklung = "Lernentwicklung (kurz!)\nInteressen\nLernstand Deutsch\nLernstand Mathe\nVeränderungsprozesse\nKnackpunkte";
         
         PdfWriter writer = null;
-        Document doc=new Document(PageSize.A4,50,30,20,30);
+        Document doc=new Document(PageSize.A4,50,50,20,30);
         writer=PdfWriter.getInstance(doc,new FileOutputStream(new File("MustermannMax.pdf")));
         doc.open();
 
         // Logo
+        URL url = this.getClass().getResource("pics/GSBrelingen.jpg");
+        Image img = Image.getInstance(url);
         double moremargin=doc.getPageSize().getWidth()*0.0;
-        Image img = Image.getInstance("OtherFiles/GSBrelingen.jpg");
         float scaler = ((doc.getPageSize().getWidth() - doc.leftMargin() - doc.rightMargin()- (float)moremargin) / img.getWidth()) * 100;
         img.scalePercent(scaler);
         
