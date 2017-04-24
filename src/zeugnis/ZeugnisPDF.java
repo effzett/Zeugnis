@@ -37,6 +37,7 @@ public class ZeugnisPDF  {
     private static final Font BIGGER_FONT=new Font(Font.FontFamily.HELVETICA,14,Font.NORMAL);
     private static final Font NAME_FONT=new Font(Font.FontFamily.HELVETICA,26,Font.NORMAL);
     private static final Font SMALL_FONT=new Font(Font.FontFamily.HELVETICA,10,Font.NORMAL);
+    private static final Font TINY_FONT=new Font(Font.FontFamily.HELVETICA,9,Font.NORMAL);
     private static final Font BIG_FONT=new Font(Font.FontFamily.HELVETICA,36,Font.BOLD);
     private static final Font NORMAL_BOLD_FONT=new Font(Font.FontFamily.HELVETICA,12,Font.BOLD);
     private static final Font NORMAL_FONT_RED=new Font(Font.FontFamily.HELVETICA,12,Font.NORMAL,BaseColor.RED);
@@ -57,7 +58,14 @@ public class ZeugnisPDF  {
         String Tage      = "versäumte Unterrichtstage im 1. und 2. Halbjahr: 2 davon unentschuldigt: 0";
         String Lernentwicklung = "Lernentwicklung (kurz!)\nInteressen\nLernstand Deutsch\nLernstand Mathe\nVeränderungsprozesse\nKnackpunkte";
         String Unterschriften = "Unterschriften";
-        String Header2 = "Seite 2 des Grundschulzeugnisses von " + Name + "(" + Geboren + ")" + "Ausstellungsdatum";
+
+        String Header2 = "Seite 2 des Grundschulzeugnisses von " + Name + " (" + Geboren + ") " + "Ausstellungsdatum";
+        String AundS = "Arbeits- und Sozialverhalten";
+        String ATitle = "Arbeitsverhalten";
+        String Selten ="selten";
+        String Wechselnd = "wechselnd";
+        String Ueberwiegend = "überwiegend";
+
         PdfWriter writer = null;
         Document doc=new Document(PageSize.A4,50,50,20,30);
         writer=PdfWriter.getInstance(doc,new FileOutputStream(new File("MustermannMax.pdf")));
@@ -189,17 +197,66 @@ public class ZeugnisPDF  {
         // Seite 2
         // Tablestruktur aufbauen...
         PdfPTable table2 = new PdfPTable(4);
+        table2.setWidths(new float[] { 64, 12,12,12 });
         table2.setWidthPercentage(100);
         
         PdfPCell cell2Header;
-        cell2Header = new PdfPCell(new Phrase(Header2,SMALL_FONT));
+        cell2Header = new PdfPCell(new Phrase(Header2,TINY_FONT));
         cell2Header.setColspan(4);
         cell2Header.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell2Header.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell cell2AundS;
+        cell2AundS = new PdfPCell(new Phrase(AundS,NORMAL_BOLD_FONT));
+        cell2AundS.setColspan(4);
+        cell2AundS.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell2AundS.setFixedHeight(40f);
+        cell2AundS.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2AundS.setBorder(Rectangle.NO_BORDER);
  
+        PdfPCell cell2ATitle;
+        cell2ATitle = new PdfPCell(new Phrase(ATitle,NORMAL_FONT));
+        //cell2ATitle.setColspan(4);
+        cell2ATitle.setVerticalAlignment(Element.ALIGN_TOP);
+        cell2ATitle.setFixedHeight(30f);
+        cell2ATitle.setHorizontalAlignment(Element.ALIGN_LEFT);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell cell2Selten;
+        cell2Selten = new PdfPCell(new Phrase(Selten,TINY_FONT));
+        //cell2ATitle.setColspan(4);
+        cell2Selten.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell2Selten.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell cell2Wechselnd;
+        cell2Wechselnd = new PdfPCell(new Phrase(Wechselnd,TINY_FONT));
+        //cell2ATitle.setColspan(4);
+        cell2Wechselnd.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell2Wechselnd.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell cell2Ueberwiegend;
+        cell2Ueberwiegend = new PdfPCell(new Phrase(Ueberwiegend,TINY_FONT));
+        //cell2ATitle.setColspan(4);
+        cell2Ueberwiegend.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell2Ueberwiegend.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
         table2.addCell(cell2Header);
-        doc.add(table2);
+        table2.addCell(cell2AundS);
+        table2.addCell(cell2ATitle);
+        table2.addCell(cell2Selten);
+        table2.addCell(cell2Wechselnd);
+        table2.addCell(cell2Ueberwiegend);
         
+        
+        
+        doc.add(table2);
+
         doc.addTitle("Zeugnis");
         doc.addAuthor("Grundschule Brelingen");
         doc.addCreationDate();
