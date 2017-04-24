@@ -366,10 +366,13 @@ public class Gui extends javax.swing.JFrame {
     private void addRow(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRow
         String datePattern = "dd.MM.yyyy";
         SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
-        Object[] row = {"", "", dateFormatter.format(Calendar.getInstance().getTime()), "", new ImageIcon(getClass().getResource("delete.png"))};
+        Object[] row = {"", "",
+            dateFormatter.format(Calendar.getInstance().getTime()), "", new ImageIcon(getClass().getResource("/zeugnis/pics/delete.png")),
+            new ImageIcon(getClass().getResource("/zeugnis/pics/pdf.png"))};
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.addRow(row);
     }//GEN-LAST:event_addRow
+
 
     private void addSchoolYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSchoolYear
         String result = (String) JOptionPane.showInputDialog(
@@ -391,10 +394,10 @@ public class Gui extends javax.swing.JFrame {
     }//GEN-LAST:event_addSchoolYear
 
     private void addClass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClass
-         String result = (String) JOptionPane.showInputDialog(
+        String result = (String) JOptionPane.showInputDialog(
                 this,
-                "Es wird eine neue Klasse zum Schuljahr " + (String)jComboBox1.getSelectedItem() + " angelegt\n" +
-                "Es wird das Format [0-9][a-z] (z.b 1a) erwartet.",
+                "Es wird eine neue Klasse zum Schuljahr " + (String) jComboBox1.getSelectedItem() + " angelegt\n"
+                + "Es wird das Format [0-9][a-z] (z.b 1a) erwartet.",
                 "Neuw Klasse anlegen",
                 JOptionPane.PLAIN_MESSAGE);
 
