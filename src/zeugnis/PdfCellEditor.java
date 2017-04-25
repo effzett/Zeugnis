@@ -7,33 +7,25 @@ package zeugnis;
 
 import com.itextpdf.text.DocumentException;
 import java.awt.Component;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.EventObject;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 
 /**
  *
  * @author juergen
  */
-
 public class PdfCellEditor extends AbstractCellEditor implements TableCellEditor {
 
     private final static Logger logger = Logger.getLogger(PdfCellEditor.class.getName());
     private Object value = null;
-
 
     public Component getTableCellEditorComponent(JTable table,
             Object value,
@@ -41,36 +33,41 @@ public class PdfCellEditor extends AbstractCellEditor implements TableCellEditor
             int row,
             int column) {
 
-        try {
-            ZeugnisPDF zeugnisPDF = new ZeugnisPDF();
-        } catch (IOException ex) {
-            Logger.getLogger(PdfCellEditor.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DocumentException ex) {
-            Logger.getLogger(PdfCellEditor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        /* JOptionPane.showMessageDialog(null,
-            "Methode zum PDF erzeugen noch nicht implementiert.",
-            "",
-            JOptionPane.INFORMATION_MESSAGE);
-         */
-        return new JLabel(new ImageIcon(getClass().getResource("pdf.png")));
+        JLabel pdfIcon = new JLabel(new ImageIcon(getClass().getResource("/zeugnis/pics/pdf.png")));
+        pdfIcon.setToolTipText("Zeugnis als PDF erzeugen");
+        pdfIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                createTestimony(table, row);
+            }
+        });
+        return new JLabel("ätsch");
 
     }
 
     @Override
     public boolean isCellEditable(EventObject anEvent) {
-
-        if (anEvent instanceof MouseEvent) {
-            int clickCountToStart = 1;
-            return ((MouseEvent) anEvent).getClickCount() >= clickCountToStart;
-        }
-
-        return true;
+        return false;
     }
 
+    // Da der Wert nicht editierbar ist, einfach null zurueckgeben
     @Override
     public Object getCellEditorValue() {
-        return value;
+        return null;
+    }
+
+    // Ueber Tabelle und Zeile kann auf den Namen des Schuelers zugegriffen werden.
+    // Funktioniert noch nicht. Cell Editor ist der falsche Platz.
+    // Der EventHandler muß direkt an das JLabel gehängt werden das beim Füllen der Tabelle
+    // erzeugt wird.
+    private void createTestimony(JTable table, int row) {
+
+        try {
+            ZeugnisPDF zeugnisPDF = new ZeugnisPDF();
+        } catch (IOException | DocumentException ex) {
+            logger.severe(ex.getLocalizedMessage());
+        }
+
     }
 
 }

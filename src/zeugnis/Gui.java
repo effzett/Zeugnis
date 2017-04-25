@@ -32,11 +32,13 @@ public class Gui extends javax.swing.JFrame {
     private final static Logger logger = Logger.getLogger(Gui.class.getName());
     private GuiTest guiTest = null;
     private JComboBox markComboBox = null;
+    private SQLConnector connector = null;
 
     /**
      * Creates new form Gui
      */
-    public Gui() {
+    public Gui(SQLConnector connector) {
+        this.connector = connector;
         guiTest = new GuiTest();
 
         // Objects for the ComboBox

@@ -18,12 +18,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import org.apache.derby.drda.NetworkServerControl;
 
 public class SQLConnector {
 
-    private static boolean log = true;
+    private final static Logger logger = Logger.getLogger(SQLConnector.class.getName());
     private Connection con = null;
     private NetworkServerControl server = null;
     private boolean foreignDerby = false;
@@ -63,11 +64,35 @@ public class SQLConnector {
 
         // Connect to the server
         Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
-        con = DriverManager.getConnection("jdbc:derby://localhost:1527/zeugnis",
+        con = DriverManager.getConnection("jdbc:derby://localhost:1527/Zeugnis",
                 config.getProperty("derbyUser"),
                 config.getProperty("derbyPassword"));
     }
 
+    /**
+     * der Primary Key des Schuelers wird erzeugt aus dem Hashcode aus
+     * NameVornameGebDatumKlasse. Das Datum im Format yyyy.MM-dd.
+     * 
+     * @param values Die Werte zum Anlegen eines Schülers
+     * @throws SQLException 
+     */
+    public void insertPuple(String[] values) throws SQLException {
+
+        try (Statement statement = con.createStatement()) {
+
+            String sql = "insert into SCHUELER values(" + values[0]
+                    + ",'" + values[1]
+                    + "', '" + values[2]
+                    + "', '" + values[3]
+                    + "', '" + values[4]
+                    + "', '" + values[5]
+                    + "', " + values[6] + ")";
+
+            logger.fine(sql);
+            statement.executeUpdate(sql);
+        }
+
+    }
     /*        
      public boolean dataExists(String kennzeichen) throws SQLException {
 
@@ -91,6 +116,7 @@ public class SQLConnector {
 
      }
      */
+
     /**
      * Shuts down the Derby Server in case of starting by this class.
      *

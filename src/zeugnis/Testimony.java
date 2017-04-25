@@ -16,6 +16,7 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import zeugnis.testdata.FillDatabase;
 
 /**
  *
@@ -28,6 +29,7 @@ public class Testimony {
     private ConsoleHandler consoleHandler = null;
     private DialogHandler dialogHandler = null;
     private Properties config = null;
+    private SQLConnector connector = null;
 
     public Testimony() {
 
@@ -70,14 +72,24 @@ public class Testimony {
                 config.store(new FileWriter(configFile),
                         "Default Config created at " + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
             }
+            
+            connector = new SQLConnector(config);
+            connector.connect();
+            
+            // fill Database with Testdata
+            FillDatabase fd = new FillDatabase(connector);
+            fd.insertClass();
+            
 
         } catch (IOException ex) {
+            logger.severe(ex.getLocalizedMessage());
+        } catch (Exception ex) {
             logger.severe(ex.getLocalizedMessage());
         }
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Gui().setVisible(true);
+                new Gui(connector).setVisible(true);
             }
         });
 
