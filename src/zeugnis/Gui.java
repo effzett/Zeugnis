@@ -6,9 +6,14 @@
 package zeugnis;
 
 import java.awt.Component;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.EventObject;
+import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -17,10 +22,12 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import static javax.swing.SwingConstants.CENTER;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 
 /**
@@ -30,17 +37,17 @@ import javax.swing.table.TableColumn;
 public class Gui extends javax.swing.JFrame {
 
     private final static Logger logger = Logger.getLogger(Gui.class.getName());
-    private GuiTest guiTest = null;
     private JComboBox markComboBox = null;
     private SQLConnector connector = null;
+    private Properties config = null;
 
     /**
      * Creates new form Gui
      */
-    public Gui(SQLConnector connector) {
+    public Gui(SQLConnector connector, Properties config) {
         this.connector = connector;
-        guiTest = new GuiTest();
-
+        this.config = config;
+        
         // Objects for the ComboBox
         Object[] comboBoxContent = new Object[]{
             "Zeile1",
@@ -57,6 +64,7 @@ public class Gui extends javax.swing.JFrame {
         markComboBox.setRenderer(new ComboBoxRenderer());
 
         initComponents();
+        fillClassTable();
     }
 
     /**
@@ -72,13 +80,7 @@ public class Gui extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable() {
-
-            public Class getColumnClass(int column) {
-                return getValueAt(0, column).getClass();
-            }
-
-        };
+        jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -114,18 +116,31 @@ public class Gui extends javax.swing.JFrame {
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new String [] {
                 "Name", "Vorname", "Geburtsdatum", "Geburtsort", "", ""
-            }, 6)
+            }, 6)/* {
+
+                @Override
+                public Class<?> getColumnClass(int column) {
+                    switch (column) {
+                        case 4: return ImageIcon.class;
+                        case 5: return ImageIcon.class;
+                        default: return String.class;
+                    }
+
+                }
+
+            }*/
         );
         jTable1.setCellSelectionEnabled(true);
         jTable1.setRowHeight(20);
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        guiTest.fillClassTable(jTable1);
         TableColumn column = jTable1.getColumnModel().getColumn(2);
         column.setCellEditor(new zeugnis.DateCellEditor());
         column = jTable1.getColumnModel().getColumn(4);
         column.setCellEditor(new zeugnis.DeleteCellEditor());
+        column.setCellRenderer(new IconCellRenderer());
         column = jTable1.getColumnModel().getColumn(5);
-        column.setCellEditor(new zeugnis.PdfCellEditor());
+        column.setCellEditor(new PdfCellEditor());
+        column.setCellRenderer(new IconCellRenderer());
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Neue Zeile");
@@ -204,10 +219,7 @@ public class Gui extends javax.swing.JFrame {
         jTable2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         column = jTable2.getColumnModel().getColumn(1);
         column.setCellRenderer(new zeugnis.ComboBoxCellRenderer());
-        //column.setCellRenderer(new DefaultTableCellRenderer());
         column.setCellEditor(new DefaultCellEditor(markComboBox));
-        //setupMarkColumn(jTable2, column);
-        guiTest.fillTestimonyTable(jTable2);
         jScrollPane3.setViewportView(jTable2);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -285,7 +297,11 @@ public class Gui extends javax.swing.JFrame {
 
         jLabel1.setText("Schuljahr");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2016/17" }));
+        try{
+            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(connector.fetchSYears()));
+        } catch(SQLException ex) {
+            logger.severe(ex.getLocalizedMessage());
+        }
 
         jLabel2.setText("Halbjahr");
 
@@ -293,7 +309,7 @@ public class Gui extends javax.swing.JFrame {
 
         jLabel3.setText("Klasse");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1a", "1b", "1c" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel( config.getProperty("classes").split(",")));
 
         jMenu1.setText("Datei");
 
@@ -365,12 +381,23 @@ public class Gui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void fillClassTable() {
+        String sYear = (String)jComboBox1.getSelectedItem();
+        String sClass = (String)jComboBox3.getSelectedItem();
+        
+        try {
+            connector.fillClassTable(jTable1,Integer.parseInt(sYear.substring(0, 4)), sClass);
+        } catch (SQLException ex) {
+            logger.severe(ex.getLocalizedMessage());
+        }
+        
+    }
+    
     private void addRow(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRow
         String datePattern = "dd.MM.yyyy";
         SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
         Object[] row = {"", "",
-            dateFormatter.format(Calendar.getInstance().getTime()), "", new ImageIcon(getClass().getResource("/zeugnis/pics/delete.png")),
-            new ImageIcon(getClass().getResource("/zeugnis/pics/pdf.png"))};
+            dateFormatter.format(Calendar.getInstance().getTime()), "",};
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.addRow(row);
     }//GEN-LAST:event_addRow

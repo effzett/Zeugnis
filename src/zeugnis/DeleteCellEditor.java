@@ -45,7 +45,7 @@ public class DeleteCellEditor extends AbstractCellEditor implements TableCellEdi
             model.removeRow(row);
         }
         
-        return new JLabel(new ImageIcon(getClass().getResource("delete.png")));
+        return (JLabel)value;
     }
 
     @Override

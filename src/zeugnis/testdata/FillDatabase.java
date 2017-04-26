@@ -6,6 +6,9 @@
 package zeugnis.testdata;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import zeugnis.SQLConnector;
 
 /**
@@ -23,10 +26,10 @@ public class FillDatabase {
     public void insertClass() {
 
         String[][] testClass = new String[][]{
-            {Integer.toString("SchröderGerhardt1944-04-071a".hashCode()), "Schröder", "Gerhardt", "1944-04-07", "Massenberg-Wöhren", "1a", "2016"},
-            {Integer.toString("FerkelAngela1954-06-171a".hashCode()), "Ferkel", "Angela", "1954-06-17", "Hamburg", "1a", "2016"},
-            {Integer.toString("MansonCharles1934-11-121a".hashCode()), "Manson", "Charles", "1934-11-12", "Cinncinnati", "1a", "2016"},
-            {Integer.toString("MickJagger194308261a".hashCode()), "Mick", "Jagger", "1943-08-26", "East Hill, Dartford", "1a", "2016"},};
+            {Integer.toString("SchröderGerhardt1944-04-072016".hashCode()), "Schröder", "Gerhardt", "07.04.1944", "Massenberg-Wöhren", "1a", "2016"},
+            {Integer.toString("FerkelAngela1954-06-172016".hashCode()), "Ferkel", "Angela", "17.06.1954", "Hamburg", "1a", "2016"},
+            {Integer.toString("MansonCharles1934-11-122016".hashCode()), "Manson", "Charles", "12.11.1934", "Cinncinnati", "1a", "2016"},
+            {Integer.toString("MickJagger194308262016".hashCode()), "Mick", "Jagger", "26.08.1943", "East Hill, Dartford", "1a", "2016"},};
 
         for (String[] puple : testClass) {
 
@@ -35,6 +38,8 @@ public class FillDatabase {
             } catch (SQLException ex) {
                 System.out.println("Testdaten schon vorhanden.");
                 continue;
+            } catch (ParseException ex) {
+                ex.printStackTrace();
             }
 
         }

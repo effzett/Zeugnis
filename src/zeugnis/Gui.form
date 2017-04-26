@@ -185,7 +185,7 @@
                     <Component class="javax.swing.JTable" name="jTable1">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new String [] {&#xa;        &quot;Name&quot;, &quot;Vorname&quot;, &quot;Geburtsdatum&quot;, &quot;Geburtsort&quot;, &quot;&quot;, &quot;&quot;&#xa;    }, 6)&#xa;    " type="code"/>
+                          <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new String [] {&#xa;        &quot;Name&quot;, &quot;Vorname&quot;, &quot;Geburtsdatum&quot;, &quot;Geburtsort&quot;, &quot;&quot;, &quot;&quot;&#xa;    }, 6)/* {&#xa;&#xa;        @Override&#xa;        public Class&lt;?&gt; getColumnClass(int column) {&#xa;            switch (column) {&#xa;                case 4: return ImageIcon.class;&#xa;                case 5: return ImageIcon.class;&#xa;                default: return String.class;&#xa;            }&#xa;&#xa;        }&#xa;&#xa;    }*/&#xa;    " type="code"/>
                         </Property>
                         <Property name="cellSelectionEnabled" type="boolean" value="true"/>
                         <Property name="rowHeight" type="int" value="20"/>
@@ -194,8 +194,7 @@
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable() {&#xa;&#xa;    public Class getColumnClass(int column) {&#xa;        return getValueAt(0, column).getClass();&#xa;    }&#xa;&#xa;}"/>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="guiTest.fillClassTable(jTable1);&#xa;TableColumn column = jTable1.getColumnModel().getColumn(2);&#xa;column.setCellEditor(new zeugnis.DateCellEditor());&#xa;column = jTable1.getColumnModel().getColumn(4);&#xa;column.setCellEditor(new zeugnis.DeleteCellEditor());&#xa;column = jTable1.getColumnModel().getColumn(5);&#xa;column.setCellEditor(new zeugnis.PdfCellEditor());"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="TableColumn column = jTable1.getColumnModel().getColumn(2);&#xa;column.setCellEditor(new zeugnis.DateCellEditor());&#xa;column = jTable1.getColumnModel().getColumn(4);&#xa;column.setCellEditor(new zeugnis.DeleteCellEditor());&#xa;column.setCellRenderer(new IconCellRenderer());&#xa;column = jTable1.getColumnModel().getColumn(5);&#xa;column.setCellEditor(new PdfCellEditor());&#xa;column.setCellRenderer(new IconCellRenderer());"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -392,7 +391,7 @@
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="column = jTable2.getColumnModel().getColumn(1);&#xa;column.setCellRenderer(new zeugnis.ComboBoxCellRenderer());&#xa;//column.setCellRenderer(new DefaultTableCellRenderer());&#xa;column.setCellEditor(new DefaultCellEditor(markComboBox));&#xa;//setupMarkColumn(jTable2, column);&#xa;guiTest.fillTestimonyTable(jTable2);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="column = jTable2.getColumnModel().getColumn(1);&#xa;column.setCellRenderer(new zeugnis.ComboBoxCellRenderer());&#xa;column.setCellEditor(new DefaultCellEditor(markComboBox));"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -410,12 +409,14 @@
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBox1">
       <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="1">
-            <StringItem index="0" value="2016/17"/>
-          </StringArray>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel(connector.fetchSYears())" type="code"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="} catch(SQLException ex) {&#xa;    logger.severe(ex.getLocalizedMessage());&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="try{"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
@@ -439,12 +440,8 @@
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBox3">
       <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
-            <StringItem index="0" value="1a"/>
-            <StringItem index="1" value="1b"/>
-            <StringItem index="2" value="1c"/>
-          </StringArray>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel( config.getProperty(&quot;classes&quot;).split(&quot;,&quot;))" type="code"/>
         </Property>
       </Properties>
     </Component>

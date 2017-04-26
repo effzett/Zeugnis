@@ -37,7 +37,8 @@ public class Testimony {
             // Default Logging
 
             // Avoid double Console logging output
-            Logger parent = logger.getParent();
+            
+            //Logger parent = logger.getParent();
             for (Handler handler : Logger.getLogger("").getHandlers()) {
                 Logger.getLogger("").removeHandler(handler);
             }
@@ -69,6 +70,7 @@ public class Testimony {
                 config.setProperty("startDerby", "0");
                 config.setProperty("derbyUser", "zeugnis");
                 config.setProperty("derbyPassword", "zeugnis");
+                config.setProperty("classes", "1a,1b,2a,2b,3a,3b,4a,4b");
                 config.store(new FileWriter(configFile),
                         "Default Config created at " + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
             }
@@ -89,7 +91,7 @@ public class Testimony {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Gui(connector).setVisible(true);
+                new Gui(connector, config).setVisible(true);
             }
         });
 
