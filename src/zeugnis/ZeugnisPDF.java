@@ -24,6 +24,10 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -43,6 +47,7 @@ public class ZeugnisPDF  {
     private static final Font NORMAL_FONT_RED=new Font(Font.FontFamily.HELVETICA,12,Font.NORMAL,BaseColor.RED);
  
     private final static Logger logger = Logger.getLogger(ZeugnisPDF.class.getName());
+
 
     public ZeugnisPDF() throws IOException, DocumentException, DocumentException{
         // Schueler ist Max Mustermann, nur zum Layout testen
@@ -256,6 +261,7 @@ public class ZeugnisPDF  {
         table2.addCell(cell2Wechselnd);
         table2.addCell(cell2Ueberwiegend);
         
+
         int count=5;
         for(Integer i=0; i<count; i++){
             PdfPCell cell2;

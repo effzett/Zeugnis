@@ -119,7 +119,7 @@ public class SQLConnector {
 
         try (Statement statement = con.createStatement()) {
 
-            String sql = "select IDSCHUELER, NAME, VORNAME, GEBDATUM, GEBORT from SCHUELER where KALSSE = '" + sClass + "' and SCHULJAHR = " + sYear;
+            String sql = "select IDSCHUELER, NAME, VORNAME, GEBDATUM, GEBORT from SCHUELER where KLASSE = '" + sClass + "' and SCHULJAHR = " + sYear;
             logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
 
