@@ -42,7 +42,8 @@ public class ZeugnisPDF  {
     private static final Font NORMAL_BOLD_FONT=new Font(Font.FontFamily.HELVETICA,12,Font.BOLD);
     private static final Font NORMAL_FONT_RED=new Font(Font.FontFamily.HELVETICA,12,Font.NORMAL,BaseColor.RED);
  
-    
+    private final static Logger logger = Logger.getLogger(ZeugnisPDF.class.getName());
+
     public ZeugnisPDF() throws IOException, DocumentException, DocumentException{
         // Schueler ist Max Mustermann, nur zum Layout testen
         // Der richtige Ctor ist mit Parameter CreatePDF(int idSchueler)
@@ -66,6 +67,8 @@ public class ZeugnisPDF  {
         String Wechselnd = "wechselnd";
         String Ueberwiegend = "überwiegend";
 
+        logger.fine("Here I am");
+
         PdfWriter writer = null;
         Document doc=new Document(PageSize.A4,50,50,20,30);
         writer=PdfWriter.getInstance(doc,new FileOutputStream(new File("MustermannMax.pdf")));
@@ -78,7 +81,7 @@ public class ZeugnisPDF  {
         float scaler = ((doc.getPageSize().getWidth() - doc.leftMargin() - doc.rightMargin()- (float)moremargin) / img.getWidth()) * 100;
         img.scalePercent(scaler);
         
-        // Seite 1
+        // Seite 1 *************************************************************
         // Tablestruktur aufbauen...
         PdfPTable table1 = new PdfPTable(3);
         table1.setWidthPercentage(100);
@@ -194,7 +197,7 @@ public class ZeugnisPDF  {
       
         doc.newPage();
         
-        // Seite 2
+        // Seite 2 *************************************************************
         // Tablestruktur aufbauen...
         PdfPTable table2 = new PdfPTable(4);
         table2.setWidths(new float[] { 64, 12,12,12 });
@@ -253,7 +256,28 @@ public class ZeugnisPDF  {
         table2.addCell(cell2Wechselnd);
         table2.addCell(cell2Ueberwiegend);
         
-        
+        int count=5;
+        for(Integer i=0; i<count; i++){
+            PdfPCell cell2;
+            cell2 = new PdfPCell(new Phrase(i.toString() ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell2.setVerticalAlignment(Element.ALIGN_CENTER);
+            //cell2ATitle.setFixedHeight(30f);
+            cell2.setHorizontalAlignment(Element.ALIGN_LEFT);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+            PdfPCell cell2bewertung;
+            cell2bewertung = new PdfPCell(new Phrase("x" ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell2bewertung.setVerticalAlignment(Element.ALIGN_CENTER);
+            //cell2ATitle.setFixedHeight(30f);
+            cell2bewertung.setHorizontalAlignment(Element.ALIGN_CENTER);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+ 
+            table2.addCell(cell2);
+            table2.addCell(cell2bewertung);
+            table2.addCell(cell2bewertung);
+            table2.addCell(cell2bewertung);
+        }
         
         doc.add(table2);
 
