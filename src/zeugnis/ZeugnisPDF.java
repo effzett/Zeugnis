@@ -121,14 +121,11 @@ public class ZeugnisPDF  {
         String Halbjahr  = "1. und 2. Halbjahr";
         String Klasse    = "Klasse 1a";
         
-        String Geboren   = "geboren am 01.01.2000 in Brelingen";
-
 
         String Tage      = "versäumte Unterrichtstage im 1. und 2. Halbjahr: 2 davon unentschuldigt: 0";
         String Lernentwicklung = "Lernentwicklung (kurz!)\nInteressen\nLernstand Deutsch\nLernstand Mathe\nVeränderungsprozesse\nKnackpunkte";
         String Unterschriften = "Unterschriften";
 
-        String Header2 = "Seite 2 des Grundschulzeugnisses von " + name + " (" + Geboren + ") " + "Ausstellungsdatum";
         String AundS = "Arbeits- und Sozialverhalten";
         String ATitle = "Arbeitsverhalten";
         String Selten ="selten";
