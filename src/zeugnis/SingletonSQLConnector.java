@@ -304,6 +304,33 @@ public class SingletonSQLConnector {
         return result.toArray(new String[0]);
     }
 
+    
+    public String getSchuelerName(int idSCHUELER) throws SQLException{
+        String name="Name";
+        try (Statement statement = con.createStatement()) {
+            String sql = "select NAME from SCHUELER where ID_SCHUELER = " + idSCHUELER ;
+            logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            while (set.next()) {
+                name = set.getString(1);
+            }
+        }
+        return name;
+    }
+    
+    public String getSchuelerVorname(int idSCHUELER) throws SQLException{
+        String vorname="Vorname";
+        try (Statement statement = con.createStatement()) {
+            String sql = "select VORNAME from SCHUELER where ID_SCHUELER = " + idSCHUELER ;
+            logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            while (set.next()) {
+                vorname = set.getString(1);
+            }
+        }
+        return vorname;
+    }
+    
     /**
      * Shuts down the Derby Server in case of starting by this class.
      *
