@@ -73,7 +73,9 @@ public class ZeugnisPDF  {
         String Ueberwiegend = "überwiegend";
 
         logger.fine("Here I am");
-
+        SingletonSQLConnector connector = SingletonSQLConnector.getInstance();
+        connector.
+        
         PdfWriter writer = null;
         Document doc=new Document(PageSize.A4,50,50,20,30);
         writer=PdfWriter.getInstance(doc,new FileOutputStream(new File("MustermannMax.pdf")));
