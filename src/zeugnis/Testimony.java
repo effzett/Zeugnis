@@ -37,7 +37,6 @@ public class Testimony {
             // Default Logging
 
             // Avoid double Console logging output
-            
             //Logger parent = logger.getParent();
             for (Handler handler : Logger.getLogger("").getHandlers()) {
                 Logger.getLogger("").removeHandler(handler);
@@ -54,34 +53,14 @@ public class Testimony {
             ex.printStackTrace();
         }
 
-        // Create a default config.properties in the directory where the jarfile is placed
-        // if the config.properties does not already exist.
         try {
-            File jarFile = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
-            String jarPath = jarFile.getParent();
-            File configFile = new File(jarPath + File.separator + "config.properties");
-            config = new Properties();
-
-            if (configFile.exists()) {
-                config.load(new FileReader(configFile));
-
-            } else {
-                config.setProperty("installDir", jarPath);
-                config.setProperty("startDerby", "0");
-                config.setProperty("derbyUser", "zeugnis");
-                config.setProperty("derbyPassword", "zeugnis");
-                config.setProperty("classes", "1a,1b,2a,2b,3a,3b,4a,4b");
-                config.store(new FileWriter(configFile),
-                        "Default Config created at " + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
-            }
-            
-            connector = new SQLConnector(config);
+            Config config = Config.getInstance();
+            SingletonSQLConnector connector = SingletonSQLConnector.getInstance();
             connector.connect();
-            
+
             // fill Database with Testdata
             FillDatabase fd = new FillDatabase(connector);
             fd.insertClass();
-            
 
         } catch (IOException ex) {
             logger.severe(ex.getLocalizedMessage());
@@ -91,7 +70,7 @@ public class Testimony {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Gui(connector, config).setVisible(true);
+                new Gui().setVisible(true);
             }
         });
 

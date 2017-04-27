@@ -9,25 +9,17 @@ import java.awt.Component;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.EventObject;
 import java.util.Properties;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import static javax.swing.SwingConstants.CENTER;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 
 /**
@@ -37,16 +29,18 @@ import javax.swing.table.TableColumn;
 public class Gui extends javax.swing.JFrame {
 
     private final static Logger logger = Logger.getLogger(Gui.class.getName());
+    private static int sYear = 0;
+    private static String sClass = null;
     private JComboBox markComboBox = null;
-    private SQLConnector connector = null;
-    private Properties config = null;
+    private SingletonSQLConnector connector = null;
+    private Config config = null;
 
     /**
      * Creates new form Gui
      */
-    public Gui(SQLConnector connector, Properties config) {
-        this.connector = connector;
-        this.config = config;
+    public Gui() {
+        config = Config.getInstance();
+        connector = SingletonSQLConnector.getInstance();
         
         // Objects for the ComboBox
         Object[] comboBoxContent = new Object[]{
@@ -516,6 +510,15 @@ public class Gui extends javax.swing.JFrame {
             return this;
         }
 
+    }
+    
+    public static int getSYear() {
+        //return (String)jComboBox1.getSelectedItem();
+        return sYear;
+    }
+    
+    public static String getSClass() {
+        return sClass;
     }
 
 }

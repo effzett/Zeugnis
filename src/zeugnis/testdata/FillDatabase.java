@@ -7,9 +7,7 @@ package zeugnis.testdata;
 
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import zeugnis.SQLConnector;
+import zeugnis.SingletonSQLConnector;
 
 /**
  *
@@ -17,9 +15,9 @@ import zeugnis.SQLConnector;
  */
 public class FillDatabase {
 
-    private SQLConnector connector = null;
+    private SingletonSQLConnector connector = null;
 
-    public FillDatabase(SQLConnector connector) {
+    public FillDatabase(SingletonSQLConnector connector) {
         this.connector = connector;
     }
 

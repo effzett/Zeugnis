@@ -27,6 +27,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import org.apache.derby.drda.NetworkServerControl;
 
 public class SQLConnector {
@@ -82,7 +83,8 @@ public class SQLConnector {
      * der Primary Key des Schuelers wird erzeugt aus dem Hashcode aus
      * NameVornameGebDatumSchuljahr. Das Datum im Format yyyy.MM-dd.
      *
-     * @param values Die Werte zum Anlegen eines Schuelers
+     * @param values Die Werte zum Anlegen eines Schuelers in der Reihen folge
+     * sder Spalten der Tabelle SCHUELER
      * @throws SQLException
      */
     public void insertPuple(String[] values) throws SQLException, ParseException {
@@ -99,6 +101,34 @@ public class SQLConnector {
                     + "', '" + values[4]
                     + "', '" + values[5]
                     + "', " + values[6] + ")";
+
+            logger.fine(sql);
+            statement.executeUpdate(sql);
+        }
+
+    }
+
+    /**
+     * Update eines Schülers. Es werden alle Werte einer Zeile upgedatet (außer
+     * dem Key)
+     *
+     * @param values Eine String[] Array mit der Reihenfolge den Werten aller
+     * Spalten der Tabelle SCHUELER
+     * @throws SQLException
+     */
+    public void updatePuple(String[] values) throws SQLException, ParseException {
+        // Datumstring zu SQLDatum konvertieren
+        Date date = sdf.parse(values[3]);
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+        try (Statement statement = con.createStatement()) {
+            String sql = "update SCHUELER set NAME = '" + values[1]
+                    + "', VORNAME = '" + values[2]
+                    + "', GEBDATUM = '" + sqlDate.toString()
+                    + "', GEBORT = '" + values[4]
+                    + "', KLASSE = '" + values[5]
+                    + "', SCHULJAHR = " + values[6]
+                    + " where ID_SCHUELR = " + values[0];
 
             logger.fine(sql);
             statement.executeUpdate(sql);
@@ -139,7 +169,7 @@ public class SQLConnector {
     }
 
     /**
-     * Fühlt die übergebene JTable direkt mit Daten aus der Datenbank.
+     * Fuellt die übergebene JTable direkt mit Daten aus der Datenbank.
      *
      * @param table Die Tabelle mit der Schulklasse.
      * @param sYear Das Schuljahr
@@ -167,8 +197,77 @@ public class SQLConnector {
         }
 
     }
-    
-     /**
+
+   /**
+     * Speichert den Inhalt der uebergebenen JTable in der Tabelle SCHUELER.
+     * Vorhandene Datensaetze werden unabhaengig ob eine Aenderung stattgefunden
+     * hat aktualisiert, Neue Datensaetze eingefuegt.
+     *
+     * @param table Die Tabelle mit der Schulklasse.
+     * @param sYear Das Schuljahr
+     * @param sClass Die Klasse
+     * @throws SQLException
+     */
+    public void insertUpdateClassTable(JTable table, int sYear, String sClass) throws SQLException, ParseException {
+        TableModel model = table.getModel();
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String[] values = new String[7];
+            values[5] = sClass;
+            values[6] = Integer.toString(sYear);
+
+            for (int ii = 0; i < model.getColumnCount(); i++) {
+                String cName = model.getColumnName(ii);
+                logger.fine(cName);
+
+                switch (cName) {
+                    case "Name":
+                        values[1] = (String) model.getValueAt(i, ii);
+                        break;
+                    case "Vorname":
+                        values[2] = (String) model.getValueAt(i, ii);
+                        break;
+                    case "Geburtsdatum":
+                        values[3] = (String) model.getValueAt(i, ii);
+                        break;
+                    case "Geburtsort":
+                        values[4] = (String) model.getValueAt(i, ii);
+                        break;
+                }
+
+            }
+
+            values[0] = values[1] + values[2] + values[3] + values[6].hashCode();
+
+            if (pupleExist(Integer.parseInt(values[0]))) {
+                updatePuple(values);
+            } else {
+                insertPuple(values);
+            }
+
+        }
+
+    }
+
+    /**
+     * Prueft auf die Existenz eines Schuelers ueber den PrimaryKey.
+     *
+     * @param idSchueler
+     * @return
+     * @throws SQLException
+     */
+    public boolean pupleExist(int idSchueler) throws SQLException {
+
+        try (Statement statement = con.createStatement()) {
+            String sql = "select * from SCHUELER where ID_SCHUELER = " + idSchueler;
+            logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+
+            return set.next();
+        }
+    }
+
+    /**
      * Gibt alle bisher verwendeten Schuljahre aufsteigend sortiert in einem
      * Array zurueck. Die Schuljahre werden gleich in das Format yyyy/yy
      * formatiert.
@@ -194,8 +293,7 @@ public class SQLConnector {
 
         return result.toArray(new String[0]);
     }
-
-
+    
     /**
      * Shuts down the Derby Server in case of starting by this class.
      *
