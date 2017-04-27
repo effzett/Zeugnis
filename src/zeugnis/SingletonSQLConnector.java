@@ -43,7 +43,7 @@ public class SingletonSQLConnector {
 
     private SingletonSQLConnector() {
         config = Config.getInstance();
-        sdf = new SimpleDateFormat("dd.MM.YYYY");
+        sdf = new SimpleDateFormat("dd.MM.yyyy");
     }
 
     public static SingletonSQLConnector getInstance() {
@@ -330,7 +330,33 @@ public class SingletonSQLConnector {
         }
         return vorname;
     }
+
+    public String getSchuelerGebDatum(int idSCHUELER) throws SQLException{
+        String gebdatum="";
+        try (Statement statement = con.createStatement()) {
+            String sql = "select GEBDATUM from SCHUELER where ID_SCHUELER = " + idSCHUELER ;
+            logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            while (set.next()) {
+                gebdatum = set.getString(1);
+            }
+        }
+        return gebdatum;
+    }
     
+        public String getSchuelerGebOrt(int idSCHUELER) throws SQLException{
+        String gebort="";
+        try (Statement statement = con.createStatement()) {
+            String sql = "select GEBORT from SCHUELER where ID_SCHUELER = " + idSCHUELER ;
+            logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            while (set.next()) {
+                gebort = set.getString(1);
+            }
+        }
+        return gebort;
+    }
+ 
     /**
      * Shuts down the Derby Server in case of starting by this class.
      *
