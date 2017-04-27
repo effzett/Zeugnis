@@ -27,7 +27,10 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -61,7 +64,7 @@ public class ZeugnisPDF  {
      * @throws DocumentException
      * @throws SQLException 
      */
-    public ZeugnisPDF(int idSCHUELER) throws IOException, DocumentException, SQLException{
+    public ZeugnisPDF(int idSCHUELER) throws IOException, DocumentException, SQLException, ParseException{
         // Hier können schon alle Werte aus der Datenbank geholt werden...
         id = idSCHUELER;
         
@@ -69,19 +72,17 @@ public class ZeugnisPDF  {
 
         name      = connector.getSchuelerName(id);
         vorname   = connector.getSchuelerVorname(id);
-        gebdatum  = connector.getSchuelerGebDatum(id);
+        gebdatum  = convertDate(connector.getSchuelerGebDatum(id));
         gebort    = connector.getSchuelerGebOrt(id);
         
-        // wird später alles aus der DB geholt
+        // wird später einiges noch aus der DB geholt
         String Schuljahr = "Schuljahr 2017/2018";
         String Halbjahr  = "1. und 2. Halbjahr";
         String Klasse    = "Klasse 1a";
-        String Geboren   = "geboren am 01.01.2000 in Brelingen";
         String Tage      = "versäumte Unterrichtstage im 1. und 2. Halbjahr: 2 davon unentschuldigt: 0";
         String Lernentwicklung = "Lernentwicklung (kurz!)\nInteressen\nLernstand Deutsch\nLernstand Mathe\nVeränderungsprozesse\nKnackpunkte";
         String Unterschriften = "Unterschriften";
 
-        String Header2 = "Seite 2 des Grundschulzeugnisses von " + name + " (" + Geboren + ") " + "Ausstellungsdatum";
         String AundS = "Arbeits- und Sozialverhalten";
         String ATitle = "Arbeitsverhalten";
         String Selten ="selten";
@@ -90,13 +91,26 @@ public class ZeugnisPDF  {
     }
     
     
-        /**
-         * 
-         * @throws IOException
-         * @throws DocumentException
-         * @throws SQLException 
-         */
-        public void CreatePDF() throws IOException, DocumentException, SQLException{
+    /**
+     * Konvertiert das Datum von "yyyy-MM-dd" nach "dd.MM.yyyy"
+     * @param oldDate
+     * @return
+     * @throws ParseException 
+     */
+    private String convertDate(String oldDate) throws ParseException{
+        SimpleDateFormat oldSdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = oldSdf.parse(oldDate);
+        SimpleDateFormat newSdf = new SimpleDateFormat("dd.MM.yyyy");
+        return newSdf.format(date);
+    }
+    
+    /**
+    * 
+    * @throws IOException
+    * @throws DocumentException
+    * @throws SQLException 
+    */
+    public void CreatePDF() throws IOException, DocumentException, SQLException{
         
         // wird später alles aus der DB geholt
         logger.fine("CREATEPDF->" + name);
@@ -124,7 +138,7 @@ public class ZeugnisPDF  {
         
         PdfWriter writer = null;
         Document doc=new Document(PageSize.A4,50,50,20,30);
-        writer=PdfWriter.getInstance(doc,new FileOutputStream(new File("MustermannMax.pdf")));
+        writer=PdfWriter.getInstance(doc,new FileOutputStream(new File(name+vorname+".pdf")));
         doc.open();
 
         // Logo
@@ -257,7 +271,7 @@ public class ZeugnisPDF  {
         table2.setWidthPercentage(100);
         
         PdfPCell cell2Header;
-        cell2Header = new PdfPCell(new Phrase(Header2,TINY_FONT));
+        cell2Header = new PdfPCell(new Phrase("Seite 2 des Grundschulzeugnisses von " + vorname + " "+ name + " (" + gebdatum + ") " + "Ausstellungsdatum",TINY_FONT));
         cell2Header.setColspan(4);
         cell2Header.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell2Header.setBorder(Rectangle.NO_BORDER);
