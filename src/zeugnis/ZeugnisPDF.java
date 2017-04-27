@@ -74,7 +74,7 @@ public class ZeugnisPDF  {
 
         logger.fine("Here I am");
         SingletonSQLConnector connector = SingletonSQLConnector.getInstance();
-        connector.
+
         
         PdfWriter writer = null;
         Document doc=new Document(PageSize.A4,50,50,20,30);
