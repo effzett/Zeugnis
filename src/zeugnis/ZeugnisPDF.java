@@ -657,18 +657,18 @@ public class ZeugnisPDF  {
         cell2Sym0.setBorder(Rectangle.NO_BORDER);
         table2a.addCell(cell2Sym0);
 
-        URL url1 = this.getClass().getResource("pics/viertel.png");
+        URL url1 = this.getClass().getResource("pics/viertel0.png");
         Image img1 = Image.getInstance(url1);
-        img.scalePercent(0.9f);
-        URL url2 = this.getClass().getResource("pics/halb.png");
+        img1.scalePercent(8f);
+        URL url2 = this.getClass().getResource("pics/halb0.png");
         Image img2 = Image.getInstance(url2);
-        img.scalePercent(0.9f);
-        URL url3 = this.getClass().getResource("pics/dreiviertel.png");
+        img2.scalePercent(8f);
+        URL url3 = this.getClass().getResource("pics/dreiviertel0.png");
         Image img3 = Image.getInstance(url3);
-        img.scalePercent(0.9f);
-        URL url4 = this.getClass().getResource("pics/voll.png");
+        img3.scalePercent(8f);
+        URL url4 = this.getClass().getResource("pics/voll0.png");
         Image img4 = Image.getInstance(url4);
-        img.scalePercent(0.9f);
+        img4.scalePercent(8f);
 
         PdfPCell cell2Bewertungsstufen2;
         cell2Bewertungsstufen2 = new PdfPCell(new Phrase("\""+asBewertungen[1]+"\"",SMALL_FONT));
