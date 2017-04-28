@@ -344,7 +344,7 @@ public class SingletonSQLConnector {
         return gebdatum;
     }
     
-        public String getSchuelerGebOrt(int idSCHUELER) throws SQLException{
+    public String getSchuelerGebOrt(int idSCHUELER) throws SQLException{
         String gebort="";
         try (Statement statement = con.createStatement()) {
             String sql = "select GEBORT from SCHUELER where ID_SCHUELER = " + idSCHUELER ;
@@ -357,6 +357,32 @@ public class SingletonSQLConnector {
         return gebort;
     }
  
+    public ArrayList[] getAVerhalten(int idSCHULER) throws SQLException {
+        ArrayList<ArrayList> result = new ArrayList<>();
+
+        /*
+        kann erst gemacht werden, wenn Zeugnis befüllt....
+        try (Statement statement = con.createStatement()) {
+
+            String sql = "select IDSCHUELER, NAME, VORNAME, GEBDATUM, GEBORT from SCHUELER where KLASSE = '" + sClass + "' and SCHULJAHR = " + sYear;
+            logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+
+            while (set.next()) {
+                ArrayList puple = new ArrayList();
+                puple.add(set.getString(1));
+                puple.add(set.getString(2));
+                puple.add(set.getString(3));
+                puple.add(sdf.format(set.getDate(4)));
+                puple.add(set.getString(5));
+                result.add(puple);
+            }
+
+        }
+        */
+        return result.toArray(new ArrayList[0]);
+    }
+
     /**
      * Shuts down the Derby Server in case of starting by this class.
      *

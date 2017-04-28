@@ -57,6 +57,14 @@ public class ZeugnisPDF  {
     private String gebdatum;
     private String gebort;
 
+    private class TableItem{
+        String text;
+        int    bewertung;
+    }
+    
+    private ArrayList aVerhalten = new ArrayList<TableItem>();
+    private ArrayList sVerhalten = new ArrayList<TableItem>();
+    
     /**
      * Erzeugt eine Zeugnisklasse und füllt Variablen aus der DB
      * @param idSCHUELER
@@ -74,6 +82,8 @@ public class ZeugnisPDF  {
         vorname   = connector.getSchuelerVorname(id);
         gebdatum  = convertDate(connector.getSchuelerGebDatum(id));
         gebort    = connector.getSchuelerGebOrt(id);
+        
+        
         
         // wird später einiges noch aus der DB geholt
         String Schuljahr = "Schuljahr 2017/2018";
