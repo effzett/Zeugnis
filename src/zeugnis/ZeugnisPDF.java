@@ -56,7 +56,16 @@ public class ZeugnisPDF  {
     private String vorname;
     private String gebdatum;
     private String gebort;
-
+    private String currDate;
+    
+    private class TableItem{
+        String text;
+        int    bewertung;
+    }
+    
+    private ArrayList aVerhalten = new ArrayList<TableItem>();
+    private ArrayList sVerhalten = new ArrayList<TableItem>();
+    
     /**
      * Erzeugt eine Zeugnisklasse und füllt Variablen aus der DB
      * @param idSCHUELER
@@ -74,6 +83,10 @@ public class ZeugnisPDF  {
         vorname   = connector.getSchuelerVorname(id);
         gebdatum  = convertDate(connector.getSchuelerGebDatum(id));
         gebort    = connector.getSchuelerGebOrt(id);
+        currDate = (new SimpleDateFormat("dd.MM.yyyy")).format(new Date());
+
+        
+        
         
         // wird später einiges noch aus der DB geholt
         String Schuljahr = "Schuljahr 2017/2018";
@@ -116,6 +129,7 @@ public class ZeugnisPDF  {
         logger.fine("CREATEPDF->" + name);
         logger.fine("CREATEPDF->" + vorname);
         
+        
         // Woher kann ich diese globalen Variablen bekommen????
         String Schuljahr = "Schuljahr 2017/2018";
         String Halbjahr  = "1. und 2. Halbjahr";
@@ -124,7 +138,11 @@ public class ZeugnisPDF  {
 
         String Tage      = "versäumte Unterrichtstage im 1. und 2. Halbjahr: 2 davon unentschuldigt: 0";
         String Lernentwicklung = "Lernentwicklung (kurz!)\nInteressen\nLernstand Deutsch\nLernstand Mathe\nVeränderungsprozesse\nKnackpunkte";
-        String Unterschriften = "Unterschriften";
+        String Unterschriften1 = "___________________\nUnterschrift\nSchulleiter/in";
+        String Unterschriften2 = "___________________\nUnterschrift\nKlassenlehrer/in";
+        String Datum = "Datum: " + currDate;
+        String Unterschriften3 = "___________________\nUnterschrift\nErziehungsberechtigte/r";
+        
 
         String AundS = "Arbeits- und Sozialverhalten";
         String ATitle = "Arbeitsverhalten";
@@ -234,13 +252,50 @@ public class ZeugnisPDF  {
         //cell1Lernentwicklung.setBorder(Rectangle.NO_BORDER);
         
         // Unterschriften
-        PdfPCell cell1Unterschriften;
-        cell1Unterschriften = new PdfPCell(new Phrase(Unterschriften,SMALL_FONT));
+        PdfPCell cell1Unterschriften1;
+        cell1Unterschriften1 = new PdfPCell(new Phrase(Unterschriften1,SMALL_FONT));
         //cell1Unterschriften.setColspan(3);
-        cell1Unterschriften.setHorizontalAlignment(Element.ALIGN_CENTER);
-        cell1Unterschriften.setVerticalAlignment(Element.ALIGN_BOTTOM);
-        cell1Unterschriften.setFixedHeight(80f);
-        cell1Unterschriften.setBorder(Rectangle.NO_BORDER);
+        cell1Unterschriften1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell1Unterschriften1.setVerticalAlignment(Element.ALIGN_BOTTOM);
+        cell1Unterschriften1.setFixedHeight(70f);
+        cell1Unterschriften1.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell cell1Empty;
+        cell1Empty = new PdfPCell(new Phrase("",SMALL_FONT));
+        //cell1Unterschriften.setColspan(3);
+        cell1Empty.setFixedHeight(70f);
+        cell1Empty.setBorder(Rectangle.NO_BORDER);
+
+        
+        PdfPCell cell1Unterschriften2;
+        cell1Unterschriften2 = new PdfPCell(new Phrase(Unterschriften2,SMALL_FONT));
+        //cell1Unterschriften2.setColspan(2);
+        cell1Unterschriften2.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell1Unterschriften2.setVerticalAlignment(Element.ALIGN_BOTTOM);
+        cell1Unterschriften2.setFixedHeight(70f);
+        cell1Unterschriften2.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell cell1Datum;
+        cell1Datum = new PdfPCell(new Phrase(Datum,SMALL_FONT));
+        //cell1Unterschriften.setColspan(3);
+        cell1Datum.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell1Datum.setVerticalAlignment(Element.ALIGN_BOTTOM);
+        cell1Datum.setFixedHeight(60f);
+        cell1Datum.setBorder(Rectangle.NO_BORDER);
+        
+        cell1Empty = new PdfPCell(new Phrase("",SMALL_FONT));
+        //cell1Unterschriften.setColspan(3);
+        cell1Empty.setFixedHeight(60f);
+        cell1Empty.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell cell1Unterschriften3;
+        cell1Unterschriften3 = new PdfPCell(new Phrase(Unterschriften3,SMALL_FONT));
+        //cell1Unterschriften3.setColspan(2);
+        cell1Unterschriften3.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell1Unterschriften3.setVerticalAlignment(Element.ALIGN_BOTTOM);
+        cell1Unterschriften3.setFixedHeight(60f);
+        cell1Unterschriften3.setBorder(Rectangle.NO_BORDER);
+
         
         table1.addCell(cell1Logo);
         table1.addCell(cell1Adresse);
@@ -252,9 +307,12 @@ public class ZeugnisPDF  {
         table1.addCell(cell1Geboren);
         table1.addCell(cell1Tage);
         table1.addCell(cell1Lernentwicklung);
-        table1.addCell(cell1Unterschriften);
-        table1.addCell(cell1Unterschriften);
-        table1.addCell(cell1Unterschriften);
+        table1.addCell(cell1Unterschriften1);
+        table1.addCell(cell1Empty);
+        table1.addCell(cell1Unterschriften2);
+        table1.addCell(cell1Datum);
+        table1.addCell(cell1Empty);
+        table1.addCell(cell1Unterschriften3);
         
         
         doc.add(table1);
@@ -268,7 +326,7 @@ public class ZeugnisPDF  {
         table2.setWidthPercentage(100);
         
         PdfPCell cell2Header;
-        cell2Header = new PdfPCell(new Phrase("Seite 2 des Grundschulzeugnisses von " + vorname + " "+ name + " (" + gebdatum + ") " + "Ausstellungsdatum",TINY_FONT));
+        cell2Header = new PdfPCell(new Phrase("Seite 2 des Grundschulzeugnisses von " + vorname + " "+ name + " (" + gebdatum + ") " + " vom " +currDate,SMALL_FONT));
         cell2Header.setColspan(4);
         cell2Header.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell2Header.setBorder(Rectangle.NO_BORDER);
