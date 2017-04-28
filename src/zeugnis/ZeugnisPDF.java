@@ -124,15 +124,22 @@ public class ZeugnisPDF  {
         currDate = (new SimpleDateFormat("dd.MM.yyyy")).format(new Date());
         
         // Später werden die Werte hier aus der Datenbank geholt...
-        for(int i=0;i<11;i++){
+        ArrayList<String> av= new ArrayList();
+        av = connector.getAVerhalten(idSCHUELER);
+        ArrayList<String> sv= new ArrayList();
+        sv = connector.getSVerhalten(idSCHUELER);
+        
+        for(int i=0;i<av.size();i++){
             TableItem ti = new TableItem();
-            ti.setText("ist ein ganz, ganz netter und befolgt \nalle Anweisungen " + String.valueOf(i));
+            ti.setText(av.get(i));
+            //ti.setText("ist ein ganz, ganz netter und befolgt \nalle Anweisungen " + String.valueOf(i));
             ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 4));
             aVerhalten.add(ti);
         }
-      for(int i=0;i<7;i++){
+      for(int i=0;i<sv.size();i++){
             TableItem ti = new TableItem();
-            ti.setText("ist ein asozialer Sack, der andere Kinder \nquält und ärgert " + String.valueOf(i));
+            ti.setText(sv.get(i));
+            //ti.setText("ist ein asozialer Sack, der andere Kinder \nquält und ärgert " + String.valueOf(i));
             ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 4));
             sVerhalten.add(ti);
         }
@@ -166,7 +173,7 @@ public class ZeugnisPDF  {
     * @throws SQLException 
     */
     public void CreatePDF() throws IOException, DocumentException, SQLException{
-        float pad= 4.0f;
+        float pad= 6.0f;
 
         // wird später alles aus der DB geholt
         
@@ -374,9 +381,9 @@ public class ZeugnisPDF  {
         
         // Seite 2 *************************************************************
         // Tablestruktur aufbauen...
-        pad=2.5f;
+        //pad=2.5f;
         PdfPTable table2 = new PdfPTable(4);
-        table2.setWidths(new float[] { 64, 12,12,12 });
+        table2.setWidths(new float[] { 58, 14,14,14 });
         table2.setWidthPercentage(100);
         PdfPCell cell2Header;
         cell2Header = new PdfPCell(new Phrase("Seite 2 des Grundschulzeugnisses von " + vorname + " "+ name + " (" + gebdatum + ") " + " vom " +currDate,SMALL_FONT));
@@ -396,7 +403,7 @@ public class ZeugnisPDF  {
         cell2ATitle = new PdfPCell(new Phrase(ATitle,NORMAL_FONT));
         //cell2ATitle.setColspan(4);
         cell2ATitle.setVerticalAlignment(Element.ALIGN_TOP);
-        cell2ATitle.setFixedHeight(45f);
+        cell2ATitle.setFixedHeight(50f);
         cell2ATitle.setPadding(pad);
         cell2ATitle.setHorizontalAlignment(Element.ALIGN_LEFT);
         //cell2ATitle.setBorder(Rectangle.NO_BORDER);
@@ -510,7 +517,7 @@ public class ZeugnisPDF  {
         cell2STitle = new PdfPCell(new Phrase(STitle,NORMAL_FONT));
         //cell2ATitle.setColspan(4);
         cell2STitle.setVerticalAlignment(Element.ALIGN_TOP);
-        cell2STitle.setFixedHeight(45f);
+        cell2STitle.setFixedHeight(50f);
         cell2STitle.setPadding(pad);
         cell2STitle.setHorizontalAlignment(Element.ALIGN_LEFT);
         //cell2ATitle.setBorder(Rectangle.NO_BORDER);

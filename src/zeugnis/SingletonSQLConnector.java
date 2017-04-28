@@ -357,30 +357,44 @@ public class SingletonSQLConnector {
         return gebort;
     }
  
-    public ArrayList[] getAVerhalten(int idSCHULER) throws SQLException {
-        ArrayList<ArrayList> result = new ArrayList<>();
-
-        /*
-        kann erst gemacht werden, wenn Zeugnis befüllt....
+    public ArrayList<String> getAVerhalten(int idSCHULER) throws SQLException {
+        ArrayList<String> result = new ArrayList<>();
+        
+        // dies ist nur ein Provisorium
+        // zieht Daten nicht aus Zeugnis sondern aus KRITERIUM
+        //kann erst gemacht werden, wenn Zeugnis befüllt....
         try (Statement statement = con.createStatement()) {
 
-            String sql = "select IDSCHUELER, NAME, VORNAME, GEBDATUM, GEBORT from SCHUELER where KLASSE = '" + sClass + "' and SCHULJAHR = " + sYear;
+            String sql = "select KRITERIUMTEXT from KRITERIUM where ID_LERNBEREICH=1 AND SCHULJAHR =2017";
             logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
 
             while (set.next()) {
-                ArrayList puple = new ArrayList();
-                puple.add(set.getString(1));
-                puple.add(set.getString(2));
-                puple.add(set.getString(3));
-                puple.add(sdf.format(set.getDate(4)));
-                puple.add(set.getString(5));
-                result.add(puple);
+                result.add(set.getString(1));
             }
 
         }
-        */
-        return result.toArray(new ArrayList[0]);
+        return result;
+    }
+
+    public ArrayList<String> getSVerhalten(int idSCHULER) throws SQLException {
+        ArrayList<String> result = new ArrayList<>();
+        
+        // dies ist nur ein Provisorium
+        // zieht Daten nicht aus Zeugnis sondern aus KRITERIUM
+        //kann erst gemacht werden, wenn Zeugnis befüllt....
+        try (Statement statement = con.createStatement()) {
+
+            String sql = "select KRITERIUMTEXT from KRITERIUM where ID_LERNBEREICH=2 AND SCHULJAHR =2017";
+            logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+
+            while (set.next()) {
+                result.add(set.getString(1));
+            }
+
+        }
+        return result;
     }
 
     /**
