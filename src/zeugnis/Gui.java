@@ -7,9 +7,11 @@ package zeugnis;
 
 import java.awt.Component;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
@@ -30,6 +32,7 @@ public class Gui extends javax.swing.JFrame {
 
     private final static Logger logger = Logger.getLogger(Gui.class.getName());
     private static int sYear = 0;
+    private static int hYear = 0;
     private static String sClass = null;
     private JComboBox markComboBox = null;
     private SingletonSQLConnector connector = null;
@@ -41,7 +44,7 @@ public class Gui extends javax.swing.JFrame {
     public Gui() {
         config = Config.getInstance();
         connector = SingletonSQLConnector.getInstance();
-        
+
         // Objects for the ComboBox
         Object[] comboBoxContent = new Object[]{
             "Zeile1",
@@ -58,6 +61,9 @@ public class Gui extends javax.swing.JFrame {
         markComboBox.setRenderer(new ComboBoxRenderer());
 
         initComponents();
+        sYear = Integer.parseInt(((String) jComboBox1.getSelectedItem()).substring(0, 4));
+        hYear = Integer.parseInt((String) jComboBox2.getSelectedItem());
+        sClass = (String) jComboBox3.getSelectedItem();
         fillClassTable();
     }
 
@@ -146,8 +152,18 @@ public class Gui extends javax.swing.JFrame {
         });
 
         jButton2.setText("Speichern");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveClassTable(evt);
+            }
+        });
 
         jButton3.setText("Pdf's erzeugen");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createPdfForClass(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -296,14 +312,29 @@ public class Gui extends javax.swing.JFrame {
         } catch(SQLException ex) {
             logger.severe(ex.getLocalizedMessage());
         }
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeSYear(evt);
+            }
+        });
 
         jLabel2.setText("Halbjahr");
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeHYear(evt);
+            }
+        });
 
         jLabel3.setText("Klasse");
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel( config.getProperty("classes").split(",")));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeSClass(evt);
+            }
+        });
 
         jMenu1.setText("Datei");
 
@@ -376,17 +407,17 @@ public class Gui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fillClassTable() {
-        String sYear = (String)jComboBox1.getSelectedItem();
-        String sClass = (String)jComboBox3.getSelectedItem();
-        
+        String sYear = (String) jComboBox1.getSelectedItem();
+        String sClass = (String) jComboBox3.getSelectedItem();
+
         try {
-            connector.fillClassTable(jTable1,Integer.parseInt(sYear.substring(0, 4)), sClass);
+            connector.fillClassTable(jTable1, Integer.parseInt(sYear.substring(0, 4)), sClass);
         } catch (SQLException ex) {
             logger.severe(ex.getLocalizedMessage());
         }
-        
+
     }
-    
+
     private void addRow(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRow
         String datePattern = "dd.MM.yyyy";
         SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
@@ -434,6 +465,32 @@ public class Gui extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_addClass
+
+    private void changeSYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeSYear
+        sYear = Integer.parseInt(((String) jComboBox1.getSelectedItem()).substring(0, 4));
+    }//GEN-LAST:event_changeSYear
+
+    private void changeHYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeHYear
+        hYear = Integer.parseInt((String) jComboBox2.getSelectedItem());
+    }//GEN-LAST:event_changeHYear
+
+    private void changeSClass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeSClass
+        sClass = (String) jComboBox3.getSelectedItem();
+    }//GEN-LAST:event_changeSClass
+
+    private void saveClassTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveClassTable
+       
+        try {
+            connector.insertUpdateClassTable(jTable1, Integer.parseInt(((String) jComboBox1.getSelectedItem()).substring(0, 4)), (String) jComboBox3.getSelectedItem());
+        } catch(SQLException | ParseException ex) {
+            logger.severe(ex.getLocalizedMessage());
+        }
+        
+    }//GEN-LAST:event_saveClassTable
+
+    private void createPdfForClass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPdfForClass
+        // TODO add your handling code here:
+    }//GEN-LAST:event_createPdfForClass
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -511,12 +568,17 @@ public class Gui extends javax.swing.JFrame {
         }
 
     }
-    
+
     public static int getSYear() {
         //return (String)jComboBox1.getSelectedItem();
         return sYear;
     }
-    
+
+    public static int getHYear() {
+        //return (String)jComboBox2.getSelectedItem();
+        return hYear;
+    }
+
     public static String getSClass() {
         return sClass;
     }

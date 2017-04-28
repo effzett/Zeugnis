@@ -138,7 +138,7 @@ public class SingletonSQLConnector {
                     + "', GEBORT = '" + values[4]
                     + "', KLASSE = '" + values[5]
                     + "', SCHULJAHR = " + values[6]
-                    + " where ID_SCHUELR = " + values[0];
+                    + " where ID_SCHUELER = " + values[0];
 
             logger.fine(sql);
             statement.executeUpdate(sql);
@@ -226,7 +226,7 @@ public class SingletonSQLConnector {
             values[5] = sClass;
             values[6] = Integer.toString(sYear);
 
-            for (int ii = 0; i < model.getColumnCount(); i++) {
+            for (int ii = 0; ii < model.getColumnCount(); ii++) {
                 String cName = model.getColumnName(ii);
                 logger.fine(cName);
 
@@ -247,7 +247,7 @@ public class SingletonSQLConnector {
 
             }
 
-            values[0] = values[1] + values[2] + values[3] + values[6].hashCode();
+            values[0] = Integer.toString((values[1] + values[2] + values[3] + values[6]).hashCode());
 
             if (pupleExist(Integer.parseInt(values[0]))) {
                 updatePuple(values);
