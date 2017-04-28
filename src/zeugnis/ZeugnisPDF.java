@@ -122,6 +122,12 @@ public class ZeugnisPDF  {
             ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 4));
             aVerhalten.add(ti);
         }
+      for(int i=0;i<7;i++){
+            TableItem ti = new TableItem();
+            ti.setText("ist ein asozialer Sack, der andere Kinder \nquält und ärgert " + String.valueOf(i));
+            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 4));
+            sVerhalten.add(ti);
+        }
         
     }
     
@@ -168,11 +174,14 @@ public class ZeugnisPDF  {
 
         String AundS = "Arbeits- und Sozialverhalten";
         String ATitle = "Arbeitsverhalten\n\n" + vorname + "...";
+        String STitle = "Sozialverhalten\n\n" + vorname + "...";
         String Selten ="selten";
         String Wechselnd = "wechselnd";
         String Ueberwiegend = "überwiegend";
 
-        
+        String Erklaerungen = "Erklärungen";
+        String BewertungsstufenAS = "Bewertungsstufen für das Arbeits- und Sozialverhalten:";
+        String BewertungsstufenListe = "'verdient besondere Anerkennung'\n'entspricht den Erwartungen in vollem Umfang'\n'entspricht den Erwartungen'\n'entspricht den Erwartungen mit Einschränkungen'\n'entspricht nicht den Erwartungen'";
         PdfWriter writer = null;
         Document doc=new Document(PageSize.A4,50,50,20,30);
         writer=PdfWriter.getInstance(doc,new FileOutputStream(new File(name+vorname+".pdf")));
@@ -445,6 +454,106 @@ public class ZeugnisPDF  {
             }
          }
         
+        PdfPCell cell2EmptyLine;
+        cell2EmptyLine = new PdfPCell(new Phrase("",NORMAL_BOLD_FONT));
+        cell2EmptyLine.setColspan(4);
+        cell2EmptyLine.setFixedHeight(30f);
+        cell2EmptyLine.setBorder(Rectangle.NO_BORDER);
+
+        table2.addCell(cell2EmptyLine);
+        
+        PdfPCell cell2STitle;
+        cell2STitle = new PdfPCell(new Phrase(STitle,NORMAL_FONT));
+        //cell2ATitle.setColspan(4);
+        cell2STitle.setVerticalAlignment(Element.ALIGN_TOP);
+        cell2STitle.setFixedHeight(45f);
+        cell2STitle.setHorizontalAlignment(Element.ALIGN_LEFT);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        table2.addCell(cell2STitle);
+        table2.addCell(cell2Selten);
+        table2.addCell(cell2Wechselnd);
+        table2.addCell(cell2Ueberwiegend);
+        
+        for(Integer i=0; i<sVerhalten.size(); i++){
+            PdfPCell cell2;
+            cell2 = new PdfPCell(new Phrase( ((TableItem)sVerhalten.get(i)).getText() ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell2.setMinimumHeight(20);
+            cell2.setHorizontalAlignment(Element.ALIGN_LEFT);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+            
+            
+            PdfPCell cell2bewertungX;
+            cell2bewertungX = new PdfPCell(new Phrase("x" ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell2bewertungX.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell2.setMinimumHeight(20);
+            cell2bewertungX.setHorizontalAlignment(Element.ALIGN_CENTER);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+            
+            PdfPCell cell2bewertung;
+            cell2bewertung = new PdfPCell(new Phrase("" ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell2bewertung.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell2.setMinimumHeight(20);
+            cell2bewertung.setHorizontalAlignment(Element.ALIGN_CENTER);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+ 
+            table2.addCell(cell2);
+            switch ( ( (TableItem) sVerhalten.get(i)).getBewertung()) {
+            case 1: table2.addCell(cell2bewertungX);
+                    table2.addCell(cell2bewertung);
+                    table2.addCell(cell2bewertung);
+                    break;
+            case 2: table2.addCell(cell2bewertung);
+                    table2.addCell(cell2bewertungX);
+                    table2.addCell(cell2bewertung);;
+                    break;
+            case 3: table2.addCell(cell2bewertung);
+                    table2.addCell(cell2bewertung);
+                    table2.addCell(cell2bewertungX);
+                    break;
+            default: ;
+                    break;
+            }
+         }
+
+        cell2EmptyLine = new PdfPCell(new Phrase("",NORMAL_BOLD_FONT));
+        cell2EmptyLine.setColspan(4);
+        cell2EmptyLine.setFixedHeight(40f);
+        cell2EmptyLine.setBorder(Rectangle.NO_BORDER);
+
+        table2.addCell(cell2EmptyLine);
+
+
+        PdfPCell cell2Erklaerungen;
+        Chunk chunk1 = new Chunk(Erklaerungen,NORMAL_FONT);
+        chunk1.setUnderline(1.5f, -1);
+        cell2Erklaerungen = new PdfPCell((new Phrase(chunk1)));
+        cell2Erklaerungen.setColspan(4);
+        cell2Erklaerungen.setVerticalAlignment(Element.ALIGN_TOP);
+        cell2Erklaerungen.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2Erklaerungen.setBorder(Rectangle.NO_BORDER);
+        table2.addCell(cell2Erklaerungen);
+     
+        PdfPCell cell2BewertungsstufenAS;
+        cell2BewertungsstufenAS = new PdfPCell(new Phrase(BewertungsstufenAS,NORMAL_BOLD_FONT));
+        cell2BewertungsstufenAS.setColspan(4);
+        cell2BewertungsstufenAS.setVerticalAlignment(Element.ALIGN_TOP);
+        cell2BewertungsstufenAS.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2BewertungsstufenAS.setBorder(Rectangle.NO_BORDER);
+        table2.addCell(cell2BewertungsstufenAS);
+
+        PdfPCell cell2BewertungsstufenListe;
+        cell2BewertungsstufenListe = new PdfPCell(new Phrase(BewertungsstufenListe,NORMAL_BOLD_FONT));
+        cell2BewertungsstufenListe.setColspan(4);
+        cell2BewertungsstufenListe.setVerticalAlignment(Element.ALIGN_TOP);
+        cell2BewertungsstufenListe.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2BewertungsstufenListe.setBorder(Rectangle.NO_BORDER);
+        table2.addCell(cell2BewertungsstufenListe);
+
         doc.add(table2);
 
         doc.addTitle("Zeugnis");
