@@ -212,11 +212,17 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Speichern"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveClassTable"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton3">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Pdf&apos;s erzeugen"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createPdfForClass"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -413,6 +419,9 @@
           <Connection code="new javax.swing.DefaultComboBoxModel(connector.fetchSYears())" type="code"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeSYear"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="} catch(SQLException ex) {&#xa;    logger.severe(ex.getLocalizedMessage());&#xa;}"/>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="try{"/>
@@ -432,6 +441,9 @@
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeHYear"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
@@ -444,6 +456,9 @@
           <Connection code="new javax.swing.DefaultComboBoxModel( config.getProperty(&quot;classes&quot;).split(&quot;,&quot;))" type="code"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeSClass"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
