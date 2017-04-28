@@ -31,6 +31,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -58,9 +59,38 @@ public class ZeugnisPDF  {
     private String gebort;
     private String currDate;
     
-    private class TableItem{
-        String text;
-        int    bewertung;
+    public class TableItem{
+        private String text;
+        private int    bewertung;
+
+        /**
+         * @return the text
+         */
+        public String getText() {
+            return text;
+        }
+
+        /**
+         * @param text the text to set
+         */
+        public void setText(String text) {
+            this.text = text;
+        }
+
+        /**
+         * @return the bewertung
+         */
+        public int getBewertung() {
+            return bewertung;
+        }
+
+        /**
+         * @param bewertung the bewertung to set
+         */
+        public void setBewertung(int bewertung) {
+            this.bewertung = bewertung;
+        }
+
     }
     
     private ArrayList aVerhalten = new ArrayList<TableItem>();
@@ -84,23 +114,15 @@ public class ZeugnisPDF  {
         gebdatum  = convertDate(connector.getSchuelerGebDatum(id));
         gebort    = connector.getSchuelerGebOrt(id);
         currDate = (new SimpleDateFormat("dd.MM.yyyy")).format(new Date());
-
         
+        // Später werden die Werte hier aus der Datenbank geholt...
+        for(int i=0;i<11;i++){
+            TableItem ti = new TableItem();
+            ti.setText("ist ein ganz, ganz netter und befolgt \nalle Anweisungen " + String.valueOf(i));
+            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 4));
+            aVerhalten.add(ti);
+        }
         
-        
-        // wird später einiges noch aus der DB geholt
-        String Schuljahr = "Schuljahr 2017/2018";
-        String Halbjahr  = "1. und 2. Halbjahr";
-        String Klasse    = "Klasse 1a";
-        String Tage      = "versäumte Unterrichtstage im 1. und 2. Halbjahr: 2 davon unentschuldigt: 0";
-        String Lernentwicklung = "Lernentwicklung (kurz!)\nInteressen\nLernstand Deutsch\nLernstand Mathe\nVeränderungsprozesse\nKnackpunkte";
-        String Unterschriften = "Unterschriften";
-
-        String AundS = "Arbeits- und Sozialverhalten";
-        String ATitle = "Arbeitsverhalten";
-        String Selten ="selten";
-        String Wechselnd = "wechselnd";
-        String Ueberwiegend = "überwiegend";
     }
     
     
@@ -117,6 +139,9 @@ public class ZeugnisPDF  {
         return newSdf.format(date);
     }
     
+    private void makeCrossOnRightPosition(){
+        
+    }
     /**
     * 
     * @throws IOException
@@ -126,9 +151,6 @@ public class ZeugnisPDF  {
     public void CreatePDF() throws IOException, DocumentException, SQLException{
         
         // wird später alles aus der DB geholt
-        logger.fine("CREATEPDF->" + name);
-        logger.fine("CREATEPDF->" + vorname);
-        
         
         // Woher kann ich diese globalen Variablen bekommen????
         String Schuljahr = "Schuljahr 2017/2018";
@@ -145,7 +167,7 @@ public class ZeugnisPDF  {
         
 
         String AundS = "Arbeits- und Sozialverhalten";
-        String ATitle = "Arbeitsverhalten";
+        String ATitle = "Arbeitsverhalten\n\n" + vorname + "...";
         String Selten ="selten";
         String Wechselnd = "wechselnd";
         String Ueberwiegend = "überwiegend";
@@ -343,7 +365,7 @@ public class ZeugnisPDF  {
         cell2ATitle = new PdfPCell(new Phrase(ATitle,NORMAL_FONT));
         //cell2ATitle.setColspan(4);
         cell2ATitle.setVerticalAlignment(Element.ALIGN_TOP);
-        cell2ATitle.setFixedHeight(30f);
+        cell2ATitle.setFixedHeight(45f);
         cell2ATitle.setHorizontalAlignment(Element.ALIGN_LEFT);
         //cell2ATitle.setBorder(Rectangle.NO_BORDER);
 
@@ -378,29 +400,50 @@ public class ZeugnisPDF  {
         table2.addCell(cell2Wechselnd);
         table2.addCell(cell2Ueberwiegend);
         
-
-        int count=5;
-        for(Integer i=0; i<count; i++){
+        for(Integer i=0; i<aVerhalten.size(); i++){
             PdfPCell cell2;
-            cell2 = new PdfPCell(new Phrase(i.toString() ,TINY_FONT));
+            cell2 = new PdfPCell(new Phrase( ((TableItem)aVerhalten.get(i)).getText() ,TINY_FONT));
             //cell2ATitle.setColspan(4);
-            cell2.setVerticalAlignment(Element.ALIGN_CENTER);
-            //cell2ATitle.setFixedHeight(30f);
+            cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell2.setMinimumHeight(20);
             cell2.setHorizontalAlignment(Element.ALIGN_LEFT);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
-            PdfPCell cell2bewertung;
-            cell2bewertung = new PdfPCell(new Phrase("x" ,TINY_FONT));
+            
+            
+            PdfPCell cell2bewertungX;
+            cell2bewertungX = new PdfPCell(new Phrase("x" ,TINY_FONT));
             //cell2ATitle.setColspan(4);
-            cell2bewertung.setVerticalAlignment(Element.ALIGN_CENTER);
-            //cell2ATitle.setFixedHeight(30f);
+            cell2bewertungX.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell2.setMinimumHeight(20);
+            cell2bewertungX.setHorizontalAlignment(Element.ALIGN_CENTER);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+            
+            PdfPCell cell2bewertung;
+            cell2bewertung = new PdfPCell(new Phrase("" ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell2bewertung.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell2.setMinimumHeight(20);
             cell2bewertung.setHorizontalAlignment(Element.ALIGN_CENTER);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
  
             table2.addCell(cell2);
-            table2.addCell(cell2bewertung);
-            table2.addCell(cell2bewertung);
-            table2.addCell(cell2bewertung);
-        }
+            switch ( ( (TableItem) aVerhalten.get(i)).getBewertung()) {
+            case 1: table2.addCell(cell2bewertungX);
+                    table2.addCell(cell2bewertung);
+                    table2.addCell(cell2bewertung);
+                    break;
+            case 2: table2.addCell(cell2bewertung);
+                    table2.addCell(cell2bewertungX);
+                    table2.addCell(cell2bewertung);;
+                    break;
+            case 3: table2.addCell(cell2bewertung);
+                    table2.addCell(cell2bewertung);
+                    table2.addCell(cell2bewertungX);
+                    break;
+            default: ;
+                    break;
+            }
+         }
         
         doc.add(table2);
 

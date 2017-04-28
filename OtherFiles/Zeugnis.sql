@@ -598,3 +598,7 @@ INSERT INTO KRITERIUM VALUES (372, 56,'bereichert den Unterricht mit themenbezog
 INSERT INTO KRITERIUM VALUES (373, 56,'kann religiöse Ausdrucksformen verstehen und religiöse Räume und Feste, Zeichen, Symbole und Rituale benennen und erläutern.',2017);
 INSERT INTO KRITERIUM VALUES (374, 56,'kann eigene Vorstellungen zum Ausdruck bringen und in der Auseinandersetzung mit dem Anderen Respekt und Verständigungsbereitschaft zeigen.',2017);
 INSERT INTO KRITERIUM VALUES (375, 56,'dokumentiert und gestaltet Arbeitsergebnisse übersichtlich und sorgfältig.',2017);
+
+-- Ab hier nur Daten zum Testen: Muss später gelöscht werden!!!!!
+-- *****************************************************************************
+
