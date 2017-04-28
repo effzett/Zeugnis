@@ -156,7 +156,8 @@ public class ZeugnisPDF  {
     * @throws SQLException 
     */
     public void CreatePDF() throws IOException, DocumentException, SQLException{
-        
+        float pad= 3.0f;
+
         // wird später alles aus der DB geholt
         
         // Woher kann ich diese globalen Variablen bekommen????
@@ -285,6 +286,7 @@ public class ZeugnisPDF  {
         cell1Lernentwicklung.setColspan(3);
         cell1Lernentwicklung.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell1Lernentwicklung.setFixedHeight(300f);
+        cell1Lernentwicklung.setPadding(pad);
         //cell1Lernentwicklung.setBorder(Rectangle.NO_BORDER);
         
         // Unterschriften
@@ -360,7 +362,6 @@ public class ZeugnisPDF  {
         PdfPTable table2 = new PdfPTable(4);
         table2.setWidths(new float[] { 64, 12,12,12 });
         table2.setWidthPercentage(100);
-        
         PdfPCell cell2Header;
         cell2Header = new PdfPCell(new Phrase("Seite 2 des Grundschulzeugnisses von " + vorname + " "+ name + " (" + gebdatum + ") " + " vom " +currDate,SMALL_FONT));
         cell2Header.setColspan(4);
@@ -380,6 +381,7 @@ public class ZeugnisPDF  {
         //cell2ATitle.setColspan(4);
         cell2ATitle.setVerticalAlignment(Element.ALIGN_TOP);
         cell2ATitle.setFixedHeight(45f);
+        cell2ATitle.setPadding(pad);
         cell2ATitle.setHorizontalAlignment(Element.ALIGN_LEFT);
         //cell2ATitle.setBorder(Rectangle.NO_BORDER);
 
@@ -388,6 +390,7 @@ public class ZeugnisPDF  {
         //cell2ATitle.setColspan(4);
         cell2Selten.setVerticalAlignment(Element.ALIGN_TOP);
         //cell2ATitle.setFixedHeight(30f);
+        cell2Selten.setPadding(pad);
         cell2Selten.setHorizontalAlignment(Element.ALIGN_CENTER);
         //cell2ATitle.setBorder(Rectangle.NO_BORDER);
 
@@ -396,6 +399,7 @@ public class ZeugnisPDF  {
         //cell2ATitle.setColspan(4);
         cell2Wechselnd.setVerticalAlignment(Element.ALIGN_TOP);
         //cell2ATitle.setFixedHeight(30f);
+        cell2Wechselnd.setPadding(pad);
         cell2Wechselnd.setHorizontalAlignment(Element.ALIGN_CENTER);
         //cell2ATitle.setBorder(Rectangle.NO_BORDER);
 
@@ -404,6 +408,7 @@ public class ZeugnisPDF  {
         //cell2ATitle.setColspan(4);
         cell2Ueberwiegend.setVerticalAlignment(Element.ALIGN_TOP);
         //cell2ATitle.setFixedHeight(30f);
+        cell2Ueberwiegend.setPadding(pad);
         cell2Ueberwiegend.setHorizontalAlignment(Element.ALIGN_CENTER);
         //cell2ATitle.setBorder(Rectangle.NO_BORDER);
 
@@ -419,7 +424,8 @@ public class ZeugnisPDF  {
             cell2 = new PdfPCell(new Phrase( ((TableItem)aVerhalten.get(i)).getText() ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            cell2.setMinimumHeight(15);
+            //cell2.setMinimumHeight(15);
+            cell2.setPadding(pad);
             cell2.setHorizontalAlignment(Element.ALIGN_LEFT);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
             
@@ -428,7 +434,8 @@ public class ZeugnisPDF  {
             cell2bewertungX = new PdfPCell(new Phrase("x" ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell2bewertungX.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            cell2.setMinimumHeight(15);
+            //cell2bewertungX.setMinimumHeight(15);
+            cell2bewertungX.setPadding(pad);
             cell2bewertungX.setHorizontalAlignment(Element.ALIGN_CENTER);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
             
@@ -436,7 +443,8 @@ public class ZeugnisPDF  {
             cell2bewertung = new PdfPCell(new Phrase("" ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell2bewertung.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            cell2.setMinimumHeight(15);
+            //cell2bewertung.setMinimumHeight(15);
+            cell2bewertung.setPadding(pad);
             cell2bewertung.setHorizontalAlignment(Element.ALIGN_CENTER);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
  
@@ -472,6 +480,7 @@ public class ZeugnisPDF  {
         //cell2ATitle.setColspan(4);
         cell2STitle.setVerticalAlignment(Element.ALIGN_TOP);
         cell2STitle.setFixedHeight(45f);
+        cell2STitle.setPadding(pad);
         cell2STitle.setHorizontalAlignment(Element.ALIGN_LEFT);
         //cell2ATitle.setBorder(Rectangle.NO_BORDER);
 
@@ -486,6 +495,7 @@ public class ZeugnisPDF  {
             //cell2ATitle.setColspan(4);
             cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell2.setMinimumHeight(15);
+            cell2.setPadding(pad);
             cell2.setHorizontalAlignment(Element.ALIGN_LEFT);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
             
@@ -494,7 +504,8 @@ public class ZeugnisPDF  {
             cell2bewertungX = new PdfPCell(new Phrase("x" ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell2bewertungX.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            cell2.setMinimumHeight(15);
+            cell2bewertungX.setMinimumHeight(15);
+            cell2bewertungX.setPadding(pad);
             cell2bewertungX.setHorizontalAlignment(Element.ALIGN_CENTER);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
             
@@ -502,7 +513,8 @@ public class ZeugnisPDF  {
             cell2bewertung = new PdfPCell(new Phrase("" ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell2bewertung.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            cell2.setMinimumHeight(15);
+            cell2bewertung.setMinimumHeight(15);
+            cell2bewertung.setPadding(pad);
             cell2bewertung.setHorizontalAlignment(Element.ALIGN_CENTER);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
  
@@ -532,16 +544,20 @@ public class ZeugnisPDF  {
 
         table2.addCell(cell2EmptyLine);
 
+        // Tablestruktur aufbauen...
+        PdfPTable table2a = new PdfPTable(4);
+        table2a.setWidthPercentage(100);
 
+        
         PdfPCell cell2Erklaerungen;
         Chunk chunk1 = new Chunk(Erklaerungen,SMALL_FONT);
         chunk1.setUnderline(1.5f, -1);
         cell2Erklaerungen = new PdfPCell((new Phrase(chunk1)));
         cell2Erklaerungen.setColspan(4);
         cell2Erklaerungen.setVerticalAlignment(Element.ALIGN_TOP);
-        cell2Erklaerungen.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2Erklaerungen.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell2Erklaerungen.setBorder(Rectangle.NO_BORDER);
-        table2.addCell(cell2Erklaerungen);
+        table2a.addCell(cell2Erklaerungen);
      
         PdfPCell cell2BewertungsstufenAS;
         cell2BewertungsstufenAS = new PdfPCell(new Phrase(BewertungsstufenAS,SMALL_FONT));
@@ -549,7 +565,7 @@ public class ZeugnisPDF  {
         cell2BewertungsstufenAS.setVerticalAlignment(Element.ALIGN_TOP);
         cell2BewertungsstufenAS.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell2BewertungsstufenAS.setBorder(Rectangle.NO_BORDER);
-        table2.addCell(cell2BewertungsstufenAS);
+        table2a.addCell(cell2BewertungsstufenAS);
 
         PdfPCell cell2BewertungsstufenListe;
         cell2BewertungsstufenListe = new PdfPCell(new Phrase(BewertungsstufenListe,SMALL_FONT));
@@ -557,7 +573,7 @@ public class ZeugnisPDF  {
         cell2BewertungsstufenListe.setVerticalAlignment(Element.ALIGN_TOP);
         cell2BewertungsstufenListe.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell2BewertungsstufenListe.setBorder(Rectangle.NO_BORDER);
-        table2.addCell(cell2BewertungsstufenListe);
+        table2a.addCell(cell2BewertungsstufenListe);
 
         PdfPCell cell2Symbole;
         cell2Symbole = new PdfPCell(new Phrase(Symbole,SMALL_FONT));
@@ -565,7 +581,7 @@ public class ZeugnisPDF  {
         cell2Symbole.setVerticalAlignment(Element.ALIGN_TOP);
         cell2Symbole.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell2Symbole.setBorder(Rectangle.NO_BORDER);
-        table2.addCell(cell2Symbole);
+        table2a.addCell(cell2Symbole);
 
         /*
         PdfPCell cell2BewertungsstufenListe;
@@ -577,6 +593,7 @@ public class ZeugnisPDF  {
         table2.addCell(cell2BewertungsstufenListe);
         */
         doc.add(table2);
+        doc.add(table2a);
 
         doc.addTitle("Zeugnis");
         doc.addAuthor("Grundschule Brelingen");
