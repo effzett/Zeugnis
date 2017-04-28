@@ -183,6 +183,10 @@ public class ZeugnisPDF  {
         String Erklaerungen = "Erklärungen";
         String BewertungsstufenAS = "Bewertungsstufen für das Arbeits- und Sozialverhalten:";
         String BewertungsstufenListe = "'verdient besondere Anerkennung'\n'entspricht den Erwartungen in vollem Umfang'\n'entspricht den Erwartungen'\n'entspricht den Erwartungen mit Einschränkungen'\n'entspricht nicht den Erwartungen'";
+        String Symbole = "Symbolerläuterungen für die Unterrichtsfächer:";
+
+
+
         PdfWriter writer = null;
         Document doc=new Document(PageSize.A4,50,50,20,30);
         writer=PdfWriter.getInstance(doc,new FileOutputStream(new File(name+vorname+".pdf")));
@@ -415,7 +419,7 @@ public class ZeugnisPDF  {
             cell2 = new PdfPCell(new Phrase( ((TableItem)aVerhalten.get(i)).getText() ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            cell2.setMinimumHeight(20);
+            cell2.setMinimumHeight(15);
             cell2.setHorizontalAlignment(Element.ALIGN_LEFT);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
             
@@ -424,7 +428,7 @@ public class ZeugnisPDF  {
             cell2bewertungX = new PdfPCell(new Phrase("x" ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell2bewertungX.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            cell2.setMinimumHeight(20);
+            cell2.setMinimumHeight(15);
             cell2bewertungX.setHorizontalAlignment(Element.ALIGN_CENTER);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
             
@@ -432,7 +436,7 @@ public class ZeugnisPDF  {
             cell2bewertung = new PdfPCell(new Phrase("" ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell2bewertung.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            cell2.setMinimumHeight(20);
+            cell2.setMinimumHeight(15);
             cell2bewertung.setHorizontalAlignment(Element.ALIGN_CENTER);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
  
@@ -481,7 +485,7 @@ public class ZeugnisPDF  {
             cell2 = new PdfPCell(new Phrase( ((TableItem)sVerhalten.get(i)).getText() ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            cell2.setMinimumHeight(20);
+            cell2.setMinimumHeight(15);
             cell2.setHorizontalAlignment(Element.ALIGN_LEFT);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
             
@@ -490,7 +494,7 @@ public class ZeugnisPDF  {
             cell2bewertungX = new PdfPCell(new Phrase("x" ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell2bewertungX.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            cell2.setMinimumHeight(20);
+            cell2.setMinimumHeight(15);
             cell2bewertungX.setHorizontalAlignment(Element.ALIGN_CENTER);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
             
@@ -498,7 +502,7 @@ public class ZeugnisPDF  {
             cell2bewertung = new PdfPCell(new Phrase("" ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell2bewertung.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            cell2.setMinimumHeight(20);
+            cell2.setMinimumHeight(15);
             cell2bewertung.setHorizontalAlignment(Element.ALIGN_CENTER);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
  
@@ -555,6 +559,23 @@ public class ZeugnisPDF  {
         cell2BewertungsstufenListe.setBorder(Rectangle.NO_BORDER);
         table2.addCell(cell2BewertungsstufenListe);
 
+        PdfPCell cell2Symbole;
+        cell2Symbole = new PdfPCell(new Phrase(Symbole,SMALL_FONT));
+        cell2Symbole.setColspan(4);
+        cell2Symbole.setVerticalAlignment(Element.ALIGN_TOP);
+        cell2Symbole.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2Symbole.setBorder(Rectangle.NO_BORDER);
+        table2.addCell(cell2Symbole);
+
+        /*
+        PdfPCell cell2BewertungsstufenListe;
+        cell2BewertungsstufenListe = new PdfPCell(new Phrase(BewertungsstufenListe,SMALL_FONT));
+        cell2BewertungsstufenListe.setColspan(4);
+        cell2BewertungsstufenListe.setVerticalAlignment(Element.ALIGN_TOP);
+        cell2BewertungsstufenListe.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2BewertungsstufenListe.setBorder(Rectangle.NO_BORDER);
+        table2.addCell(cell2BewertungsstufenListe);
+        */
         doc.add(table2);
 
         doc.addTitle("Zeugnis");
