@@ -48,6 +48,7 @@ public class ZeugnisPDF  {
     private static final Font TINY_FONT=new Font(Font.FontFamily.HELVETICA,9,Font.NORMAL);
     private static final Font BIG_FONT=new Font(Font.FontFamily.HELVETICA,36,Font.BOLD);
     private static final Font NORMAL_BOLD_FONT=new Font(Font.FontFamily.HELVETICA,12,Font.BOLD);
+    private static final Font SMALL_BOLD_FONT=new Font(Font.FontFamily.HELVETICA,10,Font.BOLD);
     private static final Font NORMAL_FONT_RED=new Font(Font.FontFamily.HELVETICA,12,Font.NORMAL,BaseColor.RED);
  
     private final static Logger logger = Logger.getLogger(ZeugnisPDF.class.getName());
@@ -522,14 +523,14 @@ public class ZeugnisPDF  {
 
         cell2EmptyLine = new PdfPCell(new Phrase("",NORMAL_BOLD_FONT));
         cell2EmptyLine.setColspan(4);
-        cell2EmptyLine.setFixedHeight(40f);
+        cell2EmptyLine.setFixedHeight(20f);
         cell2EmptyLine.setBorder(Rectangle.NO_BORDER);
 
         table2.addCell(cell2EmptyLine);
 
 
         PdfPCell cell2Erklaerungen;
-        Chunk chunk1 = new Chunk(Erklaerungen,NORMAL_FONT);
+        Chunk chunk1 = new Chunk(Erklaerungen,SMALL_FONT);
         chunk1.setUnderline(1.5f, -1);
         cell2Erklaerungen = new PdfPCell((new Phrase(chunk1)));
         cell2Erklaerungen.setColspan(4);
@@ -539,7 +540,7 @@ public class ZeugnisPDF  {
         table2.addCell(cell2Erklaerungen);
      
         PdfPCell cell2BewertungsstufenAS;
-        cell2BewertungsstufenAS = new PdfPCell(new Phrase(BewertungsstufenAS,NORMAL_BOLD_FONT));
+        cell2BewertungsstufenAS = new PdfPCell(new Phrase(BewertungsstufenAS,SMALL_FONT));
         cell2BewertungsstufenAS.setColspan(4);
         cell2BewertungsstufenAS.setVerticalAlignment(Element.ALIGN_TOP);
         cell2BewertungsstufenAS.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -547,7 +548,7 @@ public class ZeugnisPDF  {
         table2.addCell(cell2BewertungsstufenAS);
 
         PdfPCell cell2BewertungsstufenListe;
-        cell2BewertungsstufenListe = new PdfPCell(new Phrase(BewertungsstufenListe,NORMAL_BOLD_FONT));
+        cell2BewertungsstufenListe = new PdfPCell(new Phrase(BewertungsstufenListe,SMALL_FONT));
         cell2BewertungsstufenListe.setColspan(4);
         cell2BewertungsstufenListe.setVerticalAlignment(Element.ALIGN_TOP);
         cell2BewertungsstufenListe.setHorizontalAlignment(Element.ALIGN_LEFT);
