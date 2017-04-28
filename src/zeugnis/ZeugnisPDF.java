@@ -59,6 +59,13 @@ public class ZeugnisPDF  {
     private String gebdatum;
     private String gebort;
     private String currDate;
+    private String[] asBewertungen = {  "verdient besondere Anerkennung",
+                                        "entspricht den Erwartungen in vollem Umfang",
+                                        "entspricht den Erwartungen",
+                                        "entspricht den Erwartungen mit Einschränkungen",
+                                        "entspricht nicht den Erwartungen"}; 
+    private int noteArbeit;
+    private int noteSozial;
     
     public class TableItem{
         private String text;
@@ -129,7 +136,10 @@ public class ZeugnisPDF  {
             ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 4));
             sVerhalten.add(ti);
         }
+        noteArbeit = 2;
+        noteSozial = 0;
         
+      
     }
     
     
@@ -156,7 +166,7 @@ public class ZeugnisPDF  {
     * @throws SQLException 
     */
     public void CreatePDF() throws IOException, DocumentException, SQLException{
-        float pad= 3.0f;
+        float pad= 4.0f;
 
         // wird später alles aus der DB geholt
         
@@ -183,9 +193,14 @@ public class ZeugnisPDF  {
 
         String Erklaerungen = "Erklärungen";
         String BewertungsstufenAS = "Bewertungsstufen für das Arbeits- und Sozialverhalten:";
-        String BewertungsstufenListe = "'verdient besondere Anerkennung'\n'entspricht den Erwartungen in vollem Umfang'\n'entspricht den Erwartungen'\n'entspricht den Erwartungen mit Einschränkungen'\n'entspricht nicht den Erwartungen'";
+        
         String Symbole = "Symbolerläuterungen für die Unterrichtsfächer:";
-
+        String Sym0 = "das Thema wurde noch nicht bearbeitet";
+        String Sym1 = "Die Kompetenz ist in Ansätzen vorhanden";
+        String Sym2 = "Die Kompetenz ist grundlegend gesichert";
+        String Sym3 = "Die Kompetenz ist weitgehend gesichert";
+        String Sym4 = "Die Kompetenz is gesichert";
+        
 
 
         PdfWriter writer = null;
@@ -359,6 +374,7 @@ public class ZeugnisPDF  {
         
         // Seite 2 *************************************************************
         // Tablestruktur aufbauen...
+        pad=2.5f;
         PdfPTable table2 = new PdfPTable(4);
         table2.setWidths(new float[] { 64, 12,12,12 });
         table2.setWidthPercentage(100);
@@ -372,7 +388,7 @@ public class ZeugnisPDF  {
         cell2AundS = new PdfPCell(new Phrase(AundS,NORMAL_BOLD_FONT));
         cell2AundS.setColspan(4);
         cell2AundS.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell2AundS.setFixedHeight(40f);
+        cell2AundS.setFixedHeight(35f);
         cell2AundS.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell2AundS.setBorder(Rectangle.NO_BORDER);
  
@@ -467,6 +483,21 @@ public class ZeugnisPDF  {
             }
          }
         
+        PdfPCell cell2BewertungA;
+        if(vorname.endsWith("s") || vorname.endsWith("x") || vorname.endsWith("z")){
+            cell2BewertungA = new PdfPCell(new Phrase(vorname + "' Verhalten " + asBewertungen[noteArbeit],NORMAL_FONT));            
+        }
+        else{
+            cell2BewertungA = new PdfPCell(new Phrase(vorname + "s Verhalten " + asBewertungen[noteArbeit],NORMAL_FONT));                        
+        }
+        cell2BewertungA.setColspan(4);
+        cell2BewertungA.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        //cell2BewertungA.setFixedHeight(45f);
+        cell2BewertungA.setPadding(pad);
+        cell2BewertungA.setHorizontalAlignment(Element.ALIGN_LEFT);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+        table2.addCell(cell2BewertungA);
+        
         PdfPCell cell2EmptyLine;
         cell2EmptyLine = new PdfPCell(new Phrase("",NORMAL_BOLD_FONT));
         cell2EmptyLine.setColspan(4);
@@ -537,61 +568,201 @@ public class ZeugnisPDF  {
             }
          }
 
+   PdfPCell cell2BewertungS;
+        if(vorname.endsWith("s") || vorname.endsWith("x") || vorname.endsWith("z")){
+            cell2BewertungS = new PdfPCell(new Phrase(vorname + "' Verhalten " + asBewertungen[noteSozial],NORMAL_FONT));            
+        }
+        else{
+            cell2BewertungS = new PdfPCell(new Phrase(vorname + "s Verhalten " + asBewertungen[noteSozial],NORMAL_FONT));                        
+        }
+        cell2BewertungS.setColspan(4);
+        cell2BewertungS.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        //cell2BewertungA.setFixedHeight(45f);
+        cell2BewertungS.setPadding(pad);
+        cell2BewertungS.setHorizontalAlignment(Element.ALIGN_LEFT);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+        table2.addCell(cell2BewertungS);
+             
+        
         cell2EmptyLine = new PdfPCell(new Phrase("",NORMAL_BOLD_FONT));
         cell2EmptyLine.setColspan(4);
-        cell2EmptyLine.setFixedHeight(20f);
+        cell2EmptyLine.setFixedHeight(15f);
         cell2EmptyLine.setBorder(Rectangle.NO_BORDER);
 
         table2.addCell(cell2EmptyLine);
 
         // Tablestruktur aufbauen...
         PdfPTable table2a = new PdfPTable(4);
+        table2a.setWidths(new float[] { 10, 45,10,45 });
         table2a.setWidthPercentage(100);
 
         
         PdfPCell cell2Erklaerungen;
-        Chunk chunk1 = new Chunk(Erklaerungen,SMALL_FONT);
+        Chunk chunk1 = new Chunk(Erklaerungen,NORMAL_FONT);
         chunk1.setUnderline(1.5f, -1);
         cell2Erklaerungen = new PdfPCell((new Phrase(chunk1)));
         cell2Erklaerungen.setColspan(4);
+        cell2Erklaerungen.setFixedHeight(20f);
         cell2Erklaerungen.setVerticalAlignment(Element.ALIGN_TOP);
         cell2Erklaerungen.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell2Erklaerungen.setBorder(Rectangle.NO_BORDER);
         table2a.addCell(cell2Erklaerungen);
      
         PdfPCell cell2BewertungsstufenAS;
-        cell2BewertungsstufenAS = new PdfPCell(new Phrase(BewertungsstufenAS,SMALL_FONT));
-        cell2BewertungsstufenAS.setColspan(4);
+        cell2BewertungsstufenAS = new PdfPCell(new Phrase(BewertungsstufenAS,SMALL_BOLD_FONT));
+        cell2BewertungsstufenAS.setColspan(2);
         cell2BewertungsstufenAS.setVerticalAlignment(Element.ALIGN_TOP);
         cell2BewertungsstufenAS.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell2BewertungsstufenAS.setBorder(Rectangle.NO_BORDER);
         table2a.addCell(cell2BewertungsstufenAS);
 
-        PdfPCell cell2BewertungsstufenListe;
-        cell2BewertungsstufenListe = new PdfPCell(new Phrase(BewertungsstufenListe,SMALL_FONT));
-        cell2BewertungsstufenListe.setColspan(4);
-        cell2BewertungsstufenListe.setVerticalAlignment(Element.ALIGN_TOP);
-        cell2BewertungsstufenListe.setHorizontalAlignment(Element.ALIGN_LEFT);
-        cell2BewertungsstufenListe.setBorder(Rectangle.NO_BORDER);
-        table2a.addCell(cell2BewertungsstufenListe);
-
         PdfPCell cell2Symbole;
-        cell2Symbole = new PdfPCell(new Phrase(Symbole,SMALL_FONT));
-        cell2Symbole.setColspan(4);
+        cell2Symbole = new PdfPCell(new Phrase(Symbole,SMALL_BOLD_FONT));
+        cell2Symbole.setColspan(2);
         cell2Symbole.setVerticalAlignment(Element.ALIGN_TOP);
-        cell2Symbole.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2Symbole.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell2Symbole.setBorder(Rectangle.NO_BORDER);
         table2a.addCell(cell2Symbole);
 
-        /*
-        PdfPCell cell2BewertungsstufenListe;
-        cell2BewertungsstufenListe = new PdfPCell(new Phrase(BewertungsstufenListe,SMALL_FONT));
-        cell2BewertungsstufenListe.setColspan(4);
-        cell2BewertungsstufenListe.setVerticalAlignment(Element.ALIGN_TOP);
-        cell2BewertungsstufenListe.setHorizontalAlignment(Element.ALIGN_LEFT);
-        cell2BewertungsstufenListe.setBorder(Rectangle.NO_BORDER);
-        table2.addCell(cell2BewertungsstufenListe);
-        */
+        float height=20.0f;
+        PdfPCell cell2Bewertungsstufen1;
+        cell2Bewertungsstufen1 = new PdfPCell(new Phrase("\""+asBewertungen[0]+"\"",SMALL_FONT));
+        cell2Bewertungsstufen1.setColspan(2);
+        cell2Bewertungsstufen1.setMinimumHeight(height);
+        cell2Bewertungsstufen1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell2Bewertungsstufen1.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2Bewertungsstufen1.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Bewertungsstufen1);
+
+        PdfPCell cell2Sym0img;
+        cell2Sym0img = new PdfPCell(new Phrase("--",SMALL_FONT));
+        //cell2Bewertungsstufen1.setColspan(1);
+        cell2Sym0img.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell2Sym0img.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        cell2Sym0img.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Sym0img);
+
+        PdfPCell cell2Sym0;
+        cell2Sym0 = new PdfPCell(new Phrase(Sym0,SMALL_FONT));
+        //cell2Bewertungsstufen1.setColspan(1);
+        cell2Sym0.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell2Sym0.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2Sym0.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Sym0);
+
+        URL url1 = this.getClass().getResource("pics/viertel.png");
+        Image img1 = Image.getInstance(url1);
+        img.scalePercent(0.9f);
+        URL url2 = this.getClass().getResource("pics/halb.png");
+        Image img2 = Image.getInstance(url2);
+        img.scalePercent(0.9f);
+        URL url3 = this.getClass().getResource("pics/dreiviertel.png");
+        Image img3 = Image.getInstance(url3);
+        img.scalePercent(0.9f);
+        URL url4 = this.getClass().getResource("pics/voll.png");
+        Image img4 = Image.getInstance(url4);
+        img.scalePercent(0.9f);
+
+        PdfPCell cell2Bewertungsstufen2;
+        cell2Bewertungsstufen2 = new PdfPCell(new Phrase("\""+asBewertungen[1]+"\"",SMALL_FONT));
+        cell2Bewertungsstufen2.setColspan(2);
+        cell2Bewertungsstufen2.setMinimumHeight(height);
+        cell2Bewertungsstufen2.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell2Bewertungsstufen2.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2Bewertungsstufen2.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Bewertungsstufen2);
+
+        PdfPCell cell2Sym1img;
+        cell2Sym1img = new PdfPCell(img1);
+        //cell2Bewertungsstufen1.setColspan(1);
+        cell2Sym1img.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell2Sym1img.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        cell2Sym1img.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Sym1img);
+
+        PdfPCell cell2Sym1;
+        cell2Sym1 = new PdfPCell(new Phrase(Sym1,SMALL_FONT));
+        //cell2Bewertungsstufen1.setColspan(1);
+        cell2Sym1.setVerticalAlignment(Element.ALIGN_TOP);
+        cell2Sym1.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2Sym1.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Sym1);
+
+        PdfPCell cell2Bewertungsstufen3;
+        cell2Bewertungsstufen3 = new PdfPCell(new Phrase("\""+asBewertungen[2]+"\"",SMALL_FONT));
+        cell2Bewertungsstufen3.setColspan(2);
+        cell2Bewertungsstufen3.setMinimumHeight(height);
+        cell2Bewertungsstufen3.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell2Bewertungsstufen3.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2Bewertungsstufen3.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Bewertungsstufen3);
+
+        PdfPCell cell2Sym2img;
+        cell2Sym2img = new PdfPCell(img2);
+        //cell2Bewertungsstufen1.setColspan(1);
+        cell2Sym2img.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell2Sym2img.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        cell2Sym2img.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Sym2img);
+
+        PdfPCell cell2Sym2;
+        cell2Sym2 = new PdfPCell(new Phrase(Sym2,SMALL_FONT));
+        //cell2Bewertungsstufen1.setColspan(1);
+        cell2Sym2.setVerticalAlignment(Element.ALIGN_TOP);
+        cell2Sym2.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2Sym2.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Sym2);
+
+        PdfPCell cell2Bewertungsstufen4;
+        cell2Bewertungsstufen4 = new PdfPCell(new Phrase("\""+asBewertungen[3]+"\"",SMALL_FONT));
+        cell2Bewertungsstufen4.setColspan(2);
+        cell2Bewertungsstufen4.setMinimumHeight(height);
+        cell2Bewertungsstufen4.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell2Bewertungsstufen4.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2Bewertungsstufen4.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Bewertungsstufen4);
+
+        PdfPCell cell2Sym3img;
+        cell2Sym3img = new PdfPCell(img3);
+        //cell2Bewertungsstufen1.setColspan(1);
+        cell2Sym3img.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell2Sym3img.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        cell2Sym3img.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Sym3img);
+
+        PdfPCell cell2Sym3;
+        cell2Sym3 = new PdfPCell(new Phrase(Sym3,SMALL_FONT));
+        //cell2Bewertungsstufen1.setColspan(1);
+        cell2Sym3.setVerticalAlignment(Element.ALIGN_TOP);
+        cell2Sym3.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2Sym3.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Sym3);
+
+        PdfPCell cell2Bewertungsstufen5;
+        cell2Bewertungsstufen5 = new PdfPCell(new Phrase("\""+asBewertungen[4]+"\"",SMALL_FONT));
+        cell2Bewertungsstufen5.setColspan(2);
+        cell2Bewertungsstufen5.setMinimumHeight(height);
+        cell2Bewertungsstufen5.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell2Bewertungsstufen5.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2Bewertungsstufen5.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Bewertungsstufen5);
+
+        PdfPCell cell2Sym4img;
+        cell2Sym4img = new PdfPCell(img4);
+        //cell2Bewertungsstufen1.setColspan(1);
+        cell2Sym4img.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell2Sym4img.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        cell2Sym4img.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Sym4img);
+
+        PdfPCell cell2Sym4;
+        cell2Sym4 = new PdfPCell(new Phrase(Sym4,SMALL_FONT));
+        //cell2Bewertungsstufen1.setColspan(1);
+        cell2Sym4.setVerticalAlignment(Element.ALIGN_TOP);
+        cell2Sym4.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell2Sym4.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Sym4);
+
         doc.add(table2);
         doc.add(table2a);
 
