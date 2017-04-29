@@ -21,6 +21,7 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import static com.itextpdf.text.pdf.PdfName.URL;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
@@ -809,5 +810,14 @@ public class ZeugnisPDF  {
         doc.addSubject("Zeugnis");
         doc.close();
         writer.close();
+              
+        // TODO nur zum Testen, muss später besser gelöst werden
+        Desktop desktop = Desktop.getDesktop();
+        if (desktop != null && desktop.isSupported(Desktop.Action.OPEN)) {
+            desktop.open(new File(System.getProperty("user.home") +"/NetBeansProjects/Zeugnis"+ "/"+name+vorname+".pdf"));
+            } else {
+                System.err.println("PDF-Datei kann nicht angezeigt werden!");
+            }
+
     }
 }
