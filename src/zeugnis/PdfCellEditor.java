@@ -87,12 +87,14 @@ public class PdfCellEditor extends AbstractCellEditor implements TableCellEditor
         try {
             // idSCHUELER berechnen
             TableModel model = table.getModel();
+            logger.fine("Columns:-> " + String.valueOf(model.getColumnCount()));
             SimpleDateFormat oldFormat = new SimpleDateFormat("dd.MM.yyyy");
             Date dt = oldFormat.parse(model.getValueAt(row, 2).toString());
             SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String namevornamedatumschuljahr=model.getValueAt(row, 0).toString() + 
-                    model.getValueAt(row, 1).toString() +
-                    newFormat.format(dt) +"2016";
+            String namevornamedatumschuljahr=   model.getValueAt(row, 0).toString() + 
+                                                model.getValueAt(row, 1).toString() +
+                                                newFormat.format(dt) +
+                                                Integer.toString(Gui.getSYear());
             logger.fine(namevornamedatumschuljahr);
             int idSCHUELER =namevornamedatumschuljahr.hashCode();
             ZeugnisPDF zeugnis = new ZeugnisPDF(idSCHUELER);    // holt Werte aus DB -> private Variables

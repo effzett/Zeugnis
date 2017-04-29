@@ -54,6 +54,9 @@ public class ZeugnisPDF  {
     private final static Logger logger = Logger.getLogger(ZeugnisPDF.class.getName());
     
     private int id;
+    private int schuljahr;
+    private int halbjahr;
+    private String klasse;
     private String name;
     private String vorname;
     private String gebdatum;
@@ -122,6 +125,9 @@ public class ZeugnisPDF  {
         gebdatum  = convertDate(connector.getSchuelerGebDatum(id));
         gebort    = connector.getSchuelerGebOrt(id);
         currDate = (new SimpleDateFormat("dd.MM.yyyy")).format(new Date());
+        schuljahr = Gui.getSYear();
+        halbjahr  = Gui.getHYear();
+        klasse    = Gui.getSClass();
         
         // Später werden die Werte hier aus der Datenbank geholt...
         ArrayList<String> av= new ArrayList();
@@ -178,9 +184,15 @@ public class ZeugnisPDF  {
         // wird später alles aus der DB geholt
         
         // Woher kann ich diese globalen Variablen bekommen????
-        String Schuljahr = "Schuljahr 2017/2018";
-        String Halbjahr  = "1. und 2. Halbjahr";
-        String Klasse    = "Klasse 1a";
+        String Schuljahr = "Schuljahr " + Integer.toString(schuljahr) + "/" + Integer.toString(schuljahr+1);
+        String Halbjahr;
+        if(halbjahr==1){
+            Halbjahr  = "1. Halbjahr";            
+        }
+        else{
+            Halbjahr  = "1. und 2. Halbjahr";
+        }
+        String Klasse    = "Klasse "+ klasse;
         
 
         String Tage      = "versäumte Unterrichtstage im 1. und 2. Halbjahr: 2 davon unentschuldigt: 0";
@@ -206,7 +218,7 @@ public class ZeugnisPDF  {
         String Sym1 = "Die Kompetenz ist in Ansätzen vorhanden";
         String Sym2 = "Die Kompetenz ist grundlegend gesichert";
         String Sym3 = "Die Kompetenz ist weitgehend gesichert";
-        String Sym4 = "Die Kompetenz is gesichert";
+        String Sym4 = "Die Kompetenz ist gesichert";
         
 
 
@@ -773,6 +785,22 @@ public class ZeugnisPDF  {
         doc.add(table2);
         doc.add(table2a);
 
+                doc.newPage();
+        
+        // Seite 3 *************************************************************
+        // Tablestruktur aufbauen...
+        //pad=2.5f;
+        PdfPTable table3 = new PdfPTable(5);
+        table3.setWidths(new float[] { 60,8,8,8,8,8 });
+        table3.setWidthPercentage(100);
+        PdfPCell cell3Header;
+        cell3Header = new PdfPCell(new Phrase("Seite 3 des Grundschulzeugnisses von " + vorname + " "+ name + " (" + gebdatum + ") " + " vom " +currDate,SMALL_FONT));
+        cell3Header.setColspan(5);
+        cell3Header.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell3Header.setBorder(Rectangle.NO_BORDER);
+
+        
+        
         doc.addTitle("Zeugnis");
         doc.addAuthor("Grundschule Brelingen");
         doc.addCreationDate();
