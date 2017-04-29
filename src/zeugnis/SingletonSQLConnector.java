@@ -365,7 +365,7 @@ public class SingletonSQLConnector {
         //kann erst gemacht werden, wenn Zeugnis befüllt....
         try (Statement statement = con.createStatement()) {
 
-            String sql = "select KRITERIUMTEXT from KRITERIUM where ID_LERNBEREICH=1 AND SCHULJAHR =2017";
+            String sql = "select KRITERIUMTEXT from KRITERIUM where ID_LERNBEREICH=1 AND SCHULJAHR ="+Gui.getSYear();
             logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
 
@@ -385,7 +385,7 @@ public class SingletonSQLConnector {
         //kann erst gemacht werden, wenn Zeugnis befüllt....
         try (Statement statement = con.createStatement()) {
 
-            String sql = "select KRITERIUMTEXT from KRITERIUM where ID_LERNBEREICH=2 AND SCHULJAHR =2017";
+            String sql = "select KRITERIUMTEXT from KRITERIUM where ID_LERNBEREICH=2 AND SCHULJAHR ="+Gui.getSYear();
             logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
 

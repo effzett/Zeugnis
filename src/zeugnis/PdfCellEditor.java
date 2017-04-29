@@ -95,14 +95,12 @@ public class PdfCellEditor extends AbstractCellEditor implements TableCellEditor
                                                 model.getValueAt(row, 1).toString() +
                                                 newFormat.format(dt) +
                                                 Integer.toString(Gui.getSYear());
-            logger.fine(namevornamedatumschuljahr);
+            logger.fine("idSchueler="+namevornamedatumschuljahr);
             int idSCHUELER =namevornamedatumschuljahr.hashCode();
             ZeugnisPDF zeugnis = new ZeugnisPDF(idSCHUELER);    // holt Werte aus DB -> private Variables
             zeugnis.CreatePDF();    // uses private Variables
         } catch (IOException | DocumentException ex) {
             logger.severe(ex.getLocalizedMessage());
-        }
-        
-    }
-    
+        }     
+    }  
 }

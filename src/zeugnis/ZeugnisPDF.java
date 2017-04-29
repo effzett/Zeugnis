@@ -183,7 +183,6 @@ public class ZeugnisPDF  {
 
         // wird später alles aus der DB geholt
         
-        // Woher kann ich diese globalen Variablen bekommen????
         String Schuljahr = "Schuljahr " + Integer.toString(schuljahr) + "/" + Integer.toString(schuljahr+1);
         String Halbjahr;
         if(halbjahr==1){
@@ -785,20 +784,23 @@ public class ZeugnisPDF  {
         doc.add(table2);
         doc.add(table2a);
 
-                doc.newPage();
+        doc.newPage();
         
         // Seite 3 *************************************************************
         // Tablestruktur aufbauen...
         //pad=2.5f;
-        PdfPTable table3 = new PdfPTable(5);
+        PdfPTable table3 = new PdfPTable(6);
         table3.setWidths(new float[] { 60,8,8,8,8,8 });
         table3.setWidthPercentage(100);
+        
         PdfPCell cell3Header;
         cell3Header = new PdfPCell(new Phrase("Seite 3 des Grundschulzeugnisses von " + vorname + " "+ name + " (" + gebdatum + ") " + " vom " +currDate,SMALL_FONT));
-        cell3Header.setColspan(5);
+        cell3Header.setColspan(6);
         cell3Header.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell3Header.setBorder(Rectangle.NO_BORDER);
 
+        table3.addCell(cell3Header);
+        doc.add(table3);
         
         
         doc.addTitle("Zeugnis");
