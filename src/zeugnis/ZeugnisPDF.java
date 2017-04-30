@@ -233,7 +233,7 @@ public class ZeugnisPDF  {
         
         String deutsch = "Deutsch ";
         String jStufe  = "Jahrgangsstufe "+ Gui.getSClass().substring(0, 1);
-        String sz = "Sprechen und Zuhören";
+        String sz = "Sprechen und Zuhören\n\n" + vorname + "...";
 
         PdfWriter writer = null;
         Document doc=new Document(PageSize.A4,50,50,20,30);
