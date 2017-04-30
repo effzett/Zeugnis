@@ -231,7 +231,9 @@ public class ZeugnisPDF  {
         String Sym3 = "Die Kompetenz ist weitgehend gesichert";
         String Sym4 = "Die Kompetenz ist gesichert";
         
-
+        String deutsch = "Deutsch ";
+        String jStufe  = "Jahrgangsstufe "+ Gui.getSClass().substring(0, 1);
+        String sz = "Sprechen und Zuhören";
 
         PdfWriter writer = null;
         Document doc=new Document(PageSize.A4,50,50,20,30);
@@ -811,8 +813,79 @@ public class ZeugnisPDF  {
         cell3Header.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell3Header.setBorder(Rectangle.NO_BORDER);
 
-        table3.addCell(cell3Header);
         
+        PdfPCell cell3Deutsch;
+        cell3Deutsch = new PdfPCell(new Phrase(deutsch + jStufe,NORMAL_BOLD_FONT));
+        cell3Deutsch.setColspan(6);
+        cell3Deutsch.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell3Deutsch.setFixedHeight(35f);
+        cell3Deutsch.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell3Deutsch.setBorder(Rectangle.NO_BORDER);
+ 
+        PdfPCell cell3sz;
+        cell3sz = new PdfPCell(new Phrase(sz,NORMAL_FONT));
+        //cell2ATitle.setColspan(4);
+        cell3sz.setVerticalAlignment(Element.ALIGN_TOP);
+        cell3sz.setFixedHeight(50f);
+        cell3sz.setPadding(pad);
+        cell3sz.setHorizontalAlignment(Element.ALIGN_LEFT);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell cell3Leer;
+        cell3Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+        //cell2ATitle.setColspan(4);
+        cell3Leer.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell3Leer.setPadding(pad);
+        cell3Leer.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell cell3Viertel;
+        cell3Viertel = new PdfPCell(img1);
+        //cell2ATitle.setColspan(4);
+        cell3Viertel.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell3Viertel.setPadding(pad);
+        cell3Viertel.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell cell3Halb;
+        cell3Halb = new PdfPCell(img2);
+        //cell2ATitle.setColspan(4);
+        cell3Halb.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell3Halb.setPadding(pad);
+        cell3Halb.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell cell3Dreiviertel;
+        cell3Dreiviertel = new PdfPCell(img3);
+        //cell2ATitle.setColspan(4);
+        cell3Dreiviertel.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell3Dreiviertel.setPadding(pad);
+        cell3Dreiviertel.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell cell3Voll;
+        cell3Voll = new PdfPCell(img4);
+        //cell2ATitle.setColspan(4);
+        cell3Voll.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell3Voll.setPadding(pad);
+        cell3Voll.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        table3.addCell(cell3Header);
+        table3.addCell(cell3Deutsch);
+        table3.addCell(cell3sz);
+        table3.addCell(cell3Leer);
+        table3.addCell(cell3Viertel);
+        table3.addCell(cell3Halb);
+        table3.addCell(cell3Dreiviertel);
+        table3.addCell(cell3Voll);
+        
+ 
         for(Integer i=0; i<sprechenZuhoeren.size(); i++){
             PdfPCell cell3;
             cell3 = new PdfPCell(new Phrase( ((TableItem)sprechenZuhoeren.get(i)).getText() ,TINY_FONT));
