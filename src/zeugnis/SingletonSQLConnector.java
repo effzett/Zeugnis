@@ -397,6 +397,27 @@ public class SingletonSQLConnector {
         return result;
     }
 
+    public ArrayList<String> getSprechenZuhoeren(int idSCHULER) throws SQLException {
+        ArrayList<String> result = new ArrayList<>();
+        
+        // dies ist nur ein Provisorium
+        // zieht Daten nicht aus Zeugnis sondern aus KRITERIUM
+        //kann erst gemacht werden, wenn Zeugnis befüllt....
+        try (Statement statement = con.createStatement()) {
+            String k=Gui.getSClass().substring(0, 1);
+            String lernbereich="Sprechen und Zuhören";
+            String sql = "select KRITERIUMTEXT from KRITERIUM,LERNBEREICH where LERNBEREICH.LERNBEREICH='"+ lernbereich+"' AND KRITERIUM.ID_LERNBEREICH=LERNBEREICH.ID_LERNBEREICH AND LERNBEREICH.KLASSENSTUFE=" + k +" AND LERNBEREICH.SCHULJAHR ="+Gui.getSYear() + " AND KRITERIUM.SCHULJAHR ="+Gui.getSYear();
+            logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+
+            while (set.next()) {
+                result.add(set.getString(1));
+            }
+        }
+        return result;
+    }
+
+    
     /**
      * Shuts down the Derby Server in case of starting by this class.
      *

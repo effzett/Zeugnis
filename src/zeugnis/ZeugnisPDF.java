@@ -107,6 +107,7 @@ public class ZeugnisPDF  {
     
     private ArrayList aVerhalten = new ArrayList<TableItem>();
     private ArrayList sVerhalten = new ArrayList<TableItem>();
+    private ArrayList sprechenZuhoeren = new ArrayList<TableItem>();
     
     /**
      * Erzeugt eine Zeugnisklasse und füllt Variablen aus der DB
@@ -135,6 +136,8 @@ public class ZeugnisPDF  {
         av = connector.getAVerhalten(idSCHUELER);
         ArrayList<String> sv= new ArrayList();
         sv = connector.getSVerhalten(idSCHUELER);
+        ArrayList<String> sz = new ArrayList();
+        sz=connector.getSprechenZuhoeren(idSCHUELER);
         
         for(int i=0;i<av.size();i++){
             TableItem ti = new TableItem();
@@ -153,6 +156,14 @@ public class ZeugnisPDF  {
         noteArbeit = 2;
         noteSozial = 0;
         
+        for(int i=0;i<sz.size();i++){
+            TableItem ti = new TableItem();
+            ti.setText(sz.get(i));
+            //ti.setText("ist ein asozialer Sack, der andere Kinder \nquält und ärgert " + String.valueOf(i));
+            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            sprechenZuhoeren.add(ti);
+        }
+ 
       
     }
     
@@ -801,8 +812,75 @@ public class ZeugnisPDF  {
         cell3Header.setBorder(Rectangle.NO_BORDER);
 
         table3.addCell(cell3Header);
-        doc.add(table3);
         
+        for(Integer i=0; i<sprechenZuhoeren.size(); i++){
+            PdfPCell cell3;
+            cell3 = new PdfPCell(new Phrase( ((TableItem)sprechenZuhoeren.get(i)).getText() ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell3.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell3.setMinimumHeight(15);
+            cell3.setPadding(pad);
+            cell3.setHorizontalAlignment(Element.ALIGN_LEFT);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+            
+            
+            PdfPCell cell3bewertungX;
+            cell3bewertungX = new PdfPCell(new Phrase("x" ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell3bewertungX.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell3bewertungX.setMinimumHeight(15);
+            cell3bewertungX.setPadding(pad);
+            cell3bewertungX.setHorizontalAlignment(Element.ALIGN_CENTER);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+            
+            PdfPCell cell3bewertung;
+            cell3bewertung = new PdfPCell(new Phrase("" ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell3bewertung.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell3bewertung.setMinimumHeight(15);
+            cell3bewertung.setPadding(pad);
+            cell3bewertung.setHorizontalAlignment(Element.ALIGN_CENTER);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+ 
+            table3.addCell(cell3);
+            switch ( ( (TableItem) sprechenZuhoeren.get(i)).getBewertung()) {
+            case 1: table3.addCell(cell3bewertungX);
+                    table3.addCell(cell3bewertung);
+                    table3.addCell(cell3bewertung);
+                    table3.addCell(cell3bewertung);
+                    table3.addCell(cell3bewertung);
+                    break;
+            case 2: table3.addCell(cell3bewertung);
+                    table3.addCell(cell3bewertungX);
+                    table3.addCell(cell3bewertung);;
+                    table3.addCell(cell3bewertung);;
+                    table3.addCell(cell3bewertung);;
+                    break;
+            case 3: table3.addCell(cell3bewertung);
+                    table3.addCell(cell3bewertung);
+                    table3.addCell(cell3bewertungX);
+                    table3.addCell(cell3bewertung);;
+                    table3.addCell(cell3bewertung);;
+                    break;
+            case 4: table3.addCell(cell3bewertung);
+                    table3.addCell(cell3bewertung);
+                    table3.addCell(cell3bewertung);
+                    table3.addCell(cell3bewertungX);;
+                    table3.addCell(cell3bewertung);;
+                    break;
+            case 5: table3.addCell(cell3bewertung);
+                    table3.addCell(cell3bewertung);
+                    table3.addCell(cell3bewertung);
+                    table3.addCell(cell3bewertung);;
+                    table3.addCell(cell3bewertungX);;
+                    break;
+            default: ;
+                    break;
+            }
+         }
+
+        doc.add(table3);
+
         
         doc.addTitle("Zeugnis");
         doc.addAuthor("Grundschule Brelingen");
