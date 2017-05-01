@@ -111,6 +111,9 @@ public class ZeugnisPDF  {
     private ArrayList schreiben = new ArrayList<TableItem>();
     private ArrayList lesen = new ArrayList<TableItem>();
     private ArrayList sprache = new ArrayList<TableItem>();
+    private ArrayList zah = new ArrayList<TableItem>();
+    private ArrayList gro = new ArrayList<TableItem>();
+    private ArrayList rau = new ArrayList<TableItem>();
     
     /**
      * Erzeugt eine Zeugnisklasse und füllt Variablen aus der DB
@@ -147,6 +150,12 @@ public class ZeugnisPDF  {
         les=connector.getKriterien(idSCHUELER,"Lesen - mit Texten und Medien umgehen");
         ArrayList<String> sp = new ArrayList();
         sp=connector.getKriterien(idSCHUELER,"Sprache und Sprachgebrauch untersuchen");
+        ArrayList<String> zo = new ArrayList();
+        zo=connector.getKriterien(idSCHUELER,"Zahlen und Operationen");
+        ArrayList<String> gm = new ArrayList();
+        gm=connector.getKriterien(idSCHUELER,"Größen und Messen");
+        ArrayList<String> rf = new ArrayList();
+        rf=connector.getKriterien(idSCHUELER,"Raum und Form");
         
         
         for(int i=0;i<av.size();i++){
@@ -173,25 +182,44 @@ public class ZeugnisPDF  {
             sprechenZuhoeren.add(ti);
         }
 
-            for(int i=0;i<sch.size();i++){
+        for(int i=0;i<sch.size();i++){
             TableItem ti = new TableItem();
             ti.setText(sch.get(i));
             ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
             schreiben.add(ti);
         }
 
-            for(int i=0;i<les.size();i++){
+        for(int i=0;i<les.size();i++){
             TableItem ti = new TableItem();
             ti.setText(les.get(i));
             ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
             lesen.add(ti);
         }
 
-            for(int i=0;i<sp.size();i++){
+        for(int i=0;i<sp.size();i++){
             TableItem ti = new TableItem();
             ti.setText(sp.get(i));
             ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
             sprache.add(ti);
+        }
+
+        for(int i=0;i<zo.size();i++){
+            TableItem ti = new TableItem();
+            ti.setText(zo.get(i));
+            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            zah.add(ti);
+        }
+        for(int i=0;i<gm.size();i++){
+            TableItem ti = new TableItem();
+            ti.setText(gm.get(i));
+            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            gro.add(ti);
+        }
+        for(int i=0;i<rf.size();i++){
+            TableItem ti = new TableItem();
+            ti.setText(rf.get(i));
+            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            rau.add(ti);
         }
 
       
@@ -262,12 +290,15 @@ public class ZeugnisPDF  {
         String Sym4 = "Die Kompetenz ist gesichert";
         
         String deutsch = "Deutsch ";
+        String mathe   = "Mathematik ";
         String jStufe  = "Jahrgangsstufe "+ Gui.getSClass().substring(0, 1);
         String sz = "Sprechen und Zuhören\n\n" + vorname + "...";
         String sch = "Schreiben\n\n" + vorname + "...";
         String les = "Lesen - mit Texten und Medien umgehen\n\n" + vorname + "...";
         String sp = "Sprache und Sprachgebrauch untersuchen\n\n" + vorname + "...";
-        
+        String zo = "Zahlen und Operationen\n\n" + vorname + "...";
+        String gm = "Größen und Messen\n\n" + vorname + "...";
+        String rf = "Raum und Form\n\n" + vorname + "...";
 
         PdfWriter writer = null;
         Document doc=new Document(PageSize.A4,50,50,20,30);
@@ -836,7 +867,7 @@ public class ZeugnisPDF  {
         
         // Seite 3 *************************************************************
         // Tablestruktur aufbauen...
-        //pad=2.5f;
+        pad=3f;
         PdfPTable table3 = new PdfPTable(6);
         table3.setWidths(new float[] { 60,8,8,8,8,8 });
         table3.setWidthPercentage(100);
@@ -1249,7 +1280,426 @@ public class ZeugnisPDF  {
 
         
         doc.add(table3);
+        doc.newPage();
 
+        // Seite 4 *************************************************************
+        // Tablestruktur aufbauen...
+        pad=3f;
+        PdfPTable table4 = new PdfPTable(6);
+        table4.setWidths(new float[] { 60,8,8,8,8,8 });
+        table4.setWidthPercentage(100);
+        
+        PdfPCell cell4Header;
+        cell4Header = new PdfPCell(new Phrase("Seite 4 des Grundschulzeugnisses von " + vorname + " "+ name + " (" + gebdatum + ") " + " vom " +currDate,SMALL_FONT));
+        cell4Header.setColspan(6);
+        cell4Header.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell4Header.setBorder(Rectangle.NO_BORDER);
+
+        
+        PdfPCell cell4Mathe;
+        cell4Mathe = new PdfPCell(new Phrase(mathe + jStufe,NORMAL_BOLD_FONT));
+        cell4Mathe.setColspan(6);
+        cell4Mathe.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell4Mathe.setFixedHeight(35f);
+        cell3Deutsch.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell3Deutsch.setBorder(Rectangle.NO_BORDER);
+ 
+        // Zahlen und Operationen 
+        PdfPCell cell4zo;
+        cell4zo = new PdfPCell(new Phrase(zo,NORMAL_FONT));
+        //cell2ATitle.setColspan(4);
+        cell4zo.setVerticalAlignment(Element.ALIGN_TOP);
+        cell4zo.setFixedHeight(50f);
+        cell4zo.setPadding(pad);
+        cell4zo.setHorizontalAlignment(Element.ALIGN_LEFT);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell cell4Leer;
+        cell4Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+        //cell2ATitle.setColspan(4);
+        cell4Leer.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell4Leer.setPadding(pad);
+        cell4Leer.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell cell4Viertel;
+        cell4Viertel = new PdfPCell(img1);
+        //cell2ATitle.setColspan(4);
+        cell4Viertel.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell4Viertel.setPadding(pad);
+        cell4Viertel.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell cell4Halb;
+        cell4Halb = new PdfPCell(img2);
+        //cell2ATitle.setColspan(4);
+        cell4Halb.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell4Halb.setPadding(pad);
+        cell4Halb.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell cell4Dreiviertel;
+        cell4Dreiviertel = new PdfPCell(img3);
+        //cell2ATitle.setColspan(4);
+        cell4Dreiviertel.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell4Dreiviertel.setPadding(pad);
+        cell4Dreiviertel.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        PdfPCell cell4Voll;
+        cell4Voll = new PdfPCell(img4);
+        //cell2ATitle.setColspan(4);
+        cell4Voll.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell4Voll.setPadding(pad);
+        cell4Voll.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        table4.addCell(cell4Mathe);
+        table4.addCell(cell4zo);
+        table4.addCell(cell4Leer);
+        table4.addCell(cell4Viertel);
+        table4.addCell(cell4Halb);
+        table4.addCell(cell4Dreiviertel);
+        table4.addCell(cell4Voll);
+        
+ 
+        for(Integer i=0; i<zah.size(); i++){
+            PdfPCell cell4;
+            cell4 = new PdfPCell(new Phrase( ((TableItem)zah.get(i)).getText() ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell4.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell4.setMinimumHeight(15);
+            cell4.setPadding(pad);
+            cell4.setHorizontalAlignment(Element.ALIGN_LEFT);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+            
+            
+            PdfPCell cell4bewertungX;
+            cell4bewertungX = new PdfPCell(new Phrase("x" ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell4bewertungX.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell4bewertungX.setMinimumHeight(15);
+            cell4bewertungX.setPadding(pad);
+            cell4bewertungX.setHorizontalAlignment(Element.ALIGN_CENTER);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+            
+            PdfPCell cell4bewertung;
+            cell4bewertung = new PdfPCell(new Phrase("" ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell4bewertung.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell4bewertung.setMinimumHeight(15);
+            cell4bewertung.setPadding(pad);
+            cell4bewertung.setHorizontalAlignment(Element.ALIGN_CENTER);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+ 
+            table4.addCell(cell4);
+            switch ( ( (TableItem) zah.get(i)).getBewertung()) {
+            case 1: table4.addCell(cell4bewertungX);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    break;
+            case 2: table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertungX);
+                    table4.addCell(cell4bewertung);;
+                    table4.addCell(cell4bewertung);;
+                    table4.addCell(cell4bewertung);;
+                    break;
+            case 3: table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertungX);
+                    table4.addCell(cell4bewertung);;
+                    table4.addCell(cell4bewertung);;
+                    break;
+            case 4: table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertungX);;
+                    table4.addCell(cell4bewertung);;
+                    break;
+            case 5: table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);;
+                    table4.addCell(cell4bewertungX);;
+                    break;
+            default: ;
+                    break;
+            }
+         }
+ 
+        PdfPCell cell4EmptyLine;
+        cell4EmptyLine = new PdfPCell(new Phrase("",NORMAL_BOLD_FONT));
+        cell4EmptyLine.setColspan(6);
+        cell4EmptyLine.setFixedHeight(15f);
+        cell4EmptyLine.setBorder(Rectangle.NO_BORDER);
+        
+        // Größen und Messen
+        PdfPCell cell4gm;
+        cell4gm = new PdfPCell(new Phrase(gm,NORMAL_FONT));
+        //cell2ATitle.setColspan(4);
+        cell4gm.setVerticalAlignment(Element.ALIGN_TOP);
+        cell4gm.setFixedHeight(50f);
+        cell4gm.setPadding(pad);
+        cell4gm.setHorizontalAlignment(Element.ALIGN_LEFT);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        cell4Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+        //cell2ATitle.setColspan(4);
+        cell4Leer.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell4Leer.setPadding(pad);
+        cell4Leer.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        cell4Viertel = new PdfPCell(img1);
+        //cell2ATitle.setColspan(4);
+        cell4Viertel.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell4Viertel.setPadding(pad);
+        cell4Viertel.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        cell4Halb = new PdfPCell(img2);
+        //cell2ATitle.setColspan(4);
+        cell4Halb.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell4Halb.setPadding(pad);
+        cell4Halb.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        cell4Dreiviertel = new PdfPCell(img3);
+        //cell2ATitle.setColspan(4);
+        cell4Dreiviertel.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell4Dreiviertel.setPadding(pad);
+        cell4Dreiviertel.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        cell4Voll = new PdfPCell(img4);
+        //cell2ATitle.setColspan(4);
+        cell4Voll.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell4Voll.setPadding(pad);
+        cell4Voll.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        table4.addCell(cell4EmptyLine);
+        table4.addCell(cell4gm);
+        table4.addCell(cell4Leer);
+        table4.addCell(cell4Viertel);
+        table4.addCell(cell4Halb);
+        table4.addCell(cell4Dreiviertel);
+        table4.addCell(cell4Voll);
+        
+ 
+        for(Integer i=0; i<gro.size(); i++){
+            PdfPCell cell4;
+            cell4 = new PdfPCell(new Phrase( ((TableItem)gro.get(i)).getText() ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell4.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell4.setMinimumHeight(15);
+            cell4.setPadding(pad);
+            cell4.setHorizontalAlignment(Element.ALIGN_LEFT);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+            
+            
+            PdfPCell cell4bewertungX;
+            cell4bewertungX = new PdfPCell(new Phrase("x" ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell4bewertungX.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell4bewertungX.setMinimumHeight(15);
+            cell4bewertungX.setPadding(pad);
+            cell4bewertungX.setHorizontalAlignment(Element.ALIGN_CENTER);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+            
+            PdfPCell cell4bewertung;
+            cell4bewertung = new PdfPCell(new Phrase("" ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell4bewertung.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell4bewertung.setMinimumHeight(15);
+            cell4bewertung.setPadding(pad);
+            cell4bewertung.setHorizontalAlignment(Element.ALIGN_CENTER);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+ 
+            table4.addCell(cell4);
+            switch ( ( (TableItem) gro.get(i)).getBewertung()) {
+            case 1: table4.addCell(cell4bewertungX);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    break;
+            case 2: table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertungX);
+                    table4.addCell(cell4bewertung);;
+                    table4.addCell(cell4bewertung);;
+                    table4.addCell(cell4bewertung);;
+                    break;
+            case 3: table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertungX);
+                    table4.addCell(cell4bewertung);;
+                    table4.addCell(cell4bewertung);;
+                    break;
+            case 4: table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertungX);;
+                    table4.addCell(cell4bewertung);;
+                    break;
+            case 5: table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);;
+                    table4.addCell(cell4bewertungX);;
+                    break;
+            default: ;
+                    break;
+            }
+         }
+
+        // Raum und Form
+        cell4EmptyLine = new PdfPCell(new Phrase("",NORMAL_BOLD_FONT));
+        cell4EmptyLine.setColspan(6);
+        cell4EmptyLine.setFixedHeight(15f);
+        cell4EmptyLine.setBorder(Rectangle.NO_BORDER);
+        
+        PdfPCell cell4rf;
+        cell4rf = new PdfPCell(new Phrase(rf,NORMAL_FONT));
+        //cell2ATitle.setColspan(4);
+        cell4rf.setVerticalAlignment(Element.ALIGN_TOP);
+        cell4rf.setFixedHeight(50f);
+        cell4rf.setPadding(pad);
+        cell4rf.setHorizontalAlignment(Element.ALIGN_LEFT);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        cell4Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+        //cell2ATitle.setColspan(4);
+        cell4Leer.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell4Leer.setPadding(pad);
+        cell4Leer.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        cell4Viertel = new PdfPCell(img1);
+        //cell2ATitle.setColspan(4);
+        cell4Viertel.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell4Viertel.setPadding(pad);
+        cell4Viertel.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        cell4Halb = new PdfPCell(img2);
+        //cell2ATitle.setColspan(4);
+        cell4Halb.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell4Halb.setPadding(pad);
+        cell4Halb.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        cell4Dreiviertel = new PdfPCell(img3);
+        //cell2ATitle.setColspan(4);
+        cell4Dreiviertel.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell4Dreiviertel.setPadding(pad);
+        cell4Dreiviertel.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        cell4Voll = new PdfPCell(img4);
+        //cell2ATitle.setColspan(4);
+        cell4Voll.setVerticalAlignment(Element.ALIGN_TOP);
+        //cell2ATitle.setFixedHeight(30f);
+        cell4Voll.setPadding(pad);
+        cell4Voll.setHorizontalAlignment(Element.ALIGN_CENTER);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+
+        table4.addCell(cell4EmptyLine);
+        table4.addCell(cell4rf);
+        table4.addCell(cell4Leer);
+        table4.addCell(cell4Viertel);
+        table4.addCell(cell4Halb);
+        table4.addCell(cell4Dreiviertel);
+        table4.addCell(cell4Voll);
+        
+ 
+        for(Integer i=0; i<rau.size(); i++){
+            PdfPCell cell4;
+            cell4 = new PdfPCell(new Phrase( ((TableItem)rau.get(i)).getText() ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell4.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell4.setMinimumHeight(15);
+            cell4.setPadding(pad);
+            cell4.setHorizontalAlignment(Element.ALIGN_LEFT);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+            
+            
+            PdfPCell cell4bewertungX;
+            cell4bewertungX = new PdfPCell(new Phrase("x" ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell4bewertungX.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell4bewertungX.setMinimumHeight(15);
+            cell4bewertungX.setPadding(pad);
+            cell4bewertungX.setHorizontalAlignment(Element.ALIGN_CENTER);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+            
+            PdfPCell cell4bewertung;
+            cell4bewertung = new PdfPCell(new Phrase("" ,TINY_FONT));
+            //cell2ATitle.setColspan(4);
+            cell4bewertung.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell4bewertung.setMinimumHeight(15);
+            cell4bewertung.setPadding(pad);
+            cell4bewertung.setHorizontalAlignment(Element.ALIGN_CENTER);
+            //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+ 
+            table4.addCell(cell4);
+            switch ( ( (TableItem) rau.get(i)).getBewertung()) {
+            case 1: table4.addCell(cell4bewertungX);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    break;
+            case 2: table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertungX);
+                    table4.addCell(cell4bewertung);;
+                    table4.addCell(cell4bewertung);;
+                    table4.addCell(cell4bewertung);;
+                    break;
+            case 3: table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertungX);
+                    table4.addCell(cell4bewertung);;
+                    table4.addCell(cell4bewertung);;
+                    break;
+            case 4: table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertungX);;
+                    table4.addCell(cell4bewertung);;
+                    break;
+            case 5: table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);
+                    table4.addCell(cell4bewertung);;
+                    table4.addCell(cell4bewertungX);;
+                    break;
+            default: ;
+                    break;
+            }
+         }
+
+        
+        doc.add(table4);
+
+        
+        
         doc.addTitle("Zeugnis");
         doc.addAuthor("Grundschule Brelingen");
         doc.addCreationDate();
