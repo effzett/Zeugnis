@@ -1301,8 +1301,8 @@ public class ZeugnisPDF  {
         cell4Mathe.setColspan(6);
         cell4Mathe.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell4Mathe.setFixedHeight(35f);
-        cell3Deutsch.setHorizontalAlignment(Element.ALIGN_LEFT);
-        cell3Deutsch.setBorder(Rectangle.NO_BORDER);
+        cell4Mathe.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell4Mathe.setBorder(Rectangle.NO_BORDER);
  
         // Zahlen und Operationen 
         PdfPCell cell4zo;
@@ -1359,6 +1359,7 @@ public class ZeugnisPDF  {
         cell4Voll.setHorizontalAlignment(Element.ALIGN_CENTER);
         //cell2ATitle.setBorder(Rectangle.NO_BORDER);
 
+        table4.addCell(cell4Header);
         table4.addCell(cell4Mathe);
         table4.addCell(cell4zo);
         table4.addCell(cell4Leer);
