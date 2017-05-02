@@ -107,13 +107,13 @@ public class ZeugnisPDF  {
     
     private ArrayList aVerhalten = new ArrayList<TableItem>();
     private ArrayList sVerhalten = new ArrayList<TableItem>();
-    private ArrayList sprechenZuhoeren = new ArrayList<TableItem>();
-    private ArrayList schreiben = new ArrayList<TableItem>();
-    private ArrayList lesen = new ArrayList<TableItem>();
-    private ArrayList sprache = new ArrayList<TableItem>();
-    private ArrayList zah = new ArrayList<TableItem>();
-    private ArrayList gro = new ArrayList<TableItem>();
-    private ArrayList rau = new ArrayList<TableItem>();
+    private ArrayList sprechenZL = new ArrayList<TableItem>();
+    private ArrayList schreibenZL = new ArrayList<TableItem>();
+    private ArrayList lesenZL = new ArrayList<TableItem>();
+    private ArrayList sprachZL = new ArrayList<TableItem>();
+    private ArrayList zahlenZL = new ArrayList<TableItem>();
+    private ArrayList groessenZL = new ArrayList<TableItem>();
+    private ArrayList raumZL = new ArrayList<TableItem>();
     
     /**
      * Erzeugt eine Zeugnisklasse und füllt Variablen aus der DB
@@ -128,6 +128,7 @@ public class ZeugnisPDF  {
         
         SingletonSQLConnector connector = SingletonSQLConnector.getInstance();
 
+        //Alle nötigen Felder werden aus der Datenbank gefüllt
         name      = connector.getSchuelerName(id);
         vorname   = connector.getSchuelerVorname(id);
         gebdatum  = convertDate(connector.getSchuelerGebDatum(id));
@@ -137,15 +138,15 @@ public class ZeugnisPDF  {
         halbjahr  = Gui.getHYear();
         klasse    = Gui.getSClass();
         
-        // Später werden die Werte hier aus der Datenbank geholt...
-        ArrayList<String> av= new ArrayList();
-        av = connector.getAVerhalten(idSCHUELER);
-        ArrayList<String> sv= new ArrayList();
-        sv = connector.getSVerhalten(idSCHUELER);
-        ArrayList<String> sz = new ArrayList();
-        sz=connector.getKriterien(idSCHUELER,"Sprechen und Zuhören");
-        ArrayList<String> sch = new ArrayList();
-        sch=connector.getKriterien(idSCHUELER,"Schreiben");
+        // Hier müssen später andere Aufrufe stehen , da aus Zeugnissen geholt werden muss...
+        ArrayList<String> avListe= new ArrayList();
+        avListe = connector.getAVerhalten(idSCHUELER);
+        ArrayList<String> svListe= new ArrayList();
+        svListe = connector.getSVerhalten(idSCHUELER);
+        ArrayList<String> szListe = new ArrayList();
+        szListe=connector.getKriterien(idSCHUELER,"Sprechen und Zuhören");
+        ArrayList<String> schListe = new ArrayList();
+        schListe=connector.getKriterien(idSCHUELER,"Schreiben");
         ArrayList<String> les = new ArrayList();
         les=connector.getKriterien(idSCHUELER,"Lesen - mit Texten und Medien umgehen");
         ArrayList<String> sp = new ArrayList();
@@ -158,16 +159,16 @@ public class ZeugnisPDF  {
         rf=connector.getKriterien(idSCHUELER,"Raum und Form");
         
         
-        for(int i=0;i<av.size();i++){
+        for(int i=0;i<avListe.size();i++){
             TableItem ti = new TableItem();
-            ti.setText(av.get(i));
+            ti.setText(avListe.get(i));
             //ti.setText("ist ein ganz, ganz netter und befolgt \nalle Anweisungen " + String.valueOf(i));
             ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 4));
             aVerhalten.add(ti);
         }
-      for(int i=0;i<sv.size();i++){
+      for(int i=0;i<svListe.size();i++){
             TableItem ti = new TableItem();
-            ti.setText(sv.get(i));
+            ti.setText(svListe.get(i));
             //ti.setText("ist ein asozialer Sack, der andere Kinder \nquält und ärgert " + String.valueOf(i));
             ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 4));
             sVerhalten.add(ti);
@@ -175,51 +176,51 @@ public class ZeugnisPDF  {
         noteArbeit = 2;
         noteSozial = 0;
         
-        for(int i=0;i<sz.size();i++){
+        for(int i=0;i<szListe.size();i++){
             TableItem ti = new TableItem();
-            ti.setText(sz.get(i));
+            ti.setText(szListe.get(i));
             ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
-            sprechenZuhoeren.add(ti);
+            sprechenZL.add(ti);
         }
 
-        for(int i=0;i<sch.size();i++){
+        for(int i=0;i<schListe.size();i++){
             TableItem ti = new TableItem();
-            ti.setText(sch.get(i));
+            ti.setText(schListe.get(i));
             ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
-            schreiben.add(ti);
+            schreibenZL.add(ti);
         }
 
         for(int i=0;i<les.size();i++){
             TableItem ti = new TableItem();
             ti.setText(les.get(i));
             ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
-            lesen.add(ti);
+            lesenZL.add(ti);
         }
 
         for(int i=0;i<sp.size();i++){
             TableItem ti = new TableItem();
             ti.setText(sp.get(i));
             ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
-            sprache.add(ti);
+            sprachZL.add(ti);
         }
 
         for(int i=0;i<zo.size();i++){
             TableItem ti = new TableItem();
             ti.setText(zo.get(i));
             ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
-            zah.add(ti);
+            zahlenZL.add(ti);
         }
         for(int i=0;i<gm.size();i++){
             TableItem ti = new TableItem();
             ti.setText(gm.get(i));
             ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
-            gro.add(ti);
+            groessenZL.add(ti);
         }
         for(int i=0;i<rf.size();i++){
             TableItem ti = new TableItem();
             ti.setText(rf.get(i));
             ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
-            rau.add(ti);
+            raumZL.add(ti);
         }
 
       
@@ -237,6 +238,44 @@ public class ZeugnisPDF  {
         Date date = oldSdf.parse(oldDate);
         SimpleDateFormat newSdf = new SimpleDateFormat("dd.MM.yyyy");
         return newSdf.format(date);
+    }
+    
+    private PdfPCell header(int page,String vorname,String name,String geb, String currdate, int colspan){
+        PdfPCell retCell = new PdfPCell(new Phrase("Seite "+ String.valueOf(page) +
+                " des Grundschulzeugnisses von " + vorname + " "+ name + " (" + gebdatum + ") " + 
+                " vom " +currDate,SMALL_FONT));
+        retCell.setColspan(colspan);
+        retCell.setHorizontalAlignment(Element.ALIGN_LEFT);
+        retCell.setBorder(Rectangle.NO_BORDER);
+        return retCell;
+    }
+    
+    private PdfPCell title1(String s,int colspan,float minheight){
+        PdfPCell retCell = new PdfPCell(new Phrase(s,NORMAL_BOLD_FONT));
+        retCell.setColspan(colspan);
+        retCell.setFixedHeight(minheight);
+        retCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        retCell.setHorizontalAlignment(Element.ALIGN_LEFT);
+        retCell.setBorder(Rectangle.NO_BORDER);
+        return retCell;
+    }
+    
+    private PdfPCell title2(String s,int colspan,float minheight,float pad){
+        PdfPCell retCell = new PdfPCell(new Phrase(s,NORMAL_FONT));        
+        retCell.setColspan(colspan);
+        retCell.setFixedHeight(50f);
+        retCell.setVerticalAlignment(Element.ALIGN_TOP);
+        retCell.setPadding(pad);
+        retCell.setHorizontalAlignment(Element.ALIGN_LEFT);
+        return retCell;
+    }
+    
+    private PdfPCell seweue(String s, float pad){
+        PdfPCell retCell = new PdfPCell(new Phrase(s,TINY_FONT));
+        retCell.setVerticalAlignment(Element.ALIGN_TOP);
+        retCell.setPadding(pad);
+        retCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        return retCell;
     }
     
     private void makeCrossOnRightPosition(){
@@ -475,55 +514,15 @@ public class ZeugnisPDF  {
         PdfPTable table2 = new PdfPTable(4);
         table2.setWidths(new float[] { 58, 14,14,14 });
         table2.setWidthPercentage(100);
-        PdfPCell cell2Header;
-        cell2Header = new PdfPCell(new Phrase("Seite 2 des Grundschulzeugnisses von " + vorname + " "+ name + " (" + gebdatum + ") " + " vom " +currDate,SMALL_FONT));
-        cell2Header.setColspan(4);
-        cell2Header.setHorizontalAlignment(Element.ALIGN_LEFT);
-        cell2Header.setBorder(Rectangle.NO_BORDER);
+        
+        PdfPCell cell2Header = new PdfPCell(header(2,vorname,name,gebdatum,currDate,4));
+        PdfPCell cell2AundS  = new PdfPCell(title1(AundS,4,35f));
+        PdfPCell cell2ATitle = new PdfPCell(title2(ATitle,1,50f,pad));
 
-        PdfPCell cell2AundS;
-        cell2AundS = new PdfPCell(new Phrase(AundS,NORMAL_BOLD_FONT));
-        cell2AundS.setColspan(4);
-        cell2AundS.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell2AundS.setFixedHeight(35f);
-        cell2AundS.setHorizontalAlignment(Element.ALIGN_LEFT);
-        cell2AundS.setBorder(Rectangle.NO_BORDER);
- 
-        PdfPCell cell2ATitle;
-        cell2ATitle = new PdfPCell(new Phrase(ATitle,NORMAL_FONT));
-        //cell2ATitle.setColspan(4);
-        cell2ATitle.setVerticalAlignment(Element.ALIGN_TOP);
-        cell2ATitle.setFixedHeight(50f);
-        cell2ATitle.setPadding(pad);
-        cell2ATitle.setHorizontalAlignment(Element.ALIGN_LEFT);
-        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
-
-        PdfPCell cell2Selten;
-        cell2Selten = new PdfPCell(new Phrase(Selten,TINY_FONT));
-        //cell2ATitle.setColspan(4);
-        cell2Selten.setVerticalAlignment(Element.ALIGN_TOP);
-        //cell2ATitle.setFixedHeight(30f);
-        cell2Selten.setPadding(pad);
-        cell2Selten.setHorizontalAlignment(Element.ALIGN_CENTER);
-        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
-
-        PdfPCell cell2Wechselnd;
-        cell2Wechselnd = new PdfPCell(new Phrase(Wechselnd,TINY_FONT));
-        //cell2ATitle.setColspan(4);
-        cell2Wechselnd.setVerticalAlignment(Element.ALIGN_TOP);
-        //cell2ATitle.setFixedHeight(30f);
-        cell2Wechselnd.setPadding(pad);
-        cell2Wechselnd.setHorizontalAlignment(Element.ALIGN_CENTER);
-        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
-
-        PdfPCell cell2Ueberwiegend;
-        cell2Ueberwiegend = new PdfPCell(new Phrase(Ueberwiegend,TINY_FONT));
-        //cell2ATitle.setColspan(4);
-        cell2Ueberwiegend.setVerticalAlignment(Element.ALIGN_TOP);
-        //cell2ATitle.setFixedHeight(30f);
-        cell2Ueberwiegend.setPadding(pad);
-        cell2Ueberwiegend.setHorizontalAlignment(Element.ALIGN_CENTER);
-        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+        PdfPCell cell2Selten = new PdfPCell(seweue(Selten,pad));
+        PdfPCell cell2Wechselnd = new PdfPCell(seweue(Wechselnd,pad));
+        PdfPCell cell2Ueberwiegend = new PdfPCell(seweue(Ueberwiegend,pad));
+        
 
         table2.addCell(cell2Header);
         table2.addCell(cell2AundS);
@@ -603,14 +602,8 @@ public class ZeugnisPDF  {
 
         table2.addCell(cell2EmptyLine);
         
-        PdfPCell cell2STitle;
-        cell2STitle = new PdfPCell(new Phrase(STitle,NORMAL_FONT));
-        //cell2ATitle.setColspan(4);
-        cell2STitle.setVerticalAlignment(Element.ALIGN_TOP);
-        cell2STitle.setFixedHeight(50f);
-        cell2STitle.setPadding(pad);
-        cell2STitle.setHorizontalAlignment(Element.ALIGN_LEFT);
-        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+        
+        PdfPCell cell2STitle = new PdfPCell(title2(STitle,1,50f,pad));
 
         table2.addCell(cell2STitle);
         table2.addCell(cell2Selten);
@@ -872,12 +865,7 @@ public class ZeugnisPDF  {
         table3.setWidths(new float[] { 60,8,8,8,8,8 });
         table3.setWidthPercentage(100);
         
-        PdfPCell cell3Header;
-        cell3Header = new PdfPCell(new Phrase("Seite 3 des Grundschulzeugnisses von " + vorname + " "+ name + " (" + gebdatum + ") " + " vom " +currDate,SMALL_FONT));
-        cell3Header.setColspan(6);
-        cell3Header.setHorizontalAlignment(Element.ALIGN_LEFT);
-        cell3Header.setBorder(Rectangle.NO_BORDER);
-
+        PdfPCell cell3Header = header(3,vorname,name,gebdatum,currDate,6);
         
         PdfPCell cell3Deutsch;
         cell3Deutsch = new PdfPCell(new Phrase(deutsch + jStufe,NORMAL_BOLD_FONT));
@@ -952,9 +940,9 @@ public class ZeugnisPDF  {
         table3.addCell(cell3Voll);
         
  
-        for(Integer i=0; i<sprechenZuhoeren.size(); i++){
+        for(Integer i=0; i<sprechenZL.size(); i++){
             PdfPCell cell3;
-            cell3 = new PdfPCell(new Phrase( ((TableItem)sprechenZuhoeren.get(i)).getText() ,TINY_FONT));
+            cell3 = new PdfPCell(new Phrase( ((TableItem)sprechenZL.get(i)).getText() ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell3.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell3.setMinimumHeight(15);
@@ -982,7 +970,7 @@ public class ZeugnisPDF  {
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
  
             table3.addCell(cell3);
-            switch ( ( (TableItem) sprechenZuhoeren.get(i)).getBewertung()) {
+            switch ( ( (TableItem) sprechenZL.get(i)).getBewertung()) {
             case 1: table3.addCell(cell3bewertungX);
                     table3.addCell(cell3bewertung);
                     table3.addCell(cell3bewertung);
@@ -1083,9 +1071,9 @@ public class ZeugnisPDF  {
         table3.addCell(cell3Voll);
         
  
-        for(Integer i=0; i<schreiben.size(); i++){
+        for(Integer i=0; i<schreibenZL.size(); i++){
             PdfPCell cell3;
-            cell3 = new PdfPCell(new Phrase( ((TableItem)schreiben.get(i)).getText() ,TINY_FONT));
+            cell3 = new PdfPCell(new Phrase( ((TableItem)schreibenZL.get(i)).getText() ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell3.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell3.setMinimumHeight(15);
@@ -1113,7 +1101,7 @@ public class ZeugnisPDF  {
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
  
             table3.addCell(cell3);
-            switch ( ( (TableItem) schreiben.get(i)).getBewertung()) {
+            switch ( ( (TableItem) schreibenZL.get(i)).getBewertung()) {
             case 1: table3.addCell(cell3bewertungX);
                     table3.addCell(cell3bewertung);
                     table3.addCell(cell3bewertung);
@@ -1212,9 +1200,9 @@ public class ZeugnisPDF  {
         table3.addCell(cell3Voll);
         
  
-        for(Integer i=0; i<lesen.size(); i++){
+        for(Integer i=0; i<lesenZL.size(); i++){
             PdfPCell cell3;
-            cell3 = new PdfPCell(new Phrase( ((TableItem)lesen.get(i)).getText() ,TINY_FONT));
+            cell3 = new PdfPCell(new Phrase( ((TableItem)lesenZL.get(i)).getText() ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell3.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell3.setMinimumHeight(15);
@@ -1242,7 +1230,7 @@ public class ZeugnisPDF  {
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
  
             table3.addCell(cell3);
-            switch ( ( (TableItem) schreiben.get(i)).getBewertung()) {
+            switch ( ( (TableItem) schreibenZL.get(i)).getBewertung()) {
             case 1: table3.addCell(cell3bewertungX);
                     table3.addCell(cell3bewertung);
                     table3.addCell(cell3bewertung);
@@ -1289,12 +1277,7 @@ public class ZeugnisPDF  {
         table4.setWidths(new float[] { 60,8,8,8,8,8 });
         table4.setWidthPercentage(100);
         
-        PdfPCell cell4Header;
-        cell4Header = new PdfPCell(new Phrase("Seite 4 des Grundschulzeugnisses von " + vorname + " "+ name + " (" + gebdatum + ") " + " vom " +currDate,SMALL_FONT));
-        cell4Header.setColspan(6);
-        cell4Header.setHorizontalAlignment(Element.ALIGN_LEFT);
-        cell4Header.setBorder(Rectangle.NO_BORDER);
-
+        PdfPCell cell4Header = header(4,vorname,name,gebdatum,currDate,6);
         
         PdfPCell cell4Mathe;
         cell4Mathe = new PdfPCell(new Phrase(mathe + jStufe,NORMAL_BOLD_FONT));
@@ -1369,9 +1352,9 @@ public class ZeugnisPDF  {
         table4.addCell(cell4Voll);
         
  
-        for(Integer i=0; i<zah.size(); i++){
+        for(Integer i=0; i<zahlenZL.size(); i++){
             PdfPCell cell4;
-            cell4 = new PdfPCell(new Phrase( ((TableItem)zah.get(i)).getText() ,TINY_FONT));
+            cell4 = new PdfPCell(new Phrase( ((TableItem)zahlenZL.get(i)).getText() ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell4.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell4.setMinimumHeight(15);
@@ -1399,7 +1382,7 @@ public class ZeugnisPDF  {
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
  
             table4.addCell(cell4);
-            switch ( ( (TableItem) zah.get(i)).getBewertung()) {
+            switch ( ( (TableItem) zahlenZL.get(i)).getBewertung()) {
             case 1: table4.addCell(cell4bewertungX);
                     table4.addCell(cell4bewertung);
                     table4.addCell(cell4bewertung);
@@ -1500,9 +1483,9 @@ public class ZeugnisPDF  {
         table4.addCell(cell4Voll);
         
  
-        for(Integer i=0; i<gro.size(); i++){
+        for(Integer i=0; i<groessenZL.size(); i++){
             PdfPCell cell4;
-            cell4 = new PdfPCell(new Phrase( ((TableItem)gro.get(i)).getText() ,TINY_FONT));
+            cell4 = new PdfPCell(new Phrase( ((TableItem)groessenZL.get(i)).getText() ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell4.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell4.setMinimumHeight(15);
@@ -1530,7 +1513,7 @@ public class ZeugnisPDF  {
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
  
             table4.addCell(cell4);
-            switch ( ( (TableItem) gro.get(i)).getBewertung()) {
+            switch ( ( (TableItem) groessenZL.get(i)).getBewertung()) {
             case 1: table4.addCell(cell4bewertungX);
                     table4.addCell(cell4bewertung);
                     table4.addCell(cell4bewertung);
@@ -1630,9 +1613,9 @@ public class ZeugnisPDF  {
         table4.addCell(cell4Voll);
         
  
-        for(Integer i=0; i<rau.size(); i++){
+        for(Integer i=0; i<raumZL.size(); i++){
             PdfPCell cell4;
-            cell4 = new PdfPCell(new Phrase( ((TableItem)rau.get(i)).getText() ,TINY_FONT));
+            cell4 = new PdfPCell(new Phrase( ((TableItem)raumZL.get(i)).getText() ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell4.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell4.setMinimumHeight(15);
@@ -1660,7 +1643,7 @@ public class ZeugnisPDF  {
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
  
             table4.addCell(cell4);
-            switch ( ( (TableItem) rau.get(i)).getBewertung()) {
+            switch ( ( (TableItem) raumZL.get(i)).getBewertung()) {
             case 1: table4.addCell(cell4bewertungX);
                     table4.addCell(cell4bewertung);
                     table4.addCell(cell4bewertung);
