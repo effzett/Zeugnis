@@ -1285,126 +1285,213 @@ public class ZeugnisPDF  {
         
         table5 = lernbereiche(table5,religion,pad);
         
-        table5.addCell(emptyLine(6,15f));
-        // *********************************************************************
-
-        
         doc.add(table5);
-        doc.newPage();
-        
-        // Seite 6 *************************************************************
-        // Tablestruktur aufbauen...
-        pad=3f;
-        PdfPTable table6 = new PdfPTable(6);
-        table6.setWidths(new float[] { 60,8,8,8,8,8 });
-        table6.setWidthPercentage(100);
-        
-        PdfPCell cell6Header = header(6,vorname,name,gebdatum,currDate,6);
+        // ************************************* Klasse 1 und 2
+        if(Gui.getSClass().substring(0, 1).endsWith("1" ) || Gui.getSClass().substring(0, 1).endsWith("2")){
+            PdfPTable table5a = new PdfPTable(6);
+            table5a.setWidths(new float[] { 60,8,8,8,8,8 });
+            table5a.setWidthPercentage(100);
+   
+            table5a.addCell(emptyLine(6,15f));
         // *********************************************************************
-        PdfPCell cell6Kunst;
-        cell6Kunst = new PdfPCell(new Phrase(kunstS + jStufe,NORMAL_BOLD_FONT));
-        cell6Kunst.setColspan(6);
-        cell6Kunst.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell6Kunst.setFixedHeight(35f);
-        cell6Kunst.setHorizontalAlignment(Element.ALIGN_LEFT);
-        cell6Kunst.setBorder(Rectangle.NO_BORDER);
+            PdfPCell cell5Kunst;
+            cell5Kunst = new PdfPCell(new Phrase(kunstS + jStufe,NORMAL_BOLD_FONT));
+            cell5Kunst.setColspan(6);
+            cell5Kunst.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell5Kunst.setFixedHeight(35f);
+            cell5Kunst.setHorizontalAlignment(Element.ALIGN_LEFT);
+            cell5Kunst.setBorder(Rectangle.NO_BORDER);
  
         // Kunst
-        PdfPCell cell6su;
-        cell6su = new PdfPCell(new Phrase(su,NORMAL_FONT));
-        cell6su.setVerticalAlignment(Element.ALIGN_TOP);
-        cell6su.setFixedHeight(30f);
-        cell6su.setPadding(pad);
-        cell6su.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-        PdfPCell cell6Leer;
-        cell6Leer = new PdfPCell(new Phrase("--",TINY_FONT));
-        cell6Leer.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell6Leer.setPadding(pad);
-        cell6Leer.setHorizontalAlignment(Element.ALIGN_CENTER);
-
-        table6.addCell(cell6Kunst);
-        table6.addCell(cell5su);
-        table6.addCell(cell5Leer);
-        table6.addCell(kreisViertel(1,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
-        table6.addCell(kreisViertel(2,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
-        table6.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
-        table6.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table5a.addCell(cell5Kunst);
+            table5a.addCell(cell5su);
+            table5a.addCell(cell5Leer);
+            table5a.addCell(kreisViertel(1,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table5a.addCell(kreisViertel(2,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table5a.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table5a.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
         
-        table6 = lernbereiche(table6,kunst,pad);
+            table5a = lernbereiche(table5a,kunst,pad);
         
-        table6.addCell(emptyLine(6,15f));
+            table5a.addCell(emptyLine(6,15f));
         // *********************************************************************
         // *********************************************************************
-        PdfPCell cell6Sport;
-        cell6Sport = new PdfPCell(new Phrase(sportS + jStufe,NORMAL_BOLD_FONT));
-        cell6Sport.setColspan(6);
-        cell6Sport.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell6Sport.setFixedHeight(35f);
-        cell6Sport.setHorizontalAlignment(Element.ALIGN_LEFT);
-        cell6Sport.setBorder(Rectangle.NO_BORDER);
+            PdfPCell cell5Sport;
+            cell5Sport = new PdfPCell(new Phrase(sportS + jStufe,NORMAL_BOLD_FONT));
+            cell5Sport.setColspan(6);
+            cell5Sport.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell5Sport.setFixedHeight(35f);
+            cell5Sport.setHorizontalAlignment(Element.ALIGN_LEFT);
+            cell5Sport.setBorder(Rectangle.NO_BORDER);
  
         // Sport
-        cell6su = new PdfPCell(new Phrase(su,NORMAL_FONT));
-        cell6su.setVerticalAlignment(Element.ALIGN_TOP);
-        cell6su.setFixedHeight(30f);
-        cell6su.setPadding(pad);
-        cell6su.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-        cell6Leer = new PdfPCell(new Phrase("--",TINY_FONT));
-        cell6Leer.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell6Leer.setPadding(pad);
-        cell6Leer.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table5a.addCell(cell5Sport);
+            table5a.addCell(cell5su);
+            table5a.addCell(cell5Leer);
+            table5a.addCell(kreisViertel(1,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table5a.addCell(kreisViertel(2,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table5a.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table5a.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+        
+            table5a = lernbereiche(table5a,sport,pad);
+        
+        // *********************************************************************
+            doc.add(table5a);
+            
+        }
+        else{
+            doc.newPage();
+        // Seite 6 *************************************************************
+        // Tablestruktur aufbauen...
+            PdfPTable table6 = new PdfPTable(6);
+            pad=3f;
+            table6.setWidths(new float[] { 60,8,8,8,8,8 });
+            table6.setWidthPercentage(100);
+        
+            PdfPCell cell6Header = header(6,vorname,name,gebdatum,currDate,6);
 
-        table6.addCell(cell6Sport);
-        table6.addCell(cell5su);
-        table6.addCell(cell5Leer);
-        table6.addCell(kreisViertel(1,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
-        table6.addCell(kreisViertel(2,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
-        table6.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
-        table6.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+        // *********************************************************************
+            PdfPCell cell6Kunst;
+            cell6Kunst = new PdfPCell(new Phrase(kunstS + jStufe,NORMAL_BOLD_FONT));
+            cell6Kunst.setColspan(6);
+            cell6Kunst.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell6Kunst.setFixedHeight(35f);
+            cell6Kunst.setHorizontalAlignment(Element.ALIGN_LEFT);
+            cell6Kunst.setBorder(Rectangle.NO_BORDER);
+ 
+        // Kunst
+            PdfPCell cell6su;
+            cell6su = new PdfPCell(new Phrase(su,NORMAL_FONT));
+            cell6su.setVerticalAlignment(Element.ALIGN_TOP);
+            cell6su.setFixedHeight(30f);
+            cell6su.setPadding(pad);
+            cell6su.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+            PdfPCell cell6Leer;
+            cell6Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+            cell6Leer.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell6Leer.setPadding(pad);
+            cell6Leer.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+            table6.addCell(cell6Header);
+            table6.addCell(cell6Kunst);
+            table6.addCell(cell6su);
+            table6.addCell(cell6Leer);
+            table6.addCell(kreisViertel(1,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table6.addCell(kreisViertel(2,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table6.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table6.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
         
-        table6 = lernbereiche(table6,sport,pad);
+            table6 = lernbereiche(table6,kunst,pad);
         
-        table6.addCell(emptyLine(6,15f));
+            table6.addCell(emptyLine(6,15f));
         // *********************************************************************
         // *********************************************************************
-        PdfPCell cell6Werken;
-        cell6Werken = new PdfPCell(new Phrase(werkenS + jStufe,NORMAL_BOLD_FONT));
-        cell6Werken.setColspan(6);
-        cell6Werken.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell6Werken.setFixedHeight(35f);
-        cell6Werken.setHorizontalAlignment(Element.ALIGN_LEFT);
-        cell6Werken.setBorder(Rectangle.NO_BORDER);
+            PdfPCell cell6Sport;
+            cell6Sport = new PdfPCell(new Phrase(sportS + jStufe,NORMAL_BOLD_FONT));
+            cell6Sport.setColspan(6);
+            cell6Sport.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell6Sport.setFixedHeight(35f);
+            cell6Sport.setHorizontalAlignment(Element.ALIGN_LEFT);
+            cell6Sport.setBorder(Rectangle.NO_BORDER);
+ 
+        // Sport
+
+            table6.addCell(cell6Sport);
+            table6.addCell(cell5su);
+            table6.addCell(cell5Leer);
+            table6.addCell(kreisViertel(1,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table6.addCell(kreisViertel(2,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table6.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table6.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+        
+            table6 = lernbereiche(table6,sport,pad);
+        
+            table6.addCell(emptyLine(6,15f));
+        // *********************************************************************
+        // *********************************************************************
+            PdfPCell cell6Werken;
+            cell6Werken = new PdfPCell(new Phrase(werkenS + jStufe,NORMAL_BOLD_FONT));
+            cell6Werken.setColspan(6);
+            cell6Werken.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell6Werken.setFixedHeight(35f);
+            cell6Werken.setHorizontalAlignment(Element.ALIGN_LEFT);
+            cell6Werken.setBorder(Rectangle.NO_BORDER);
  
         // Werken
-        cell6su = new PdfPCell(new Phrase(su,NORMAL_FONT));
-        cell6su.setVerticalAlignment(Element.ALIGN_TOP);
-        cell6su.setFixedHeight(30f);
-        cell6su.setPadding(pad);
-        cell6su.setHorizontalAlignment(Element.ALIGN_LEFT);
-
-        cell6Leer = new PdfPCell(new Phrase("--",TINY_FONT));
-        cell6Leer.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell6Leer.setPadding(pad);
-        cell6Leer.setHorizontalAlignment(Element.ALIGN_CENTER);
-
-        table6.addCell(cell6Werken);
-        table6.addCell(cell5su);
-        table6.addCell(cell5Leer);
-        table6.addCell(kreisViertel(1,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
-        table6.addCell(kreisViertel(2,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
-        table6.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
-        table6.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table6.addCell(cell6Werken);
+            table6.addCell(cell5su);
+            table6.addCell(cell5Leer);
+            table6.addCell(kreisViertel(1,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table6.addCell(kreisViertel(2,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table6.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table6.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
         
-        table6 = lernbereiche(table6,werken,pad);
+            table6 = lernbereiche(table6,werken,pad);
         
-        table6.addCell(emptyLine(6,15f));
+            table6.addCell(emptyLine(6,15f));
         // *********************************************************************
+        // *********************************************************************
+            PdfPCell cell6Textil;
+            cell6Textil = new PdfPCell(new Phrase(textilS + jStufe,NORMAL_BOLD_FONT));
+            cell6Textil.setColspan(6);
+            cell6Textil.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell6Textil.setFixedHeight(35f);
+            cell6Textil.setHorizontalAlignment(Element.ALIGN_LEFT);
+            cell6Textil.setBorder(Rectangle.NO_BORDER);
+ 
+        // Textil
+            table6.addCell(cell6Textil);
+            table6.addCell(cell5su);
+            table6.addCell(cell5Leer);
+            table6.addCell(kreisViertel(1,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table6.addCell(kreisViertel(2,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table6.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table6.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+        
+            table6 = lernbereiche(table6,textil,pad);
+        
+            table6.addCell(emptyLine(6,15f));
+        // *********************************************************************
+        // *********************************************************************
+    
+            doc.add(table6);
+            doc.newPage();
+        // Seite 7 *************************************************************
+        // Tablestruktur aufbauen...
+            PdfPTable table7 = new PdfPTable(6);
+            pad=3f;
+            table7.setWidths(new float[] { 60,8,8,8,8,8 });
+            table7.setWidthPercentage(100);
+        
+            PdfPCell cell7Header = header(7,vorname,name,gebdatum,currDate,6);
+            table7.addCell(cell7Header);
 
- 
-        doc.add(table6);
- 
+            PdfPCell cell7Englisch;
+            cell7Englisch = new PdfPCell(new Phrase(englischS + jStufe,NORMAL_BOLD_FONT));
+            cell7Englisch.setColspan(6);
+            cell7Englisch.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell7Englisch.setFixedHeight(35f);
+            cell7Englisch.setHorizontalAlignment(Element.ALIGN_LEFT);
+            cell7Englisch.setBorder(Rectangle.NO_BORDER);
+
+        // Englisch
+            table7.addCell(cell7Englisch);
+            table7.addCell(cell5su);
+            table7.addCell(cell5Leer);
+            table7.addCell(kreisViertel(1,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table7.addCell(kreisViertel(2,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table7.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+            table7.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+        
+            table7 = lernbereiche(table7,englisch,pad);
+        
+            table7.addCell(emptyLine(6,15f));
+        // *********************************************************************
+            doc.add(table7);
+        }
         doc.addTitle("Zeugnis");
         doc.addAuthor("Grundschule Brelingen");
         doc.addCreationDate();
