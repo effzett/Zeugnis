@@ -36,8 +36,6 @@ public class FillDatabase {
             } catch (SQLException ex) {
                 System.out.println("Testdaten schon vorhanden.");
                 continue;
-            } catch (ParseException ex) {
-                ex.printStackTrace();
             }
 
         }

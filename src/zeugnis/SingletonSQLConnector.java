@@ -91,23 +91,20 @@ public class SingletonSQLConnector {
 
     /**
      * der Primary Key des Schuelers wird erzeugt aus dem Hashcode aus
-     * NameVornameGebDatumSchuljahr. Das Datum im Format yyyy.MM-dd.
+     * NameVornameGebDatumSchuljahr. Das Datum im Format yyyy-MM-dd.
      *
      * @param values Die Werte zum Anlegen eines Schuelers in der Reihen folge
      * sder Spalten der Tabelle SCHUELER
      * @throws SQLException
      */
-    public void insertPuple(String[] values) throws SQLException, ParseException {
+    public void insertPuple(String[] values) throws SQLException {
 
         try (Statement statement = con.createStatement()) {
-            // Datumstring zu SQLDatum konvertieren
-            Date date = sdf.parse(values[3]);
-            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-
+            
             String sql = "insert into SCHUELER values(" + values[0]
                     + ",'" + values[1]
                     + "', '" + values[2]
-                    + "', '" + sqlDate.toString()
+                    + "', '" + values[3]
                     + "', '" + values[4]
                     + "', '" + values[5]
                     + "', " + values[6] + ")";
@@ -126,22 +123,14 @@ public class SingletonSQLConnector {
      * Spalten der Tabelle SCHUELER
      * @throws SQLException
      */
-    public void updatePuple(String[] values) throws SQLException, ParseException {
-        // Datumstring zu SQLDatum konvertieren
-        Date date = sdf.parse(values[3]);
-        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+    public void updatePuple(String[] values, String idSchueler) throws SQLException {
+        
 
         try (Statement statement = con.createStatement()) {
-            String sql = "update SCHUELER set NAME = '" + values[1]
-                    + "', VORNAME = '" + values[2]
-                    + "', GEBDATUM = '" + sqlDate.toString()
-                    + "', GEBORT = '" + values[4]
-                    + "', KLASSE = '" + values[5]
-                    + "', SCHULJAHR = " + values[6]
-                    + " where ID_SCHUELER = " + values[0];
-
+            String sql = "delete from SCHUELER where ID_Schueler = " + idSchueler;
             logger.fine(sql);
             statement.executeUpdate(sql);
+            insertPuple(values);
         }
 
     }
@@ -186,10 +175,10 @@ public class SingletonSQLConnector {
      * @param sClass Die Klasse
      * @throws SQLException
      */
-    public void fillClassTable(JTable table, int sYear, String sClass) throws SQLException {
+    public void fillClassTable(JTable table, int sYear, String sClass, ArrayList<String> idSchuelerList) throws SQLException {
 
         try (Statement statement = con.createStatement()) {
-            String sql = "select ID_SCHUELER, NAME, VORNAME, GEBDATUM, GEBORT from SCHUELER where KLASSE = '" + sClass + "' and SCHULJAHR = " + sYear;
+            String sql = "select ID_SCHUELER, NAME, VORNAME, GEBDATUM, GEBORT from SCHUELER where KLASSE = '" + sClass + "' and SCHULJAHR = " + sYear + " order by NAME asc";
             logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
             DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -202,63 +191,13 @@ public class SingletonSQLConnector {
                 row[2] = sdf.format(set.getDate(4));
                 row[3] = set.getString(5);
                 model.addRow(row);
+                idSchuelerList.add(set.getString(1));
             }
 
         }
 
     }
-
-    /**
-     * Speichert den Inhalt der uebergebenen JTable in der Tabelle SCHUELER.
-     * Vorhandene Datensaetze werden unabhaengig ob eine Aenderung stattgefunden
-     * hat aktualisiert, Neue Datensaetze eingefuegt.
-     *
-     * @param table Die Tabelle mit der Schulklasse.
-     * @param sYear Das Schuljahr
-     * @param sClass Die Klasse
-     * @throws SQLException
-     */
-    public void insertUpdateClassTable(JTable table, int sYear, String sClass) throws SQLException, ParseException {
-        TableModel model = table.getModel();
-
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String[] values = new String[7];
-            values[5] = sClass;
-            values[6] = Integer.toString(sYear);
-
-            for (int ii = 0; ii < model.getColumnCount(); ii++) {
-                String cName = model.getColumnName(ii);
-                logger.fine(cName);
-
-                switch (cName) {
-                    case "Name":
-                        values[1] = (String) model.getValueAt(i, ii);
-                        break;
-                    case "Vorname":
-                        values[2] = (String) model.getValueAt(i, ii);
-                        break;
-                    case "Geburtsdatum":
-                        values[3] = (String) model.getValueAt(i, ii);
-                        break;
-                    case "Geburtsort":
-                        values[4] = (String) model.getValueAt(i, ii);
-                        break;
-                }
-
-            }
-
-            values[0] = Integer.toString((values[1] + values[2] + values[3] + values[6]).hashCode());
-
-            if (pupleExist(Integer.parseInt(values[0]))) {
-                updatePuple(values);
-            } else {
-                insertPuple(values);
-            }
-
-        }
-
-    }
-
+ 
     /**
      * Prueft auf die Existenz eines Schuelers ueber den PrimaryKey.
      *
