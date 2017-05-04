@@ -140,8 +140,6 @@ public class ZeugnisPDF  {
         //Alle nötigen Felder werden aus der Datenbank gefüllt
         name      = connector.getSchuelerName(id);
         vorname   = connector.getSchuelerVorname(id);
-        logger.fine(String.valueOf(id));        
-        logger.fine(connector.getSchuelerGebDatum(id));
         gebdatum  = convertDate(connector.getSchuelerGebDatum(id));
         gebort    = connector.getSchuelerGebOrt(id);
         currDate = (new SimpleDateFormat("dd.MM.yyyy")).format(new Date());
