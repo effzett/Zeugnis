@@ -1499,6 +1499,7 @@ public class ZeugnisPDF  {
         doc.close();
         writer.close();
               
+
         // TODO nur zum Testen, muss später besser gelöst werden
         Desktop desktop = Desktop.getDesktop();
         if (desktop != null && desktop.isSupported(Desktop.Action.OPEN)) {

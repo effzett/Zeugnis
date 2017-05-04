@@ -5,11 +5,19 @@
  */
 package zeugnis;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 /**
  *
  * @author internet
  */
 public class Lernbereich {
+    private String lernbereich;
+    private int schuljahr;
+    private int klassenstufe;
     
     public Lernbereich(){
         

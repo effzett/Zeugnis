@@ -354,6 +354,30 @@ public class SingletonSQLConnector {
         }
         return result;
     }
+    
+    
+    /**
+     * liefert eine Liste der Lernbereiche, die für ein Schuljahr und 
+     * eine Klassenstufe gültig ist
+     * @param schuljahr
+     * @param klassenstufe
+     * @return result
+     * @throws java.sql.SQLException
+     */
+    public ArrayList<String> getLernbereiche(int schuljahr, int klassenstufe) throws SQLException{ 
+        ArrayList<String> result = new ArrayList<>();
+        try (Statement statement = con.createStatement()) {
+
+            String sql = "select LERNBEREICH from LERNBEREICH where KLASSENSTUFE="+ klassenstufe +" AND SCHULJAHR ="+schuljahr;
+            logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+
+            while (set.next()) {
+                result.add(set.getString(1));
+            }
+        }
+        return result;
+    }
 
     
     /**
