@@ -167,14 +167,6 @@ public class ZeugnisPDF  {
         ArrayList<String> rf = new ArrayList();
         rf=connector.getKriterien(idSCHUELER,"Raum und Form");
         
-        // Nur zum Testen:
-        ArrayList<String> testliste = new ArrayList();
-        testliste = connector.getLernbereiche();
-        
-        for(String bereich: testliste){
-            logger.fine(bereich);
-        }
-        
         //***************
         
         //SU Fächer
