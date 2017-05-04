@@ -306,11 +306,8 @@ public class ZeugnisPDF  {
             ti.setText(su8.get(i));
             ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
             englisch.add(ti);
-        }
-
-      
+        } 
     }
-    
     
     /**
      * Konvertiert das Datum von "yyyy-MM-dd" nach "dd.MM.yyyy"
@@ -532,6 +529,7 @@ public class ZeugnisPDF  {
 
         // wird später alles aus der DB geholt
         
+        // Einige String für die Ausgabe...
         String Schuljahr = "Schuljahr " + Integer.toString(schuljahr) + "/" + Integer.toString(schuljahr+1);
         String Halbjahr;
         if(halbjahr==1){
@@ -543,7 +541,7 @@ public class ZeugnisPDF  {
         String Klasse    = "Klasse "+ klasse;
         
 
-        String Tage      = "versäumte Unterrichtstage im 1. und 2. Halbjahr: 2 davon unentschuldigt: 0";
+        String Tage      = "Versäumte Unterrichtstage im 1. und 2. Halbjahr: 2 davon unentschuldigt: 0";
         String Lernentwicklung = "Lernentwicklung (kurz!)\nInteressen\nLernstand Deutsch\nLernstand Mathe\nVeränderungsprozesse\nKnackpunkte";
         String Unterschriften1 = "___________________\nUnterschrift\nSchulleiter/in";
         String Unterschriften2 = "___________________\nUnterschrift\nKlassenlehrer/in";
@@ -553,16 +551,16 @@ public class ZeugnisPDF  {
 
         String AundS = "Arbeits- und Sozialverhalten";
         String ATitle = "Arbeitsverhalten\n\n" + vorname + "...";
-        String STitle = "Sozialverhalten\n\n" + vorname + "...";
-        String Selten ="selten";
-        String Wechselnd = "wechselnd";
+        String STitle = "Sozialverhalten\n\n"  + vorname + "...";
+        String Selten       = "selten";
+        String Wechselnd    = "wechselnd";
         String Ueberwiegend = "überwiegend";
 
         String Erklaerungen = "Erklärungen";
         String BewertungsstufenAS = "Bewertungsstufen für das Arbeits- und Sozialverhalten:";
-        
         String Symbole = "Symbolerläuterungen für die Unterrichtsfächer:";
-        String Sym0 = "das Thema wurde noch nicht bearbeitet";
+        
+        String Sym0 = "Das Thema wurde noch nicht bearbeitet";
         String Sym1 = "Die Kompetenz ist in Ansätzen vorhanden";
         String Sym2 = "Die Kompetenz ist grundlegend gesichert";
         String Sym3 = "Die Kompetenz ist weitgehend gesichert";
@@ -570,24 +568,24 @@ public class ZeugnisPDF  {
         
         String deutsch          = "Deutsch ";
         String mathe            = "Mathematik ";
-        String sachunterrichtS   = "Sachunterricht ";
-        String musikS            = "Musik ";
-        String religionS         = "Religion ";
-        String kunstS            = "Kunst ";
-        String sportS            = "Sport ";
-        String textilS           = "Textiles Gestalten ";
-        String werkenS           = "Werken ";
-        String englischS         = "Englisch ";
+        String sachunterrichtS  = "Sachunterricht ";
+        String musikS           = "Musik ";
+        String religionS        = "Religion ";
+        String kunstS           = "Kunst ";
+        String sportS           = "Sport ";
+        String textilS          = "Textiles Gestalten ";
+        String werkenS          = "Werken ";
+        String englischS        = "Englisch ";
         
-        String jStufe  = "Jahrgangsstufe "+ Gui.getSClass().substring(0, 1);
-        String sz = "Sprechen und Zuhören\n\n" + vorname + "...";
-        String sch = "Schreiben\n\n" + vorname + "...";
-        String les = "Lesen - mit Texten und Medien umgehen\n\n" + vorname + "...";
-        String sp = "Sprache und Sprachgebrauch untersuchen\n\n" + vorname + "...";
-        String zo = "Zahlen und Operationen\n\n" + vorname + "...";
-        String gm = "Größen und Messen\n\n" + vorname + "...";
-        String rf = "Raum und Form\n\n" + vorname + "...";
-        String su = vorname + "...";
+        String jStufe   = "Jahrgangsstufe "+ Gui.getSClass().substring(0, 1);
+        String sz       = "Sprechen und Zuhören\n\n" + vorname + "...";
+        String sch      = "Schreiben\n\n" + vorname + "...";
+        String les      = "Lesen - mit Texten und Medien umgehen\n\n" + vorname + "...";
+        String sp       = "Sprache und Sprachgebrauch untersuchen\n\n" + vorname + "...";
+        String zo       = "Zahlen und Operationen\n\n" + vorname + "...";
+        String gm       = "Größen und Messen\n\n" + vorname + "...";
+        String rf       = "Raum und Form\n\n" + vorname + "...";
+        String su       = vorname + "...";
         
         PdfWriter writer = null;
         Document doc=new Document(PageSize.A4,50,50,20,30);
