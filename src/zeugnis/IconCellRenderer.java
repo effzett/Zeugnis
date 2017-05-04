@@ -22,12 +22,12 @@ public class IconCellRenderer extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         
-        if (column == 4) {
+        if (column == 5) {
             setIcon(new ImageIcon(getClass().getResource("/zeugnis/pics/delete.png")));
             //setText("");
         }
 
-        if (column == 5) {
+        if (column == 6) {
             setIcon(new ImageIcon(getClass().getResource("/zeugnis/pics/pdf.png")));
             //setText("");
         }

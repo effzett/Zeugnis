@@ -116,11 +116,11 @@ public class SingletonSQLConnector {
     }
 
     /**
-     * Update eines Schülers. Es werden alle Werte einer Zeile upgedatet (außer
-     * dem Key)
+     * Update eines Schülers. Es werden alle Werte einer Zeile upgedatet.
      *
      * @param values Eine String[] Array mit der Reihenfolge den Werten aller
      * Spalten der Tabelle SCHUELER
+     * @param idSchueler Die Id des zu loeschenden Datensatzes.
      * @throws SQLException
      */
     public void updatePuple(String[] values, String idSchueler) throws SQLException {
@@ -131,6 +131,23 @@ public class SingletonSQLConnector {
             logger.fine(sql);
             statement.executeUpdate(sql);
             insertPuple(values);
+        }
+
+    }
+    
+     /**
+     * Löschen eines Schülers.
+     *
+     * @param idschueler Die Id des zu loeschenden Datensatzes.
+     * @throws SQLException
+     */
+    public void deletePuple(String idSchueler) throws SQLException {
+        
+
+        try (Statement statement = con.createStatement()) {
+            String sql = "delete from SCHUELER where ID_Schueler = " + idSchueler;
+            logger.fine(sql);
+            statement.executeUpdate(sql);
         }
 
     }
@@ -175,7 +192,7 @@ public class SingletonSQLConnector {
      * @param sClass Die Klasse
      * @throws SQLException
      */
-    public void fillClassTable(JTable table, int sYear, String sClass, ArrayList<String> idSchuelerList) throws SQLException {
+    public void fillClassTable(JTable table, int sYear, String sClass) throws SQLException {
 
         try (Statement statement = con.createStatement()) {
             String sql = "select ID_SCHUELER, NAME, VORNAME, GEBDATUM, GEBORT from SCHUELER where KLASSE = '" + sClass + "' and SCHULJAHR = " + sYear + " order by NAME asc";
@@ -185,13 +202,13 @@ public class SingletonSQLConnector {
             model.setRowCount(0);
 
             while (set.next()) {
-                Object[] row = new Object[6];
-                row[0] = set.getString(2);
-                row[1] = set.getString(3);
-                row[2] = sdf.format(set.getDate(4));
-                row[3] = set.getString(5);
+                Object[] row = new Object[7];
+                row[0] = set.getString(1);
+                row[1] = set.getString(2);
+                row[2] = set.getString(3);
+                row[3] = sdf.format(set.getDate(4));
+                row[4] = set.getString(5);
                 model.addRow(row);
-                idSchuelerList.add(set.getString(1));
             }
 
         }

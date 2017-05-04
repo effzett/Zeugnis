@@ -43,9 +43,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private JComboBox markComboBox = null;
     private SingletonSQLConnector connector = null;
     private Config config = null;
-    private ArrayList<String> idSchuelerList = null;
-    private int rows;
-    private boolean fill = false;
+    private boolean tableModelEventEnabled = true;
 
     /**
      * Creates new form Gui
@@ -73,16 +71,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         sYear = Integer.parseInt(((String) jComboBox1.getSelectedItem()).substring(0, 4));
         hYear = Integer.parseInt((String) jComboBox2.getSelectedItem());
         sClass = (String) jComboBox3.getSelectedItem();
-
-        // Dient als blinde Spalte fuer die Schueler Keys.
-        // Wenn ein vorhandener Datensatz editiert wird, kann die Id nicht mehr
-        // aus den Werten aus der Spalte generiert werden. Um trotzdem den entsprechenden
-        // Datensatz updaten zu koennen werden die originalen Id in der ArrayList vorgehalten.
-        idSchuelerList = new ArrayList<>();
-        fill = true;
         fillClassTable();
-        fill = false;
-    }
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -129,21 +119,29 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        // Da sich die Schueler id (Primary Key) aus den Spalten Name,
+        // Vorname oder Geburtdatum zusammensetzt, kann sie nicht mehr ermittelt
+        // werden wenn eines der Felder editiert wird. Daher muß die Id in der
+        // ersten verdeckten Spalte mitgeführt und ggf nach dem Insert oder Update
+        // eines Schuelers auf Stand gehalten werden.
         DefaultTableModel tableModel = new javax.swing.table.DefaultTableModel(
             new String [] {
-                "Name", "Vorname", "Geburtsdatum", "Geburtsort", "", ""
-            }, 6);
+                "Id", "Name", "Vorname", "Geburtsdatum", "Geburtsort", "", ""
+            }, 7);
             tableModel.addTableModelListener(this);
             jTable1.setModel(tableModel);
             jTable1.setCellSelectionEnabled(true);
             jTable1.setRowHeight(20);
             jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-            TableColumn column = jTable1.getColumnModel().getColumn(2);
+            TableColumn column = jTable1.getColumnModel().getColumn(0);
+            column.setWidth(0);
+            column.setMaxWidth(0);
+            column = jTable1.getColumnModel().getColumn(3);
             column.setCellEditor(new zeugnis.DateCellEditor());
-            column = jTable1.getColumnModel().getColumn(4);
+            column = jTable1.getColumnModel().getColumn(5);
             column.setCellEditor(new zeugnis.DeleteCellEditor());
             column.setCellRenderer(new IconCellRenderer());
-            column = jTable1.getColumnModel().getColumn(5);
+            column = jTable1.getColumnModel().getColumn(6);
             column.setCellEditor(new PdfCellEditor());
             column.setCellRenderer(new IconCellRenderer());
             jScrollPane1.setViewportView(jTable1);
@@ -406,11 +404,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         String sClass = (String) jComboBox3.getSelectedItem();
 
         try {
-            connector.fillClassTable(jTable1, Integer.parseInt(sYear.substring(0, 4)), sClass, idSchuelerList);
-
-            // Anzahl der Zeilen ermitteln. Der Wert wird später genbraucht um zu entscheiden ob eine
-            // Änderung ein Update oder ein Insert ist.
-            rows = jTable1.getModel().getRowCount();
+            connector.fillClassTable(jTable1, Integer.parseInt(sYear.substring(0, 4)), sClass);
         } catch (SQLException ex) {
             logger.severe(ex.getLocalizedMessage());
         }
@@ -420,7 +414,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private void addRow(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRow
         String datePattern = "dd.MM.yyyy";
         SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
-        Object[] row = {"", "",
+        Object[] row = {"", "", "",
             dateFormatter.format(Calendar.getInstance().getTime()), "",};
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.addRow(row);
@@ -519,22 +513,24 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
     @Override
     public void tableChanged(TableModelEvent e) {
-
-        if (!fill) {
+        
+        if(e.getType() == TableModelEvent.UPDATE && tableModelEventEnabled) {
             int row = e.getFirstRow();
-            int column = e.getColumn();
             TableModel model = (TableModel) e.getSource();
-            String columnName = model.getColumnName(column);
-            Object data = model.getValueAt(row, column);
+            int idColumn = 0;
 
         // Prüfen ob die Spalten Name, Vorname, Geburtsdatun Werte enthalten um eine idSchueler zu generieren
             // Wenn ja, über rows ermitteln ob es sich um ein update oder ein insert handelt.
-            Object data1 = null, data2 = null, data3 = null, data4 = null;
+            Object data0 = null, data1 = null, data2 = null, data3 = null, data4 = null;
             String string1, string2, string3;
 
             for (int i = 0; i < model.getColumnCount(); i++) {
 
                 switch (model.getColumnName(i)) {
+                     case "Id":
+                         data0 = model.getValueAt(row, i);
+                         idColumn = i;
+                        break;
                     case "Name":
                         data1 = model.getValueAt(row, i);
                         break;
@@ -577,17 +573,24 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 values[6] = ((String) jComboBox1.getSelectedItem()).substring(0, 4);
 
                 try {
+                    tableModelEventEnabled = false;
                     // insert
-                    if (row >= rows) {
+                    if (data0 == null || ((String) data0).isEmpty()) {
+                        
                         connector.insertPuple(values);
-                        idSchuelerList.add(values[0]);
-                        rows++;
-                        // update    
+                        
+                        // Die neue Id in die erste Spalte der Tabelle schreiben.
+                        model.setValueAt(values[0], row, idColumn);
+                                            
+                    // update    
                     } else {
-                        connector.updatePuple(values, idSchuelerList.get(row));
-                        idSchuelerList.add(row, values[0]);
+                        connector.updatePuple(values, (String)data0);
+                        
+                        // Die neue Id in die erste Spalte der Tabelle schreiben.
+                        jTable1.getModel().setValueAt(values[0], row, idColumn);
                     }
-
+                    
+                    tableModelEventEnabled = true;
                 } catch (SQLException ex) {
                     logger.severe(ex.getLocalizedMessage());
                 }
