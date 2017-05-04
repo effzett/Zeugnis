@@ -47,7 +47,7 @@ public class PdfCellEditor extends AbstractCellEditor implements TableCellEditor
     JDatePickerImpl datePicker = null;
 
     public PdfCellEditor() {
-        
+
     }
 
     //Implement the one method defined by TableCellEditor.
@@ -63,17 +63,17 @@ public class PdfCellEditor extends AbstractCellEditor implements TableCellEditor
         } catch (ParseException ex) {
             Logger.getLogger(PdfCellEditor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return (JLabel)value;
+        return (JLabel) value;
     }
 
     @Override
     public boolean isCellEditable(EventObject anEvent) {
-        
+
         if (anEvent instanceof MouseEvent) {
             int clickCountToStart = 1;
             return ((MouseEvent) anEvent).getClickCount() >= clickCountToStart;
         }
-        
+
         return true;
     }
 
@@ -81,7 +81,7 @@ public class PdfCellEditor extends AbstractCellEditor implements TableCellEditor
     public Object getCellEditorValue() {
         return value;
     }
-     
+
     private void createTestimony(JTable table, int row) throws SQLException, ParseException {
 
         try {
@@ -89,18 +89,18 @@ public class PdfCellEditor extends AbstractCellEditor implements TableCellEditor
             TableModel model = table.getModel();
             logger.fine("Columns:-> " + String.valueOf(model.getColumnCount()));
             SimpleDateFormat oldFormat = new SimpleDateFormat("dd.MM.yyyy");
-            Date dt = oldFormat.parse(model.getValueAt(row, 2).toString());
+            Date dt = oldFormat.parse((String)model.getValueAt(row, 2));
             SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String namevornamedatumschuljahr=   model.getValueAt(row, 0).toString() + 
-                                                model.getValueAt(row, 1).toString() +
-                                                newFormat.format(dt) +
-                                                Integer.toString(Gui.getSYear());
-            logger.fine("idSchueler="+namevornamedatumschuljahr);
-            int idSCHUELER =namevornamedatumschuljahr.hashCode();
+            String namevornamedatumschuljahr = (String)model.getValueAt(row, 0)
+                    + (String)model.getValueAt(row, 1)
+                    + newFormat.format(dt)
+                    + Integer.toString(Gui.getSYear());
+            logger.fine("idSchueler=" + namevornamedatumschuljahr + " " + namevornamedatumschuljahr.hashCode());
+            int idSCHUELER = namevornamedatumschuljahr.hashCode();
             ZeugnisPDF zeugnis = new ZeugnisPDF(idSCHUELER);    // holt Werte aus DB -> private Variables
             zeugnis.CreatePDF();    // uses private Variables
         } catch (IOException | DocumentException ex) {
             logger.severe(ex.getLocalizedMessage());
-        }     
-    }  
+        }
+    }
 }

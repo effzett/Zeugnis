@@ -7,7 +7,9 @@ package zeugnis;
 
 import java.awt.Component;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.EventObject;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;
@@ -17,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -41,10 +44,26 @@ public class DeleteCellEditor extends AbstractCellEditor implements TableCellEdi
                 JOptionPane.QUESTION_MESSAGE);
         
         if(result == JOptionPane.OK_OPTION) {
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            model.removeRow(row);
+            TableModel model = table.getModel();
+            
+            for (int i = 0; i < model.getColumnCount(); i++) {
+
+                if(model.getColumnName(i).equals("Id")) {
+                    
+                    try {
+                        SingletonSQLConnector.getInstance().deletePuple((String)model.getValueAt(row, i));
+                        break;
+                    } catch (SQLException ex) {
+                        logger.severe(ex.getLocalizedMessage());
+                    }
+                    
+                }
+            
+            }
+            
+            ((DefaultTableModel)model).removeRow(row);
         }
-        
+               
         return (JLabel)value;
     }
 
