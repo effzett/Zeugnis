@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
@@ -115,7 +116,6 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -346,14 +346,6 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             });
             jMenu2.add(jMenuItem2);
 
-            jMenuItem3.setText("Neue Klasse anlegen");
-            jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    addClass(evt);
-                }
-            });
-            jMenu2.add(jMenuItem3);
-
             jMenuBar1.add(jMenu2);
 
             setJMenuBar(jMenuBar1);
@@ -421,44 +413,6 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     }//GEN-LAST:event_addRow
 
 
-    private void addSchoolYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSchoolYear
-        String result = (String) JOptionPane.showInputDialog(
-                this,
-                "Tragen Sie das Schuljahr im Format yyyy/yy (z.B 2015/16) ein",
-                "Neues Schuljahr anlegen",
-                JOptionPane.PLAIN_MESSAGE);
-
-        if ((result != null) && (result.length() > 0)) {
-
-            if (result.matches("[0-9]{4}/[0-9]{2}")) {
-
-            } else {
-                logger.warning("Der eingegebene Wert entspricht nicht dem Format yyyy/yy (z.B 2015/16)");
-            }
-
-        }
-
-    }//GEN-LAST:event_addSchoolYear
-
-    private void addClass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClass
-        String result = (String) JOptionPane.showInputDialog(
-                this,
-                "Es wird eine neue Klasse zum Schuljahr " + (String) jComboBox1.getSelectedItem() + " angelegt\n"
-                + "Es wird das Format [0-9][a-z] (z.b 1a) erwartet.",
-                "Neuw Klasse anlegen",
-                JOptionPane.PLAIN_MESSAGE);
-
-        if ((result != null) && (result.length() > 0)) {
-
-            if (result.matches("[0-9]{1}[a-z]{1}")) {
-
-            } else {
-                logger.warning("Der eingegebene Wert entspricht nicht dem Format [0-9][a-z] (z.B 1a)");
-            }
-
-        }
-    }//GEN-LAST:event_addClass
-
     private void changeSYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeSYear
         sYear = Integer.parseInt(((String) jComboBox1.getSelectedItem()).substring(0, 4));
     }//GEN-LAST:event_changeSYear
@@ -475,6 +429,41 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         // TODO add your handling code here:
     }//GEN-LAST:event_createPdfForClass
 
+    private void addSchoolYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSchoolYear
+        String result = (String) JOptionPane.showInputDialog(
+            this,
+            "Tragen Sie das Schuljahr im Format yyyy/yy (z.B 2015/16) ein",
+            "Neues Schuljahr anlegen",
+            JOptionPane.PLAIN_MESSAGE);
+
+        if ((result != null) && (result.length() > 0)) {
+
+            if (result.matches("[0-9]{4}/[0-9]{2}")) {
+
+            } else {
+                logger.warning("Der eingegebene Wert entspricht nicht dem Format yyyy/yy (z.B 2015/16)");
+            }
+
+        }
+    }//GEN-LAST:event_addSchoolYear
+
+    private void fillPupleComboBox() {
+               
+        try {
+            ArrayList[] fetchedPuples = connector.fetchPuples(sYear, sClass);
+            String[][] comboBoxEntries = new String[fetchedPuples.length][2];
+            
+            for(int i = 0; i < fetchedPuples.length; i++) {
+                ArrayList<String> puple = fetchedPuples[i];
+                jComboBox4.insertItemAt(new String[]{(puple.get(1) + ", " + puple.get(2)), puple.get(0)}, i);
+            }
+           
+        } catch (SQLException ex) {
+            logger.severe(ex.getLocalizedMessage());
+        }
+        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
@@ -495,7 +484,6 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -564,7 +552,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 }
 
                 String[] values = new String[7];
-                values[0] = Integer.toString((string1 + string2 + sqlDate.toString() + Gui.getSYear()).hashCode());
+                values[0] = Integer.toString((string1 + string2 + sqlDate.toString() + sYear).hashCode());
                 values[1] = string1;
                 values[2] = string2;
                 values[3] = string3;
