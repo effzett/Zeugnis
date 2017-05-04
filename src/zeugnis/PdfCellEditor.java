@@ -89,10 +89,10 @@ public class PdfCellEditor extends AbstractCellEditor implements TableCellEditor
             TableModel model = table.getModel();
             logger.fine("Columns:-> " + String.valueOf(model.getColumnCount()));
             SimpleDateFormat oldFormat = new SimpleDateFormat("dd.MM.yyyy");
-            Date dt = oldFormat.parse((String)model.getValueAt(row, 2));
+            Date dt = oldFormat.parse((String)model.getValueAt(row, 3));
             SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String namevornamedatumschuljahr = (String)model.getValueAt(row, 0)
-                    + (String)model.getValueAt(row, 1)
+            String namevornamedatumschuljahr = (String)model.getValueAt(row, 1)
+                    + (String)model.getValueAt(row, 2)
                     + newFormat.format(dt)
                     + Integer.toString(Gui.getSYear());
             logger.fine("idSchueler=" + namevornamedatumschuljahr + " " + namevornamedatumschuljahr.hashCode());

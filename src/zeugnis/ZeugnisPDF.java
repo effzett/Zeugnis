@@ -140,8 +140,6 @@ public class ZeugnisPDF  {
         //Alle nötigen Felder werden aus der Datenbank gefüllt
         name      = connector.getSchuelerName(id);
         vorname   = connector.getSchuelerVorname(id);
-        logger.fine(String.valueOf(id));        
-        logger.fine(connector.getSchuelerGebDatum(id));
         gebdatum  = convertDate(connector.getSchuelerGebDatum(id));
         gebort    = connector.getSchuelerGebOrt(id);
         currDate = (new SimpleDateFormat("dd.MM.yyyy")).format(new Date());
@@ -168,6 +166,8 @@ public class ZeugnisPDF  {
         gm=connector.getKriterien(idSCHUELER,"Größen und Messen");
         ArrayList<String> rf = new ArrayList();
         rf=connector.getKriterien(idSCHUELER,"Raum und Form");
+        
+        //***************
         
         //SU Fächer
         ArrayList<String> su1 = new ArrayList();
@@ -1501,6 +1501,7 @@ public class ZeugnisPDF  {
         doc.close();
         writer.close();
               
+
         // TODO nur zum Testen, muss später besser gelöst werden
         Desktop desktop = Desktop.getDesktop();
         if (desktop != null && desktop.isSupported(Desktop.Action.OPEN)) {
