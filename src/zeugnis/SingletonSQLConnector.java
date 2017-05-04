@@ -336,6 +336,14 @@ public class SingletonSQLConnector {
         return result;
     }
     
+    /**
+     * liefert die Kriterien für den übergebenen Lernbereich für die aktuelle 
+     * Klassenstufe und das aktuelle Schuljahr
+     * @param idSCHULER
+     * @param lernbereich
+     * @return
+     * @throws SQLException 
+     */
     public ArrayList<String> getKriterien(int idSCHULER,String lernbereich) throws SQLException {
         ArrayList<String> result = new ArrayList<>();
         
@@ -357,18 +365,20 @@ public class SingletonSQLConnector {
     
     
     /**
-     * liefert eine Liste der Lernbereiche, die für ein Schuljahr und 
-     * eine Klassenstufe gültig ist
+     * liefert eine Liste der Lernbereiche, die für das aktuelle Schuljahr und 
+     * die aktuelle Klassenstufe
      * @param schuljahr
      * @param klassenstufe
      * @return result
      * @throws java.sql.SQLException
      */
-    public ArrayList<String> getLernbereiche(int schuljahr, int klassenstufe) throws SQLException{ 
+    public ArrayList<String> getLernbereiche() throws SQLException{ 
         ArrayList<String> result = new ArrayList<>();
         try (Statement statement = con.createStatement()) {
 
-            String sql = "select LERNBEREICH from LERNBEREICH where KLASSENSTUFE="+ klassenstufe +" AND SCHULJAHR ="+schuljahr;
+            String sql = "select LERNBEREICH from LERNBEREICH where KLASSENSTUFE="+ 
+                    Gui.getSClass().substring(0,1) +" AND SCHULJAHR =" +
+                    Gui.getSYear();
             logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
 
