@@ -564,7 +564,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 }
 
                 String[] values = new String[7];
-                values[0] = Integer.toString((string1 + string2 + sqlDate.toString()).hashCode());
+                values[0] = Integer.toString((string1 + string2 + sqlDate.toString()+Gui.getSYear()).hashCode());
                 values[1] = string1;
                 values[2] = string2;
                 values[3] = string3;
