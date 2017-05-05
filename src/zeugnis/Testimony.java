@@ -29,8 +29,7 @@ public class Testimony {
     private ConsoleHandler consoleHandler = null;
     private DialogHandler dialogHandler = null;
     private Properties config = null;
-    private SQLConnector connector = null;
-
+  
     public Testimony() {
 
         try {

@@ -34,7 +34,7 @@ import org.apache.derby.drda.NetworkServerControl;
  */
 public class SingletonSQLConnector {
 
-    private final static Logger logger = Logger.getLogger(SQLConnector.class.getName());
+    private final static Logger logger = Logger.getLogger(SingletonSQLConnector.class.getName());
     private static Config config = null;
     private Connection con = null;
     private NetworkServerControl server = null;
@@ -165,7 +165,7 @@ public class SingletonSQLConnector {
 
         try (Statement statement = con.createStatement()) {
 
-            String sql = "select IDSCHUELER, NAME, VORNAME, GEBDATUM, GEBORT from SCHUELER where KLASSE = '" + sClass + "' and SCHULJAHR = " + sYear;
+            String sql = "select ID_SCHUELER, NAME, VORNAME, GEBDATUM, GEBORT from SCHUELER where KLASSE = '" + sClass + "' and SCHULJAHR = " + sYear;
             logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
 
