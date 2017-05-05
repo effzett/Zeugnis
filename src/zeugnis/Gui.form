@@ -118,6 +118,9 @@
       </Layout>
       <SubComponents>
         <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="changeTab"/>
+          </Events>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
           <SubComponents>
@@ -138,7 +141,7 @@
                           <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButton3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="437" max="32767" attributes="0"/>
+                          <EmptySpace pref="505" max="32767" attributes="0"/>
                       </Group>
                       <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane1" alignment="0" pref="707" max="32767" attributes="0"/>
@@ -244,10 +247,15 @@
                                   </Group>
                                   <Component id="jTextField1" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jComboBox5" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane3" min="-2" pref="453" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" pref="515" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -255,14 +263,19 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jScrollPane3" min="-2" pref="375" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jComboBox4" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jComboBox5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="jScrollPane2" min="-2" pref="102" max="-2" attributes="0"/>
@@ -282,7 +295,7 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="13" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -295,15 +308,13 @@
                 </Component>
                 <Component class="javax.swing.JComboBox" name="jComboBox4">
                   <Properties>
-                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
-                        <StringItem index="0" value="Item 1"/>
-                        <StringItem index="1" value="Item 2"/>
-                        <StringItem index="2" value="Item 3"/>
-                        <StringItem index="3" value="Item 4"/>
-                      </StringArray>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="new javax.swing.DefaultComboBoxModel()" type="code"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jComboBox4.setRenderer(new DefaultListCellRenderer(){&#xa;&#xa;    public Component getListCellRendererComponent(JList list,&#xa;                                                   Object value,&#xa;                                                   int index,&#xa;                                                   boolean isSelected,&#xa;                                                   boolean cellHasFocus) {&#xa;        &#xa;        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);&#xa;&#xa;        if(value instanceof String[]){&#xa;            String[] puple = (String[])value;&#xa;            setText(puple[0]);&#xa;        }&#xa;/*&#xa;         Color background;&#xa;         Color foreground;&#xa;&#xa;         // check if this cell represents the current DnD drop location&#xa;         JList.DropLocation dropLocation = list.getDropLocation();&#xa;         if (dropLocation != null&#xa;                 &amp;&amp; !dropLocation.isInsert()&#xa;                 &amp;&amp; dropLocation.getIndex() == index) {&#xa;&#xa;             background = Color.BLUE;&#xa;             foreground = Color.WHITE;&#xa;&#xa;         // check if this cell is selected&#xa;         } else if (isSelected) {&#xa;             background = Color.RED;&#xa;             foreground = Color.WHITE;&#xa;&#xa;         // unselected, and not the DnD drop location&#xa;         } else {&#xa;             background = Color.WHITE;&#xa;             foreground = Color.BLACK;&#xa;         };&#xa;&#xa;         setBackground(background);&#xa;         setForeground(foreground);&#xa;*/&#xa;         return this;&#xa;     }&#xa;&#xa;});"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel5">
                   <Properties>
@@ -370,7 +381,7 @@
                     <Component class="javax.swing.JTable" name="jTable2">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new String [] {&#xa;        &quot;Fach&quot;, &quot;Bewertung&quot;&#xa;    }, 2)&#xa;    " type="code"/>
+                          <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new String [] {&#xa;        &quot;Kriterien&quot;, &quot;Bewertung&quot;&#xa;    }, 2)&#xa;    " type="code"/>
                         </Property>
                         <Property name="rowHeight" type="int" value="20"/>
                         <Property name="rowSelectionAllowed" type="boolean" value="false"/>
@@ -379,11 +390,21 @@
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="column = jTable2.getColumnModel().getColumn(1);&#xa;column.setCellRenderer(new zeugnis.ComboBoxCellRenderer());&#xa;column.setCellEditor(new DefaultCellEditor(markComboBox));"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="column = jTable2.getColumnModel().getColumn(1);&#xa;//column.setCellRenderer(new zeugnis.ComboBoxCellRenderer());&#xa;column.setCellEditor(new DefaultCellEditor(getMarkBox()));"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
+                <Component class="javax.swing.JLabel" name="jLabel9">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="F&#xe4;cher"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JComboBox" name="jComboBox5">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeSubject"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>
@@ -426,6 +447,9 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changeHYear"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jComboBox2.setEnabled((jTabbedPane1.getSelectedIndex() == 0) ? false : true);"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
