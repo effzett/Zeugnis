@@ -403,6 +403,29 @@ public class SingletonSQLConnector {
         return result;
     }
 
+     /**
+     * liefert ID_Kriterien, die zur Zeugnis.ID_KRITERIUMSLISTE passen
+     * immer für die aktuelle Klassenstufe/Schuljahr/Halbjahr
+     * Diese Liste wird dann in einer Hashtabelle (ID_KRITERIUM,BEWERTUNG) abgelegt
+     * @param idSCHULER
+     * @return
+     * @throws SQLException 
+     */
+    public ArrayList<Integer> getID_KriterienZeugnis(int idSchueler) throws SQLException {
+        ArrayList<Integer> result = new ArrayList<>();
+
+        try (Statement statement = con.createStatement()) {
+            String k=Gui.getSClass().substring(0, 1);
+            String sql = "select ID_KRITERIUM from KRITERIUMSLISTE where KRITERIUMSLISTE.ID_KRITERIUMSLISTE=ZEUGNIS.ID_KRITERIUMSLISTE AND ZEUGNIS.ID_SCHUELER=" + idSchueler + " AND ZEUGNIS.HALBJAHR="+ Gui.getHYear()+" ZEUGNIS.SCHULJAHR ="+Gui.getSYear();
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            while (set.next()) {
+                result.add(set.getInt(1));
+            }
+        }
+        return result;
+    }
+
     /**
      * liefert eine Liste der Lernbereiche, die für das aktuelle Schuljahr und 
      * die aktuelle Klassenstufe

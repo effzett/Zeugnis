@@ -72,9 +72,10 @@ public class ZeugnisPDF  {
     private int noteArbeit;
     private int noteSozial;
     
-    public class TableItem{
+    public class TableItem {
+
         private String text;
-        private int    bewertung;
+        private int bewertung;
 
         /**
          * @return the text
