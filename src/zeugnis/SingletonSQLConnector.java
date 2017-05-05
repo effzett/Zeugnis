@@ -411,16 +411,19 @@ public class SingletonSQLConnector {
      * @return
      * @throws SQLException 
      */
-    public ArrayList<Integer> getID_KriterienZeugnis(int idSchueler) throws SQLException {
-        ArrayList<Integer> result = new ArrayList<>();
-
+    public ArrayList<KriteriumBewertung> getID_KriterienZeugnis(int idSchueler) throws SQLException {
+        ArrayList<KriteriumBewertung> result = new ArrayList<>();
+        KriteriumBewertung kb = new KriteriumBewertung();
+        
         try (Statement statement = con.createStatement()) {
             String k=Gui.getSClass().substring(0, 1);
-            String sql = "select ID_KRITERIUM from KRITERIUMSLISTE where KRITERIUMSLISTE.ID_KRITERIUMSLISTE=ZEUGNIS.ID_KRITERIUMSLISTE AND ZEUGNIS.ID_SCHUELER=" + idSchueler + " AND ZEUGNIS.HALBJAHR="+ Gui.getHYear()+" ZEUGNIS.SCHULJAHR ="+Gui.getSYear();
+            String sql = "select ID_KRITERIUM,BEWERTUNG from KRITERIUMSLISTE where KRITERIUMSLISTE.ID_KRITERIUMSLISTE=ZEUGNIS.ID_KRITERIUMSLISTE AND ZEUGNIS.ID_SCHUELER=" + idSchueler + " AND ZEUGNIS.HALBJAHR="+ Gui.getHYear()+" ZEUGNIS.SCHULJAHR ="+Gui.getSYear();
             //logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
             while (set.next()) {
-                result.add(set.getInt(1));
+                kb.setIdKriterium(set.getInt(1));
+                kb.setBewertung(set.getInt(2));
+                result.add(kb);
             }
         }
         return result;

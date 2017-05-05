@@ -13,6 +13,15 @@ public class KriteriumBewertung {
     private int idKriterium;
     private int bewertung;
 
+    public KriteriumBewertung(int id, int bew){
+        idKriterium = id;
+        bewertung   = bew;
+    }
+    public KriteriumBewertung(){
+        idKriterium = 0;
+        bewertung   = 0;
+    }
+    
     /**
      * @return the idKriterium
      */
