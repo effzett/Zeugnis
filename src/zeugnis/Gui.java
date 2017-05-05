@@ -811,4 +811,22 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         return sClass;
     }
 
+    /**
+     * convert a Date (dt) from an old format (i.e. "dd.MM.yyyy") into a new format (i.e. "yyyy-MM-dd")
+     * @param oldFormat
+     * @param newFormat
+     * @param dt
+     * @return 
+     */
+    public static String convertDate(String oldFormat, String newFormat, String dateString) throws ParseException{
+        SimpleDateFormat odf;
+        SimpleDateFormat ndf;
+        String result;
+        odf = new SimpleDateFormat(oldFormat);
+        ndf = new SimpleDateFormat(newFormat);
+        Date dt = odf.parse(dateString);
+        result= ndf.format(dt);
+
+        return result;
+    }
 }
