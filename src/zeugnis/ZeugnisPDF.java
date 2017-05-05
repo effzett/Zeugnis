@@ -330,6 +330,30 @@ public class ZeugnisPDF  {
         return cell;
     }
     
+    /**
+     * soll später die generische Funktion zur Zellerzeugung sein...
+     * @param text
+     * @param hAlign
+     * @param vAlign
+     * @param colSpan
+     * @param font
+     * @param border
+     * @param pad
+     * @param height
+     * @return cell
+     */
+    private PdfPCell createCell(String text, int hAlign, int vAlign, int colSpan, Font font,int border,float pad,float height){
+        PdfPCell cell;
+        cell = new PdfPCell(new Phrase(text,font));
+        cell.setColspan(colSpan);
+        cell.setHorizontalAlignment(hAlign);
+        cell.setHorizontalAlignment(vAlign);
+        cell.setPadding(pad);
+        cell.setFixedHeight(height);
+        cell.setBorder(border);
+        return cell;
+    }
+    
     private PdfPCell kreisViertel(int fraction,float pad, int hAlign,int vAlign,int border) throws IOException, BadElementException{
         PdfPCell cell;
 
@@ -566,8 +590,8 @@ public class ZeugnisPDF  {
         String Sym3 = "Die Kompetenz ist weitgehend gesichert";
         String Sym4 = "Die Kompetenz ist gesichert";
         
-        String deutsch          = "Deutsch ";
-        String mathe            = "Mathematik ";
+        String deutschS          = "Deutsch ";
+        String matheS            = "Mathematik ";
         String sachunterrichtS  = "Sachunterricht ";
         String musikS           = "Musik ";
         String religionS        = "Religion ";
@@ -612,6 +636,7 @@ public class ZeugnisPDF  {
         
         
         // Adresse
+        
         PdfPCell cell1Adresse;
         cell1Adresse = new PdfPCell(new Phrase("Grundschule Brelingen, Schulstraße 10, 30900 Wedemark",NORMAL_FONT));
         cell1Adresse.setColspan(3);
@@ -975,7 +1000,7 @@ public class ZeugnisPDF  {
         PdfPCell cell3Header = header(3,vorname,name,gebdatum,currDate,6);
         
         PdfPCell cell3Deutsch;
-        cell3Deutsch = new PdfPCell(new Phrase(deutsch + jStufe,NORMAL_BOLD_FONT));
+        cell3Deutsch = new PdfPCell(new Phrase(deutschS + jStufe,NORMAL_BOLD_FONT));
         cell3Deutsch.setColspan(6);
         cell3Deutsch.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell3Deutsch.setFixedHeight(35f);
@@ -1081,7 +1106,7 @@ public class ZeugnisPDF  {
         PdfPCell cell4Header = header(4,vorname,name,gebdatum,currDate,6);
         
         PdfPCell cell4Mathe;
-        cell4Mathe = new PdfPCell(new Phrase(mathe + jStufe,NORMAL_BOLD_FONT));
+        cell4Mathe = new PdfPCell(new Phrase(matheS + jStufe,NORMAL_BOLD_FONT));
         cell4Mathe.setColspan(6);
         cell4Mathe.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell4Mathe.setFixedHeight(35f);

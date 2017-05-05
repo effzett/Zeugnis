@@ -265,7 +265,7 @@ public class SingletonSQLConnector {
         String name="Name";
         try (Statement statement = con.createStatement()) {
             String sql = "select NAME from SCHUELER where ID_SCHUELER = " + idSCHUELER ;
-            logger.fine(sql);
+            //logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
             while (set.next()) {
                 name = set.getString(1);
@@ -278,7 +278,7 @@ public class SingletonSQLConnector {
         String vorname="Vorname";
         try (Statement statement = con.createStatement()) {
             String sql = "select VORNAME from SCHUELER where ID_SCHUELER = " + idSCHUELER ;
-            logger.fine(sql);
+            //logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
             while (set.next()) {
                 vorname = set.getString(1);
@@ -291,7 +291,7 @@ public class SingletonSQLConnector {
         String gebdatum="";
         try (Statement statement = con.createStatement()) {
             String sql = "select GEBDATUM from SCHUELER where ID_SCHUELER = " + idSCHUELER ;
-            logger.fine(sql);
+            //logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
             while (set.next()) {
                 gebdatum = set.getString(1);
@@ -304,7 +304,7 @@ public class SingletonSQLConnector {
         String gebort="";
         try (Statement statement = con.createStatement()) {
             String sql = "select GEBORT from SCHUELER where ID_SCHUELER = " + idSCHUELER ;
-            logger.fine(sql);
+            //logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
             while (set.next()) {
                 gebort = set.getString(1);
@@ -322,7 +322,7 @@ public class SingletonSQLConnector {
         try (Statement statement = con.createStatement()) {
 
             String sql = "select KRITERIUMTEXT from KRITERIUM where ID_LERNBEREICH=1 AND SCHULJAHR ="+Gui.getSYear();
-            logger.fine(sql);
+            //logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
 
             while (set.next()) {
@@ -342,7 +342,7 @@ public class SingletonSQLConnector {
         try (Statement statement = con.createStatement()) {
 
             String sql = "select KRITERIUMTEXT from KRITERIUM where ID_LERNBEREICH=2 AND SCHULJAHR ="+Gui.getSYear();
-            logger.fine(sql);
+            //logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
 
             while (set.next()) {
@@ -370,7 +370,7 @@ public class SingletonSQLConnector {
         try (Statement statement = con.createStatement()) {
             String k=Gui.getSClass().substring(0, 1);
             String sql = "select KRITERIUMTEXT from KRITERIUM,LERNBEREICH where LERNBEREICH.LERNBEREICH='"+ lernbereich+"' AND KRITERIUM.ID_LERNBEREICH=LERNBEREICH.ID_LERNBEREICH AND LERNBEREICH.KLASSENSTUFE=" + k +" AND LERNBEREICH.SCHULJAHR ="+Gui.getSYear() + " AND KRITERIUM.SCHULJAHR ="+Gui.getSYear();
-            logger.fine(sql);
+            //logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
 
             while (set.next()) {
@@ -396,7 +396,7 @@ public class SingletonSQLConnector {
             String sql = "select LERNBEREICH from LERNBEREICH where KLASSENSTUFE="+ 
                     Gui.getSClass().substring(0,1) +" AND SCHULJAHR =" +
                     Gui.getSYear();
-            logger.fine(sql);
+            //logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
 
             while (set.next()) {
