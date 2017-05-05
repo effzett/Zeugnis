@@ -7,6 +7,8 @@ package zeugnis.testdata;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 import zeugnis.SingletonSQLConnector;
 
 /**
@@ -21,7 +23,7 @@ public class FillDatabase {
         this.connector = connector;
     }
 
-    public void insertClass() {
+    public void insertClass() throws SQLException {
 
         String[][] testClass = new String[][]{
             {Integer.toString("SchröderGerhardt1944-04-072016".hashCode()), "Schröder", "Gerhardt", "07.04.1944", "Massenberg-Wöhren", "1a", "2016"},
@@ -45,16 +47,36 @@ public class FillDatabase {
         for (String[] puple : testClass) {
             try {
                 connector.insertPuple(puple);
-                connector.insertZeugnis(testZeugnis[i]); // 1. Halbjahr
-                connector.insertZeugnis(testZeugnis[i+1]); // 2. Halbjahr
+                connector.insertZeugnis(testZeugnis[i]);    // 1. Halbjahr
+                connector.insertZeugnis(testZeugnis[i+1]);  // 2. Halbjahr
                 i+=2;
             } catch (SQLException ex) {
                 System.out.println("Testdaten schon vorhanden.");
                 continue;
             }
-
         }
 
+        // jetzt noch KRITERIUMSLISTE füllen...
+        try {
+            ArrayList<Integer> lbid = new ArrayList<Integer>(); // Lernbereiche
+            lbid = connector.getID_Lernbereiche();
+            for (Integer l : lbid){
+                ArrayList<Integer> kid = new ArrayList<Integer>();  // Kriterium
+                kid = connector.getID_Kriterien(l);
+                for(int j=1; j<9; j++){
+                    for(Integer k : kid){
+                        Integer bew = ThreadLocalRandom.current().nextInt(1, 4);
+                        String[] s = {Integer.toString(j),Integer.toString(k),Integer.toString(bew)};
+                        System.out.println("KRITERIUMSLISTE:"+s[0]+" KRITERIUM:"+s[1]+"BEWERTUNG:"+s[2]);
+                        connector.insertKriteriumsliste(s);
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+               System.out.println("FEEEEEEEHLER "+ex.getMessage());
+        }
+        
+        
     }
 
 }

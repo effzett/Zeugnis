@@ -136,6 +136,21 @@ public class SingletonSQLConnector {
         }
     }
 
+    public void insertKriteriumsliste(String[] values) throws SQLException{
+        try (Statement statement = con.createStatement()) {
+            
+            String sql = "insert into KRITERIUMSLISTE values(" + 
+                            values[0]
+                    + "," + values[1]
+                    + "," + values[2] 
+                    + ")";
+            logger.fine(sql);
+            statement.executeUpdate(sql);
+        }
+ 
+    }
+    
+    
     /**
      * Update eines Schülers. Es werden alle Werte einer Zeile upgedatet.
      *
@@ -413,8 +428,20 @@ public class SingletonSQLConnector {
         ArrayList<Integer> result = new ArrayList<>();
 
         try (Statement statement = con.createStatement()) {
-            String k=Gui.getSClass().substring(0, 1);
-            String sql = "select ID_KRITERIUM from KRITERIUM where KRITERIUM.ID_LERNBEREICH=" + idLernbereich +" AND KRITERIUM.SCHULJAHR ="+Gui.getSYear();
+            String k;
+            int y;
+//            try {
+//                k = Gui.getSClass().substring(0, 1);
+//                y = Gui.getSYear();
+//            } catch (Exception ex) {
+//                k="1";
+//                y=2016;
+//            }
+                k="1";
+                y=2016;
+            
+//            String sql = "select ID_KRITERIUM from KRITERIUM where KRITERIUM.ID_LERNBEREICH=" + idLernbereich +" AND KRITERIUM.SCHULJAHR =2016";
+            String sql = "select ID_KRITERIUM from KRITERIUM where KRITERIUM.ID_LERNBEREICH=" + idLernbereich +" AND KRITERIUM.SCHULJAHR ="+y;
             //logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
             while (set.next()) {
@@ -436,8 +463,9 @@ public class SingletonSQLConnector {
      */
     public Hashtable<Integer,Integer> getID_KriterienZeugnis(int idSchueler) throws SQLException {
         Hashtable<Integer,Integer> resultHT = new Hashtable<Integer,Integer>();
+
         try (Statement statement = con.createStatement()) {
-            String sql = "select ID_KRITERIUM,BEWERTUNG from KRITERIUMSLISTE where KRITERIUMSLISTE.ID_KRITERIUMSLISTE=ZEUGNIS.ID_KRITERIUMSLISTE AND ZEUGNIS.ID_SCHUELER=" + idSchueler + " AND ZEUGNIS.HALBJAHR="+ Gui.getHYear()+" ZEUGNIS.SCHULJAHR ="+Gui.getSYear();
+            String sql = "select ID_KRITERIUM,BEWERTUNG from KRITERIUMSLISTE,ZEUGNIS where KRITERIUMSLISTE.ID_KRITERIUMSLISTE=ZEUGNIS.ID_KRITERIUMSLISTE AND ZEUGNIS.ID_SCHUELER=" + idSchueler + " AND ZEUGNIS.HALBJAHR="+ Gui.getHYear()+" AND ZEUGNIS.SCHULJAHR ="+Gui.getSYear();
             ResultSet set = statement.executeQuery(sql);
             while (set.next()) {
                 resultHT.put(set.getInt(1), set.getInt(2));
@@ -461,7 +489,6 @@ public class SingletonSQLConnector {
             String sql = "select LERNBEREICH from LERNBEREICH where KLASSENSTUFE="+ 
                     Gui.getSClass().substring(0,1) +" AND SCHULJAHR =" +
                     Gui.getSYear();
-            //logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
 
             while (set.next()) {
@@ -481,14 +508,21 @@ public class SingletonSQLConnector {
      */
     public ArrayList<Integer> getID_Lernbereiche() throws SQLException{ 
         ArrayList<Integer> result = new ArrayList<>();
+        String k;
+        int y;
+        try {
+            k = Gui.getSClass().substring(0, 1);
+            y = Gui.getSYear();
+        } catch (Exception ex) {
+            k="1";
+            y=2016;
+        }
+//            k="1";
+//            y=2016;
+
         try (Statement statement = con.createStatement()) {
-
-            String sql = "select ID_LERNBEREICH from LERNBEREICH where KLASSENSTUFE="+ 
-                    Gui.getSClass().substring(0,1) +" AND SCHULJAHR =" +
-                    Gui.getSYear();
-            //logger.fine(sql);
+            String sql = "select ID_LERNBEREICH from LERNBEREICH where (KLASSENSTUFE="+ k +" OR KLASSENSTUFE=0) AND SCHULJAHR =" + y;
             ResultSet set = statement.executeQuery(sql);
-
             while (set.next()) {
                 result.add(set.getInt(1));
             }
