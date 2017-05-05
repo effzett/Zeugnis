@@ -379,8 +379,7 @@ public class SingletonSQLConnector {
         }
         return result;
     }
-    
-    
+     
     /**
      * liefert eine Liste der Lernbereiche, die für das aktuelle Schuljahr und 
      * die aktuelle Klassenstufe
@@ -406,6 +405,32 @@ public class SingletonSQLConnector {
         return result;
     }
 
+        /**
+     * liefert eine Liste der ID_Lernbereiche, die für das aktuelle Schuljahr und 
+     * die aktuelle Klassenstufe
+     * @param schuljahr
+     * @param klassenstufe
+     * @return result
+     * @throws java.sql.SQLException
+     */
+    public ArrayList<Integer> getID_Lernbereiche() throws SQLException{ 
+        ArrayList<Integer> result = new ArrayList<>();
+        try (Statement statement = con.createStatement()) {
+
+            String sql = "select ID_LERNBEREICH from LERNBEREICH where KLASSENSTUFE="+ 
+                    Gui.getSClass().substring(0,1) +" AND SCHULJAHR =" +
+                    Gui.getSYear();
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+
+            while (set.next()) {
+                result.add(set.getInt(1));
+            }
+        }
+        return result;
+    }
+
+    
     
     /**
      * Shuts down the Derby Server in case of starting by this class.
