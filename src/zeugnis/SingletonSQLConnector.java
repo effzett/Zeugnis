@@ -380,6 +380,29 @@ public class SingletonSQLConnector {
         return result;
     }
      
+       /**
+     * liefert die Liste der ID_Kriterien für den übergebenen ID_Lernbereich für die aktuelle 
+     * Klassenstufe und das aktuelle Schuljahr
+     * @param idSCHULER
+     * @param lernbereich
+     * @return
+     * @throws SQLException 
+     */
+    public ArrayList<Integer> getID_Kriterien(int idLernbereich) throws SQLException {
+        ArrayList<Integer> result = new ArrayList<>();
+
+        try (Statement statement = con.createStatement()) {
+            String k=Gui.getSClass().substring(0, 1);
+            String sql = "select ID_KRITERIUM from KRITERIUM where KRITERIUM.ID_LERNBEREICH=" + idLernbereich +" AND KRITERIUM.SCHULJAHR ="+Gui.getSYear();
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            while (set.next()) {
+                result.add(set.getInt(1));
+            }
+        }
+        return result;
+    }
+
     /**
      * liefert eine Liste der Lernbereiche, die für das aktuelle Schuljahr und 
      * die aktuelle Klassenstufe
