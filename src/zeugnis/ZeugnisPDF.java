@@ -33,6 +33,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -107,6 +108,8 @@ public class ZeugnisPDF  {
 
     }
     
+    Hashtable<Integer,Integer> zeugnis;
+    
     private ArrayList aVerhalten    = new ArrayList<TableItem>();
     private ArrayList sVerhalten    = new ArrayList<TableItem>();
     private ArrayList sprechenZL    = new ArrayList<TableItem>();
@@ -133,11 +136,13 @@ public class ZeugnisPDF  {
      * @throws SQLException 
      */
     public ZeugnisPDF(int idSCHUELER) throws IOException, DocumentException, SQLException, ParseException{
+        this.zeugnis = new Hashtable<Integer,Integer>();
         // Hier können schon alle Werte aus der Datenbank geholt werden...
         id = idSCHUELER;
         
         SingletonSQLConnector connector = SingletonSQLConnector.getInstance();
 
+        
         //Alle nötigen Felder werden aus der Datenbank gefüllt
         name      = connector.getSchuelerName(id);
         vorname   = connector.getSchuelerVorname(id);
@@ -147,6 +152,9 @@ public class ZeugnisPDF  {
         schuljahr = Gui.getSYear();
         halbjahr  = Gui.getHYear();
         klasse    = Gui.getSClass();
+        
+        // liefert alle im zeugnis abgelegten Kriterien mit Bewertungen
+        zeugnis = connector.getID_KriterienZeugnis(idSCHUELER);
         
         // Hier müssen später andere Aufrufe stehen , da aus Zeugnissen geholt werden muss...
         ArrayList<String> avListe= new ArrayList();

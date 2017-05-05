@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -405,28 +406,26 @@ public class SingletonSQLConnector {
 
      /**
      * liefert ID_Kriterien, die zur Zeugnis.ID_KRITERIUMSLISTE passen
+     * in einer Hashtable. Dadurch kann man mit der ID_KRITERIUM leicht die 
+     * Bewertung erhalten
      * immer für die aktuelle Klassenstufe/Schuljahr/Halbjahr
      * Diese Liste wird dann in einer Hashtabelle (ID_KRITERIUM,BEWERTUNG) abgelegt
      * @param idSCHULER
      * @return
      * @throws SQLException 
      */
-    public ArrayList<KriteriumBewertung> getID_KriterienZeugnis(int idSchueler) throws SQLException {
-        ArrayList<KriteriumBewertung> result = new ArrayList<>();
-        KriteriumBewertung kb = new KriteriumBewertung();
-        
+    public Hashtable<Integer,Integer> getID_KriterienZeugnis(int idSchueler) throws SQLException {
+        Hashtable<Integer,Integer> resultHT = new Hashtable<Integer,Integer>();
         try (Statement statement = con.createStatement()) {
             String k=Gui.getSClass().substring(0, 1);
             String sql = "select ID_KRITERIUM,BEWERTUNG from KRITERIUMSLISTE where KRITERIUMSLISTE.ID_KRITERIUMSLISTE=ZEUGNIS.ID_KRITERIUMSLISTE AND ZEUGNIS.ID_SCHUELER=" + idSchueler + " AND ZEUGNIS.HALBJAHR="+ Gui.getHYear()+" ZEUGNIS.SCHULJAHR ="+Gui.getSYear();
             //logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
             while (set.next()) {
-                kb.setIdKriterium(set.getInt(1));
-                kb.setBewertung(set.getInt(2));
-                result.add(kb);
+                resultHT.put(set.getInt(1), set.getInt(2));
             }
         }
-        return result;
+        return resultHT;
     }
 
     /**
