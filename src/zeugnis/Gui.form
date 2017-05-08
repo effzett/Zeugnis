@@ -390,7 +390,7 @@
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="column = jTable2.getColumnModel().getColumn(1);&#xa;//column.setCellRenderer(new zeugnis.ComboBoxCellRenderer());&#xa;column.setCellEditor(new DefaultCellEditor(getMarkBox()));"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="column = jTable2.getColumnModel().getColumn(1);&#xa;column.setCellRenderer(new zeugnis.ComboBoxCellRenderer());&#xa;column.setCellEditor(new DefaultCellEditor(getMarkBox()));"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>

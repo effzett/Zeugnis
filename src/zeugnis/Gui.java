@@ -260,7 +260,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             jTable2.setRowSelectionAllowed(false);
             jTable2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
             column = jTable2.getColumnModel().getColumn(1);
-            //column.setCellRenderer(new zeugnis.ComboBoxCellRenderer());
+            column.setCellRenderer(new zeugnis.ComboBoxCellRenderer());
             column.setCellEditor(new DefaultCellEditor(getMarkBox()));
             jScrollPane3.setViewportView(jTable2);
 
@@ -472,7 +472,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private void changeSYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeSYear
         sYear = Integer.parseInt(((String) jComboBox1.getSelectedItem()).substring(0, 4));
         fillPupleComboBox();
-        fillSubjectComboBox();    
+        fillSubjectComboBox();
     }//GEN-LAST:event_changeSYear
 
     private void changeHYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeHYear
@@ -483,7 +483,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private void changeSClass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeSClass
         sClass = (String) jComboBox3.getSelectedItem();
         fillPupleComboBox();
-        fillSubjectComboBox();        
+        fillSubjectComboBox();
     }//GEN-LAST:event_changeSClass
 
     private void createPdfForClass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPdfForClass
@@ -506,7 +506,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             }
 
         }
-        
+
     }//GEN-LAST:event_addSchoolYear
 
     private void changeTab(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_changeTab
@@ -518,7 +518,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     }//GEN-LAST:event_changeTab
 
     private void changeSubject(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeSubject
-        fillTestimonyTable((String)jComboBox5.getSelectedItem());
+        fillTestimonyTable((String) jComboBox5.getSelectedItem());
     }//GEN-LAST:event_changeSubject
 
     /**
@@ -526,9 +526,9 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
      * wird um den aktuellen Stand zu haben falls im Reiter Schulklassen Schüler
      * ediert, hinzugefuegt oder geloescht wurden. Ein anderes Schuljahr
      * ausgewählt wird. ComboBox1 Schuljahr Eine andere Klasse ausgewählt wird.
-     * ComboBox3 Klasse.
-     * Auf die ID des Schuelers kann uber (String[])jComboBox4getSelectedItem zugegrigffen
-     * werden. Das zweite Feld im String ist die ID_SCHUELER.
+     * ComboBox3 Klasse. Auf die ID des Schuelers kann uber
+     * (String[])jComboBox4getSelectedItem zugegrigffen werden. Das zweite Feld
+     * im String ist die ID_SCHUELER.
      */
     private void fillPupleComboBox() {
         jComboBox4.removeAllItems();
@@ -547,43 +547,43 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         }
 
     }
-    
+
     /**
-     * Fuellt die jComboBox5 mit den entsprechenden Fächern. Abhaengig
-     * von Klasse und Schuljahr.
-     * In Abhaengigkeit des Faches wird die Tabelle zur politisch
-     * korrrekten Benotung gefuellt.
+     * Fuellt die jComboBox5 mit den entsprechenden Fächern. Abhaengig von
+     * Klasse und Schuljahr. In Abhaengigkeit des Faches wird die Tabelle zur
+     * politisch korrrekten Benotung gefuellt.
      */
     private void fillSubjectComboBox() {
-        
+
         try {
             jComboBox5.setModel(new DefaultComboBoxModel(connector.getLernbereiche().toArray(new String[0])));
         } catch (SQLException ex) {
             logger.severe(ex.getLocalizedMessage());
         }
-      
-        fillTestimonyTable((String)jComboBox5.getItemAt(0));
+
+        fillTestimonyTable((String) jComboBox5.getItemAt(0));
     }
-    
+
     private void fillTestimonyTable(String subject) {
-        
+
         try {
             ArrayList<String> criteria = connector.getKriterien(0, subject);
-            DefaultTableModel model = (DefaultTableModel)jTable2.getModel();
+            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
             model.setRowCount(0);
             Object[] row = new Object[2];
             Iterator<String> it = criteria.iterator();
-                        
-            while(it.hasNext()) {
+
+            while (it.hasNext()) {
                 row[0] = it.next();
-                row[1]= getMarkBox();
+                //row[1] = getMarkBox();
+                row[1] = "Zeile1";
                 model.addRow(row);
             }
-            
+
         } catch (SQLException ex) {
             logger.severe(ex.getLocalizedMessage());
         }
-        
+
     }
 
     // Gibt eine neue Instanz eines Noten PulldownMenues zurueck.
@@ -606,7 +606,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                     setText("");
                     setIcon((ImageIcon) value);
                 } else {
-                    logger.severe("Unerwartetes Object beim Rendern der ComboBox");
+                    logger.severe("Unerwartetes Object beim Rendern der ComboBox:" + value.getClass().getName());
                 }
 
                 return this;
@@ -812,20 +812,22 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     }
 
     /**
-     * convert a Date (dt) from an old format (i.e. "dd.MM.yyyy") into a new format (i.e. "yyyy-MM-dd")
+     * convert a Date (dt) from an old format (i.e. "dd.MM.yyyy") into a new
+     * format (i.e. "yyyy-MM-dd")
+     *
      * @param oldFormat
      * @param newFormat
      * @param dt
-     * @return 
+     * @return
      */
-    public static String convertDate(String oldFormat, String newFormat, String dateString) throws ParseException{
+    public static String convertDate(String oldFormat, String newFormat, String dateString) throws ParseException {
         SimpleDateFormat odf;
         SimpleDateFormat ndf;
         String result;
         odf = new SimpleDateFormat(oldFormat);
         ndf = new SimpleDateFormat(newFormat);
         Date dt = odf.parse(dateString);
-        result= ndf.format(dt);
+        result = ndf.format(dt);
 
         return result;
     }

@@ -24,12 +24,12 @@ public class IconCellRenderer extends DefaultTableCellRenderer {
         
         if (column == 5) {
             setIcon(new ImageIcon(getClass().getResource("/zeugnis/pics/delete.png")));
-            //setText("");
+            this.setHorizontalAlignment(JLabel.CENTER);
         }
 
         if (column == 6) {
             setIcon(new ImageIcon(getClass().getResource("/zeugnis/pics/pdf.png")));
-            //setText("");
+            this.setHorizontalAlignment(JLabel.CENTER);
         }
 
         return this;
