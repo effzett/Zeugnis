@@ -32,6 +32,7 @@ public class ComboBoxCellRenderer implements TableCellRenderer {
             logger.severe("Unerwartetes Objects beim Rendern des Tabellenfeldes: " + value.getClass().getName());
         }
 
+        label.setHorizontalAlignment(JLabel.CENTER);
         return label;
     }
 

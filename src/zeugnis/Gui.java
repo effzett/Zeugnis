@@ -7,6 +7,10 @@ package zeugnis;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +30,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListCellRenderer;
 import static javax.swing.SwingConstants.CENTER;
+import javax.swing.UIManager;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -42,6 +47,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
     private static int sYear = 0;
     private static int hYear = 0;
+    private static String selectedSubject = null;
     private static String sClass = null;
     private SingletonSQLConnector connector = null;
     private Config config = null;
@@ -125,7 +131,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             tableModel.addTableModelListener(this);
             jTable1.setModel(tableModel);
             jTable1.setCellSelectionEnabled(true);
-            jTable1.setRowHeight(20);
+            jTable1.setRowHeight(25);
             jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
             TableColumn column = jTable1.getColumnModel().getColumn(0);
             column.setWidth(0);
@@ -256,7 +262,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                     "Kriterien", "Bewertung"
                 }, 2)
             );
-            jTable2.setRowHeight(20);
+            jTable2.setRowHeight(25);
             jTable2.setRowSelectionAllowed(false);
             jTable2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
             column = jTable2.getColumnModel().getColumn(1);
@@ -374,7 +380,6 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                     changeHYear(evt);
                 }
             });
-            jComboBox2.setEnabled((jTabbedPane1.getSelectedIndex() == 0) ? false : true);
 
             jLabel3.setText("Klasse");
 
@@ -510,6 +515,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     }//GEN-LAST:event_addSchoolYear
 
     private void changeTab(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_changeTab
+        jComboBox2.setEnabled((jTabbedPane1.getSelectedIndex() == 0) ? false : true);
 
         if (jTabbedPane1.getSelectedIndex() == 1) {
             fillPupleComboBox();
@@ -518,7 +524,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     }//GEN-LAST:event_changeTab
 
     private void changeSubject(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeSubject
-        fillTestimonyTable((String) jComboBox5.getSelectedItem());
+        selectedSubject = (String) jComboBox5.getSelectedItem();
+        fillTestimonyTable(selectedSubject);
     }//GEN-LAST:event_changeSubject
 
     /**
@@ -556,7 +563,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private void fillSubjectComboBox() {
 
         try {
-            jComboBox5.setModel(new DefaultComboBoxModel(connector.getLernbereiche().toArray(new String[0])));
+            jComboBox5.setModel(new DefaultComboBoxModel(connector.getLernbereicheIncl0().toArray(new String[0])));
         } catch (SQLException ex) {
             logger.severe(ex.getLocalizedMessage());
         }
@@ -575,8 +582,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
             while (it.hasNext()) {
                 row[0] = it.next();
-                //row[1] = getMarkBox();
-                row[1] = "Zeile1";
+                row[1] = "";
                 model.addRow(row);
             }
 
@@ -588,7 +594,22 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
     // Gibt eine neue Instanz eines Noten PulldownMenues zurueck.
     private JComboBox getMarkBox() {
-        JComboBox markComboBox = new JComboBox();
+        JComboBox markComboBox = new JComboBox() {
+
+            @Override
+            public void setSelectedIndex(int index) {
+
+                if (Gui.getSelectedSubject().equals("Sozialverhalten")
+                        || Gui.getSelectedSubject().equals("Arbeitsverhalten")) {
+
+                    super.setSelectedIndex((index > 5) ? 0 : index);
+
+                } else {
+                    super.setSelectedIndex((index > 5) ? index : 0);
+                }
+            }
+
+        };
         markComboBox.setRenderer(new DefaultListCellRenderer() {
 
             public Component getListCellRendererComponent(JList list,
@@ -599,6 +620,21 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
+                if (Gui.getSelectedSubject().equals("Sozialverhalten")
+                        || Gui.getSelectedSubject().equals("Arbeitsverhalten")) {
+
+                    if(index > 6) {
+                       setForeground(UIManager.getColor("Label.disabledForeground"));
+                    }
+
+                } else {
+                    
+                    if(index < 6) {
+                       setForeground(UIManager.getColor("Label.disabledForeground"));
+                    }
+                    
+                }
+                
                 if (value instanceof java.lang.String) {
                     setText((String) value);
                     setIcon(null);
@@ -608,24 +644,41 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 } else {
                     logger.severe("Unerwartetes Object beim Rendern der ComboBox:" + value.getClass().getName());
                 }
-
+                
                 return this;
             }
 
         });
 
         markComboBox.setModel(new javax.swing.DefaultComboBoxModel(new Object[]{
-            "Zeile1",
-            "Zeile2",
-            "Zeile3",
-            new ImageIcon(getClass().getResource("/zeugnis/pics/leer.png")),
-            new ImageIcon(getClass().getResource("/zeugnis/pics/viertel.png")),
-            new ImageIcon(getClass().getResource("/zeugnis/pics/halb.png")),
-            new ImageIcon(getClass().getResource("/zeugnis/pics/dreiviertel.png")),
-            new ImageIcon(getClass().getResource("/zeugnis/pics/voll.png"))
-        }));
+            "",
+            "verdient besondere Anerkennung",
+            "enspricht den Erwartungen in vollemUmfang",
+            "entspricht den Erwartungen",
+            "entspricht den Erwartungen mit Einschränkungen",
+            "Voll Scheiße Alter, ich schwör!",
+            "--",
+            getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/viertel0.png"))).getImage(), 20, 20),
+            getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/halb0.png"))).getImage(), 20, 20),
+            getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/dreiviertel0.png"))).getImage(), 20, 20),
+            getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/voll0.png"))).getImage(), 20, 20), /*new ImageIcon(getClass().getResource("/zeugnis/pics/viertel.png")),
+         new ImageIcon(getClass().getResource("/zeugnis/pics/halb.png")),
+         new ImageIcon(getClass().getResource("/zeugnis/pics/dreiviertel.png")),
+         new ImageIcon(getClass().getResource("/zeugnis/pics/voll.png"))*/}));
 
         return markComboBox;
+    }
+
+    private ImageIcon getScaledImage(Image srcImg, int w, int h) {
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+
+        return new ImageIcon(resizedImg);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -809,6 +862,10 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
     public static String getSClass() {
         return sClass;
+    }
+
+    public static String getSelectedSubject() {
+        return selectedSubject;
     }
 
     /**

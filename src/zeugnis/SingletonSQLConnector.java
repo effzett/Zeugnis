@@ -16,17 +16,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Hashtable;
-import java.util.Properties;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import org.apache.derby.drda.NetworkServerControl;
 
 /**
@@ -475,7 +470,7 @@ public class SingletonSQLConnector {
     }
 
     /**
-     * liefert eine Liste der Lernbereiche, die für das aktuelle Schuljahr und 
+     * liefert eine Liste der Lernbereiche für das aktuelle Schuljahr und 
      * die aktuelle Klassenstufe
      * @param schuljahr
      * @param klassenstufe
@@ -487,7 +482,31 @@ public class SingletonSQLConnector {
         try (Statement statement = con.createStatement()) {
 
             String sql = "select LERNBEREICH from LERNBEREICH where KLASSENSTUFE="+ 
-                    Gui.getSClass().substring(0,1) +" AND SCHULJAHR =" +
+                    Gui.getSClass().substring(0,1) + " AND SCHULJAHR =" +
+                    Gui.getSYear();
+            ResultSet set = statement.executeQuery(sql);
+
+            while (set.next()) {
+                result.add(set.getString(1));
+            }
+        }
+        return result;
+    }
+    
+     /**
+     * liefert eine Liste der Lernbereiche, für das aktuelle Schuljahr und 
+     * die aktuelle Klassenstufe incl der Kalssenstuf 0
+     * @param schuljahr
+     * @param klassenstufe
+     * @return result
+     * @throws java.sql.SQLException
+     */
+    public ArrayList<String> getLernbereicheIncl0() throws SQLException{ 
+        ArrayList<String> result = new ArrayList<>();
+        try (Statement statement = con.createStatement()) {
+
+            String sql = "select LERNBEREICH from LERNBEREICH where (KLASSENSTUFE="+ 
+                    Gui.getSClass().substring(0,1) + " OR KLASSENSTUFE = 0 )AND  SCHULJAHR =" +
                     Gui.getSYear();
             ResultSet set = statement.executeQuery(sql);
 
