@@ -32,14 +32,14 @@ public class FillDatabase {
             {Integer.toString("MickJagger1943-01-042016".hashCode()), "Mick", "Jagger", "04.01.1943", "East Hill, Dartford", "1a", "2016"},};
 
         String[][] testZeugnis = new String[][]{
-            {Integer.toString("SchröderGerhardt1944-04-0720161".hashCode()),Integer.toString("SchröderGerhardt1944-04-072016".hashCode())   ,"1","1","2","0","0","Keine","Versetzt","1","2016"},
-            {Integer.toString("SchröderGerhardt1944-04-0720162".hashCode()),Integer.toString("SchröderGerhardt1944-04-072016".hashCode())   ,"2","1","2","0","0","Keine","Versetzt","2","2016"},
-            {Integer.toString("FerkelAngela1954-06-1720161".hashCode()),Integer.toString("FerkelAngela1954-06-172016".hashCode())           ,"3","1","2","0","0","Keine","Versetzt","1","2016"},
-            {Integer.toString("FerkelAngela1954-06-1720162".hashCode()),Integer.toString("FerkelAngela1954-06-172016".hashCode())           ,"4","1","2","0","0","Keine","Versetzt","2","2016"},
-            {Integer.toString("MansonCharles1934-11-1220161".hashCode()),Integer.toString("MansonCharles1934-11-122016".hashCode())         ,"5","1","2","0","0","Keine","Versetzt","1","2016"},
-            {Integer.toString("MansonCharles1934-11-1220162".hashCode()),Integer.toString("MansonCharles1934-11-122016".hashCode())         ,"6","1","2","0","0","Keine","Versetzt","2","2016"},
-            {Integer.toString("MickJagger1943-01-0420161".hashCode()),Integer.toString("MickJagger1943-01-042016".hashCode())               ,"7","1","2","0","0","Keine","Versetzt","1","2016"},
-            {Integer.toString("MickJagger1943-01-0420162".hashCode()),Integer.toString("MickJagger1943-01-042016".hashCode())               ,"8","1","2","0","0","Keine","Versetzt","2","2016"}
+            {Integer.toString("SchröderGerhardt1944-04-0720161".hashCode()),Integer.toString("SchröderGerhardt1944-04-072016".hashCode())   ,"1","2","0","0","Keine","Versetzt","1","2016"},
+            {Integer.toString("SchröderGerhardt1944-04-0720162".hashCode()),Integer.toString("SchröderGerhardt1944-04-072016".hashCode())   ,"1","2","0","0","Keine","Versetzt","2","2016"},
+            {Integer.toString("FerkelAngela1954-06-1720161".hashCode()),Integer.toString("FerkelAngela1954-06-172016".hashCode())           ,"1","2","0","0","Keine","Versetzt","1","2016"},
+            {Integer.toString("FerkelAngela1954-06-1720162".hashCode()),Integer.toString("FerkelAngela1954-06-172016".hashCode())           ,"1","2","0","0","Keine","Versetzt","2","2016"},
+            {Integer.toString("MansonCharles1934-11-1220161".hashCode()),Integer.toString("MansonCharles1934-11-122016".hashCode())         ,"1","2","0","0","Keine","Versetzt","1","2016"},
+            {Integer.toString("MansonCharles1934-11-1220162".hashCode()),Integer.toString("MansonCharles1934-11-122016".hashCode())         ,"1","2","0","0","Keine","Versetzt","2","2016"},
+            {Integer.toString("MickJagger1943-01-0420161".hashCode()),Integer.toString("MickJagger1943-01-042016".hashCode())               ,"1","2","0","0","Keine","Versetzt","1","2016"},
+            {Integer.toString("MickJagger1943-01-0420162".hashCode()),Integer.toString("MickJagger1943-01-042016".hashCode())               ,"1","2","0","0","Keine","Versetzt","2","2016"}
         };
     
         
@@ -57,18 +57,21 @@ public class FillDatabase {
         }
 
         // jetzt noch KRITERIUMSLISTE füllen...
+        
         try {
-            ArrayList<Integer> lbid = new ArrayList<Integer>(); // Lernbereiche
-            lbid = connector.getID_Lernbereiche();
-            for (Integer l : lbid){
-                ArrayList<Integer> kid = new ArrayList<Integer>();  // Kriterium
-                kid = connector.getID_Kriterien(l);
-                for(int j=1; j<9; j++){
-                    for(Integer k : kid){
-                        Integer bew = ThreadLocalRandom.current().nextInt(1, 4);
-                        String[] s = {Integer.toString(j),Integer.toString(k),Integer.toString(bew)};
-                        System.out.println("KRITERIUMSLISTE:"+s[0]+" KRITERIUM:"+s[1]+"BEWERTUNG:"+s[2]);
-                        connector.insertKriteriumsliste(s);
+            if(!connector.existKriteriumsliste()){ // prüfen ob leer 
+                ArrayList<Integer> lbid = new ArrayList<Integer>(); // Lernbereiche
+                lbid = connector.getID_Lernbereiche();
+                for (Integer l : lbid){
+                    ArrayList<Integer> kid = new ArrayList<Integer>();  // Kriterium
+                    kid = connector.getID_Kriterien(l);
+                    for(int j=1; j<9; j++){ // sind nur 8 Beispielzeugnisse
+                        for(Integer k : kid){
+                            Integer bew = ThreadLocalRandom.current().nextInt(1, 4);
+                            String[] s = {testZeugnis[j-1][0],Integer.toString(k),Integer.toString(bew)};
+                            System.out.println("KRITERIUMSLISTE:"+s[0]+" KRITERIUM:"+s[1]+"BEWERTUNG:"+s[2]);
+                            connector.insertKriteriumsliste(s);
+                        }
                     }
                 }
             }

@@ -121,16 +121,25 @@ public class SingletonSQLConnector {
                 + "," + values[3]
                 + "," + values[4]
                 + "," + values[5]
-                + "," + values[6]
-                + ",'" + values[7]
-                + "','" + values[8]
-                + "'," + values[9]
-                + "," + values[10] + ")";
+                + ",'" + values[6]
+                + "','" + values[7]
+                + "'," + values[8]
+                + "," + values[9] + ")";
             logger.fine(sql);
             statement.executeUpdate(sql);
         }
     }
 
+    public Boolean existKriteriumsliste() throws SQLException{
+        try (Statement statement = con.createStatement()) {
+            String sql = "select * from KRITERIUMSLISTE";
+            logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+
+            return set.next();
+        }
+    }
+    
     public void insertKriteriumsliste(String[] values) throws SQLException{
         try (Statement statement = con.createStatement()) {
             
@@ -460,7 +469,7 @@ public class SingletonSQLConnector {
         Hashtable<Integer,Integer> resultHT = new Hashtable<Integer,Integer>();
 
         try (Statement statement = con.createStatement()) {
-            String sql = "select ID_KRITERIUM,BEWERTUNG from KRITERIUMSLISTE,ZEUGNIS where KRITERIUMSLISTE.ID_KRITERIUMSLISTE=ZEUGNIS.ID_KRITERIUMSLISTE AND ZEUGNIS.ID_SCHUELER=" + idSchueler + " AND ZEUGNIS.HALBJAHR="+ Gui.getHYear()+" AND ZEUGNIS.SCHULJAHR ="+Gui.getSYear();
+            String sql = "select ID_KRITERIUM,BEWERTUNG from KRITERIUMSLISTE,ZEUGNIS where KRITERIUMSLISTE.ID_KRITERIUMSLISTE=ZEUGNIS.ID_ZEUGNIS AND ZEUGNIS.ID_SCHUELER=" + idSchueler + " AND ZEUGNIS.HALBJAHR="+ Gui.getHYear()+" AND ZEUGNIS.SCHULJAHR ="+Gui.getSYear();
             ResultSet set = statement.executeQuery(sql);
             while (set.next()) {
                 resultHT.put(set.getInt(1), set.getInt(2));
