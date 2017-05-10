@@ -7,9 +7,12 @@ package zeugnis;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -112,6 +115,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Zeugnisverwaltung");
+        setIconImage((new ImageIcon(getClass().getResource("/zeugnis/pics/testimony_icon.png"))).getImage());
 
         jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -453,11 +458,9 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         }// </editor-fold>//GEN-END:initComponents
 
     private void fillClassTable() {
-        String sYear = (String) jComboBox1.getSelectedItem();
-        String sClass = (String) jComboBox3.getSelectedItem();
 
         try {
-            connector.fillClassTable(jTable1, Integer.parseInt(sYear.substring(0, 4)), sClass);
+            connector.fillClassTable(jTable1, ((String) jComboBox1.getSelectedItem()).substring(0, 4), sClass);
         } catch (SQLException ex) {
             logger.severe(ex.getLocalizedMessage());
         }
@@ -478,6 +481,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         sYear = Integer.parseInt(((String) jComboBox1.getSelectedItem()).substring(0, 4));
         fillPupleComboBox();
         fillSubjectComboBox();
+        fillClassTable();
     }//GEN-LAST:event_changeSYear
 
     private void changeHYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeHYear
@@ -489,6 +493,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         sClass = (String) jComboBox3.getSelectedItem();
         fillPupleComboBox();
         fillSubjectComboBox();
+        fillClassTable();
     }//GEN-LAST:event_changeSClass
 
     private void createPdfForClass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPdfForClass
@@ -515,7 +520,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     }//GEN-LAST:event_addSchoolYear
 
     private void changeTab(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_changeTab
-        jComboBox2.setEnabled((jTabbedPane1.getSelectedIndex() == 0) ? false : true);
+        jComboBox2.setEnabled((jTabbedPane1.getSelectedIndex() != 0));
 
         if (jTabbedPane1.getSelectedIndex() == 1) {
             fillPupleComboBox();
@@ -548,7 +553,10 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 jComboBox4.insertItemAt(new String[]{(puple.get(1) + ", " + puple.get(2)), puple.get(0)}, i);
             }
 
-            jComboBox4.setSelectedIndex(0);
+            if (jComboBox4.getItemCount() > 0) {
+                jComboBox4.setSelectedIndex(0);
+            }
+
         } catch (SQLException ex) {
             logger.severe(ex.getLocalizedMessage());
         }
@@ -623,18 +631,18 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 if (Gui.getSelectedSubject().equals("Sozialverhalten")
                         || Gui.getSelectedSubject().equals("Arbeitsverhalten")) {
 
-                    if(index > 6) {
-                       setForeground(UIManager.getColor("Label.disabledForeground"));
+                    if (index > 6) {
+                        setForeground(UIManager.getColor("Label.disabledForeground"));
                     }
 
                 } else {
-                    
-                    if(index < 6) {
-                       setForeground(UIManager.getColor("Label.disabledForeground"));
+
+                    if (index < 6) {
+                        setForeground(UIManager.getColor("Label.disabledForeground"));
                     }
-                    
+
                 }
-                
+
                 if (value instanceof java.lang.String) {
                     setText((String) value);
                     setIcon(null);
@@ -644,7 +652,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 } else {
                     logger.severe("Unerwartetes Object beim Rendern der ComboBox:" + value.getClass().getName());
                 }
-                
+
                 return this;
             }
 

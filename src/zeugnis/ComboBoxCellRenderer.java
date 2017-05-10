@@ -6,6 +6,9 @@
 package zeugnis;
 
 import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -23,7 +26,7 @@ public class ComboBoxCellRenderer implements TableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         JLabel label = new JLabel();
-
+       
         if (value instanceof java.lang.String) {
             label.setText((String) value);
         } else if (value instanceof javax.swing.ImageIcon) {
