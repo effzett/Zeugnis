@@ -223,7 +223,7 @@ public class SingletonSQLConnector {
      * @param sClass Die Klasse
      * @throws SQLException
      */
-    public void fillClassTable(JTable table, int sYear, String sClass) throws SQLException {
+    public void fillClassTable(JTable table, String sYear, String sClass) throws SQLException {
 
         try (Statement statement = con.createStatement()) {
             String sql = "select ID_SCHUELER, NAME, VORNAME, GEBDATUM, GEBORT from SCHUELER where KLASSE = '" + sClass + "' and SCHULJAHR = " + sYear + " order by NAME asc";
