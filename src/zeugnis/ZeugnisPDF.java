@@ -57,6 +57,7 @@ public class ZeugnisPDF  {
     private final static Logger logger = Logger.getLogger(ZeugnisPDF.class.getName());
     
     private int id;
+    private int zid;
     private int schuljahr;
     private int halbjahr;
     private String klasse;
@@ -72,42 +73,7 @@ public class ZeugnisPDF  {
                                         "entspricht nicht den Erwartungen"}; 
     private int noteArbeit;
     private int noteSozial;
-    
-    public class TableItem {
-
-        private String text;
-        private int bewertung;
-
-        /**
-         * @return the text
-         */
-        public String getText() {
-            return text;
-        }
-
-        /**
-         * @param text the text to set
-         */
-        public void setText(String text) {
-            this.text = text;
-        }
-
-        /**
-         * @return the bewertung
-         */
-        public int getBewertung() {
-            return bewertung;
-        }
-
-        /**
-         * @param bewertung the bewertung to set
-         */
-        public void setBewertung(int bewertung) {
-            this.bewertung = bewertung;
-        }
-
-    }
-    
+        
     Hashtable<Integer,Integer> zeugnis;
     
     private ArrayList aVerhalten    = new ArrayList<TableItem>();
@@ -136,12 +102,14 @@ public class ZeugnisPDF  {
      * @throws SQLException 
      */
     public ZeugnisPDF(int idSCHUELER) throws IOException, DocumentException, SQLException, ParseException{
-        this.zeugnis = new Hashtable<Integer,Integer>();
-        // Hier können schon alle Werte aus der Datenbank geholt werden...
-        id = idSCHUELER;
         
         SingletonSQLConnector connector = SingletonSQLConnector.getInstance();
 
+        this.zeugnis = new Hashtable<Integer,Integer>();
+
+        // Hier können schon alle Werte aus der Datenbank geholt werden...
+        id = idSCHUELER;
+        zid = connector.getIdZeugnis(id);
         
         //Alle nötigen Felder werden aus der Datenbank gefüllt
         name      = connector.getSchuelerName(id);
@@ -154,13 +122,10 @@ public class ZeugnisPDF  {
         klasse    = Gui.getSClass();
         
         // liefert alle im zeugnis abgelegten Kriterien mit Bewertungen
-        zeugnis = connector.getID_KriterienZeugnis(idSCHUELER);
+        zeugnis = connector.getID_KriterienZeugnis(zid);
         
         // Hier müssen später andere Aufrufe stehen , da aus Zeugnissen geholt werden muss...
-        ArrayList<String> avListe= new ArrayList();
-        avListe = connector.getAVerhalten(idSCHUELER);
-        ArrayList<String> svListe= new ArrayList();
-        svListe = connector.getSVerhalten(idSCHUELER);
+        
         ArrayList<String> szListe = new ArrayList();
         szListe=connector.getKriterien(idSCHUELER,"Sprechen und Zuhören");
         ArrayList<String> schListe = new ArrayList();
@@ -197,23 +162,26 @@ public class ZeugnisPDF  {
         su8=connector.getKriterien(idSCHUELER,"Englisch");
 
         
-        for(int i=0;i<avListe.size();i++){
+        // Arbeitsverhalten 
+        for(Integer id : connector.getAVerhaltenID()){  // holt Reihenfolge
             TableItem ti = new TableItem();
-            ti.setText(avListe.get(i));
-            //ti.setText("ist ein ganz, ganz netter und befolgt \nalle Anweisungen " + String.valueOf(i));
-            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 4));
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             aVerhalten.add(ti);
         }
-      for(int i=0;i<svListe.size();i++){
+        
+        // Sozialverhalten 
+        for(Integer id : connector.getSVerhaltenID()){  // holt Reihenfolge
             TableItem ti = new TableItem();
-            ti.setText(svListe.get(i));
-            //ti.setText("ist ein asozialer Sack, der andere Kinder \nquält und ärgert " + String.valueOf(i));
-            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 4));
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             sVerhalten.add(ti);
         }
-        noteArbeit = 2;
-        noteSozial = 0;
+
+        noteArbeit = connector.getNoteArbeit(zid);
+        noteSozial = connector.getNoteSozial(zid);
         
+        //********************************************
         for(int i=0;i<szListe.size();i++){
             TableItem ti = new TableItem();
             ti.setText(szListe.get(i));

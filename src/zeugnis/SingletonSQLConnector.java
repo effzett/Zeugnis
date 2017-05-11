@@ -411,6 +411,19 @@ public class SingletonSQLConnector {
         return result.toArray(new String[0]);
     }
 
+    public String getSchuelerSchuljahr(int idSCHUELER) throws SQLException {
+        String name = "";
+        try (Statement statement = con.createStatement()) {
+            String sql = "select SCHULJAHR from SCHUELER where ID_SCHUELER = " + idSCHUELER;
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            while (set.next()) {
+                name = set.getString(1);
+            }
+        }
+        return name;
+    }
+
     public String getSchuelerName(int idSCHUELER) throws SQLException {
         String name = "Name";
         try (Statement statement = con.createStatement()) {
@@ -463,46 +476,83 @@ public class SingletonSQLConnector {
         return gebort;
     }
 
-    public ArrayList<String> getAVerhalten(int idSCHULER) throws SQLException {
-        ArrayList<String> result = new ArrayList<>();
-
-        // dies ist nur ein Provisorium
-        // zieht Daten nicht aus Zeugnis sondern aus KRITERIUM
-        //kann erst gemacht werden, wenn Zeugnis befüllt....
+    
+    
+    public ArrayList<Integer> getAVerhaltenID() throws SQLException {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        
         try (Statement statement = con.createStatement()) {
-
-            String sql = "select KRITERIUMTEXT from KRITERIUM where ID_LERNBEREICH=1 AND SCHULJAHR =" + Gui.getSYear();
+            String sql = "select ID_KRITERIUM from KRITERIUM,LERNBEREICH where LERNBEREICH.ID_LERNBEREICH=1 AND KLASSENSTUFE=0 AND LERNBEREICH.SCHULJAHR =" + Gui.getSYear() +
+                    " AND LERNBEREICH.SCHULJAHR=KRITERIUM.SCHULJAHR AND LERNBEREICH.ID_LERNBEREICH=KRITERIUM.ID_LERNBEREICH";
             //logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
 
             while (set.next()) {
-                result.add(set.getString(1));
+                result.add(set.getInt(1));
             }
-
         }
         return result;
     }
 
-    public ArrayList<String> getSVerhalten(int idSCHULER) throws SQLException {
-        ArrayList<String> result = new ArrayList<>();
-
-        // dies ist nur ein Provisorium
-        // zieht Daten nicht aus Zeugnis sondern aus KRITERIUM
-        //kann erst gemacht werden, wenn Zeugnis befüllt....
+    public Integer getNoteArbeit(Integer zid) throws SQLException{
+        Integer retVal=0;
+        
         try (Statement statement = con.createStatement()) {
-
-            String sql = "select KRITERIUMTEXT from KRITERIUM where ID_LERNBEREICH=2 AND SCHULJAHR =" + Gui.getSYear();
+            String sql = "select NOTE_ARBEIT from ZEUGNIS where ID_ZEUGNIS=" + zid;
             //logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
 
             while (set.next()) {
-                result.add(set.getString(1));
+                retVal= set.getInt(1);
             }
+        }
+        return retVal; 
+    }
+    
+    public Integer getNoteSozial(Integer zid) throws SQLException{
+        Integer retVal=0;
+        
+        try (Statement statement = con.createStatement()) {
+            String sql = "select NOTE_SOZIAL from ZEUGNIS where ID_ZEUGNIS=" + zid;
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
 
+            while (set.next()) {
+                retVal= set.getInt(1);
+            }
+        }
+        return retVal; 
+    }
+    
+    public ArrayList<Integer> getSVerhaltenID() throws SQLException {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        
+        try (Statement statement = con.createStatement()) {
+            String sql = "select ID_KRITERIUM from KRITERIUM,LERNBEREICH where LERNBEREICH.ID_LERNBEREICH=2 AND KLASSENSTUFE=0 AND LERNBEREICH.SCHULJAHR =" + Gui.getSYear() +
+                    " AND LERNBEREICH.SCHULJAHR=KRITERIUM.SCHULJAHR AND LERNBEREICH.ID_LERNBEREICH=KRITERIUM.ID_LERNBEREICH";
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+
+            while (set.next()) {
+                result.add(set.getInt(1));
+            }
         }
         return result;
     }
 
+    public String getKriteriumText(Integer id) throws SQLException{
+        String retVal="";
+        try (Statement statement = con.createStatement()) {
+            String sql = "select KRITERIUMTEXT from KRITERIUM where ID_KRITERIUM=" + id;
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            while (set.next()) {
+                retVal = set.getString(1);
+            }
+        }
+        return retVal;
+    }
+    
     /**
      * liefert die Kriterien für den übergebenen Lernbereich für die aktuelle
      * Klassenstufe und das aktuelle Schuljahr
@@ -577,11 +627,11 @@ public class SingletonSQLConnector {
      * @return
      * @throws SQLException
      */
-    public Hashtable<Integer, Integer> getID_KriterienZeugnis(int idSchueler) throws SQLException {
+    public Hashtable<Integer, Integer> getID_KriterienZeugnis(int idZeugnis) throws SQLException {
         Hashtable<Integer, Integer> resultHT = new Hashtable<Integer, Integer>();
 
         try (Statement statement = con.createStatement()) {
-            String sql = "select ID_KRITERIUM,BEWERTUNG from KRITERIUMSLISTE,ZEUGNIS where KRITERIUMSLISTE.ID_KRITERIUMSLISTE=ZEUGNIS.ID_ZEUGNIS AND ZEUGNIS.ID_SCHUELER=" + idSchueler + " AND ZEUGNIS.HALBJAHR=" + Gui.getHYear() + " AND ZEUGNIS.SCHULJAHR =" + Gui.getSYear();
+            String sql = "select ID_KRITERIUM,BEWERTUNG from KRITERIUMSLISTE,ZEUGNIS where KRITERIUMSLISTE.ID_KRITERIUMSLISTE=ZEUGNIS.ID_ZEUGNIS AND ZEUGNIS.ID_ZEUGNIS=" + idZeugnis;
             ResultSet set = statement.executeQuery(sql);
             while (set.next()) {
                 resultHT.put(set.getInt(1), set.getInt(2));
@@ -673,6 +723,13 @@ public class SingletonSQLConnector {
         return result;
     }
 
+    public Integer getIdZeugnis(Integer idSchueler) throws SQLException{
+        Integer retVal;
+        retVal = (this.getSchuelerName(idSchueler) + this.getSchuelerVorname(idSchueler) +
+                this.getSchuelerGebDatum(idSchueler) + this.getSchuelerSchuljahr(idSchueler) + Gui.getHYear()).hashCode();
+        return retVal;
+    }
+    
     /**
      * Shuts down the Derby Server in case of starting by this class.
      *
