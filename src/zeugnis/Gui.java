@@ -242,6 +242,11 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
             });
             jComboBox4.setModel(new javax.swing.DefaultComboBoxModel());
+            jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    changePuple(evt);
+                }
+            });
 
             jLabel5.setText("Lernentwicklungsbericht");
 
@@ -482,11 +487,12 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         fillPupleComboBox();
         fillSubjectComboBox();
         fillClassTable();
+        fillTabFromTestimony();
     }//GEN-LAST:event_changeSYear
 
     private void changeHYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeHYear
         hYear = Integer.parseInt((String) jComboBox2.getSelectedItem());
-
+        fillTabFromTestimony();
     }//GEN-LAST:event_changeHYear
 
     private void changeSClass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeSClass
@@ -533,6 +539,25 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         fillTestimonyTable(selectedSubject);
     }//GEN-LAST:event_changeSubject
 
+    private void changePuple(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePuple
+        fillTabFromTestimony();
+    }//GEN-LAST:event_changePuple
+
+    public void fillTabFromTestimony() {
+        String idSchueler = ((String[])jComboBox4.getSelectedItem())[1];
+        
+        try {
+            String[] testimony = connector.fetchZeugnis(Integer.parseInt(idSchueler), hYear);
+            
+            if(testimony[6] != null) jTextArea1.setText(testimony[6]);
+            if(testimony[7] != null)jTextField1.setText(testimony[7]);
+            if(testimony[4] != null)jSpinner1.setValue(Integer.parseInt(testimony[4]));
+            if(testimony[5] != null)jSpinner2.setValue(Integer.parseInt(testimony[5]));
+        } catch (SQLException ex) {
+            logger.severe(ex.getLocalizedMessage());
+        }
+    }
+    
     /**
      * Die ComboBox wird neu befuellt wenn: Auf den Reiter Zeugnis gewechselt
      * wird um den aktuellen Stand zu haben falls im Reiter Schulklassen Schüler
@@ -609,11 +634,9 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
                 if (Gui.getSelectedSubject().equals("Sozialverhalten")
                         || Gui.getSelectedSubject().equals("Arbeitsverhalten")) {
-
-                    super.setSelectedIndex((index > 5) ? 0 : index);
-
+                    super.setSelectedIndex((index > 3) ? 0 : index);
                 } else {
-                    super.setSelectedIndex((index > 5) ? index : 0);
+                    super.setSelectedIndex((index > 3) ? index : 0);
                 }
             }
 
@@ -631,13 +654,13 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 if (Gui.getSelectedSubject().equals("Sozialverhalten")
                         || Gui.getSelectedSubject().equals("Arbeitsverhalten")) {
 
-                    if (index > 6) {
+                    if (index > 4) {
                         setForeground(UIManager.getColor("Label.disabledForeground"));
                     }
 
                 } else {
 
-                    if (index < 6) {
+                    if (index < 4) {
                         setForeground(UIManager.getColor("Label.disabledForeground"));
                     }
 
@@ -660,19 +683,15 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
         markComboBox.setModel(new javax.swing.DefaultComboBoxModel(new Object[]{
             "",
-            "verdient besondere Anerkennung",
-            "enspricht den Erwartungen in vollemUmfang",
-            "entspricht den Erwartungen",
-            "entspricht den Erwartungen mit Einschränkungen",
-            "Voll Scheiße Alter, ich schwör!",
+            "selten",
+            "wechelnd",
+            "überwiegend",
             "--",
             getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/viertel0.png"))).getImage(), 20, 20),
             getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/halb0.png"))).getImage(), 20, 20),
             getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/dreiviertel0.png"))).getImage(), 20, 20),
-            getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/voll0.png"))).getImage(), 20, 20), /*new ImageIcon(getClass().getResource("/zeugnis/pics/viertel.png")),
-         new ImageIcon(getClass().getResource("/zeugnis/pics/halb.png")),
-         new ImageIcon(getClass().getResource("/zeugnis/pics/dreiviertel.png")),
-         new ImageIcon(getClass().getResource("/zeugnis/pics/voll.png"))*/}));
+            getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/voll0.png"))).getImage(), 20, 20)}
+        ));
 
         return markComboBox;
     }
