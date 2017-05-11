@@ -170,7 +170,7 @@ public class SingletonSQLConnector {
                 sql += "HALBJAHR = " + values[8] + ", ";
             }
             if (values[9] != null) {
-                sql += "SCHLJAHR = " + values[9] + ", ";
+                sql += "SCHULJAHR = " + values[9] + ", ";
             }
             sql = (sql.substring(0, sql.length() - 2)) + " where ID_ZEUGNIS = " + values[0];
             logger.fine(sql);
