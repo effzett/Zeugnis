@@ -34,7 +34,7 @@ public class Config extends Properties {
 
             } else {
                 setProperty("installDir", jarPath);
-                setProperty("startDerby", "0");
+                setProperty("startDerby", "1");
                 setProperty("derbyUser", "zeugnis");
                 setProperty("derbyPassword", "zeugnis");
                 setProperty("classes", "1a,1b,2a,2b,3a,3b,4a,4b");

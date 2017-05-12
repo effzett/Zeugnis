@@ -182,7 +182,7 @@ public class FillDatabase {
                     kid = connector.getID_Kriterien(l);
                     for (int j = 1; j < 9; j++) { // sind nur 8 Beispielzeugnisse
                         for (Integer k : kid) {
-                            Integer bew = ThreadLocalRandom.current().nextInt(1, 4);
+                            Integer bew = ThreadLocalRandom.current().nextInt(1, 2);
                             String[] s = {testZeugnis[j - 1], Integer.toString(k), Integer.toString(bew)};
                             System.out.println("KRITERIUMSLISTE:" + s[0] + " KRITERIUM:" + s[1] + "BEWERTUNG:" + s[2]);
                             connector.insertKriteriumsliste(s);
