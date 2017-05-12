@@ -476,7 +476,33 @@ public class SingletonSQLConnector {
         return gebort;
     }
 
+    public Integer getFehltage(Integer zid) throws SQLException{
+        Integer retVal=0;
+        try (Statement statement = con.createStatement()) {
+            String sql = "select FEHLTAGE from ZEUGNIS where ID_ZEUGNIS=" + zid;
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+
+            while (set.next()) {
+                retVal = set.getInt(1);
+            }
+        }
+        return retVal;
+    }
     
+    public Integer getFehltageOhne(Integer zid) throws SQLException{
+        Integer retVal=0;
+        try (Statement statement = con.createStatement()) {
+            String sql = "select FEHLTAGEOHNE from ZEUGNIS where ID_ZEUGNIS=" + zid;
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+
+            while (set.next()) {
+                retVal = set.getInt(1);
+            }
+        }
+        return retVal;
+    }
     
     public ArrayList<Integer> getAVerhaltenID() throws SQLException {
         ArrayList<Integer> result = new ArrayList<Integer>();

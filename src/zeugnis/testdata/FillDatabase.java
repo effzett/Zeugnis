@@ -78,8 +78,8 @@ public class FillDatabase {
         puple = new String[10];
         puple[0] = Integer.toString("FerkelAngela1954-06-1720161".hashCode());
         testZeugnis[2] = puple[0];
-        puple[2] = "1";
-        puple[3] = "2";
+        puple[2] = "0";
+        puple[3] = "0";
         puple[4] = "0";
         puple[5] = "0";
         puple[6] = "Keine";
@@ -95,7 +95,7 @@ public class FillDatabase {
         puple[0] = Integer.toString("FerkelAngela1954-06-1720162".hashCode());
         testZeugnis[3] = puple[0];
         puple[2] = "1";
-        puple[3] = "2";
+        puple[3] = "1";
         puple[4] = "0";
         puple[5] = "0";
         puple[6] = "Keine";
@@ -110,10 +110,10 @@ public class FillDatabase {
         puple = new String[10];
         puple[0] = Integer.toString("MansonCharles1934-11-1220161".hashCode());
         testZeugnis[4] = puple[0];
-        puple[2] = "1";
-        puple[3] = "2";
-        puple[4] = "0";
-        puple[5] = "0";
+        puple[2] = "3";
+        puple[3] = "4";
+        puple[4] = "100";
+        puple[5] = "99";
         puple[6] = "Keine";
         puple[7] = "Versetzt";
 
@@ -126,10 +126,10 @@ public class FillDatabase {
         puple = new String[10];
         puple[0] = Integer.toString("MansonCharles1934-11-1220162".hashCode());
         testZeugnis[5] = puple[5];
-        puple[2] = "1";
-        puple[3] = "2";
-        puple[4] = "0";
-        puple[5] = "0";
+        puple[2] = "3";
+        puple[3] = "4";
+        puple[4] = "100";
+        puple[5] = "99";
         puple[6] = "Keine";
         puple[7] = "Versetzt";
 

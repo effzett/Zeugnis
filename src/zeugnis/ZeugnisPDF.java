@@ -65,6 +65,8 @@ public class ZeugnisPDF  {
     private String vorname;
     private String gebdatum;
     private String gebort;
+    private int fehltage;
+    private int fehltageohne;
     private String currDate;
     private String[] asBewertungen = {  "verdient besondere Anerkennung",
                                         "entspricht den Erwartungen in vollem Umfang",
@@ -120,6 +122,8 @@ public class ZeugnisPDF  {
         schuljahr = Gui.getSYear();
         halbjahr  = Gui.getHYear();
         klasse    = Gui.getSClass();
+        fehltage  = connector.getFehltage(zid);
+        fehltageohne= connector.getFehltageOhne(zid);
         
         // liefert alle im zeugnis abgelegten Kriterien mit Bewertungen
         zeugnis = connector.getID_KriterienZeugnis(zid);
@@ -542,7 +546,7 @@ public class ZeugnisPDF  {
         String Klasse    = "Klasse "+ klasse;
         
 
-        String Tage      = "Versäumte Unterrichtstage im 1. und 2. Halbjahr: 2 davon unentschuldigt: 0";
+        String Tage      = "Versäumte Unterrichtstage im 1. und 2. Halbjahr: "+ String.valueOf(fehltage) +  " davon unentschuldigt: " + String.valueOf(fehltageohne);
         String Lernentwicklung = "Lernentwicklung (kurz!)\nInteressen\nLernstand Deutsch\nLernstand Mathe\nVeränderungsprozesse\nKnackpunkte";
         String Unterschriften1 = "___________________\nUnterschrift\nSchulleiter/in";
         String Unterschriften2 = "___________________\nUnterschrift\nKlassenlehrer/in";
