@@ -125,7 +125,7 @@ public class FillDatabase {
 
         puple = new String[10];
         puple[0] = Integer.toString("MansonCharles1934-11-1220162".hashCode());
-        testZeugnis[0] = puple[5];
+        testZeugnis[5] = puple[5];
         puple[2] = "1";
         puple[3] = "2";
         puple[4] = "0";
