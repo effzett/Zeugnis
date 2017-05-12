@@ -186,6 +186,13 @@ public class ZeugnisPDF  {
         noteSozial = connector.getNoteSozial(zid);
         
         //********************************************
+        for(Integer id : connector.getSVerhaltenID()){  // holt Reihenfolge
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            sVerhalten.add(ti);
+        }
+
         for(int i=0;i<szListe.size();i++){
             TableItem ti = new TableItem();
             ti.setText(szListe.get(i));
