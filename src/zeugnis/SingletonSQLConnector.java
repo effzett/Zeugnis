@@ -837,6 +837,36 @@ public class SingletonSQLConnector {
     }
     
     /**
+     * liefert ID_Kritierien bei Eingabe eines Lernbereichs zu passendem Schuljahr und Klassenstufe
+     * @param lernbereich
+     * @return
+     * @throws SQLException 
+     */
+    public ArrayList<Integer> getID_KriterienFromLernbereich(String lernbereich) throws SQLException{
+        ArrayList<Integer> result = new ArrayList<Integer>();
+
+        try (Statement statement = con.createStatement()) {
+            String klassenstufe;
+            int schuljahr;
+
+            klassenstufe = Gui.getSClass().substring(0, 1);
+            schuljahr = Gui.getSYear();
+
+            String sql = "select ID_KRITERIUM from KRITERIUM,LERNBEREICH where LERNBEREICH.LERNBEREICH like '" + lernbereich + "%'"+
+                    " AND LERNBEREICH.SCHULJAHR=" + schuljahr +
+                    " AND (LERNBEREICH.KLASSENSTUFE=0 OR LERNBEREICH.KLASSENSTUFE =" + klassenstufe + ")" +
+                    " AND LERNBEREICH.ID_LERNBEREICH=KRITERIUM.ID_LERNBEREICH " + 
+                    " AND LERNBEREICH.SCHULJAHR=KRITERIUM.SCHULJAHR";
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            while (set.next()) {
+                result.add(set.getInt(1));
+            }
+        }
+        return result; 
+    }
+    
+    /**
      * Shuts down the Derby Server in case of starting by this class.
      *
      * @throws Exception

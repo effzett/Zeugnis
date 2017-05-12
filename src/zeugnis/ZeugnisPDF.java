@@ -185,116 +185,110 @@ public class ZeugnisPDF  {
         noteArbeit = connector.getNoteArbeit(zid);
         noteSozial = connector.getNoteSozial(zid);
         
-        //********************************************
-        for(Integer id : connector.getSVerhaltenID()){  // holt Reihenfolge
+        for(Integer id : connector.getID_KriterienFromLernbereich("Sprechen und Zuhören")){  // holt Reihenfolge
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
-            sVerhalten.add(ti);
-        }
-
-        for(int i=0;i<szListe.size();i++){
-            TableItem ti = new TableItem();
-            ti.setText(szListe.get(i));
-            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
             sprechenZL.add(ti);
         }
 
-        for(int i=0;i<schListe.size();i++){
+        for(Integer id : connector.getID_KriterienFromLernbereich("Schreiben")){  // holt Reihenfolge
             TableItem ti = new TableItem();
-            ti.setText(schListe.get(i));
-            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             schreibenZL.add(ti);
         }
 
-        for(int i=0;i<les.size();i++){
+        for(Integer id : connector.getID_KriterienFromLernbereich("Lesen")){  // holt Reihenfolge
             TableItem ti = new TableItem();
-            ti.setText(les.get(i));
-            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             lesenZL.add(ti);
         }
 
-        for(int i=0;i<sp.size();i++){
+        for(Integer id : connector.getID_KriterienFromLernbereich("Sprache")){  // holt Reihenfolge
             TableItem ti = new TableItem();
-            ti.setText(sp.get(i));
-            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             sprachZL.add(ti);
         }
 
-        for(int i=0;i<zo.size();i++){
+        for(Integer id : connector.getID_KriterienFromLernbereich("Zahlen")){  // holt Reihenfolge
             TableItem ti = new TableItem();
-            ti.setText(zo.get(i));
-            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             zahlenZL.add(ti);
         }
-        for(int i=0;i<gm.size();i++){
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Größen")){  // holt Reihenfolge
             TableItem ti = new TableItem();
-            ti.setText(gm.get(i));
-            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             groessenZL.add(ti);
         }
-        for(int i=0;i<rf.size();i++){
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Raum")){  // holt Reihenfolge
             TableItem ti = new TableItem();
-            ti.setText(rf.get(i));
-            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             raumZL.add(ti);
         }
 
-        for(int i=0;i<su1.size();i++){
+        for(Integer id : connector.getID_KriterienFromLernbereich("Sachunterricht")){  // holt Reihenfolge
             TableItem ti = new TableItem();
-            ti.setText(su1.get(i));
-            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             sachunterricht.add(ti);
         }
 
-        for(int i=0;i<su2.size();i++){
+        for(Integer id : connector.getID_KriterienFromLernbereich("Musik")){  // holt Reihenfolge
             TableItem ti = new TableItem();
-            ti.setText(su2.get(i));
-            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             musik.add(ti);
         }
 
-        for(int i=0;i<su3.size();i++){
+        for(Integer id : connector.getID_KriterienFromLernbereich("Religion")){  // holt Reihenfolge
             TableItem ti = new TableItem();
-            ti.setText(su3.get(i));
-            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             religion.add(ti);
         }
 
-        for(int i=0;i<su4.size();i++){
+        for(Integer id : connector.getID_KriterienFromLernbereich("Kunst")){  // holt Reihenfolge
             TableItem ti = new TableItem();
-            ti.setText(su4.get(i));
-            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             kunst.add(ti);
         }
 
-        for(int i=0;i<su5.size();i++){
+        for(Integer id : connector.getID_KriterienFromLernbereich("Sport")){  // holt Reihenfolge
             TableItem ti = new TableItem();
-            ti.setText(su5.get(i));
-            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             sport.add(ti);
         }
 
-        for(int i=0;i<su6.size();i++){
+        for(Integer id : connector.getID_KriterienFromLernbereich("Werken")){  // holt Reihenfolge
             TableItem ti = new TableItem();
-            ti.setText(su6.get(i));
-            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             werken.add(ti);
         }
 
-        for(int i=0;i<su7.size();i++){
+        for(Integer id : connector.getID_KriterienFromLernbereich("Textil")){  // holt Reihenfolge
             TableItem ti = new TableItem();
-            ti.setText(su7.get(i));
-            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             textil.add(ti);
         }
 
-        for(int i=0;i<su8.size();i++){
+        for(Integer id : connector.getID_KriterienFromLernbereich("Englisch")){  // holt Reihenfolge
             TableItem ti = new TableItem();
-            ti.setText(su8.get(i));
-            ti.setBewertung(ThreadLocalRandom.current().nextInt(1, 6));
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             englisch.add(ti);
-        } 
+        }
     }
     
     /**
