@@ -1,0 +1,11 @@
+com.itextpdf.text.pdf
+com.itextpdf.text.pdf.interfaces
+com.itextpdf.text.pdf.internal
+com.itextpdf.text.xml.xmp
+com.itextpdf.text.zugferd
+com.itextpdf.text.zugferd.checkers
+com.itextpdf.text.zugferd.checkers.basic
+com.itextpdf.text.zugferd.checkers.comfort
+com.itextpdf.text.zugferd.checkers.extended
+com.itextpdf.text.zugferd.exceptions
+com.itextpdf.text.zugferd.profiles
