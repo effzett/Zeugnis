@@ -5,9 +5,13 @@
  */
 package zeugnis;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -22,10 +26,12 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.apache.derby.drda.NetworkServerControl;
+import org.apache.derby.tools.ij;
 
 /**
  *
@@ -85,10 +91,41 @@ public class SingletonSQLConnector {
         }
 
         // Connect to the server
-        Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
-        con = DriverManager.getConnection("jdbc:derby://localhost:1527/Zeugnis",
+        Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();    
+        //Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
+        con = DriverManager.getConnection("jdbc:derby://localhost:1527/Zeugnis;create=true;",
                 config.getProperty("derbyUser"),
                 config.getProperty("derbyPassword"));
+
+        logger.fine("Vor dem Schlafen");
+        TimeUnit.SECONDS.sleep(5);
+        logger.fine("Nach dem Schlafen");
+    }
+    
+            
+    // Wenn DB empty, Script ausführen
+    protected boolean runScript(File scriptFile) { 
+        FileInputStream fileStream = null; 
+        try { 
+            logger.fine(scriptFile.getAbsolutePath());
+            fileStream = new FileInputStream(scriptFile); 
+            int result  =  ij.runScript(this.con,fileStream,"UTF-8",System.out,"UTF-8"); 
+            logger.fine("Intializing DB Zeugnis: " + result); 
+            return (result==0); 
+        } catch (FileNotFoundException e) { 
+            logger.fine("SQL file not found.");
+            return false; 
+        } catch (UnsupportedEncodingException e) { 
+            logger.fine("SQL file not found.");
+            return false; 
+        } 
+        finally { 
+            if(fileStream!=null) { 
+                try { 
+                    fileStream.close(); 
+                } catch (IOException e) { } 
+            }
+        }
     }
 
     /**
