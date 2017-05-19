@@ -1,0 +1,14 @@
+Fri May 19 15:28:16 CEST 2017 : Apache Derby Network Server 10.12.1.1 - (1704137) wurde gestartet und ist bereit, Verbindungen auf Port 1527 zu akzeptieren.
+----------------------------------------------------------------
+Fri May 19 15:28:16 CEST 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-015c-20e4-fb8b-000006d40380 
+on database directory /Users/internet/NetBeansProjects/Zeugnis/store/Zeugnis with class loader sun.misc.Launcher$AppClassLoader@2503dbd3 
+Loaded from file:/Users/internet/NetBeansProjects/Zeugnis/store/Zeugnis.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_74-b02
+user.dir=/Users/internet/NetBeansProjects/Zeugnis/store
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.10.5
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
