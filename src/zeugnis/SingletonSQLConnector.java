@@ -9,9 +9,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -76,56 +78,86 @@ public class SingletonSQLConnector {
             Socket socket = new Socket();
             SocketAddress sockaddr = new InetSocketAddress("localhost", 1527);
 
-            try {
-                // Muss man diesen Treiber laden???? Hilft bei mac aber nicht bei PC
-                //Class.forName("org.apache.derby.jdbc.ClientDriver");    
-                socket.connect(sockaddr);
-            } catch (IOException ex) {
+//            try {
+//                // Mit altem Server verbinden...
+//               socket.connect(sockaddr);
+//               logger.fine("hier wurde ein Socket gefunden/verbunden");
+//            } catch (IOException  ex) {
+                // Neuen Server starten...
                 foreignDerby = false;
                 server = new NetworkServerControl();
                 server.start(new PrintWriter(sw));
                 System.out.println(sw.toString());
-            }
-
-            socket.close();
-        }
+               logger.fine("hier wurde ein neuer Server gestartet");
+                // Server neu gestartet
+                // Warten, bis Server hochgefahren...
+                Boolean waitflag=true;
+                while(waitflag){
+                    try{
+                        server.ping();
+                    }catch(Exception e){
+                        waitflag=false;
+                    }
+                }
+               logger.fine("hier wurde ein Ping vom neuen Server erhalten");
+//            } finally{
+//                if(socket!=null){
+//                    try { 
+//                        socket.close(); 
+//                        System.out.println("Socket geschlossen..."); 
+//                    } catch (IOException e) { 
+//                        System.out.println("Socket nicht zu schliessen..."); 
+//                        e.printStackTrace(); 
+//                    } 
+//                }
+//            }
+               logger.fine("hier müsste alles klar sein!!!");
+               
+            
+         }
 
         // Connect to the server
         Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();    
         //Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
-        con = DriverManager.getConnection("jdbc:derby://localhost:1527/Zeugnis;create=true;",
+        while(con==null || !con.isValid(0)){
+            try{
+                con = DriverManager.getConnection("jdbc:derby://localhost:1527/Zeugnis;create=true;",
                 config.getProperty("derbyUser"),
                 config.getProperty("derbyPassword"));
-
-        logger.fine("Vor dem Schlafen");
-        TimeUnit.SECONDS.sleep(5);
-        logger.fine("Nach dem Schlafen");
+            } catch(SQLException e){
+                logger.fine("HÄÄÄÄÄ");
+                logger.fine("nochmal...");
+                TimeUnit.SECONDS.sleep(1);
+            }
+        }
     }
     
             
     // Wenn DB empty, Script ausführen
-    protected boolean runScript(File scriptFile) { 
-        FileInputStream fileStream = null; 
-        try { 
-            logger.fine(scriptFile.getAbsolutePath());
-            fileStream = new FileInputStream(scriptFile); 
-            int result  =  ij.runScript(this.con,fileStream,"UTF-8",System.out,"UTF-8"); 
-            logger.fine("Intializing DB Zeugnis: " + result); 
-            return (result==0); 
-        } catch (FileNotFoundException e) { 
-            logger.fine("SQL file not found.");
-            return false; 
-        } catch (UnsupportedEncodingException e) { 
-            logger.fine("SQL file not found.");
-            return false; 
-        } 
-        finally { 
-            if(fileStream!=null) { 
-                try { 
-                    fileStream.close(); 
-                } catch (IOException e) { } 
+    protected boolean runScript(String file) throws SQLException {
+        InputStream inputStream=null;
+        Boolean retVal=true;
+        // Test, ob Datenbank gefüllt
+        // ...
+        if (!existTBZeugnis()) {
+            try {
+                inputStream = this.getClass().getResourceAsStream(file);;
+                int result = ij.runScript(this.con, inputStream, "UTF-8", System.out, "UTF-8");
+                logger.fine("Intialized DB Zeugnis: " + result);
+                retVal= (result == 0);
+            } catch (UnsupportedEncodingException e) {
+                logger.fine("SQL file not found.");
+                retVal= false;
+            } finally {
+                if (inputStream != null) {
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                    }
+                }
             }
         }
+        return retVal;
     }
 
     /**
@@ -293,6 +325,17 @@ public class SingletonSQLConnector {
         }
     }
 
+    public Boolean existTBZeugnis() throws SQLException {
+        try (Statement statement = con.createStatement()) {
+            String sql = "SELECT * FROM ZEUGNIS.ZEUGNIS";
+            logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            return true;
+        } catch(SQLException e){
+            return false;
+        }
+    }
+
     public void insertKriteriumsliste(String[] values) throws SQLException {
         try (Statement statement = con.createStatement()) {
 
@@ -433,7 +476,7 @@ public class SingletonSQLConnector {
      */
     public String[] fetchSYears() throws SQLException {
         ArrayList<String> result = new ArrayList<>();
-
+        
         try (Statement statement = con.createStatement()) {
 
             String sql = "select distinct SCHULJAHR from SCHUELER order by SCHULJAHR asc";
