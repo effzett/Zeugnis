@@ -59,7 +59,7 @@ public class Testimony {
 
             // fill DB with initialization data
                 // Logo
-            connector.runScript("/Zeugnis.sql");
+            //connector.runScript("/Zeugnis.sql");
             // fill Database with Testdata
             FillDatabase fd = new FillDatabase(connector);
             fd.insertClass();

@@ -62,7 +62,7 @@ public class SingletonSQLConnector {
         private static final SingletonSQLConnector INSTANCE = new SingletonSQLConnector();
     }
 
-    /**
+/**
      * If startderby == 1 start an own derby instance if port 1527 is not in
      * use. If startderby == 0 Use an runnin dery server at port 1527.
      *
@@ -72,64 +72,32 @@ public class SingletonSQLConnector {
         StringWriter sw = new StringWriter();
 
         if (config.getProperty("startDerby").equals("1")) {
-		// Start Derby at localhost on port 1527
-
+            // Start Derby at localhost on port 1527
             // Check if port 1527 is already in use. (In case of a crash the Derby Server will still running on another process)
             Socket socket = new Socket();
             SocketAddress sockaddr = new InetSocketAddress("localhost", 1527);
 
-//            try {
-//                // Mit altem Server verbinden...
-//               socket.connect(sockaddr);
-//               logger.fine("hier wurde ein Socket gefunden/verbunden");
-//            } catch (IOException  ex) {
-                // Neuen Server starten...
+            try {
+               socket.connect(sockaddr);
+            } catch (IOException ex) {
                 foreignDerby = false;
                 server = new NetworkServerControl();
                 server.start(new PrintWriter(sw));
                 System.out.println(sw.toString());
-               logger.fine("hier wurde ein neuer Server gestartet");
-                // Server neu gestartet
-                // Warten, bis Server hochgefahren...
-                Boolean waitflag=true;
-                while(waitflag){
-                    try{
-                        server.ping();
-                    }catch(Exception e){
-                        waitflag=false;
-                    }
-                }
-               logger.fine("hier wurde ein Ping vom neuen Server erhalten");
-//            } finally{
-//                if(socket!=null){
-//                    try { 
-//                        socket.close(); 
-//                        System.out.println("Socket geschlossen..."); 
-//                    } catch (IOException e) { 
-//                        System.out.println("Socket nicht zu schliessen..."); 
-//                        e.printStackTrace(); 
-//                    } 
-//                }
-//            }
-               logger.fine("hier müsste alles klar sein!!!");
-               
-            
-         }
+            }
+
+            socket.close();
+        }
 
         // Connect to the server
-        Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();    
-        //Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
-        while(con==null || !con.isValid(0)){
-            try{
-                con = DriverManager.getConnection("jdbc:derby://localhost:1527/Zeugnis;create=true;",
+        Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
+        con = DriverManager.getConnection("jdbc:derby://localhost:1527/Zeugnis;create=true",
                 config.getProperty("derbyUser"),
                 config.getProperty("derbyPassword"));
-            } catch(SQLException e){
-                logger.fine("HÄÄÄÄÄ");
-                logger.fine("nochmal...");
-                TimeUnit.SECONDS.sleep(1);
-            }
-        }
+        
+        // Datenbanktabellen erstellen und default Werte laden.
+        // Dazu werden die Statements aus der Zeugnis.sql ausgeführt.
+        CreateDatabase.create(con);
     }
     
             
@@ -325,6 +293,12 @@ public class SingletonSQLConnector {
         }
     }
 
+    /***
+     * prüft, ob Datenbanken existieren
+     * Exception bei Zugriff auf DB ergibt false
+     * @return
+     * @throws SQLException 
+     */
     public Boolean existTBZeugnis() throws SQLException {
         try (Statement statement = con.createStatement()) {
             String sql = "SELECT * FROM ZEUGNIS.ZEUGNIS";
