@@ -57,6 +57,9 @@ public class Testimony {
             SingletonSQLConnector connector = SingletonSQLConnector.getInstance();
             connector.connect();
 
+            // fill DB with initialization data
+                // Logo
+            //connector.runScript("/Zeugnis.sql");
             // fill Database with Testdata
             FillDatabase fd = new FillDatabase(connector);
             fd.insertClass();

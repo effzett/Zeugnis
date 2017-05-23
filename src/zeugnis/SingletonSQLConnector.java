@@ -5,9 +5,15 @@
  */
 package zeugnis;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -19,10 +25,17 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Hashtable;
+<<<<<<< HEAD
+=======
+import java.util.Iterator;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+>>>>>>> origin/master
 import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.apache.derby.drda.NetworkServerControl;
+import org.apache.derby.tools.ij;
 
 /**
  *
@@ -51,7 +64,7 @@ public class SingletonSQLConnector {
         private static final SingletonSQLConnector INSTANCE = new SingletonSQLConnector();
     }
 
-    /**
+/**
      * If startderby == 1 start an own derby instance if port 1527 is not in
      * use. If startderby == 0 Use an runnin dery server at port 1527.
      *
@@ -87,6 +100,37 @@ public class SingletonSQLConnector {
         // Datenbanktabellen erstellen und default Werte laden.
         // Dazu werden die Statements aus der Zeugnis.sql ausgeführt.
         CreateDatabase.create(con);
+<<<<<<< HEAD
+=======
+    }
+    
+            
+    // Wenn DB empty, Script ausführen
+    protected boolean runScript(String file) throws SQLException {
+        InputStream inputStream=null;
+        Boolean retVal=true;
+        // Test, ob Datenbank gefüllt
+        // ...
+        if (!existTBZeugnis()) {
+            try {
+                inputStream = this.getClass().getResourceAsStream(file);;
+                int result = ij.runScript(this.con, inputStream, "UTF-8", System.out, "UTF-8");
+                logger.fine("Intialized DB Zeugnis: " + result);
+                retVal= (result == 0);
+            } catch (UnsupportedEncodingException e) {
+                logger.fine("SQL file not found.");
+                retVal= false;
+            } finally {
+                if (inputStream != null) {
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                    }
+                }
+            }
+        }
+        return retVal;
+>>>>>>> origin/master
     }
 
     /**
@@ -254,6 +298,23 @@ public class SingletonSQLConnector {
         }
     }
 
+    /***
+     * prüft, ob Datenbanken existieren
+     * Exception bei Zugriff auf DB ergibt false
+     * @return
+     * @throws SQLException 
+     */
+    public Boolean existTBZeugnis() throws SQLException {
+        try (Statement statement = con.createStatement()) {
+            String sql = "SELECT * FROM ZEUGNIS.ZEUGNIS";
+            logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            return true;
+        } catch(SQLException e){
+            return false;
+        }
+    }
+
     public void insertKriteriumsliste(String[] values) throws SQLException {
         try (Statement statement = con.createStatement()) {
 
@@ -398,7 +459,7 @@ public class SingletonSQLConnector {
      */
     public String[] fetchSYears() throws SQLException {
         ArrayList<String> result = new ArrayList<>();
-
+        
         try (Statement statement = con.createStatement()) {
 
             String sql = "select distinct SCHULJAHR from SCHUELER order by SCHULJAHR asc";
