@@ -184,7 +184,7 @@ public class FillDatabase {
                         for (Integer k : kid) {
                             Integer bew = ThreadLocalRandom.current().nextInt(1, 2);
                             String[] s = {testZeugnis[j - 1], Integer.toString(k), Integer.toString(bew)};
-                            System.out.println("KRITERIUMSLISTE:" + s[0] + " KRITERIUM:" + s[1] + "BEWERTUNG:" + s[2]);
+                            //System.out.println("KRITERIUMSLISTE:" + s[0] + " KRITERIUM:" + s[1] + "BEWERTUNG:" + s[2]);
                             connector.insertKriteriumsliste(s);
                         }
                     }

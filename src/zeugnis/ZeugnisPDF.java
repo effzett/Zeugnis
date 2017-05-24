@@ -116,8 +116,8 @@ public class ZeugnisPDF  {
         id = idSCHUELER;
         zid = connector.getIdZeugnis(id,Gui.getHYear());
         
-        logger.fine("ZeugnisPDF-idSCHUELER" + Integer.toString(id));
-        logger.fine("ZeugnisPDF-idZEUGNIS" + Integer.toString(zid));
+//        logger.fine("ZeugnisPDF-idSCHUELER" + Integer.toString(id));
+//        logger.fine("ZeugnisPDF-idZEUGNIS" + Integer.toString(zid));
 
         //Alle nötigen Felder werden aus der Datenbank gefüllt
         name      = connector.getSchuelerName(id);

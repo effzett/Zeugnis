@@ -325,7 +325,7 @@ public class SingletonSQLConnector {
     public Boolean existTBZeugnis() throws SQLException {
         try (Statement statement = con.createStatement()) {
             String sql = "SELECT * FROM ZEUGNIS.ZEUGNIS";
-            logger.fine(sql);
+            // logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
             return true;
         } catch(SQLException e){
@@ -366,7 +366,7 @@ public class SingletonSQLConnector {
                     + "," + values[1]
                     + "," + values[2]
                     + ")";
-            logger.fine(sql);
+            // logger.fine(sql);
             statement.executeUpdate(sql);
         }
 
@@ -384,7 +384,7 @@ public class SingletonSQLConnector {
 
         try (Statement statement = con.createStatement()) {
             String sql = "delete from SCHUELER where ID_Schueler = " + idSchueler;
-            logger.fine(sql);
+            // logger.fine(sql);
             statement.executeUpdate(sql);
             insertPuple(values);
         }
@@ -401,7 +401,7 @@ public class SingletonSQLConnector {
 
         try (Statement statement = con.createStatement()) {
             String sql = "delete from ZEUGNIS where ID_SCHUELER = " + idSchueler;
-            logger.fine(sql);
+            // logger.fine(sql);
             statement.executeUpdate(sql);
             
             sql = "delete from SCHUELER where ID_Schueler = " + idSchueler;
@@ -425,7 +425,7 @@ public class SingletonSQLConnector {
         try (Statement statement = con.createStatement()) {
 
             String sql = "select ID_SCHUELER, NAME, VORNAME, GEBDATUM, GEBORT from SCHUELER where KLASSE = '" + sClass + "' and SCHULJAHR = " + sYear;
-            logger.fine(sql);
+            // logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
 
             while (set.next()) {
@@ -455,7 +455,7 @@ public class SingletonSQLConnector {
 
         try (Statement statement = con.createStatement()) {
             String sql = "select ID_SCHUELER, NAME, VORNAME, GEBDATUM, GEBORT from SCHUELER where KLASSE = '" + sClass + "' and SCHULJAHR = " + sYear + " order by NAME asc";
-            logger.fine(sql);
+            // logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             model.setRowCount(0);
@@ -485,7 +485,7 @@ public class SingletonSQLConnector {
 
         try (Statement statement = con.createStatement()) {
             String sql = "select * from SCHUELER where ID_SCHUELER = " + idSchueler;
-            logger.fine(sql);
+            // logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
 
             return set.next();
@@ -506,7 +506,7 @@ public class SingletonSQLConnector {
         try (Statement statement = con.createStatement()) {
 
             String sql = "select distinct SCHULJAHR from SCHUELER order by SCHULJAHR asc";
-            logger.fine(sql);
+            // logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
 
             while (set.next()) {
