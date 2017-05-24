@@ -1510,7 +1510,8 @@ public class ZeugnisPDF  {
         // TODO nur zum Testen, muss später besser gelöst werden
         Desktop desktop = Desktop.getDesktop();
         if (desktop != null && desktop.isSupported(Desktop.Action.OPEN)) {
-            desktop.open(new File(System.getProperty("user.home") +"/NetBeansProjects/Zeugnis"+ "/"+name+vorname+".pdf"));
+//            desktop.open(new File(System.getProperty("user.home") +"/NetBeansProjects/Zeugnis"+ "/"+name+vorname+".pdf"));
+            desktop.open(new File(name+vorname+".pdf"));
             } else {
                 System.err.println("PDF-Datei kann nicht angezeigt werden!");
             }
