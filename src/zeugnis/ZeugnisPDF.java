@@ -170,6 +170,7 @@ public class ZeugnisPDF  {
         for(Integer id : connector.getAVerhaltenID()){  // holt Reihenfolge
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
+            logger.fine(Integer.toString(id));
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             aVerhalten.add(ti);
         }
