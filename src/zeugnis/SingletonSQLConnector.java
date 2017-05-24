@@ -25,12 +25,9 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Hashtable;
-<<<<<<< HEAD
-=======
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
->>>>>>> origin/master
 import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -100,8 +97,7 @@ public class SingletonSQLConnector {
         // Datenbanktabellen erstellen und default Werte laden.
         // Dazu werden die Statements aus der Zeugnis.sql ausgeführt.
         CreateDatabase.create(con);
-<<<<<<< HEAD
-=======
+
     }
     
             
@@ -130,7 +126,7 @@ public class SingletonSQLConnector {
             }
         }
         return retVal;
->>>>>>> origin/master
+
     }
 
     /**
