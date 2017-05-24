@@ -155,28 +155,41 @@ public class SingletonSQLConnector {
             logger.fine(sql);
             statement.executeUpdate(sql);
             int idZeugnis = (values[1] + values[2] + values[3] + values[6] + "1").hashCode();
-            sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, HALBJAHR, SCHULJAHR) values(" + idZeugnis
+            sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, NOTE_ARBEIT, NOTE_SOZIAL, FEHLTAGE, FEHLTAGEOHNE, ENTWICKLUNG, BEMERKUNG, HALBJAHR, SCHULJAHR) values(" + idZeugnis
                     + ", " + values[0]
+                    + ", " + 0
+                    + ", " + 0
+                    + ", " + 0
+                    + ", " + 0
+                    + ", " + "' '"
+                    + ", " + "' '"                    
                     + ", " + 1
                     + ", " + values[6]
                     + ")";
 
             logger.fine(sql);
             statement.executeUpdate(sql);
-            insertKriteriumslisteAll(idZeugnis);
-            logger.fine("Kriterien eingefügt");
+//            insertKriteriumslisteAll(idZeugnis);
+//            logger.fine("Kriterien eingefügt");
 
             idZeugnis = (values[1] + values[2] + values[3] + values[6] + "2").hashCode();
-            sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, HALBJAHR, SCHULJAHR) values(" + idZeugnis
+            sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, NOTE_ARBEIT, NOTE_SOZIAL, FEHLTAGE, FEHLTAGEOHNE, ENTWICKLUNG, BEMERKUNG, HALBJAHR, SCHULJAHR) values(" + idZeugnis
+//            sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, HALBJAHR, SCHULJAHR) values(" + idZeugnis
                     + ", " + values[0]
+                    + ", " + 0
+                    + ", " + 0
+                    + ", " + 0
+                    + ", " + 0
+                    + ", " + "' '"
+                    + ", " + "' '"                    
                     + ", " + 2
                     + ", " + values[6]
                     + ")";
 
             logger.fine(sql);
             statement.executeUpdate(sql);
-            insertKriteriumslisteAll(idZeugnis);
-            logger.fine("Kriterien eingefügt");
+//            insertKriteriumslisteAll(idZeugnis);
+//            logger.fine("Kriterien eingefügt");
         }
 
     }

@@ -34,6 +34,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -113,6 +116,9 @@ public class ZeugnisPDF  {
         id = idSCHUELER;
         zid = connector.getIdZeugnis(id);
         
+//        logger.fine("ZeugnisPDF-idSCHUELER" + Integer.toString(id));
+//        logger.fine("ZeugnisPDF-idZEUGNIS" + Integer.toString(zid));
+
         //Alle nötigen Felder werden aus der Datenbank gefüllt
         name      = connector.getSchuelerName(id);
         vorname   = connector.getSchuelerVorname(id);
@@ -127,6 +133,14 @@ public class ZeugnisPDF  {
         
         // liefert alle im zeugnis abgelegten Kriterien mit Bewertungen
         zeugnis = connector.getID_KriterienZeugnis(zid);
+
+//        Set set = zeugnis.entrySet();
+//        Iterator it = set.iterator();
+//        while (it.hasNext()) {
+//            Map.Entry entry = (Map.Entry) it.next();
+//            logger.fine(entry.getKey() + " : " + entry.getValue());
+//        }
+ 
         
         // Hier müssen später andere Aufrufe stehen , da aus Zeugnissen geholt werden muss...
         
@@ -170,9 +184,6 @@ public class ZeugnisPDF  {
         for(Integer id : connector.getAVerhaltenID()){  // holt Reihenfolge
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
-            logger.fine(Integer.toString(id));
-            logger.fine(Integer.toString(zeugnis.get(id)));
-            
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             aVerhalten.add(ti);
         }
