@@ -169,8 +169,8 @@ public class SingletonSQLConnector {
 
             logger.fine(sql);
             statement.executeUpdate(sql);
-//            insertKriteriumslisteAll(idZeugnis);
-//            logger.fine("Kriterien eingefügt");
+            insertKriteriumslisteAll(idZeugnis);
+            logger.fine("Kriterien eingefügt");
 
             idZeugnis = (values[1] + values[2] + values[3] + values[6] + "2").hashCode();
             sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, NOTE_ARBEIT, NOTE_SOZIAL, FEHLTAGE, FEHLTAGEOHNE, ENTWICKLUNG, BEMERKUNG, HALBJAHR, SCHULJAHR) values(" + idZeugnis
@@ -188,8 +188,8 @@ public class SingletonSQLConnector {
 
             logger.fine(sql);
             statement.executeUpdate(sql);
-//            insertKriteriumslisteAll(idZeugnis);
-//            logger.fine("Kriterien eingefügt");
+            insertKriteriumslisteAll(idZeugnis);
+            logger.fine("Kriterien eingefügt");
         }
 
     }
@@ -338,7 +338,7 @@ public class SingletonSQLConnector {
      * @param zid 
      */
     public void insertKriteriumslisteAll(Integer zid){
-        Integer bewertung = 0;
+        Integer bewertung = 2;
         try {
             ArrayList<Integer> lbid = new ArrayList<Integer>(); // ID_Lernbereiche
             lbid = this.getID_Lernbereiche();
@@ -347,7 +347,7 @@ public class SingletonSQLConnector {
                 kid = this.getID_Kriterien(l);
                 for (Integer k : kid) {
                     String[] s = {Integer.toString(zid), Integer.toString(k), Integer.toString(bewertung)};
-                    //System.out.println("KRITERIUMSLISTE:" + s[0] + " KRITERIUM:" + s[1] + "BEWERTUNG:" + s[2]);
+                    logger.fine("----------------------->>>>>>>>>>>>>" + Integer.toString(zid));
                     this.insertKriteriumsliste(s);
                 }
             }
