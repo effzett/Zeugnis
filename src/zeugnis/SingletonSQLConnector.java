@@ -24,7 +24,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
@@ -98,6 +97,7 @@ public class SingletonSQLConnector {
         // Datenbanktabellen erstellen und default Werte laden.
         // Dazu werden die Statements aus der Zeugnis.sql ausgeführt.
         CreateDatabase.create(con);
+
     }
     
             
@@ -126,6 +126,7 @@ public class SingletonSQLConnector {
             }
         }
         return retVal;
+
     }
 
     /**
@@ -163,7 +164,7 @@ public class SingletonSQLConnector {
             idZeugnis = (values[1] + values[2] + values[3] + values[6] + "2").hashCode();
             sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, HALBJAHR, SCHULJAHR) values(" + idZeugnis
                     + ", " + values[0]
-                    + ", " + 1
+                    + ", " + 2
                     + ", " + values[6]
                     + ")";
 
@@ -344,7 +345,7 @@ public class SingletonSQLConnector {
     }
 
     /**
-     * Löschen eines Schülers.
+     * Löschen eines Schülers mit den dzugehoerigen Zeugnissen.
      *
      * @param idschueler Die Id des zu loeschenden Datensatzes.
      * @throws SQLException
@@ -352,7 +353,11 @@ public class SingletonSQLConnector {
     public void deletePuple(String idSchueler) throws SQLException {
 
         try (Statement statement = con.createStatement()) {
-            String sql = "delete from SCHUELER where ID_Schueler = " + idSchueler;
+            String sql = "delete from ZEUGNIS where ID_SCHUELER = " + idSchueler;
+            logger.fine(sql);
+            statement.executeUpdate(sql);
+            
+            sql = "delete from SCHUELER where ID_Schueler = " + idSchueler;
             logger.fine(sql);
             statement.executeUpdate(sql);
         }

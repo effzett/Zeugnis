@@ -131,7 +131,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         // eines Schuelers auf Stand gehalten werden.
         DefaultTableModel tableModel = new javax.swing.table.DefaultTableModel(
             new String [] {
-                "Id", "Name", "Vorname", "Geburtsdatum", "Geburtsort", "", ""
+                "Id", "Name", "Vorname", "Geburtsdatum", "Geburtsort", "Löschen", "Zeugnis drucken"
             }, 7);
             tableModel.addTableModelListener(this);
             jTable1.setModel(tableModel);
@@ -544,20 +544,33 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     }//GEN-LAST:event_changePuple
 
     public void fillTabFromTestimony() {
-        String idSchueler = ((String[])jComboBox4.getSelectedItem())[1];
-        
-        try {
-            String[] testimony = connector.fetchZeugnis(Integer.parseInt(idSchueler), hYear);
-            
-            if(testimony[6] != null) jTextArea1.setText(testimony[6]);
-            if(testimony[7] != null)jTextField1.setText(testimony[7]);
-            if(testimony[4] != null)jSpinner1.setValue(Integer.parseInt(testimony[4]));
-            if(testimony[5] != null)jSpinner2.setValue(Integer.parseInt(testimony[5]));
-        } catch (SQLException ex) {
-            logger.severe(ex.getLocalizedMessage());
+
+        if (jComboBox4.getSelectedItem() != null) {
+            String idSchueler = ((String[]) jComboBox4.getSelectedItem())[1];
+
+            try {
+                String[] testimony = connector.fetchZeugnis(Integer.parseInt(idSchueler), hYear);
+
+                if (testimony[6] != null) {
+                    jTextArea1.setText(testimony[6]);
+                }
+                if (testimony[7] != null) {
+                    jTextField1.setText(testimony[7]);
+                }
+                if (testimony[4] != null) {
+                    jSpinner1.setValue(Integer.parseInt(testimony[4]));
+                }
+                if (testimony[5] != null) {
+                    jSpinner2.setValue(Integer.parseInt(testimony[5]));
+                }
+            } catch (SQLException ex) {
+                logger.severe(ex.getLocalizedMessage());
+            }
+
         }
+
     }
-    
+
     /**
      * Die ComboBox wird neu befuellt wenn: Auf den Reiter Zeugnis gewechselt
      * wird um den aktuellen Stand zu haben falls im Reiter Schulklassen Schüler
