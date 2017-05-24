@@ -27,18 +27,16 @@ public class CreateDatabase {
 
         try {
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(CreateDatabase.class.getResource("/zeugnis/Zeugnis.sql").openStream()));
-
-            while ((s = br.readLine()) != null) {
-
-                // Kommentarzeilen ueberspringen
-                if (!s.matches("^[-/]{2,}.*")) {
-                    sb.append(s);
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(CreateDatabase.class.getResource("/Zeugnis.sql").openStream()))) {
+                while ((s = br.readLine()) != null) {
+                    
+                    // Kommentarzeilen ueberspringen
+                    if (!s.matches("^[-/]{2,}.*")) {
+                        sb.append(s);
+                    }
+                    
                 }
-
             }
-
-            br.close();
 
             // Die einzelnen Statements ueber ; separieren
             String[] inst = sb.toString().split(";");
@@ -56,6 +54,7 @@ public class CreateDatabase {
         } catch (SQLTransactionRollbackException ex) {
             logger.fine("Datenbank existiert. Zeugnis.sql ist gestoppt.");
         } catch (Exception ex) {
+            logger.fine("Exception: Zeugnis.sql ist gestoppt.");            
             ex.printStackTrace();
         }
 
