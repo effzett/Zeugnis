@@ -28,6 +28,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -162,6 +163,9 @@ public class SingletonSQLConnector {
 
             logger.fine(sql);
             statement.executeUpdate(sql);
+            insertKriteriumslisteAll(idZeugnis);
+            logger.fine("Kriterien eingefügt");
+
             idZeugnis = (values[1] + values[2] + values[3] + values[6] + "2").hashCode();
             sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, HALBJAHR, SCHULJAHR) values(" + idZeugnis
                     + ", " + values[0]
@@ -171,6 +175,8 @@ public class SingletonSQLConnector {
 
             logger.fine(sql);
             statement.executeUpdate(sql);
+            insertKriteriumslisteAll(idZeugnis);
+            logger.fine("Kriterien eingefügt");
         }
 
     }
@@ -312,9 +318,34 @@ public class SingletonSQLConnector {
         }
     }
 
+    /***
+     * Fügt für ein übergebenes Zeugnis 
+     * alle zugehörigen Kriterien_IDs in die Datenbank mit der Bewertung 0 ein
+     * 
+     * @param zid 
+     */
+    public void insertKriteriumslisteAll(Integer zid){
+        Integer bewertung = 0;
+        try {
+            ArrayList<Integer> lbid = new ArrayList<Integer>(); // ID_Lernbereiche
+            lbid = this.getID_Lernbereiche();
+            for (Integer l : lbid) {
+                ArrayList<Integer> kid = new ArrayList<Integer>();  // ID_Kriterium
+                kid = this.getID_Kriterien(l);
+                for (Integer k : kid) {
+                    String[] s = {Integer.toString(zid), Integer.toString(k), Integer.toString(bewertung)};
+                    //System.out.println("KRITERIUMSLISTE:" + s[0] + " KRITERIUM:" + s[1] + "BEWERTUNG:" + s[2]);
+                    this.insertKriteriumsliste(s);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SingletonSQLConnector.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
+    
     public void insertKriteriumsliste(String[] values) throws SQLException {
         try (Statement statement = con.createStatement()) {
-
             String sql = "insert into KRITERIUMSLISTE values("
                     + values[0]
                     + "," + values[1]
