@@ -114,10 +114,10 @@ public class ZeugnisPDF  {
 
         // Hier können schon alle Werte aus der Datenbank geholt werden...
         id = idSCHUELER;
-        zid = connector.getIdZeugnis(id);
+        zid = connector.getIdZeugnis(id,Gui.getHYear());
         
-//        logger.fine("ZeugnisPDF-idSCHUELER" + Integer.toString(id));
-//        logger.fine("ZeugnisPDF-idZEUGNIS" + Integer.toString(zid));
+        logger.fine("ZeugnisPDF-idSCHUELER" + Integer.toString(id));
+        logger.fine("ZeugnisPDF-idZEUGNIS" + Integer.toString(zid));
 
         //Alle nötigen Felder werden aus der Datenbank gefüllt
         name      = connector.getSchuelerName(id);
@@ -134,12 +134,12 @@ public class ZeugnisPDF  {
         // liefert alle im zeugnis abgelegten Kriterien mit Bewertungen
         zeugnis = connector.getID_KriterienZeugnis(zid);
 
-//        Set set = zeugnis.entrySet();
-//        Iterator it = set.iterator();
-//        while (it.hasNext()) {
-//            Map.Entry entry = (Map.Entry) it.next();
-//            logger.fine(entry.getKey() + " : " + entry.getValue());
-//        }
+        Set set = zeugnis.entrySet();
+        Iterator it = set.iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            logger.fine(entry.getKey() + " : " + entry.getValue());
+        }
  
         
         // Hier müssen später andere Aufrufe stehen , da aus Zeugnissen geholt werden muss...

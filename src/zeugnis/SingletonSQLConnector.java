@@ -154,7 +154,8 @@ public class SingletonSQLConnector {
 
             logger.fine(sql);
             statement.executeUpdate(sql);
-            int idZeugnis = (values[1] + values[2] + values[3] + values[6] + "1").hashCode();
+//            int idZeugnis = (values[1] + values[2] + values[3] + values[6] + "1").hashCode();
+            int idZeugnis =  (getIdZeugnis((Integer)Integer.parseInt(values[0]),1).hashCode());
             sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, NOTE_ARBEIT, NOTE_SOZIAL, FEHLTAGE, FEHLTAGEOHNE, ENTWICKLUNG, BEMERKUNG, HALBJAHR, SCHULJAHR) values(" + idZeugnis
                     + ", " + values[0]
                     + ", " + 0
@@ -172,7 +173,8 @@ public class SingletonSQLConnector {
             insertKriteriumslisteAll(idZeugnis);
             logger.fine("Kriterien eingefügt");
 
-            idZeugnis = (values[1] + values[2] + values[3] + values[6] + "2").hashCode();
+//            idZeugnis = (values[1] + values[2] + values[3] + values[6] + "2").hashCode();
+            idZeugnis =  (getIdZeugnis((Integer)Integer.parseInt(values[0]),2).hashCode());
             sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, NOTE_ARBEIT, NOTE_SOZIAL, FEHLTAGE, FEHLTAGEOHNE, ENTWICKLUNG, BEMERKUNG, HALBJAHR, SCHULJAHR) values(" + idZeugnis
 //            sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, HALBJAHR, SCHULJAHR) values(" + idZeugnis
                     + ", " + values[0]
@@ -338,7 +340,7 @@ public class SingletonSQLConnector {
      * @param zid 
      */
     public void insertKriteriumslisteAll(Integer zid){
-        Integer bewertung = 2;
+        Integer bewertung = 1;
         try {
             ArrayList<Integer> lbid = new ArrayList<Integer>(); // ID_Lernbereiche
             lbid = this.getID_Lernbereiche();
@@ -347,7 +349,7 @@ public class SingletonSQLConnector {
                 kid = this.getID_Kriterien(l);
                 for (Integer k : kid) {
                     String[] s = {Integer.toString(zid), Integer.toString(k), Integer.toString(bewertung)};
-                    logger.fine("----------------------->>>>>>>>>>>>>" + Integer.toString(zid));
+                    //logger.fine("----------------------->>>>>>>>>>>>>" + Integer.toString(zid));
                     this.insertKriteriumsliste(s);
                 }
             }
@@ -933,10 +935,10 @@ public class SingletonSQLConnector {
      * @return
      * @throws SQLException 
      */
-    public Integer getIdZeugnis(Integer idSchueler) throws SQLException{
+    public Integer getIdZeugnis(Integer idSchueler, Integer halbjahr) throws SQLException{
         Integer retVal;
         retVal = (this.getSchuelerName(idSchueler) + this.getSchuelerVorname(idSchueler) +
-                this.getSchuelerGebDatum(idSchueler) + this.getSchuelerSchuljahr(idSchueler) + Gui.getHYear()).hashCode();
+                this.getSchuelerGebDatum(idSchueler) + this.getSchuelerSchuljahr(idSchueler) + halbjahr.toString()).hashCode();
         return retVal;
     }
     
