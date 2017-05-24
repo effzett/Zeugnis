@@ -90,7 +90,8 @@ public class SingletonSQLConnector {
 
         // Connect to the server
         Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
-        con = DriverManager.getConnection("jdbc:derby://localhost:1527/Zeugnis;create=true",
+        con = DriverManager.getConnection("jdbc:derby:Zeugnis;create=true",
+//        con = DriverManager.getConnection("jdbc:derby://localhost:1527/Zeugnis;create=true",
                 config.getProperty("derbyUser"),
                 config.getProperty("derbyPassword"));
         
