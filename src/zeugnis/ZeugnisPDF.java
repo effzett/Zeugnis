@@ -134,12 +134,12 @@ public class ZeugnisPDF  {
         // liefert alle im zeugnis abgelegten Kriterien mit Bewertungen
         zeugnis = connector.getID_KriterienZeugnis(zid);
 
-        Set set = zeugnis.entrySet();
-        Iterator it = set.iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            logger.fine(entry.getKey() + " : " + entry.getValue());
-        }
+//        Set set = zeugnis.entrySet();
+//        Iterator it = set.iterator();
+//        while (it.hasNext()) {
+//            Map.Entry entry = (Map.Entry) it.next();
+//            logger.fine(entry.getKey() + " : " + entry.getValue());
+//        }
  
         
         // Hier müssen später andere Aufrufe stehen , da aus Zeugnissen geholt werden muss...

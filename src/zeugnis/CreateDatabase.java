@@ -27,7 +27,7 @@ public class CreateDatabase {
 
         try {
 
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(CreateDatabase.class.getResource("/Zeugnis.sql").openStream()))) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(CreateDatabase.class.getResource("/Zeugnis.sql").openStream(),"UTF-8"))) {
                 while ((s = br.readLine()) != null) {
                     
                     // Kommentarzeilen ueberspringen
