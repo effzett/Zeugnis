@@ -171,6 +171,8 @@ public class ZeugnisPDF  {
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
             logger.fine(Integer.toString(id));
+            logger.fine(Integer.toString(zeugnis.get(id)));
+            
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             aVerhalten.add(ti);
         }
