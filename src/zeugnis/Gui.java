@@ -372,7 +372,21 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             jLabel1.setText("Schuljahr");
 
             try{
-                jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(connector.fetchSYears()));
+                String[] sYears = connector.fetchSYears();
+
+                if(sYears.length == 0) {
+                    sYears = new String[1];
+                    SimpleDateFormat sf = new SimpleDateFormat("MMyyyy");
+                    String curr = sf.format(Calendar.getInstance().getTime());
+
+                    if(Integer.parseInt(curr.substring(0,1)) < 6 ) {
+                        sYears[0] = (Integer.parseInt(curr.substring(2)) -1) +  "/" + curr.substring(4);
+                    } else {
+                        sYears[0] = curr.substring(2) + "/" + (Integer.parseInt(curr.substring(4)) + 1);
+                    }
+
+                }
+                jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(sYears));
             } catch(SQLException ex) {
                 logger.severe(ex.getLocalizedMessage());
             }
