@@ -55,7 +55,8 @@ public class CreateDatabase {
             logger.fine("Datenbank existiert. Zeugnis.sql ist gestoppt.");
         } catch (Exception ex) {
             logger.fine("Exception: Zeugnis.sql ist gestoppt.");            
-            ex.printStackTrace();
+            //ex.printStackTrace();
+            logger.fine(ex.getLocalizedMessage());
         }
 
     }
