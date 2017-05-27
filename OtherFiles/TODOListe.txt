@@ -3,5 +3,7 @@ TODO:
 * Arbeits- und Sozialverhalten:  Kriterien anzeigen
 * Neuen Jahrgang anlegen mit verschieben der alten Schüler
 * Schüler löschen inklusiver Zeugnisse und Kriteriumslisten
-
+* PDF's erzeugen: einen Klassenordner anlegen und dort alle Zeugnisse generieren
+* Hauptfunktionalität: Bewertungen eintragen im Zeugnis-TAB
+* Programm über beenden beenden
 
