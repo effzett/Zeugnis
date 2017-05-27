@@ -6,4 +6,12 @@ TODO:
 * PDF's erzeugen: einen Klassenordner anlegen und dort alle Zeugnisse generieren
 * Hauptfunktionalität: Bewertungen eintragen im Zeugnis-TAB
 * Programm über beenden beenden
+* Daten aus Zeugnis-TAB in die DB schrieben
+** Fehltage
+** Bewertungen
+** Bemerkungen
+* Noch ein Feld zur Benotung von Arbeitsverhalten
+* Noch ein Feld zur Benotung von Sozialverhalten
+* Feld mit den Kriterien breiter machen und ggfs andere Felder darüber oder darunter setzen
+
 
