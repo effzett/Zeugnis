@@ -1,0 +1,7 @@
+TODO:
+* Tab Schulklasse: Beim Verlassen des Feldes Geburtsortes gibt es eine ominöse DELETE Warnung
+* Arbeits- und Sozialverhalten:  Kriterien anzeigen
+* Neuen Jahrgang anlegen mit verschieben der alten Schüler
+* Schüler löschen inklusiver Zeugnisse und Kriteriumslisten
+
+
