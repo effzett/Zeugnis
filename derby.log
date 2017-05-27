@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Fri May 26 02:11:45 CEST 2017:
-Booten von Derby-Version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): Instanz a816c00e-015c-4218-42d8-000006d02be0
-für Datenbankverzeichnis /home/juergen/NetBeansProjects/Zeugnis/Zeugnis mit Class Loader sun.misc.Launcher$AppClassLoader@2626b418
-Geladen aus file:/home/juergen/NetBeansProjects/Zeugnis/lib/derby.jar
+Fri May 26 23:24:54 CEST 2017:
+Booten von Derby-Version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): Instanz a816c00e-015c-46a5-dd25-00000e765b28
+für Datenbankverzeichnis /Users/internet/NetBeansProjects/Zeugnis/Zeugnis mit Class Loader sun.misc.Launcher$AppClassLoader@5caf905d
+Geladen aus file:/Users/internet/NetBeansProjects/Zeugnis/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_65-b17
-user.dir=/home/juergen/NetBeansProjects/Zeugnis
-os.name=Linux
-os.arch=amd64
-os.version=4.9.0-2-amd64
+java.runtime.version=1.8.0_73-b02
+user.dir=/Users/internet/NetBeansProjects/Zeugnis
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.10.5
 derby.system.home=null
 Datenbank-Class Loader wurde gestartet - derby.database.classpath=''
