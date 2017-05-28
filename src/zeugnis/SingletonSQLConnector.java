@@ -50,7 +50,7 @@ public class SingletonSQLConnector {
     private String getNewKlasse(String klasse) {
         String newKlasse=klasse;
         
-        if(klasse.matches("[1-4].")){
+        if(klasse.matches("[1-3].")){
         // Einfache Methode
             newKlasse = newKlasse.replace('3', '4');
             newKlasse = newKlasse.replace('2', '3');
@@ -156,7 +156,7 @@ public class SingletonSQLConnector {
     /***
      * liefert das größte Schuljahr zurück, dass in SCHUELER gefunden wurde
      */
-    public Integer getMaxSchuljahr() throws SQLException{
+    public Integer getMaxSchuljahrFromZeugnis() throws SQLException{
         Integer retVal=0;
 
         try (Statement statement = con.createStatement()) {
@@ -174,6 +174,50 @@ public class SingletonSQLConnector {
         return retVal;
     }
     
+        /***
+     * liefert das größte Schuljahr zurück, dass in KRITERIUM gefunden wurde
+     */
+    public Integer getMaxSchuljahrFromKriterium() throws SQLException{
+        Integer retVal=0;
+
+        try (Statement statement = con.createStatement()) {
+
+            String sql = "select distinct SCHULJAHR from KRITERIUM order by SCHULJAHR desc";
+            // logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+
+            while (set.next()) {
+                retVal = set.getInt(1);
+                break;
+             }
+            logger.fine(retVal.toString());
+        }
+        return retVal;
+    }
+
+
+        /***
+     * liefert das größte Schuljahr zurück, dass in LERNBEREICH gefunden wurde
+     */
+    public Integer getMaxSchuljahrFromLernbereich() throws SQLException{
+        Integer retVal=0;
+
+        try (Statement statement = con.createStatement()) {
+
+            String sql = "select distinct SCHULJAHR from LERNBEREICH order by SCHULJAHR desc";
+            // logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+
+            while (set.next()) {
+                retVal = set.getInt(1);
+                break;
+             }
+            logger.fine(retVal.toString());
+        }
+        return retVal;
+    }
+
+
     
     /***
      * Vorläufig: wandelt String in Integer um
@@ -207,8 +251,22 @@ public class SingletonSQLConnector {
             
             // Neue Klasse bestimmen
             String newKlasse = getNewKlasse(klasse);
+ 
+            // TODO Kriterium Tabelle für neues Schuljahr erstellen
+            // if(newYear not exist in KRITERIUM)
+            if(newYear != this.getMaxSchuljahrFromKriterium()){
+            // Alle Daten von oldyear nehmen, aber mit ID_KRITERIUM+1000 und newYear
+                logger.fine("Hier muss was dupliziert werden....");
+            }
             
-            if(!newKlasse.contains("5")){
+            // TODO Lernbereich für neues Schuljahr erstellen
+            // if(newYear not exist in LERNBEREICH)
+            if(newYear != this.getMaxSchuljahrFromLernbereich()){
+            // Alle Daten von oldyear nehmen, aber mit ID_LERNBEREICH+1000 und newYear
+                logger.fine("Hier muss was dupliziert werden....");
+            }
+ 
+            if(newKlasse.contains("2") || newKlasse.contains("3") || newKlasse.contains("4")  ){   // 5. Klasse gibt's nicht
                 // Schueler einfügen
                 String[] schueler = new String[]{
                     Integer.toString(this.createIdSchueler(name, vorname, gebdatum, Integer.toString(newYear))), 
@@ -221,6 +279,7 @@ public class SingletonSQLConnector {
                 this.insertPuple(schueler);
                 logger.fine(schueler.toString());
             }
+            
         }
     }
     
