@@ -60,7 +60,7 @@ public class FillDatabase {
                 try {
                     if (!connector.existKriteriumsliste()) { // prüfen ob leer 
                         ArrayList<Integer> lbid = new ArrayList<Integer>(); // Lernbereiche
-                        lbid = connector.getID_Lernbereiche();
+                        lbid = connector.getID_Lernbereiche(2016,1);
                         for (Integer l : lbid) {
                             ArrayList<Integer> kid = new ArrayList<Integer>();  // Kriterium
                             kid = connector.getID_Kriterien(l);

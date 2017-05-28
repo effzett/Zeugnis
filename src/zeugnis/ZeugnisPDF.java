@@ -200,6 +200,7 @@ public class ZeugnisPDF  {
         noteSozial = connector.getNoteSozial(zid);
         
         for(Integer id : connector.getID_KriterienFromLernbereich("Sprechen und Zuhören")){  // holt Reihenfolge
+            logger.fine("ID_KRITERIUM= "+Integer.toString(id));
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable

@@ -240,6 +240,23 @@ public class SingletonSQLConnector {
         Integer newYear = schuljahr;
         Integer oldYear = schuljahr-1;  
 
+        // TODO Lernbereich für neues Schuljahr erstellen
+        // if(newYear not exist in LERNBEREICH)
+        if (newYear != this.getMaxSchuljahrFromLernbereich()) {
+            // Alle Daten von oldyear nehmen, aber mit ID_LERNBEREICH+1000 und newYear
+            appendNewYearLernbereich(newYear);
+        }
+
+        // TODO Kriterium Tabelle für neues Schuljahr erstellen
+        // if(newYear not exist in KRITERIUM)
+        if (newYear != this.getMaxSchuljahrFromKriterium()) {
+            // Alle Daten von oldyear nehmen, aber mit ID_KRITERIUM+1000 und newYear
+            // Achtung: ID_LERNBEREICH muss sich auf die richtigen Jahre in LERNBEREICH
+            // beziehen! Da immer +1000 sollte das so funktionieren....
+            appendNewYearKriterium(newYear);
+        }
+
+        
         for(Integer idSchueler: getIDSchueler(oldYear)){
             logger.fine(idSchueler.toString());
             // Für jeden Schuler durchführen...
@@ -252,19 +269,7 @@ public class SingletonSQLConnector {
             // Neue Klasse bestimmen
             String newKlasse = getNewKlasse(klasse);
  
-            // TODO Kriterium Tabelle für neues Schuljahr erstellen
-            // if(newYear not exist in KRITERIUM)
-            if(newYear != this.getMaxSchuljahrFromKriterium()){
-            // Alle Daten von oldyear nehmen, aber mit ID_KRITERIUM+1000 und newYear
-                logger.fine("Hier muss was dupliziert werden....");
-            }
             
-            // TODO Lernbereich für neues Schuljahr erstellen
-            // if(newYear not exist in LERNBEREICH)
-            if(newYear != this.getMaxSchuljahrFromLernbereich()){
-            // Alle Daten von oldyear nehmen, aber mit ID_LERNBEREICH+1000 und newYear
-                logger.fine("Hier muss was dupliziert werden....");
-            }
  
             if(newKlasse.contains("2") || newKlasse.contains("3") || newKlasse.contains("4")  ){   // 5. Klasse gibt's nicht
                 // Schueler einfügen
@@ -283,6 +288,67 @@ public class SingletonSQLConnector {
         }
     }
     
+    private void appendNewYearLernbereich(Integer newYear) throws SQLException{
+        Integer oldYear = newYear-1;
+        ArrayList<String> setInput = new ArrayList<String>();
+        
+        try (Statement statement = con.createStatement()) {
+            String sql = "select * from LERNBEREICH where SCHULJAHR=" + oldYear;
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+
+            while (set.next()) {
+                Integer idLernbereich = set.getInt(1);
+                String lernbereich = set.getString(2);
+                Integer klassenstufe = set.getInt(3);
+                Integer notenbereich = set.getInt(4);
+                Integer schuljahr = set.getInt(5);
+                String sql2 = "insert into LERNBEREICH values("+
+                        Integer.toString(idLernbereich+1000) + ",'" +
+                        lernbereich + "'," + 
+                        Integer.toString(klassenstufe) + "," +
+                        Integer.toString(notenbereich) + "," +
+                        Integer.toString(newYear) + ")";
+                setInput.add(sql2);
+            }
+            for(String insertCmd : setInput){
+                logger.fine(insertCmd);
+                statement.executeUpdate(insertCmd);
+            }
+        }   
+    }
+
+    private void appendNewYearKriterium(Integer newYear) throws SQLException{
+        Integer oldYear = newYear-1;
+        ArrayList<String> setInput = new ArrayList<String>();
+    
+        try (Statement statement = con.createStatement()) {
+            String sql = "select * from KRITERIUM where SCHULJAHR=" + oldYear;
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+
+            while (set.next()) {
+                Integer idKriterium = set.getInt(1);
+                Integer idLernbereich = set.getInt(2);
+                String kriteriumtext = set.getString(3);
+                Integer schuljahr = set.getInt(4);
+                String sql2 = "insert into KRITERIUM values("+
+                        Integer.toString(idKriterium+1000) + "," +
+                        Integer.toString(idLernbereich+1000) + ",'" +
+                        kriteriumtext + "'," + 
+                        Integer.toString(newYear)+ ")";
+                setInput.add(sql2);
+            }
+            for(String insertCmd : setInput){
+                logger.fine(insertCmd);
+                statement.executeUpdate(insertCmd);
+            }
+        }   
+        
+    }
+
+
+
     /***
      * liefert eine Liste aller SchuelerID, die im angegebenen Schuljahr sind
      * @return 
@@ -504,24 +570,42 @@ public class SingletonSQLConnector {
         }
     }
 
+    private Integer getKlassenstufe(Integer zid) throws SQLException{
+        Integer retVal=0;
+        String klasse="";
+        
+        try (Statement statement = con.createStatement()) {
+            String sql = "select KLASSE from SCHUELER,ZEUGNIS where ZEUGNIS.ID_ZEUGNIS = " + zid + " AND ZEUGNIS.ID_SCHUELER=SCHUELER.ID_SCHUELER";
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            while (set.next()) {
+                klasse = set.getString(1);
+            }
+        }
+        return Integer.parseInt(klasse.substring(0, 1));
+    }
     /**
      * *
      * Fügt für ein übergebenes Zeugnis alle zugehörigen Kriterien_IDs in die
-     * Datenbank mit der Bewertung 0 ein
+     * Datenbank mit der Bewertung 1 ein
      *
      * @param zid
      */
-    public void insertKriteriumslisteAll(Integer zid) {
+    public void insertKriteriumslisteAll(Integer zid) throws SQLException {
         Integer bewertung = 1;
+        // Klassenstufe ermitteln
+        Integer ks = this.getKlassenstufe(zid);
         try {
             ArrayList<Integer> lbid = new ArrayList<Integer>(); // ID_Lernbereiche
-            lbid = this.getID_Lernbereiche();
+            lbid = this.getID_Lernbereiche(this.getZeugnisSchuljahr(zid),ks);
             for (Integer l : lbid) {
+                logger.fine(Integer.toString(l));
+                logger.fine(Integer.toString(this.getZeugnisSchuljahr(zid)));               
                 ArrayList<Integer> kid = new ArrayList<Integer>();  // ID_Kriterium
                 kid = this.getID_Kriterien(l);
                 for (Integer k : kid) {
                     String[] s = {Integer.toString(zid), Integer.toString(k), Integer.toString(bewertung)};
-                    //logger.fine("----------------------->>>>>>>>>>>>>" + Integer.toString(zid));
+                    logger.fine("----------------------->>>>>>>>>>>>>" + s[0] + " " + s[1] + " " + s[2]);
                     this.insertKriteriumsliste(s);
                 }
             }
@@ -721,6 +805,26 @@ public class SingletonSQLConnector {
             }
         }
         return name;
+    }
+    
+    /**
+     * liefert das Schuljahr aus der Zeugnistabelle für die idZeugnis
+     *
+     * @param idZEUGNIS
+     * @return
+     * @throws SQLException
+     */
+    public Integer getZeugnisSchuljahr(int idZEUGNIS) throws SQLException {
+        Integer schuljahr = 0;
+        try (Statement statement = con.createStatement()) {
+            String sql = "select SCHULJAHR from ZEUGNIS where ID_ZEUGNIS = " + idZEUGNIS;
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            while (set.next()) {
+                schuljahr = set.getInt(1);
+            }
+        }
+        return schuljahr;
     }
 
     /**
@@ -1011,20 +1115,7 @@ public class SingletonSQLConnector {
         ArrayList<Integer> result = new ArrayList<>();
 
         try (Statement statement = con.createStatement()) {
-            String k;
-            int y;
-//            try {
-//                k = Gui.getSClass().substring(0, 1);
-//                y = Gui.getSYear();
-//            } catch (Exception ex) {
-//                k="1";
-//                y=2016;
-//            }
-            k = "1";
-            y = 2016;
-
-//            String sql = "select ID_KRITERIUM from KRITERIUM where KRITERIUM.ID_LERNBEREICH=" + idLernbereich +" AND KRITERIUM.SCHULJAHR =2016";
-            String sql = "select ID_KRITERIUM from KRITERIUM where KRITERIUM.ID_LERNBEREICH=" + idLernbereich + " AND KRITERIUM.SCHULJAHR =" + y;
+            String sql = "select ID_KRITERIUM from KRITERIUM where KRITERIUM.ID_LERNBEREICH=" + idLernbereich;
             //logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
             while (set.next()) {
@@ -1116,19 +1207,17 @@ public class SingletonSQLConnector {
      * @return result
      * @throws java.sql.SQLException
      */
-    public ArrayList<Integer> getID_Lernbereiche() throws SQLException {
+    public ArrayList<Integer> getID_Lernbereiche(Integer schuljahr, Integer klassenstufe) throws SQLException {
         ArrayList<Integer> result = new ArrayList<>();
         String k;
         int y;
         try {
-            k = Gui.getSClass().substring(0, 1);
-            y = Gui.getSYear();
+            k = Integer.toString(klassenstufe);
+            y = schuljahr;
         } catch (Exception ex) { // wenn GUI noch nicht initialisiert...(Testcode)
             k = "1";
             y = 2016;
         }
-//            k="1";
-//            y=2016;
 
         try (Statement statement = con.createStatement()) {
             String sql = "select ID_LERNBEREICH from LERNBEREICH where (KLASSENSTUFE=" + k + " OR KLASSENSTUFE=0) AND SCHULJAHR =" + y;
@@ -1184,7 +1273,7 @@ public class SingletonSQLConnector {
                     + " AND (LERNBEREICH.KLASSENSTUFE=0 OR LERNBEREICH.KLASSENSTUFE =" + klassenstufe + ")"
                     + " AND LERNBEREICH.ID_LERNBEREICH=KRITERIUM.ID_LERNBEREICH "
                     + " AND LERNBEREICH.SCHULJAHR=KRITERIUM.SCHULJAHR";
-            //logger.fine(sql);
+            logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
             while (set.next()) {
                 result.add(set.getInt(1));
