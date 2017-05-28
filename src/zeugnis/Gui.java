@@ -521,20 +521,42 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     }//GEN-LAST:event_createPdfForClass
 
     private void addSchoolYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSchoolYear
-        String result = (String) JOptionPane.showInputDialog(
-                this,
-                "Tragen Sie das Schuljahr im Format yyyy/yy (z.B 2015/16) ein",
-                "Neues Schuljahr anlegen",
-                JOptionPane.PLAIN_MESSAGE);
-
-        if ((result != null) && (result.length() > 0)) {
-
-            if (result.matches("[0-9]{4}/[0-9]{2}")) {
-
-            } else {
-                logger.warning("Der eingegebene Wert entspricht nicht dem Format yyyy/yy (z.B 2015/16)");
-            }
-
+        try {
+            // Ist wahrscheinlich überflüssig.
+            // es wird einfach ein neues Schuljahr angelegt und basta.
+            // Formatierung in der GUI übernimmt das Programm von selbst
+            // In der DB wird einfach das nächste Jahr erzeugt (maxjahr+1)
+            // Wichtig: Es muss das neue Schuljahr vorausgewählt werden in der GUI
+            // Damit alle Methoden auf diesem neuen Schuljahr operieren
+            Integer newYear = connector.getMaxSchuljahr()+1;
+            Integer newYear1 = newYear+1;
+            String newYearS = Integer.toString(newYear) + "/" + Integer.toString(newYear1).substring(2);
+            connector.generateNewYear(newYear);
+            // Jetzt noch in die Combobox eintragen??? Aber wie? oder wird automatisch?
+//        String result = (String) JOptionPane.showInputDialog(
+//                this,
+//                "Tragen Sie das Schuljahr im Format yyyy/yy (z.B 2015/16) ein",
+//                "Neues Schuljahr anlegen",
+//                JOptionPane.PLAIN_MESSAGE);
+//
+//        if ((result != null) && (result.length() > 0)) {
+//
+//            if (result.matches("[0-9]{4}/[0-9]{2}")) {
+//                try {
+//                    Integer newYear= Integer.parseInt(result.split("/")[0]);
+//                    connector.generateNewYear(connector.getMaxSchuljahr()+1);
+//                    //connector.generateNewYear(newYear);
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                
+//            } else {
+//                logger.warning("Der eingegebene Wert entspricht nicht dem Format yyyy/yy (z.B 2015/16)");
+//            }
+//
+//        }
+        } catch (SQLException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_addSchoolYear
