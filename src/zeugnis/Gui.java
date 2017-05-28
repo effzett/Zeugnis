@@ -529,9 +529,10 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             // Wichtig: Es muss das neue Schuljahr vorausgewählt werden in der GUI
             // Damit alle Methoden auf diesem neuen Schuljahr operieren
             Integer newYear = connector.getMaxSchuljahrFromZeugnis()+1;
+            connector.generateNewYear(newYear);
+            // neu einlesen...     
 //            Integer newYear1 = newYear+1;
 //            String newYearS = Integer.toString(newYear) + "/" + Integer.toString(newYear1).substring(2);
-            connector.generateNewYear(newYear);
 //        String result = (String) JOptionPane.showInputDialog(
 //                this,
 //                "Tragen Sie das Schuljahr im Format yyyy/yy (z.B 2015/16) ein",

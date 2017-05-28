@@ -133,16 +133,6 @@ public class ZeugnisPDF  {
         
         // liefert alle im zeugnis abgelegten Kriterien mit Bewertungen
         zeugnis = connector.getID_KriterienZeugnis(zid);
-
-//        Set set = zeugnis.entrySet();
-//        Iterator it = set.iterator();
-//        while (it.hasNext()) {
-//            Map.Entry entry = (Map.Entry) it.next();
-//            logger.fine(entry.getKey() + " : " + entry.getValue());
-//        }
- 
-        
-        // Hier müssen später andere Aufrufe stehen , da aus Zeugnissen geholt werden muss...
         
         ArrayList<String> szListe = new ArrayList();
         szListe=connector.getKriterien(idSCHUELER,"Sprechen und Zuhören");
@@ -179,28 +169,43 @@ public class ZeugnisPDF  {
         ArrayList<String> su8 = new ArrayList();
         su8=connector.getKriterien(idSCHUELER,"Englisch");
 
-        
-        // Arbeitsverhalten 
-        for(Integer id : connector.getAVerhaltenID()){  // holt Reihenfolge
+        for(Integer id : connector.getID_KriterienFromLernbereich("Arbeitsverhalten")){  // holt Reihenfolge
+            //logger.fine("ID_KRITERIUM= "+Integer.toString(id));
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             aVerhalten.add(ti);
         }
-        
-        // Sozialverhalten 
-        for(Integer id : connector.getSVerhaltenID()){  // holt Reihenfolge
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Sozialverhalten")){  // holt Reihenfolge
+            //logger.fine("ID_KRITERIUM= "+Integer.toString(id));
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             sVerhalten.add(ti);
         }
+        
+//        // Arbeitsverhalten 
+//        for(Integer id : connector.getAVerhaltenID()){  // holt Reihenfolge
+//            TableItem ti = new TableItem();
+//            ti.setText(connector.getKriteriumText(id)); // holt Text
+//            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+//            aVerhalten.add(ti);
+//        }
+        
+//        // Sozialverhalten 
+//        for(Integer id : connector.getSVerhaltenID()){  // holt Reihenfolge
+//            TableItem ti = new TableItem();
+//            ti.setText(connector.getKriteriumText(id)); // holt Text
+//            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+//            sVerhalten.add(ti);
+//        }
 
         noteArbeit = connector.getNoteArbeit(zid);
         noteSozial = connector.getNoteSozial(zid);
         
         for(Integer id : connector.getID_KriterienFromLernbereich("Sprechen und Zuhören")){  // holt Reihenfolge
-            logger.fine("ID_KRITERIUM= "+Integer.toString(id));
+            //logger.fine("ID_KRITERIUM= "+Integer.toString(id));
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
