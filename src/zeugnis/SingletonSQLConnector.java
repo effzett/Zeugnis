@@ -84,7 +84,13 @@ public class SingletonSQLConnector {
 
     }
 
-    // Wenn DB empty, Script ausführen
+    /***
+     * Dies ist eine Alternative zum manuellen Einlesen des .sql Scripts
+     * Später kann dies mal aktiviert werden...
+     * @param file
+     * @return
+     * @throws SQLException 
+     */
     protected boolean runScript(String file) throws SQLException {
         InputStream inputStream = null;
         Boolean retVal = true;
@@ -112,6 +118,37 @@ public class SingletonSQLConnector {
 
     }
 
+    /***
+     * Für später wenn die ID unabhängig erzeugt wird
+     * @return 
+     */
+    public Integer createIdSchueler(){
+        return 0;
+    }
+    
+    
+    /***
+     * Für später wenn die ID unabhängig erzeugt wird
+     * @return 
+     */
+    public Integer createIdSchueler(String name, String vorname, String gebdatum, String schuljahr){
+        Integer retVal=0;
+        
+        retVal = (name+vorname+gebdatum+schuljahr).hashCode();
+        return retVal;
+    }
+    
+    /***
+     * Vorläufig: wandelt String in Integer um
+     * @return 
+     */
+    public Integer createIdSchueler(String idSchueler){
+        Integer retVal=0;
+        
+        retVal = Integer.getInteger(idSchueler);
+        return retVal;
+    }
+    
     /**
      * der Primary Key des Schuelers wird erzeugt aus dem Hashcode aus
      * NameVornameGebDatumSchuljahr. Das Datum im Format yyyy-MM-dd.
@@ -135,8 +172,7 @@ public class SingletonSQLConnector {
 
             logger.fine(sql);
             statement.executeUpdate(sql);
-//            int idZeugnis = (values[1] + values[2] + values[3] + values[6] + "1").hashCode();
-            int idZeugnis = (getIdZeugnis((Integer) Integer.parseInt(values[0]), 1).hashCode());
+            int idZeugnis = getIdZeugnis(Integer.parseInt(values[0]), 1);
             sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, NOTE_ARBEIT, NOTE_SOZIAL, FEHLTAGE, FEHLTAGEOHNE, ENTWICKLUNG, BEMERKUNG, HALBJAHR, SCHULJAHR) values(" + idZeugnis
                     + ", " + values[0]
                     + ", " + 0
@@ -155,7 +191,7 @@ public class SingletonSQLConnector {
             logger.fine("Kriterien eingefügt");
 
 //            idZeugnis = (values[1] + values[2] + values[3] + values[6] + "2").hashCode();
-            idZeugnis = (getIdZeugnis((Integer) Integer.parseInt(values[0]), 2).hashCode());
+            idZeugnis = getIdZeugnis(Integer.parseInt(values[0]), 2);
             sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, NOTE_ARBEIT, NOTE_SOZIAL, FEHLTAGE, FEHLTAGEOHNE, ENTWICKLUNG, BEMERKUNG, HALBJAHR, SCHULJAHR) values(" + idZeugnis
                     //            sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, HALBJAHR, SCHULJAHR) values(" + idZeugnis
                     + ", " + values[0]
@@ -171,6 +207,7 @@ public class SingletonSQLConnector {
 
             logger.fine(sql);
             statement.executeUpdate(sql);
+            // Kriteriumsliste aufbauen...
             insertKriteriumslisteAll(idZeugnis);
             logger.fine("Kriterien eingefügt");
         }
@@ -376,18 +413,30 @@ public class SingletonSQLConnector {
     }
 
     /**
-     * Löschen eines Schülers mit den dzugehoerigen Zeugnissen.
+     * Löschen eines Schülers mit den dazugehoerigen Zeugnissen.
      *
      * @param idschueler Die Id des zu loeschenden Datensatzes.
      * @throws SQLException
      */
     public void deletePuple(String idSchueler) throws SQLException {
-
+        Integer idZeugnis1;
+        Integer idZeugnis2;
+        
+        idZeugnis1 = this.getIdZeugnis(Integer.parseInt(idSchueler), 1);
+        idZeugnis2 = this.getIdZeugnis(Integer.parseInt(idSchueler), 2);
+        
         try (Statement statement = con.createStatement()) {
-            String sql = "delete from ZEUGNIS where ID_SCHUELER = " + idSchueler;
+            // Erst Kriterienlisten löschen
+            String sql = "delete from KRITERIUMSLISTE where ID_KRITERIUMSLISTE = " + idZeugnis1 + " OR ID_KRITERIUMSLISTE = " + idZeugnis2;
+            // logger.fine(sql);
+            statement.executeUpdate(sql);
+            
+            // Dann Zeugnisse löschen
+            sql = "delete from ZEUGNIS where ID_ZEUGNIS = " + idZeugnis1 + " OR ID_ZEUGNIS = " + idZeugnis2;
             // logger.fine(sql);
             statement.executeUpdate(sql);
 
+            // Dann Schueler löschen
             sql = "delete from SCHUELER where ID_Schueler = " + idSchueler;
             logger.fine(sql);
             statement.executeUpdate(sql);
@@ -532,6 +581,8 @@ public class SingletonSQLConnector {
      */
     public String getSchuelerName(int idSCHUELER) throws SQLException {
         String name = "Name";
+        logger.fine(String.valueOf(idSCHUELER));
+        
         try (Statement statement = con.createStatement()) {
             String sql = "select NAME from SCHUELER where ID_SCHUELER = " + idSCHUELER;
             //logger.fine(sql);
@@ -929,11 +980,18 @@ public class SingletonSQLConnector {
      * Liefert die ID_ZEUGNIS zurück, wenn man die ID_SCHUELER übergibt
      *
      * @param idSchueler
+     * @param halbjahr
      * @return
      * @throws SQLException
      */
     public Integer getIdZeugnis(Integer idSchueler, Integer halbjahr) throws SQLException {
         Integer retVal;
+        logger.fine(String.valueOf(idSchueler));
+        logger.fine(this.getSchuelerName(idSchueler));
+        logger.fine(this.getSchuelerVorname(idSchueler));
+        logger.fine(this.getSchuelerGebDatum(idSchueler));
+        logger.fine(this.getSchuelerSchuljahr(idSchueler));
+        
         retVal = (this.getSchuelerName(idSchueler) + this.getSchuelerVorname(idSchueler)
                 + this.getSchuelerGebDatum(idSchueler) + this.getSchuelerSchuljahr(idSchueler) + halbjahr.toString()).hashCode();
         return retVal;

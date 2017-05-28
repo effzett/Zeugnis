@@ -61,8 +61,8 @@ public class Testimony {
                 // Logo
             //connector.runScript("/Zeugnis.sql");
             // fill Database with Testdata
-            //FillDatabase fd = new FillDatabase(connector);
-            //fd.insertClass();
+            FillDatabase fd = new FillDatabase(connector);
+            fd.insertClass();
 
         } catch (IOException ex) {
             logger.severe(ex.getLocalizedMessage());

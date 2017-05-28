@@ -30,170 +30,59 @@ public class FillDatabase {
             {Integer.toString("FerkelAngela1954-06-172016".hashCode()), "Ferkel", "Angela", "1954-06-17", "Hamburg", "1a", "2016"},
             {Integer.toString("MansonCharles1934-11-122016".hashCode()), "Manson", "Charles", "1934-11-12", "Cinncinnati", "1a", "2016"},
             {Integer.toString("MickJagger1943-01-042016".hashCode()), "Mick", "Jagger", "1943-01-04", "East Hill, Dartford", "1a", "2016"},};
-
+        Integer idZeugnis1;
+        Integer idZeugnis2;
+        Integer idSchueler;
+        String[] zeugnis1;
+        String[] zeugnis2;
+        
         for (String[] puple : testClass) {
+            // Besser wenn idSchueler gekapselt wird und nicht zu Fuss erstellt wird
+            idSchueler = connector.createIdSchueler(puple[1], puple[2], puple[3], puple[6]);
+            puple[0] = String.valueOf(idSchueler);
 
             try {
+                // Schueler einfügen
                 connector.insertPuple(puple);
+                // Zeugnis einfügen
+                idZeugnis1 = connector.getIdZeugnis(idSchueler,1);
+                idZeugnis2 = connector.getIdZeugnis(idSchueler,2);
+                System.out.println(String.valueOf(idZeugnis1));
+                zeugnis1 = new String[]{String.valueOf(idZeugnis1),String.valueOf(idSchueler),"1","2","3","4","Keine","Versetzt","1","2016"};               
+                zeugnis2 = new String[]{String.valueOf(idZeugnis2),String.valueOf(idSchueler),"1","2","3","4","Keine","Versetzt","2","2016"};               
+                try {
+                    connector.updateZeugnis(zeugnis1);
+                    connector.updateZeugnis(zeugnis2);                    
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                // jetzt noch KRITERIUMSLISTE füllen...
+                try {
+                    if (!connector.existKriteriumsliste()) { // prüfen ob leer 
+                        ArrayList<Integer> lbid = new ArrayList<Integer>(); // Lernbereiche
+                        lbid = connector.getID_Lernbereiche();
+                        for (Integer l : lbid) {
+                            ArrayList<Integer> kid = new ArrayList<Integer>();  // Kriterium
+                            kid = connector.getID_Kriterien(l);
+                            for (Integer k : kid) {
+                                Integer bew = ThreadLocalRandom.current().nextInt(1, 2);
+                                String[] s1 = {zeugnis1[0], Integer.toString(k), Integer.toString(bew)};
+                                bew = ThreadLocalRandom.current().nextInt(1, 2);
+                                String[] s2 = {zeugnis2[0], Integer.toString(k), Integer.toString(bew)};
+                                connector.insertKriteriumsliste(s1);
+                                connector.insertKriteriumsliste(s2);                                
+                            }
+                        }
+                    }
+                } catch (SQLException ex) {
+                    System.out.println("FEEEEEEEHLER " + ex.getMessage());
+                }
             } catch (SQLException ex) {
                 System.out.println("Schüler schon vorhanden.");
                 continue;
             }
 
-        }
-        
-        String[] testZeugnis = new String[8];
-        String[] puple = new String[10];
-        puple[0] = Integer.toString("SchröderGerhardt1944-04-0720161".hashCode());
-        testZeugnis[0] = puple[0];
-        puple[2] = "1";
-        puple[3] = "2";
-        puple[4] = "0";
-        puple[5] = "0";
-        puple[6] = "Keine";
-        puple[7] = "Versetzt";
-
-        try {
-            connector.updateZeugnis(puple);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        puple = new String[10];
-        puple[0] = Integer.toString("SchröderGerhardt1944-04-0720162".hashCode());
-        testZeugnis[1] = puple[0];
-        puple[2] = "1";
-        puple[3] = "2";
-        puple[4] = "0";
-        puple[5] = "0";
-        puple[6] = "Keine";
-        puple[7] = "Versetzt";
-
-        try {
-            connector.updateZeugnis(puple);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        puple = new String[10];
-        puple[0] = Integer.toString("FerkelAngela1954-06-1720161".hashCode());
-        testZeugnis[2] = puple[0];
-        puple[2] = "0";
-        puple[3] = "0";
-        puple[4] = "0";
-        puple[5] = "0";
-        puple[6] = "Keine";
-        puple[7] = "Versetzt";
-
-        try {
-            connector.updateZeugnis(puple);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        puple = new String[10];
-        puple[0] = Integer.toString("FerkelAngela1954-06-1720162".hashCode());
-        testZeugnis[3] = puple[0];
-        puple[2] = "1";
-        puple[3] = "1";
-        puple[4] = "0";
-        puple[5] = "0";
-        puple[6] = "Keine";
-        puple[7] = "Versetzt";
-
-        try {
-            connector.updateZeugnis(puple);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        puple = new String[10];
-        puple[0] = Integer.toString("MansonCharles1934-11-1220161".hashCode());
-        testZeugnis[4] = puple[0];
-        puple[2] = "3";
-        puple[3] = "4";
-        puple[4] = "100";
-        puple[5] = "99";
-        puple[6] = "Keine";
-        puple[7] = "Versetzt";
-
-        try {
-            connector.updateZeugnis(puple);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        puple = new String[10];
-        puple[0] = Integer.toString("MansonCharles1934-11-1220162".hashCode());
-        testZeugnis[5] = puple[5];
-        puple[2] = "3";
-        puple[3] = "4";
-        puple[4] = "100";
-        puple[5] = "99";
-        puple[6] = "Keine";
-        puple[7] = "Versetzt";
-
-        try {
-            connector.updateZeugnis(puple);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        puple = new String[10];
-        puple[0] = Integer.toString("MickJagger1943-01-0420161".hashCode());
-        testZeugnis[6] = puple[0];
-        puple[2] = "1";
-        puple[3] = "2";
-        puple[4] = "0";
-        puple[5] = "0";
-        puple[6] = "Keine";
-        puple[7] = "Versetzt";
-
-        try {
-            connector.updateZeugnis(puple);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        puple = new String[10];
-        puple[0] = Integer.toString("MickJagger1943-01-0420162".hashCode());
-        testZeugnis[7] = puple[0];
-        puple[2] = "1";
-        puple[3] = "2";
-        puple[4] = "0";
-        puple[5] = "0";
-        puple[6] = "Keine";
-        puple[7] = "Versetzt";
-
-        try {
-            connector.updateZeugnis(puple);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        
-         
-
-        // jetzt noch KRITERIUMSLISTE füllen...
-        try {
-            if (!connector.existKriteriumsliste()) { // prüfen ob leer 
-                ArrayList<Integer> lbid = new ArrayList<Integer>(); // Lernbereiche
-                lbid = connector.getID_Lernbereiche();
-                for (Integer l : lbid) {
-                    ArrayList<Integer> kid = new ArrayList<Integer>();  // Kriterium
-                    kid = connector.getID_Kriterien(l);
-                    for (int j = 1; j < 9; j++) { // sind nur 8 Beispielzeugnisse
-                        for (Integer k : kid) {
-                            Integer bew = ThreadLocalRandom.current().nextInt(1, 2);
-                            String[] s = {testZeugnis[j - 1], Integer.toString(k), Integer.toString(bew)};
-                            //System.out.println("KRITERIUMSLISTE:" + s[0] + " KRITERIUM:" + s[1] + "BEWERTUNG:" + s[2]);
-                            connector.insertKriteriumsliste(s);
-                        }
-                    }
-                }
-            }
-        } catch (SQLException ex) {
-            System.out.println("FEEEEEEEHLER " + ex.getMessage());
-        }
-
+        }        
     }
 
 }
