@@ -417,6 +417,11 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             jMenu1.setText("Datei");
 
             jMenuItem1.setText("Beenden");
+            jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenuItem1ActionPerformed(evt);
+                }
+            });
             jMenu1.add(jMenuItem1);
 
             jMenuBar1.add(jMenu1);
@@ -578,6 +583,11 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private void changePuple(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePuple
         fillTabFromTestimony();
     }//GEN-LAST:event_changePuple
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     public void fillTabFromTestimony() {
 

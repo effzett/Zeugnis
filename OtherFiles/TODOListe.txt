@@ -1,11 +1,12 @@
 TODO:
 * Tab Schulklasse: Beim Verlassen des Feldes Geburtsortes gibt es eine ominöse DELETE Warnung
-* Arbeits- und Sozialverhalten:  Kriterien anzeigen
+= Arbeits- und Sozialverhalten:  Kriterien anzeigen = erledigt
+  (operiert nicht auf Zeugnis-Tabelle; muss nochmal überdacht werden)
 = Neuen Jahrgang anlegen mit verschieben der alten Schüler  = erledigt
 = Schüler löschen inklusiver Zeugnisse und Kriteriumslisten = erledigt.
 * PDF's erzeugen: einen Klassenordner anlegen und dort alle Zeugnisse generieren
 * Hauptfunktionalität: Bewertungen eintragen im Zeugnis-TAB
-* Programm über beenden beenden
+= Programm über beenden beenden = erledigt (Einfach beenden)
 * Daten aus Zeugnis-TAB in die DB schrieben
 ** Fehltage
 ** Bewertungen

@@ -1091,7 +1091,7 @@ public class SingletonSQLConnector {
         //kann erst gemacht werden, wenn Zeugnis befüllt....
         try (Statement statement = con.createStatement()) {
             String k = Gui.getSClass().substring(0, 1);
-            String sql = "select KRITERIUMTEXT from KRITERIUM,LERNBEREICH where LERNBEREICH.LERNBEREICH='" + lernbereich + "' AND KRITERIUM.ID_LERNBEREICH=LERNBEREICH.ID_LERNBEREICH AND LERNBEREICH.KLASSENSTUFE=" + k + " AND LERNBEREICH.SCHULJAHR =" + Gui.getSYear() + " AND KRITERIUM.SCHULJAHR =" + Gui.getSYear();
+            String sql = "select KRITERIUMTEXT from KRITERIUM,LERNBEREICH where LERNBEREICH.LERNBEREICH='" + lernbereich + "' AND KRITERIUM.ID_LERNBEREICH=LERNBEREICH.ID_LERNBEREICH AND (LERNBEREICH.KLASSENSTUFE=" + k + " OR LERNBEREICH.KLASSENSTUFE=0) AND LERNBEREICH.SCHULJAHR =" + Gui.getSYear() + " AND KRITERIUM.SCHULJAHR =" + Gui.getSYear();
             //logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
 
