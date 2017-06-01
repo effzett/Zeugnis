@@ -533,33 +533,20 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             // In der DB wird einfach das nächste Jahr erzeugt (maxjahr+1)
             // Wichtig: Es muss das neue Schuljahr vorausgewählt werden in der GUI
             // Damit alle Methoden auf diesem neuen Schuljahr operieren
-            Integer newYear = connector.getMaxSchuljahrFromZeugnis()+1;
-            connector.generateNewYear(newYear);
-            // neu einlesen...     
-//            Integer newYear1 = newYear+1;
-//            String newYearS = Integer.toString(newYear) + "/" + Integer.toString(newYear1).substring(2);
-//        String result = (String) JOptionPane.showInputDialog(
-//                this,
-//                "Tragen Sie das Schuljahr im Format yyyy/yy (z.B 2015/16) ein",
-//                "Neues Schuljahr anlegen",
-//                JOptionPane.PLAIN_MESSAGE);
-//
-//        if ((result != null) && (result.length() > 0)) {
-//
-//            if (result.matches("[0-9]{4}/[0-9]{2}")) {
-//                try {
-//                    Integer newYear= Integer.parseInt(result.split("/")[0]);
-//                    connector.generateNewYear(connector.getMaxSchuljahrFromZeugnis()+1);
-//                    //connector.generateNewYear(newYear);
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                
-//            } else {
-//                logger.warning("Der eingegebene Wert entspricht nicht dem Format yyyy/yy (z.B 2015/16)");
-//            }
-//
-//        }
+            // Es können höchstens bis zu aktuellen Jahr Schuljahr erzeugt werden.
+            // Aktuelles Jahr z.B. 2015 = Schuljahe 2015 = Jahrgang 2015/16
+
+            Integer newYear = connector.getMaxSchuljahrFromZeugnis() + 1;
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy");
+            String curr = sf.format(Calendar.getInstance().getTime());
+
+            if (newYear <= Integer.parseInt(curr)) {
+                connector.generateNewYear(newYear);
+                
+                // Funktioniert nur bis zum Jahr 2099 :-)
+                jComboBox1.addItem(Integer.toString(newYear) + "/" + Integer.toString(newYear -1999));
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -860,10 +847,10 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 values[0] = Integer.toString((string1 + string2 + sqlDate.toString() + sYear).hashCode());
                 values[1] = string1;
                 values[2] = string2;
-                values[3] = string3;
+                values[3] = sqlDate.toString();
                 values[4] = (String) data4;
                 values[5] = (String) jComboBox3.getSelectedItem();
-                values[6] = ((String) jComboBox1.getSelectedItem()).substring(0, 4);
+                values[6] = ((String) jComboBox1.getSelectedItem()).substring(0, 5);
 
                 try {
                     tableModelEventEnabled = false;

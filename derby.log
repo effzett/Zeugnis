@@ -1,13 +1,17 @@
-----------------------------------------------------------------
-Mon May 29 18:24:52 CEST 2017:
-Booten von Derby-Version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): Instanz a816c00e-015c-5506-4183-000006f3a488
-für Datenbankverzeichnis /Users/internet/NetBeansProjects/Zeugnis/Zeugnis mit Class Loader sun.misc.Launcher$AppClassLoader@27716f4
-Geladen aus file:/Users/internet/NetBeansProjects/Zeugnis/lib/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_74-b02
-user.dir=/Users/internet/NetBeansProjects/Zeugnis
-os.name=Mac OS X
-os.arch=x86_64
-os.version=10.10.5
-derby.system.home=null
-Datenbank-Class Loader wurde gestartet - derby.database.classpath=''
+Thu Jun 01 17:12:51 CEST 2017 : Horchen auf Port 1527 auf Host localhost nicht möglich:
+ java.net.BindException: Address already in use: JVM_Bind
+Beim Starten des Netzwerkservers wurde eine Ausnahme ausgelöst. DRDA_ListenPort.S:Horchen auf Port 1527 auf Host localhost nicht möglich:
+ java.net.BindException: Address already in use: JVM_Bind
+java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.derby.iapi.jdbc.DRDAServerStarter.run(Unknown Source)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.Exception: DRDA_ListenPort.S:Horchen auf Port 1527 auf Host localhost nicht möglich:
+ java.net.BindException: Address already in use: JVM_Bind
+	at org.apache.derby.impl.drda.NetworkServerControlImpl.consolePropertyMessageWork(Unknown Source)
+	at org.apache.derby.impl.drda.NetworkServerControlImpl.consolePropertyMessage(Unknown Source)
+	at org.apache.derby.impl.drda.NetworkServerControlImpl.blockingStart(Unknown Source)
+	... 6 more
