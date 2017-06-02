@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,6 +56,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private SingletonSQLConnector connector = null;
     private Config config = null;
     private boolean tableModelEventEnabled = true;
+    private Hashtable<Integer, Integer> idKriterien = null;
 
     /**
      * Creates new form Gui
@@ -533,33 +535,20 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             // In der DB wird einfach das nächste Jahr erzeugt (maxjahr+1)
             // Wichtig: Es muss das neue Schuljahr vorausgewählt werden in der GUI
             // Damit alle Methoden auf diesem neuen Schuljahr operieren
-            Integer newYear = connector.getMaxSchuljahrFromZeugnis()+1;
-            connector.generateNewYear(newYear);
-            // neu einlesen...     
-//            Integer newYear1 = newYear+1;
-//            String newYearS = Integer.toString(newYear) + "/" + Integer.toString(newYear1).substring(2);
-//        String result = (String) JOptionPane.showInputDialog(
-//                this,
-//                "Tragen Sie das Schuljahr im Format yyyy/yy (z.B 2015/16) ein",
-//                "Neues Schuljahr anlegen",
-//                JOptionPane.PLAIN_MESSAGE);
-//
-//        if ((result != null) && (result.length() > 0)) {
-//
-//            if (result.matches("[0-9]{4}/[0-9]{2}")) {
-//                try {
-//                    Integer newYear= Integer.parseInt(result.split("/")[0]);
-//                    connector.generateNewYear(connector.getMaxSchuljahrFromZeugnis()+1);
-//                    //connector.generateNewYear(newYear);
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                
-//            } else {
-//                logger.warning("Der eingegebene Wert entspricht nicht dem Format yyyy/yy (z.B 2015/16)");
-//            }
-//
-//        }
+            // Es können höchstens bis zu aktuellen Jahr Schuljahr erzeugt werden.
+            // Aktuelles Jahr z.B. 2015 = Schuljahe 2015 = Jahrgang 2015/16
+
+            Integer newYear = connector.getMaxSchuljahrFromZeugnis() + 1;
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy");
+            String curr = sf.format(Calendar.getInstance().getTime());
+
+            if (newYear <= Integer.parseInt(curr)) {
+                connector.generateNewYear(newYear);
+                
+                // Funktioniert nur bis zum Jahr 2099 :-)
+                jComboBox1.addItem(Integer.toString(newYear) + "/" + Integer.toString(newYear -1999));
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -609,6 +598,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 if (testimony[5] != null) {
                     jSpinner2.setValue(Integer.parseInt(testimony[5]));
                 }
+                
+                idKriterien = connector.getID_KriterienZeugnis(Integer.parseInt(testimony[0]));
             } catch (SQLException ex) {
                 logger.severe(ex.getLocalizedMessage());
             }
@@ -656,6 +647,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
         try {
             jComboBox5.setModel(new DefaultComboBoxModel(connector.getLernbereicheIncl0().toArray(new String[0])));
+            selectedSubject = (String)jComboBox5.getItemAt(0);
         } catch (SQLException ex) {
             logger.severe(ex.getLocalizedMessage());
         }
@@ -666,14 +658,15 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private void fillTestimonyTable(String subject) {
 
         try {
-            ArrayList<String> criteria = connector.getKriterien(0, subject);
+            ArrayList<String[]> criteria = connector.getKriterien(0, subject);
             DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
             model.setRowCount(0);
             Object[] row = new Object[2];
-            Iterator<String> it = criteria.iterator();
+            Iterator<String[]> it = criteria.iterator();
 
             while (it.hasNext()) {
-                row[0] = it.next();
+                String[] array = it.next();
+                row[0] = new CritField(array[1], array[0]);
                 row[1] = "";
                 model.addRow(row);
             }
@@ -860,7 +853,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 values[0] = Integer.toString((string1 + string2 + sqlDate.toString() + sYear).hashCode());
                 values[1] = string1;
                 values[2] = string2;
-                values[3] = string3;
+                values[3] = sqlDate.toString();
                 values[4] = (String) data4;
                 values[5] = (String) jComboBox3.getSelectedItem();
                 values[6] = ((String) jComboBox1.getSelectedItem()).substring(0, 4);
@@ -974,4 +967,28 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
         return result;
     }
+    
+    class CritField extends JLabel {
+        private String idKriterium;
+        
+        public CritField(String text, String idKriterium) {
+            super(text);
+            this.idKriterium = idKriterium;
+        }
+        
+        public String getIdKriterium() {
+            return idKriterium;
+        }
+        
+        public int getIdKriteriumInt() {
+            return Integer.parseInt(idKriterium);
+        }
+        
+        @Override
+        public String toString() {
+            return this.getText();
+        }
+        
+    }
+    
 }
