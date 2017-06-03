@@ -1353,8 +1353,35 @@ public class SingletonSQLConnector {
         return retVal;
     }
 
+    /***
+     * aktualisiert ein Kriterium und die Bewertung in einem Zeugnis
+     * @param zid
+     * @param idKriterium
+     * @param bewertung
+     * @throws SQLException 
+     */
+    public void updateZeugniszeile(Integer zid, Integer idKriterium, Integer bewertung) throws SQLException{
+    
+        try (Statement statement = con.createStatement()) {
+            String sql = "update KRITERIUMSLISTE set ";
+            if (zid != null) {
+                sql += "ID_KRITERIUMSLISTE = " + zid + ", ";
+            }
+            if (idKriterium != null) {
+                sql += "ID_KRITERIUM = " + idKriterium + ", ";
+            }
+            if (bewertung != null) {
+                sql += "BEWERTUNG = " + bewertung + ", ";
+            }
+            sql = (sql.substring(0, sql.length() - 2)) + " where ID_KRITERIUMSLISTE = " + zid;
+            // logger.fine(sql);
+            statement.executeUpdate(sql);
+        }
+        
+    }
+    
     /**
-     * liefert ID_Kritierien bei Eingabe eines Lernbereichs zu passendem
+     * liefert ID_Kritierien bei Eingabe eines Lernbereichs zu aktuellem
      * Schuljahr und Klassenstufe
      *
      * @param lernbereich

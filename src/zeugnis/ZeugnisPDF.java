@@ -134,40 +134,6 @@ public class ZeugnisPDF  {
         // liefert alle im zeugnis abgelegten Kriterien mit Bewertungen
         zeugnis = connector.getID_KriterienZeugnis(zid);
         
-//        ArrayList<String> szListe = new ArrayList();
-//        szListe=connector.getKriterien(idSCHUELER,"Sprechen und Zuhören");
-//        ArrayList<String> schListe = new ArrayList();
-//        schListe=connector.getKriterien(idSCHUELER,"Schreiben");
-//        ArrayList<String> les = new ArrayList();
-//        les=connector.getKriterien(idSCHUELER,"Lesen - mit Texten und Medien umgehen");
-//        ArrayList<String> sp = new ArrayList();
-//        sp=connector.getKriterien(idSCHUELER,"Sprache und Sprachgebrauch untersuchen");
-//        ArrayList<String> zo = new ArrayList();
-//        zo=connector.getKriterien(idSCHUELER,"Zahlen und Operationen");
-//        ArrayList<String> gm = new ArrayList();
-//        gm=connector.getKriterien(idSCHUELER,"Größen und Messen");
-//        ArrayList<String> rf = new ArrayList();
-//        rf=connector.getKriterien(idSCHUELER,"Raum und Form");
-//        
-//        //***************
-//        
-//        //SU Fächer
-//        ArrayList<String> su1 = new ArrayList();
-//        su1=connector.getKriterien(idSCHUELER,"Sachunterricht");
-//        ArrayList<String> su2 = new ArrayList();
-//        su2=connector.getKriterien(idSCHUELER,"Musik");
-//        ArrayList<String> su3 = new ArrayList();
-//        su3=connector.getKriterien(idSCHUELER,"Religion");
-//        ArrayList<String> su4 = new ArrayList();
-//        su4=connector.getKriterien(idSCHUELER,"Kunst");
-//        ArrayList<String> su5 = new ArrayList();
-//        su5=connector.getKriterien(idSCHUELER,"Sport");
-//        ArrayList<String> su6 = new ArrayList();
-//        su6=connector.getKriterien(idSCHUELER,"Werken");
-//        ArrayList<String> su7 = new ArrayList();
-//        su7=connector.getKriterien(idSCHUELER,"Textiles Gestalten");
-//        ArrayList<String> su8 = new ArrayList();
-//        su8=connector.getKriterien(idSCHUELER,"Englisch");
 
         for(Integer id : connector.getID_KriterienFromLernbereich("Arbeitsverhalten")){  // holt Reihenfolge
             //logger.fine("ID_KRITERIUM= "+Integer.toString(id));
