@@ -96,7 +96,7 @@ public class PdfCellEditor extends AbstractCellEditor implements TableCellEditor
             //logger.fine("idSchueler=" + namevornamedatumschuljahr + " " + namevornamedatumschuljahr.hashCode());
             int idSCHUELER = namevornamedatumschuljahr.hashCode();
             ZeugnisPDF zeugnis = new ZeugnisPDF(idSCHUELER);    // holt Werte aus DB -> private Variables
-            zeugnis.CreatePDF();    // uses private Variables
+            zeugnis.CreatePDF();    // uses private Variables to print pdf
         } catch (IOException | DocumentException ex) {
             logger.severe(ex.getLocalizedMessage());
         }
