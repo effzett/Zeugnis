@@ -525,6 +525,15 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
     private void createPdfForClass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPdfForClass
         // TODO add your handling code here:
+        // für alle Schüler Zeugnisse erzeugen
+        // Im Verzeichnis <Schuljahr>_<Halbjahr>_<Klasse>/NameVorname_<Geb>.pdf> also z.B.
+        //  201617/1H/1a/GerhardSchröder_20101011.pdf
+        
+        // Zunächst Liste aller Zeugnisse erzeugen
+        
+        // Für jedes Zeugnis, Zeugnis in einen definierten Ordner speichern
+        
+        
     }//GEN-LAST:event_createPdfForClass
 
     private void addSchoolYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSchoolYear
