@@ -581,7 +581,15 @@ public class ZeugnisPDF  {
         
         PdfWriter writer = null;
         Document doc=new Document(PageSize.A4,50,50,20,30);
-        writer=PdfWriter.getInstance(doc,new FileOutputStream(new File(String.valueOf(Gui.getSYear())+String.valueOf(Gui.getHYear())+Gui.getSClass()+name+vorname+".pdf")));
+        String fileName = name+vorname+gebdatum+".pdf"; 
+        String dirName = String.valueOf(Gui.getSYear())+String.valueOf(Gui.getHYear())+Gui.getSClass(); 
+        File file = new File("./" + dirName + "/" + fileName); 
+        File dir = new File("./" + dirName); 
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+//        writer=PdfWriter.getInstance(doc,new FileOutputStream(new File(String.valueOf(Gui.getSYear())+String.valueOf(Gui.getHYear())+Gui.getSClass()+name+vorname+".pdf")));
+        writer=PdfWriter.getInstance(doc,new FileOutputStream(file));
         doc.open();
 
         // Logo
@@ -1497,9 +1505,10 @@ public class ZeugnisPDF  {
         Desktop desktop = Desktop.getDesktop();
         if (desktop != null && desktop.isSupported(Desktop.Action.OPEN)) {
 //            desktop.open(new File(System.getProperty("user.home") +"/NetBeansProjects/Zeugnis"+ "/"+name+vorname+".pdf"));
-            desktop.open(new File(String.valueOf(Gui.getSYear())+String.valueOf(Gui.getHYear())+Gui.getSClass()+name+vorname+".pdf"));
+//            desktop.open(new File(String.valueOf(Gui.getSYear())+String.valueOf(Gui.getHYear())+Gui.getSClass()+name+vorname+".pdf"));
+            desktop.open(file);
             } else {
-                System.err.println("PDF-Datei kann nicht angezeigt werden!");
+                System.err.println("PDF-Datei kann nicht angezeigt werden: " + file.getPath());
             }
 
     }
