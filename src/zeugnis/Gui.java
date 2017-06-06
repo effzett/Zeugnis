@@ -764,7 +764,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         markComboBox.setModel(new javax.swing.DefaultComboBoxModel(new Object[]{
             "",
             "selten",
-            "wechelnd",
+            "wechselnd",
             "überwiegend",
             "--",
             getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/viertel0.png"))).getImage(), 20, 20),
