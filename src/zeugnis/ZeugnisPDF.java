@@ -139,6 +139,8 @@ public class ZeugnisPDF  {
             //logger.fine("ID_KRITERIUM= "+Integer.toString(id));
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
+            logger.fine("ID_KRITERIUM-> "+String.valueOf(id));
+            logger.fine("Wert aus zeugnis-> "+String.valueOf(zeugnis.get(id)));
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
             aVerhalten.add(ti);
         }

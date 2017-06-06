@@ -680,7 +680,7 @@ public class SingletonSQLConnector {
                 sqlUpdateSchueler += "SCHULJAHR=" + values[6] + ", ";
             }
 
-            sqlUpdateSchueler = sqlUpdateSchueler.substring(0, sqlUpdateSchueler.length() - 3);
+            sqlUpdateSchueler = sqlUpdateSchueler.substring(0, sqlUpdateSchueler.length() - 2);
             sqlUpdateSchueler += " where ID_SCHUELER=" + idSchueler;
           
             // Aenderungen in Zeugnis und Kriteriumsliste durchführen wenn sich die ID_SCHUELER geaendertr hat
