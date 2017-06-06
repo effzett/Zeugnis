@@ -638,6 +638,24 @@ public class SingletonSQLConnector {
 
     }
 
+    /***
+     * liefert eine Liste der Zeugnis-Ids für das aktuelle Klasse/Halbjahr/Schuljahr
+     * @return 
+     */
+    public ArrayList<Integer> listIdSchueler() throws SQLException{
+        ArrayList<Integer> result = new ArrayList<>();
+
+        try (Statement statement = con.createStatement()) {
+            String sql = "select ZEUGNIS.ID_SCHUELER from SCHUELER,ZEUGNIS where SCHUELER.SCHULJAHR=" + Gui.getSYear() + " AND ZEUGNIS.HALBJAHR="+Gui.getHYear()+" AND KLASSE like '"+Gui.getSClass() + "' AND SCHUELER.ID_SCHUELER=ZEUGNIS.ID_SCHUELER";
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            while (set.next()) {
+                result.add(set.getInt(1));
+            }
+        }
+        return result;
+     
+    }
     /**
      * Update eines Schülers. Ausserdem muessen in der Zeugnistabelle gggf die
      * ZeugnisIs und die SchuelerId geaendert werden.

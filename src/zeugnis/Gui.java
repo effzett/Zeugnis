@@ -5,6 +5,7 @@
  */
 package zeugnis;
 
+import com.itextpdf.text.DocumentException;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -14,6 +15,7 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -524,15 +526,32 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     }//GEN-LAST:event_changeSClass
 
     private void createPdfForClass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPdfForClass
-        // TODO add your handling code here:
-        // für alle Schüler Zeugnisse erzeugen
-        // Im Verzeichnis <Schuljahr>_<Halbjahr>_<Klasse>/NameVorname_<Geb>.pdf> also z.B.
-        //  201617/1H/1a/GerhardSchröder_20101011.pdf
+
         
         // Zunächst Liste aller Zeugnisse erzeugen
         
         // Für jedes Zeugnis, Zeugnis in einen definierten Ordner speichern
-        
+        ArrayList<Integer> liste = new ArrayList<>();                
+        try {
+            liste = connector.listIdSchueler();
+        } catch (SQLException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for(Integer idSchueler: liste){
+            try {
+                ZeugnisPDF zeugnis = new ZeugnisPDF(idSchueler);    // holt Werte aus DB -> private Variables
+                zeugnis.CreatePDF();    // uses private Variables to print pdf
+            } catch (IOException ex) {
+                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DocumentException ex) {
+                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
         
     }//GEN-LAST:event_createPdfForClass
 
