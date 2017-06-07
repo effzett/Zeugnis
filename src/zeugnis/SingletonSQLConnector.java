@@ -711,9 +711,15 @@ public class SingletonSQLConnector {
             sqlUpdateSchueler = sqlUpdateSchueler.substring(0, sqlUpdateSchueler.length() - 2);
             sqlUpdateSchueler += " where ID_SCHUELER=" + idSchueler;
           
-            // Aenderungen in Zeugnis und Kriteriumsliste durchführen wenn sich die ID_SCHUELER geaendertr hat
+                logger.fine("updatePupil-idSchueler neu ->" + Integer.toString(Integer.parseInt(values[0])));
+                logger.fine("updatePupil-idSchueler alt ->" + Integer.toString(Integer.parseInt(idSchueler)));
+                logger.fine("updatePupil-idZEUGNIS neu ->" + Integer.toString(getIdZeugnis(Integer.parseInt(values[0]),1)));
+                logger.fine("updatePupil-idZEUGNIS alt ->" + Integer.toString(getIdZeugnis(Integer.parseInt(idSchueler),1)));
+           // Aenderungen in Zeugnis und Kriteriumsliste durchführen wenn sich die ID_SCHUELER geaendertr hat
             if (!idSchueler.equals(values[0])) {
-                int idZeugnis = getIdZeugnis(Integer.parseInt(values[0]), 1);
+                 
+ //               int idZeugnis = getIdZeugnis(Integer.parseInt(values[0]), 1);
+                int idZeugnis = getIdZeugnisMemory(values[1],values[2],values[3],values[6],"1");
                 int idKriteriumsliste = getIdZeugnis(Integer.parseInt(idSchueler), 1);
                 String sql = "update KRITERIUMSLISTE set ID_KRITERIUMSLISTE=" + idZeugnis
                         + " where ID_KRITERIUMSLISTE=" + idKriteriumsliste;
@@ -727,10 +733,12 @@ public class SingletonSQLConnector {
                 logger.fine(sql);
                 statement.executeUpdate(sql);
                 
-                idZeugnis = getIdZeugnis(Integer.parseInt(values[0]), 2);
+                
+ //               idZeugnis = getIdZeugnis(Integer.parseInt(values[0]), 2);
+                idZeugnis = getIdZeugnisMemory(values[1],values[2],values[3],values[6],"2");
                 idKriteriumsliste = getIdZeugnis(Integer.parseInt(idSchueler), 2);
                 sql = "update KRITERIUMSLISTE set ID_KRITERIUMSLISTE=" + idZeugnis
-                        + " where ID_KRITERIUMSLISTE=" + idZeugnis;
+                        + " where ID_KRITERIUMSLISTE=" + idKriteriumsliste;
                 logger.fine(sql);
                 statement.executeUpdate(sql);
 
@@ -1362,7 +1370,7 @@ public class SingletonSQLConnector {
 
     /**
      * Liefert die ID_ZEUGNIS zurück, wenn man die ID_SCHUELER übergibt
-     *
+     * Achtung: benutzt die Daten aus der Datenbanktabelle!
      * @param idSchueler
      * @param halbjahr
      * @return
@@ -1370,17 +1378,25 @@ public class SingletonSQLConnector {
      */
     public Integer getIdZeugnis(Integer idSchueler, Integer halbjahr) throws SQLException {
         Integer retVal;
-        // logger.fine(String.valueOf(idSchueler));
-        // logger.fine(this.getSchuelerName(idSchueler));
-        // logger.fine(this.getSchuelerVorname(idSchueler));
-        // logger.fine(this.getSchuelerGebDatum(idSchueler));
-        // logger.fine(this.getSchuelerSchuljahr(idSchueler));
 
         retVal = (this.getSchuelerName(idSchueler) + this.getSchuelerVorname(idSchueler)
                 + this.getSchuelerGebDatum(idSchueler) + this.getSchuelerSchuljahr(idSchueler) + halbjahr.toString()).hashCode();
         return retVal;
     }
 
+    /***
+     * Liefert die ID_ZEUGNIS zurück, wenn man nicht die DB Tabelle benutzen kann
+     * @param name
+     * @param vorname
+     * @param date
+     * @param jahr
+     * @param halbjahr
+     * @return 
+     */
+    public Integer getIdZeugnisMemory(String name, String vorname, String date, String jahr, String halbjahr){
+        return (name+vorname+date+jahr+halbjahr).hashCode();
+    }
+    
     /***
      * aktualisiert ein Kriterium und die Bewertung in einem Zeugnis
      * @param zid

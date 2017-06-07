@@ -15,4 +15,4 @@ TODO:
 * Noch ein Feld zur Benotung von Sozialverhalten
 * Feld mit den Kriterien breiter machen und ggfs andere Felder darüber oder darunter setzen
 
-
+* Datepicker funktioniert noch nicht und bringt Programm zum Absturz
