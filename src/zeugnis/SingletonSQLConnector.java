@@ -17,6 +17,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -160,9 +162,11 @@ public class SingletonSQLConnector {
     /**
      * *
      * liefert das größte Schuljahr zurück, dass in SCHUELER gefunden wurde
+     * falls kein Zeugnis vorhanden wird das aktuelle Jahr zurückgegeben
      */
     public Integer getMaxSchuljahrFromZeugnis() throws SQLException {
         Integer retVal = 0;
+        Boolean found=false;
 
         try (Statement statement = con.createStatement()) {
 
@@ -172,9 +176,15 @@ public class SingletonSQLConnector {
 
             while (set.next()) {
                 retVal = set.getInt(1);
+                found=true;
                 break;
             }
             // logger.fine(retVal.toString());
+        }
+        if(!found){
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date()); //heute
+            retVal = cal.get(Calendar.YEAR);
         }
         return retVal;
     }
