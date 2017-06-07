@@ -5,8 +5,8 @@ TODO:
 = Neuen Jahrgang anlegen mit verschieben der alten Schüler  = erledigt
 = Schüler löschen inklusiver Zeugnisse und Kriteriumslisten = erledigt.
 = PDF's erzeugen: einen Klassenordner anlegen und dort alle Zeugnisse generieren = erledigt
-* Hauptfunktionalität: Bewertungen eintragen im Zeugnis-TAB
 = Programm über beenden beenden = erledigt (Einfach beenden)
+* Hauptfunktionalität: Bewertungen eintragen im Zeugnis-TAB
 * Daten aus Zeugnis-TAB in die DB schrieben
 ** Fehltage
 ** Bewertungen
@@ -15,4 +15,5 @@ TODO:
 * Noch ein Feld zur Benotung von Sozialverhalten
 * Feld mit den Kriterien breiter machen und ggfs andere Felder darüber oder darunter setzen
 
-* Datepicker funktioniert noch nicht und bringt Programm zum Absturz
+= Datepicker funktioniert noch nicht und bringt Programm zum Absturz = erledigt. war ein Problem mit idZeugnis!
+* Programmabbruch beim insert eines schon bestehenden Schülers wegen nicht abgefangenen SQL Fehler 
