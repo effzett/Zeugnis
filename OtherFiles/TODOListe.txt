@@ -17,3 +17,4 @@ TODO:
 
 = Datepicker funktioniert noch nicht und bringt Programm zum Absturz = erledigt. war ein Problem mit idZeugnis!
 * Programmabbruch beim insert eines schon bestehenden Schülers wegen nicht abgefangenen SQL Fehler 
+* Duplicate key Exception muss abgefangen werden bei Zeugnis- und Schueler-Tabelle (insert und auch bei update, da primary key upgedatet wird)
