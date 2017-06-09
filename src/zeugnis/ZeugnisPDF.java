@@ -452,7 +452,9 @@ public class ZeugnisPDF  {
                     table.addCell(cell2bewertung);
                     table.addCell(cell2bewertungX);
                     break;
-            default: ;
+            default:table.addCell(cell2bewertung);
+                    table.addCell(cell2bewertung);
+                    table.addCell(cell2bewertung);
                     break;
             }
          }
@@ -517,7 +519,11 @@ public class ZeugnisPDF  {
                     table.addCell(cell2bewertung);
                     table.addCell(cell2bewertungX);
                     break;
-            default: ;
+            default:table.addCell(cell2bewertung);
+                    table.addCell(cell2bewertung);
+                    table.addCell(cell2bewertung);
+                    table.addCell(cell2bewertung);
+                    table.addCell(cell2bewertung);
                     break;
             }
          }

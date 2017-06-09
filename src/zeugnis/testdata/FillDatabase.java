@@ -57,26 +57,33 @@ public class FillDatabase {
                     ex.printStackTrace();
                 }
                 // jetzt noch KRITERIUMSLISTE füllen...
-                try {
-                    if (!connector.existKriteriumsliste()) { // prüfen ob leer 
-                        ArrayList<Integer> lbid = new ArrayList<Integer>(); // Lernbereiche
-                        lbid = connector.getID_Lernbereiche(2016,1);
-                        for (Integer l : lbid) {
-                            ArrayList<Integer> kid = new ArrayList<Integer>();  // Kriterium
-                            kid = connector.getID_Kriterien(l);
-                            for (Integer k : kid) {
-                                Integer bew = ThreadLocalRandom.current().nextInt(1, 2);
-                                String[] s1 = {zeugnis1[0], Integer.toString(k), Integer.toString(bew)};
-                                bew = ThreadLocalRandom.current().nextInt(1, 2);
-                                String[] s2 = {zeugnis2[0], Integer.toString(k), Integer.toString(bew)};
-                                connector.insertKriteriumsliste(s1);
-                                connector.insertKriteriumsliste(s2);                                
-                            }
-                        }
-                    }
-                } catch (SQLException ex) {
-                    System.out.println("FEEEEEEEHLER " + ex.getMessage());
-                }
+//                try {
+//                    if (!connector.existKriteriumsliste()) { // prüfen ob leer 
+//                        ArrayList<Integer> lbid = new ArrayList<Integer>(); // Lernbereiche
+//                        lbid = connector.getID_Lernbereiche(2016,1);
+//                        for (Integer l : lbid) {
+//                            ArrayList<Integer> kid = new ArrayList<Integer>();  // Kriterium
+//                            kid = connector.getID_Kriterien(l);
+//                            for (Integer k : kid) {
+//                                Integer bew;
+//                                if(l<=2){
+//                                    bew = ThreadLocalRandom.current().nextInt(1, 4);
+//                                    System.out.println(bew.toString());
+//                                }
+//                                else{
+//                                    bew = ThreadLocalRandom.current().nextInt(1, 6)+3;
+//                                    System.out.println(bew.toString());
+//                                }
+//                                String[] s1 = {zeugnis1[0], Integer.toString(k), Integer.toString(bew)};
+//                                String[] s2 = {zeugnis2[0], Integer.toString(k), Integer.toString(bew)};
+//                                connector.insertKriteriumsliste(s1);
+//                                connector.insertKriteriumsliste(s2);                                
+//                            }
+//                        }
+//                    }
+//                } catch (SQLException ex) {
+//                    System.out.println("FEEEEEEEHLER " + ex.getMessage());
+//                }
             } catch (SQLException ex) {
                 System.out.println("Schüler schon vorhanden.");
                 continue;

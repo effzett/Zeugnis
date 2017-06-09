@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
@@ -608,7 +609,7 @@ public class SingletonSQLConnector {
      * @param zid
      */
     public void insertKriteriumslisteAll(Integer zid) throws SQLException {
-        Integer bewertung = 1;
+        Integer bewertung = 0;
         // Klassenstufe ermitteln
         Integer ks = this.getKlassenstufe(zid);
 
@@ -622,6 +623,13 @@ public class SingletonSQLConnector {
                 ArrayList<Integer> kid = new ArrayList<Integer>();  // ID_Kriterium
                 kid = this.getID_Kriterien(l);
                 for (Integer k : kid) {
+//                    // nur zum Testen...
+//                    if (l <= 2) {
+//                        bewertung = ThreadLocalRandom.current().nextInt(1, 4);
+//                    } else {
+//                        bewertung = ThreadLocalRandom.current().nextInt(1, 6) + 3;
+//                    }
+//                    // end testing
                     String[] s = {Integer.toString(zid), Integer.toString(k), Integer.toString(bewertung)};
                     // logger.fine("----------------------->>>>>>>>>>>>>" + s[0] + " " + s[1] + " " + s[2]);
                     this.insertKriteriumsliste(s);
