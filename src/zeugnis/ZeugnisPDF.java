@@ -436,6 +436,10 @@ public class ZeugnisPDF  {
  
             table.addCell(cell2);
             switch ( ( (TableItem) verhalten.get(i)).getBewertung()) {
+            case 0: table.addCell(cell2bewertung);
+                    table.addCell(cell2bewertung);
+                    table.addCell(cell2bewertung);
+                    break;                
             case 1: table.addCell(cell2bewertungX);
                     table.addCell(cell2bewertung);
                     table.addCell(cell2bewertung);
@@ -477,31 +481,37 @@ public class ZeugnisPDF  {
  
             table.addCell(cell2);
             switch ( ( (TableItem) lernbereich.get(i)).getBewertung()) {
-            case 1: table.addCell(cell2bewertungX);
+            case 0: table.addCell(cell2bewertung);
                     table.addCell(cell2bewertung);
                     table.addCell(cell2bewertung);
                     table.addCell(cell2bewertung);
                     table.addCell(cell2bewertung);
                     break;
-            case 2: table.addCell(cell2bewertung);
+            case 4: table.addCell(cell2bewertungX);
+                    table.addCell(cell2bewertung);
+                    table.addCell(cell2bewertung);
+                    table.addCell(cell2bewertung);
+                    table.addCell(cell2bewertung);
+                    break;
+            case 5: table.addCell(cell2bewertung);
                     table.addCell(cell2bewertungX);
                     table.addCell(cell2bewertung);
                     table.addCell(cell2bewertung);
                     table.addCell(cell2bewertung);;
                     break;
-            case 3: table.addCell(cell2bewertung);
+            case 6: table.addCell(cell2bewertung);
                     table.addCell(cell2bewertung);
                     table.addCell(cell2bewertungX);
                     table.addCell(cell2bewertung);
                     table.addCell(cell2bewertung);
                     break;
-            case 4: table.addCell(cell2bewertung);
+            case 7: table.addCell(cell2bewertung);
                     table.addCell(cell2bewertung);
                     table.addCell(cell2bewertung);
                     table.addCell(cell2bewertungX);
                     table.addCell(cell2bewertung);
                     break;
-            case 5: table.addCell(cell2bewertung);
+            case 8: table.addCell(cell2bewertung);
                     table.addCell(cell2bewertung);
                     table.addCell(cell2bewertung);
                     table.addCell(cell2bewertung);
