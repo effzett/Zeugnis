@@ -444,6 +444,11 @@ public class SingletonSQLConnector {
             insertKriteriumslisteAll(idZeugnis);
             // logger.fine("Kriterien eingefügt");
         }
+//        catch(SQLException e){
+//            if(e.getSQLState().equals(23505)){
+//                // warn...?
+//            }
+//        }
 
     }
 
@@ -719,14 +724,11 @@ public class SingletonSQLConnector {
             sqlUpdateSchueler = sqlUpdateSchueler.substring(0, sqlUpdateSchueler.length() - 2);
             sqlUpdateSchueler += " where ID_SCHUELER=" + idSchueler;
           
-                logger.fine("updatePupil-idSchueler neu ->" + Integer.toString(Integer.parseInt(values[0])));
-                logger.fine("updatePupil-idSchueler alt ->" + Integer.toString(Integer.parseInt(idSchueler)));
-                logger.fine("updatePupil-idZEUGNIS neu ->" + Integer.toString(getIdZeugnis(Integer.parseInt(values[0]),1)));
-                logger.fine("updatePupil-idZEUGNIS alt ->" + Integer.toString(getIdZeugnis(Integer.parseInt(idSchueler),1)));
            // Aenderungen in Zeugnis und Kriteriumsliste durchführen wenn sich die ID_SCHUELER geaendertr hat
             if (!idSchueler.equals(values[0])) {
                  
  //               int idZeugnis = getIdZeugnis(Integer.parseInt(values[0]), 1);
+                // getIdZeugnisMemory holt die Daten aus den Parametern, nicht aus der DB 
                 int idZeugnis = getIdZeugnisMemory(values[1],values[2],values[3],values[6],"1");
                 int idKriteriumsliste = getIdZeugnis(Integer.parseInt(idSchueler), 1);
                 String sql = "update KRITERIUMSLISTE set ID_KRITERIUMSLISTE=" + idZeugnis
