@@ -43,20 +43,20 @@ public class FillDatabase {
 
             try {
                 // Schueler einfügen
-                connector.insertPuple(puple);
-                // Zeugnis einfügen
-                idZeugnis1 = connector.getIdZeugnis(idSchueler,1);
-                idZeugnis2 = connector.getIdZeugnis(idSchueler,2);
-                System.out.println(String.valueOf(idZeugnis1));
-                zeugnis1 = new String[]{String.valueOf(idZeugnis1),String.valueOf(idSchueler),"1","2","3","4","Keine","Versetzt","1","2016"};               
-                zeugnis2 = new String[]{String.valueOf(idZeugnis2),String.valueOf(idSchueler),"1","2","3","4","Keine","Versetzt","2","2016"};               
-                try {
-                    connector.updateZeugnis(zeugnis1);
-                    connector.updateZeugnis(zeugnis2);                    
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-                // jetzt noch KRITERIUMSLISTE füllen...
+                if(connector.insertPuple(puple)){
+                    // Zeugnis einfügen
+                    idZeugnis1 = connector.getIdZeugnis(idSchueler,1);
+                    idZeugnis2 = connector.getIdZeugnis(idSchueler,2);
+                    System.out.println(String.valueOf(idZeugnis1));
+                    zeugnis1 = new String[]{String.valueOf(idZeugnis1),String.valueOf(idSchueler),"1","2","3","4","Keine","Versetzt","1","2016"};               
+                    zeugnis2 = new String[]{String.valueOf(idZeugnis2),String.valueOf(idSchueler),"1","2","3","4","Keine","Versetzt","2","2016"};               
+                    try {
+                        connector.updateZeugnis(zeugnis1);
+                        connector.updateZeugnis(zeugnis2);                    
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                    // jetzt noch KRITERIUMSLISTE füllen...
 //                try {
 //                    if (!connector.existKriteriumsliste()) { // prüfen ob leer 
 //                        ArrayList<Integer> lbid = new ArrayList<Integer>(); // Lernbereiche
@@ -84,11 +84,11 @@ public class FillDatabase {
 //                } catch (SQLException ex) {
 //                    System.out.println("FEEEEEEEHLER " + ex.getMessage());
 //                }
+                }
             } catch (SQLException ex) {
                 System.out.println("Schüler schon vorhanden.");
                 continue;
             }
-
         }        
     }
 

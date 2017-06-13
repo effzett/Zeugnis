@@ -891,11 +891,14 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                     // insert
                     if (data0 == null || ((String) data0).isEmpty()) {
 
-                        connector.insertPuple(values);
+                        if(connector.insertPuple(values)){
 
-                        // Die neue Id in die erste Spalte der Tabelle schreiben.
-                        model.setValueAt(values[0], row, idColumn);
-
+                            // Die neue Id in die erste Spalte der Tabelle schreiben.
+                            model.setValueAt(values[0], row, idColumn);
+                        }else{
+                            // Warnung ausgeben und Zeile löschen????
+                            logger.fine("Eintrag schon in der Datenbank vorhanden");
+                        }
                         // update    
                     } else {
                         connector.updatePuple(values, (String) data0);
