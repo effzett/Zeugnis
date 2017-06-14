@@ -34,12 +34,15 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.ListCellRenderer;
 import static javax.swing.SwingConstants.CENTER;
 import javax.swing.UIManager;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
@@ -59,6 +62,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private Config config = null;
     private boolean tableModelEventEnabled = true;
     private Hashtable<Integer, Integer> idKriterien = null;
+    private JComboBox stringBox = null;
+    private JComboBox imageBox = null;
 
     /**
      * Creates new form Gui
@@ -66,6 +71,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     public Gui() {
         config = Config.getInstance();
         connector = SingletonSQLConnector.getInstance();
+        stringBox = this.getStringBox();
+        imageBox = this.getImageBox();
         initComponents();
         sYear = Integer.parseInt(((String) jComboBox1.getSelectedItem()).substring(0, 4));
         hYear = Integer.parseInt((String) jComboBox2.getSelectedItem());
@@ -121,6 +128,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Zeugnisverwaltung");
         setIconImage((new ImageIcon(getClass().getResource("/zeugnis/pics/testimony_icon.png"))).getImage());
+        setPreferredSize(new java.awt.Dimension(1000, 490));
 
         jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -271,219 +279,214 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
             jSpinner2.setModel(new javax.swing.SpinnerNumberModel());
 
-            jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            tableModel = new javax.swing.table.DefaultTableModel(
                 new String [] {
                     "Kriterien", "Bewertung"
-                }, 2)
-            );
-            jTable2.setRowHeight(25);
-            jTable2.setRowSelectionAllowed(false);
-            jTable2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-            column = jTable2.getColumnModel().getColumn(1);
-            column.setCellRenderer(new zeugnis.ComboBoxCellRenderer());
-            column.setCellEditor(new DefaultCellEditor(getMarkBox()));
-            jScrollPane3.setViewportView(jTable2);
+                }, 2);
 
-            jLabel9.setText("Fächer");
+                tableModel.addTableModelListener(this);
+                jTable2.setModel(tableModel);
+                jTable2.setRowHeight(25);
+                jTable2.setRowSelectionAllowed(false);
+                jTable2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+                jScrollPane3.setViewportView(jTable2);
 
-            jComboBox5.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    changeSubject(evt);
-                }
-            });
+                jLabel9.setText("Fächer");
 
-            javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-            jPanel3.setLayout(jPanel3Layout);
-            jPanel3Layout.setHorizontalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLabel5)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabel9)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
-                    .addContainerGap())
-            );
-            jPanel3Layout.setVerticalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel4)
-                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel9)
-                                .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jLabel6)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel7)
-                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel8)
-                                .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addContainerGap(13, Short.MAX_VALUE))
-            );
-
-            jTabbedPane1.addTab("Zeugnisse", jPanel3);
-
-            javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-            jPanel1.setLayout(jPanel1Layout);
-            jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jTabbedPane1)
-                    .addContainerGap())
-            );
-            jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jTabbedPane1)
-            );
-
-            jLabel1.setText("Schuljahr");
-
-            try{
-                String[] sYears = connector.fetchSYears();
-
-                if(sYears.length == 0) {
-                    sYears = new String[1];
-                    SimpleDateFormat sf = new SimpleDateFormat("MMyyyy");
-                    String curr = sf.format(Calendar.getInstance().getTime());
-
-                    if(Integer.parseInt(curr.substring(0,1)) < 6 ) {
-                        sYears[0] = (Integer.parseInt(curr.substring(2)) -1) +  "/" + curr.substring(4);
-                    } else {
-                        sYears[0] = curr.substring(2) + "/" + (Integer.parseInt(curr.substring(4)) + 1);
+                jComboBox5.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        changeSubject(evt);
                     }
+                });
 
+                javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+                jPanel3.setLayout(jPanel3Layout);
+                jPanel3Layout.setHorizontalGroup(
+                    jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                    .addComponent(jLabel7)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                    .addComponent(jLabel8)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel9)
+                            .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
+                        .addContainerGap())
+                );
+                jPanel3Layout.setVerticalGroup(
+                    jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(4, 4, 4)
+                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(13, Short.MAX_VALUE))
+                );
+
+                jTabbedPane1.addTab("Zeugnisse", jPanel3);
+
+                javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+                jPanel1.setLayout(jPanel1Layout);
+                jPanel1Layout.setHorizontalGroup(
+                    jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTabbedPane1)
+                        .addContainerGap())
+                );
+                jPanel1Layout.setVerticalGroup(
+                    jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1)
+                );
+
+                jLabel1.setText("Schuljahr");
+
+                try{
+                    String[] sYears = connector.fetchSYears();
+
+                    if(sYears.length == 0) {
+                        sYears = new String[1];
+                        SimpleDateFormat sf = new SimpleDateFormat("MMyyyy");
+                        String curr = sf.format(Calendar.getInstance().getTime());
+
+                        if(Integer.parseInt(curr.substring(0,1)) < 6 ) {
+                            sYears[0] = (Integer.parseInt(curr.substring(2)) -1) +  "/" + curr.substring(4);
+                        } else {
+                            sYears[0] = curr.substring(2) + "/" + (Integer.parseInt(curr.substring(4)) + 1);
+                        }
+
+                    }
+                    jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(sYears));
+                } catch(SQLException ex) {
+                    logger.severe(ex.getLocalizedMessage());
                 }
-                jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(sYears));
-            } catch(SQLException ex) {
-                logger.severe(ex.getLocalizedMessage());
-            }
-            jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    changeSYear(evt);
-                }
-            });
+                jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        changeSYear(evt);
+                    }
+                });
 
-            jLabel2.setText("Halbjahr");
+                jLabel2.setText("Halbjahr");
 
-            jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2" }));
-            jComboBox2.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    changeHYear(evt);
-                }
-            });
+                jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2" }));
+                jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        changeHYear(evt);
+                    }
+                });
 
-            jLabel3.setText("Klasse");
+                jLabel3.setText("Klasse");
 
-            jComboBox3.setModel(new javax.swing.DefaultComboBoxModel( config.getProperty("classes").split(",")));
-            jComboBox3.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    changeSClass(evt);
-                }
-            });
+                jComboBox3.setModel(new javax.swing.DefaultComboBoxModel( config.getProperty("classes").split(",")));
+                jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        changeSClass(evt);
+                    }
+                });
 
-            jMenu1.setText("Datei");
+                jMenu1.setText("Datei");
 
-            jMenuItem1.setText("Beenden");
-            jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jMenuItem1ActionPerformed(evt);
-                }
-            });
-            jMenu1.add(jMenuItem1);
+                jMenuItem1.setText("Beenden");
+                jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jMenuItem1ActionPerformed(evt);
+                    }
+                });
+                jMenu1.add(jMenuItem1);
 
-            jMenuBar1.add(jMenu1);
+                jMenuBar1.add(jMenu1);
 
-            jMenu2.setText("Bearbeiten");
+                jMenu2.setText("Bearbeiten");
 
-            jMenuItem2.setText("Neues Schuljahr anlegen");
-            jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    addSchoolYear(evt);
-                }
-            });
-            jMenu2.add(jMenuItem2);
+                jMenuItem2.setText("Neues Schuljahr anlegen");
+                jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        addSchoolYear(evt);
+                    }
+                });
+                jMenu2.add(jMenuItem2);
 
-            jMenuBar1.add(jMenu2);
+                jMenuBar1.add(jMenu2);
 
-            setJMenuBar(jMenuBar1);
+                setJMenuBar(jMenuBar1);
 
-            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-            getContentPane().setLayout(layout);
-            layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jLabel1)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jLabel2)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jLabel3)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap())
-            );
-            layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(5, 5, 5)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                getContentPane().setLayout(layout);
+                layout.setHorizontalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap())
-            );
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                );
+                layout.setVerticalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                );
 
-            pack();
-        }// </editor-fold>//GEN-END:initComponents
+                pack();
+            }// </editor-fold>//GEN-END:initComponents
 
     private void fillClassTable() {
 
@@ -504,7 +507,6 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         model.addRow(row);
     }//GEN-LAST:event_addRow
 
-
     private void changeSYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeSYear
         sYear = Integer.parseInt(((String) jComboBox1.getSelectedItem()).substring(0, 4));
         fillPupleComboBox();
@@ -516,6 +518,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private void changeHYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeHYear
         hYear = Integer.parseInt((String) jComboBox2.getSelectedItem());
         fillTabFromTestimony();
+        selectedSubject = (String) jComboBox5.getSelectedItem();
+        fillTestimonyTable(selectedSubject);
     }//GEN-LAST:event_changeHYear
 
     private void changeSClass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeSClass
@@ -526,45 +530,14 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     }//GEN-LAST:event_changeSClass
 
     private void createPdfForClass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPdfForClass
-
-        
-        // Zunächst Liste aller Zeugnisse erzeugen
-        
-        // Für jedes Zeugnis, Zeugnis in einen definierten Ordner speichern
-        ArrayList<Integer> liste = new ArrayList<>();                
-        try {
-            liste = connector.listIdSchueler();
-        } catch (SQLException ex) {
-            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        for(Integer idSchueler: liste){
-            try {
-                ZeugnisPDF zeugnis = new ZeugnisPDF(idSchueler);    // holt Werte aus DB -> private Variables
-                zeugnis.CreatePDF();    // uses private Variables to print pdf
-            } catch (IOException ex) {
-                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (DocumentException ex) {
-                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        
+        // TODO add your handling code here:
     }//GEN-LAST:event_createPdfForClass
 
     private void addSchoolYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSchoolYear
         try {
-            // Ist wahrscheinlich überflüssig.
-            // es wird einfach ein neues Schuljahr angelegt und basta.
-            // Formatierung in der GUI übernimmt das Programm von selbst
-            // In der DB wird einfach das nächste Jahr erzeugt (maxjahr+1)
-            // Wichtig: Es muss das neue Schuljahr vorausgewählt werden in der GUI
-            // Damit alle Methoden auf diesem neuen Schuljahr operieren
+
             // Es können höchstens bis zu aktuellen Jahr Schuljahr erzeugt werden.
-            // Aktuelles Jahr z.B. 2015 = Schuljahe 2015 = Jahrgang 2015/16
+            // Aktuelles Jahr z.B. 2015 = Schuljahr 2015 = Jahrgang 2015/16
 
             Integer newYear = connector.getMaxSchuljahrFromZeugnis() + 1;
             SimpleDateFormat sf = new SimpleDateFormat("yyyy");
@@ -574,7 +547,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 connector._generateNewYear(newYear);
                 
                 // Funktioniert nur bis zum Jahr 2099 :-)
-                jComboBox1.addItem(Integer.toString(newYear) + "/" + Integer.toString(newYear -1999));
+                jComboBox1.addItem(Integer.toString(newYear) + "/" + Integer.toString(newYear - 1999));
             }
 
         } catch (SQLException ex) {
@@ -588,6 +561,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
         if (jTabbedPane1.getSelectedIndex() == 1) {
             fillPupleComboBox();
+            fillTestimonyTable((String) jComboBox5.getItemAt(0));
         }
 
     }//GEN-LAST:event_changeTab
@@ -599,6 +573,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
     private void changePuple(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePuple
         fillTabFromTestimony();
+        selectedSubject = (String) jComboBox5.getSelectedItem();
+        fillTestimonyTable(selectedSubject);
     }//GEN-LAST:event_changePuple
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -626,7 +602,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 if (testimony[5] != null) {
                     jSpinner2.setValue(Integer.parseInt(testimony[5]));
                 }
-                
+
                 idKriterien = connector.getID_KriterienZeugnis(Integer.parseInt(testimony[0]));
             } catch (SQLException ex) {
                 logger.severe(ex.getLocalizedMessage());
@@ -675,7 +651,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
         try {
             jComboBox5.setModel(new DefaultComboBoxModel(connector.getLernbereicheIncl0().toArray(new String[0])));
-            selectedSubject = (String)jComboBox5.getItemAt(0);
+            selectedSubject = (String) jComboBox5.getItemAt(0);
         } catch (SQLException ex) {
             logger.severe(ex.getLocalizedMessage());
         }
@@ -684,44 +660,82 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     }
 
     private void fillTestimonyTable(String subject) {
+        DefaultTableModel tableModel = new javax.swing.table.DefaultTableModel(
+                new String[]{
+                    "Kriterien", "Bewertung"
+                }, 2);
 
-        try {
-            ArrayList<String[]> criteria = connector.getKriterien(0, subject);
-            DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-            model.setRowCount(0);
-            Object[] row = new Object[2];
-            Iterator<String[]> it = criteria.iterator();
+        tableModel.addTableModelListener(this);
+        jTable2.setModel(tableModel);
 
-            while (it.hasNext()) {
-                String[] array = it.next();
-                row[0] = new CritField(array[1], array[0]);
-                row[1] = "";
-                model.addRow(row);
+        if (jComboBox4.getItemCount() > 0) {
+
+            if (jComboBox4.getSelectedItem() == null) {
+                jComboBox4.setSelectedItem(0);
             }
 
-        } catch (SQLException ex) {
-            logger.severe(ex.getLocalizedMessage());
+            try {
+                TableColumn column = jTable2.getColumnModel().getColumn(1);
+                column.setCellRenderer(new zeugnis.ComboBoxCellRenderer());
+
+                if (selectedSubject.equals("Sozialverhalten")
+                        || selectedSubject.equals("Arbeitsverhalten")) {
+                    column.setCellEditor(new DefaultCellEditor(stringBox));
+                } else {
+                    column.setCellEditor(new DefaultCellEditor(imageBox));
+                }
+
+                int idKriteriumliste = connector._getIdZeugnis(Integer.parseInt(((String[]) jComboBox4.getSelectedItem())[1]), hYear);
+                ArrayList<String[]> criteria = connector.getKriterien(0, subject);
+                DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+                model.setRowCount(0);
+                Object[] row = new Object[2];
+                Iterator<String[]> it = criteria.iterator();
+                tableModelEventEnabled = false;
+
+                while (it.hasNext()) {
+                    String[] array = it.next();
+                    row[0] = new CritField(array[1], array[0]);
+                    int bewertung = connector.getBewertung(idKriteriumliste, Integer.parseInt(array[0]));
+
+                    if (bewertung == 0) {
+                        row[1] = "";
+                    } else if (bewertung < 4) {
+                        row[1] = stringBox.getItemAt(bewertung);
+                    } else if (bewertung > 3 && bewertung < 9) {
+                        row[1] = imageBox.getItemAt(bewertung - 3);
+                    } else {
+                        row[1] = "Unzulässiger Wert";
+                    }
+
+                    model.addRow(row);
+                }
+
+                this.adjustColumnSize(jTable2, 1, 5);
+                tableModelEventEnabled = true;
+            } catch (SQLException ex) {
+                logger.severe(ex.getLocalizedMessage());
+            }
+
         }
 
     }
 
-    // Gibt eine neue Instanz eines Noten PulldownMenues zurueck.
-    private JComboBox getMarkBox() {
-        JComboBox markComboBox = new JComboBox() {
+    private JComboBox getStringBox() {
+        JComboBox stringComboBox = new JComboBox();
+        stringComboBox.setModel(new javax.swing.DefaultComboBoxModel(new Object[]{
+            "",
+            "selten",
+            "wechselnd",
+            "überwiegend"}
+        ));
 
-            @Override
-            public void setSelectedIndex(int index) {
+        return stringComboBox;
+    }
 
-                if (Gui.getSelectedSubject().equals("Sozialverhalten")
-                        || Gui.getSelectedSubject().equals("Arbeitsverhalten")) {
-                    super.setSelectedIndex((index > 3) ? 0 : index);
-                } else {
-                    super.setSelectedIndex((index > 3) ? index : 0);
-                }
-            }
-
-        };
-        markComboBox.setRenderer(new DefaultListCellRenderer() {
+    private JComboBox getImageBox() {
+        JComboBox imageComboBox = new JComboBox();
+        imageComboBox.setRenderer(new DefaultListCellRenderer() {
 
             public Component getListCellRendererComponent(JList list,
                     Object value,
@@ -730,21 +744,6 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                     boolean cellHasFocus) {
 
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-
-                if (Gui.getSelectedSubject().equals("Sozialverhalten")
-                        || Gui.getSelectedSubject().equals("Arbeitsverhalten")) {
-
-                    if (index > 4) {
-                        setForeground(UIManager.getColor("Label.disabledForeground"));
-                    }
-
-                } else {
-
-                    if (index < 4) {
-                        setForeground(UIManager.getColor("Label.disabledForeground"));
-                    }
-
-                }
 
                 if (value instanceof java.lang.String) {
                     setText((String) value);
@@ -761,22 +760,19 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
         });
 
-        markComboBox.setModel(new javax.swing.DefaultComboBoxModel(new Object[]{
+        imageComboBox.setModel(new javax.swing.DefaultComboBoxModel(new Object[]{
             "",
-            "selten",
-            "wechselnd",
-            "überwiegend",
-            "--",
-            getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/viertel0.png"))).getImage(), 20, 20),
-            getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/halb0.png"))).getImage(), 20, 20),
-            getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/dreiviertel0.png"))).getImage(), 20, 20),
-            getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/voll0.png"))).getImage(), 20, 20)}
+            getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/leer0.png"))).getImage(), 20, 20, "4"),
+            getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/viertel0.png"))).getImage(), 20, 20, "5"),
+            getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/halb0.png"))).getImage(), 20, 20, "6"),
+            getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/dreiviertel0.png"))).getImage(), 20, 20, "7"),
+            getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/voll0.png"))).getImage(), 20, 20, "8")}
         ));
 
-        return markComboBox;
+        return imageComboBox;
     }
 
-    private ImageIcon getScaledImage(Image srcImg, int w, int h) {
+    private ImageIcon getScaledImage(Image srcImg, int w, int h, String desc) {
         BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = resizedImg.createGraphics();
 
@@ -784,8 +780,9 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         g2.drawImage(srcImg, 0, 0, w, h, null);
         g2.dispose();
 
-        return new ImageIcon(resizedImg);
-
+        ImageIcon icon = new ImageIcon(resizedImg);
+        icon.setDescription(desc);
+        return icon;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -828,86 +825,134 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     @Override
     public void tableChanged(TableModelEvent e) {
 
-        if (e.getType() == TableModelEvent.UPDATE && tableModelEventEnabled) {
-            int row = e.getFirstRow();
-            TableModel model = (TableModel) e.getSource();
-            int idColumn = 0;
+        // Pruefen von welcher Tabelle das Event geworfen wird.
+        // Geprueft wird anhand der Anzahle der Spalten.
+        // 7 Spalten = Die Schuelertabelle
+        // 2 Spalten = Die Zeugnistabelle
+        TableModel model = (TableModel) e.getSource();
 
-            // Prüfen ob die Spalten Name, Vorname, Geburtsdatun Werte enthalten um eine idSchueler zu generieren
-            // Wenn ja, über rows ermitteln ob es sich um ein update oder ein insert handelt.
-            Object data0 = null, data1 = null, data2 = null, data3 = null, data4 = null;
-            String string1, string2, string3;
+        if (model.getColumnCount() == 7) {
 
-            for (int i = 0; i < model.getColumnCount(); i++) {
+            if (e.getType() == TableModelEvent.UPDATE && tableModelEventEnabled) {
+                int row = e.getFirstRow();
+                int idColumn = 0;
+                
+                // Prüfen ob die Spalten Name, Vorname, Geburtsdatun Werte enthalten um eine idSchueler zu generieren
+                // Wenn ja, über rows ermitteln ob es sich um ein update oder ein insert handelt.
+                Object data0 = null, data1 = null, data2 = null, data3 = null, data4 = null;
+                String string1, string2, string3;
 
-                switch (model.getColumnName(i)) {
-                    case "Id":
-                        data0 = model.getValueAt(row, i);
-                        idColumn = i;
-                        break;
-                    case "Name":
-                        data1 = model.getValueAt(row, i);
-                        break;
-                    case "Vorname":
-                        data2 = model.getValueAt(row, i);
-                        break;
-                    case "Geburtsdatum":
-                        data3 = model.getValueAt(row, i);
-                        break;
-                    case "Geburtsort":
-                        data4 = model.getValueAt(row, i);
-                        break;
+                for (int i = 0; i < model.getColumnCount(); i++) {
+
+                    switch (model.getColumnName(i)) {
+                        case "Id":
+                            data0 = model.getValueAt(row, i);
+                            idColumn = i;
+                            break;
+                        case "Name":
+                            data1 = model.getValueAt(row, i);
+                            break;
+                        case "Vorname":
+                            data2 = model.getValueAt(row, i);
+                            break;
+                        case "Geburtsdatum":
+                            data3 = model.getValueAt(row, i);
+                            break;
+                        case "Geburtsort":
+                            data4 = model.getValueAt(row, i);
+                            break;
+                    }
+                }
+
+                if (data1 != null && !(string1 = (String) data1).isEmpty()
+                        && data2 != null && !(string2 = (String) data2).isEmpty()
+                        && data3 != null && !(string3 = (String) data3).isEmpty()) {
+                    logger.fine("column0: " + string1 + " column1: " + string2 + " column2: " + string3);
+
+                    // Datumstring zu SQLDatum konvertieren
+                    Date date = null;
+                    java.sql.Date sqlDate = null;
+
+                    try {
+                        date = sdf.parse(string3);
+                        sqlDate = new java.sql.Date(date.getTime());
+                    } catch (ParseException ex) {
+                        logger.severe(ex.getLocalizedMessage());
+                    }
+
+                    String[] values = new String[6];
+                    
+                    values[0] = string1;
+                    values[1] = string2;
+                    values[2] = sqlDate.toString();
+                    values[3] = (String) data4;
+                    values[4] = (String) jComboBox3.getSelectedItem();
+                    values[5] = ((String) jComboBox1.getSelectedItem()).substring(0, 4);
+
+                    try {
+                        tableModelEventEnabled = false;
+                        // insert
+                        if (data0 == null || ((String) data0).isEmpty()) {
+
+                            Integer idSchueler=0;
+                            idSchueler = connector._insertSchueler(Gui.getSClass(),Gui.getSYear());
+                            if(idSchueler > 0){
+                                connector._updateSchueler(values, idSchueler);
+                            }
+                            // Die neue Id in die erste Spalte der Tabelle schreiben.
+                            model.setValueAt(idSchueler.toString(), row, idColumn);
+
+                            // update    
+                        } else {
+                            Integer idSchueler = Integer.parseInt((String)data0);
+                            
+                            connector._updateSchueler(values, idSchueler);
+                            // Die neue Id in die erste Spalte der Tabelle schreiben.
+                            //jTable1.getModel().setValueAt(idSchueler, row, idColumn);
+                        }
+
+                        tableModelEventEnabled = true;
+                    } catch (SQLException ex) {
+                        logger.severe(ex.getLocalizedMessage());
+                    }
+
                 }
 
             }
 
-            if (data1 != null && !(string1 = (String) data1).isEmpty()
-                    && data2 != null && !(string2 = (String) data2).isEmpty()
-                    && data3 != null && !(string3 = (String) data3).isEmpty()) {
-                logger.fine("column0: " + string1 + " column1: " + string2 + " column2: " + string3);
+        } else {
 
-                // Datumstring zu SQLDatum konvertieren
-                Date date = null;
-                java.sql.Date sqlDate = null;
+            if (e.getType() == TableModelEvent.UPDATE && tableModelEventEnabled) {
 
                 try {
-                    date = sdf.parse(string3);
-                    sqlDate = new java.sql.Date(date.getTime());
-                } catch (ParseException ex) {
-                    logger.severe(ex.getLocalizedMessage());
-                }
+                    int row = e.getFirstRow();
+                    int idKriterium = ((CritField) model.getValueAt(row, 0)).getIdKriteriumInt();
+                    int idKriteriumliste = connector._getIdZeugnis(Integer.parseInt(((String[]) jComboBox4.getSelectedItem())[1]), hYear);
+                    Object value = model.getValueAt(row, 1);
+                    int bewertung = 0;
 
-                String[] values = new String[7];
-                values[0] = Integer.toString((string1 + string2 + sqlDate.toString() + sYear).hashCode());
-                values[1] = string1;
-                values[2] = string2;
-                values[3] = sqlDate.toString();
-                values[4] = (String) data4;
-                values[5] = (String) jComboBox3.getSelectedItem();
-                values[6] = ((String) jComboBox1.getSelectedItem()).substring(0, 4);
-
-                try {
-                    tableModelEventEnabled = false;
-                    // insert
-                    if (data0 == null || ((String) data0).isEmpty()) {
-
-                        if(connector.insertPuple(values)){
-
-                            // Die neue Id in die erste Spalte der Tabelle schreiben.
-                            model.setValueAt(values[0], row, idColumn);
-                        }else{
-                            // Warnung ausgeben und Zeile löschen????
-                            logger.fine("Eintrag schon in der Datenbank vorhanden");
+                    if (value instanceof java.lang.String) {
+                        switch ((String) value) {
+                            case "selten":
+                                bewertung = 1;
+                                break;
+                            case "wechselnd":
+                                bewertung = 2;
+                                break;
+                            case "überwiegend":
+                                bewertung = 3;
+                                break;
+                            default:
+                                bewertung = 0;
                         }
-                        // update    
-                    } else {
-                        connector.updatePuple(values, (String) data0);
 
-                        // Die neue Id in die erste Spalte der Tabelle schreiben.
-                        jTable1.getModel().setValueAt(values[0], row, idColumn);
+                    } else if (value instanceof javax.swing.ImageIcon) {
+                        bewertung = Integer.parseInt(((ImageIcon) value).getDescription());
+                    } else {
+                        logger.severe("Unerwartetes Objects beim Rendern des Tabellenfeldes: " + value.getClass().getName());
                     }
 
-                    tableModelEventEnabled = true;
+                    connector.updateBewertung(idKriteriumliste, idKriterium, bewertung);
                 } catch (SQLException ex) {
                     logger.severe(ex.getLocalizedMessage());
                 }
@@ -918,48 +963,6 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
     }
 
-    /*
-     class ComboBoxRenderer extends JLabel
-     implements ListCellRenderer {
-
-     public ComboBoxRenderer() {
-     setOpaque(true);
-     setHorizontalAlignment(CENTER);
-     setVerticalAlignment(CENTER);
-     }
-
-     @Override
-     public Component getListCellRendererComponent(
-     JList list,
-     Object value,
-     int index,
-     boolean isSelected,
-     boolean cellHasFocus) {
-
-     if (isSelected) {
-     setBackground(list.getSelectionBackground());
-     setForeground(list.getSelectionForeground());
-     } else {
-     setBackground(list.getBackground());
-     setForeground(list.getForeground());
-     }
-
-     if (value instanceof java.lang.String) {
-     setText((String) value);
-     setIcon(null);
-     } else if (value instanceof javax.swing.ImageIcon) {
-     setText("");
-     setIcon((ImageIcon) value);
-     } else {
-     logger.severe("Unerwartetes Object beim rendern der ComboBox");
-     }
-
-     return this;
-     }
-
-     }
-
-     */
     public static int getSYear() {
         //return (String)jComboBox1.getSelectedItem();
         return sYear;
@@ -998,28 +1001,57 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
         return result;
     }
-    
-    class CritField extends JLabel {
-        private String idKriterium;
+
+private void adjustColumnSize(JTable table, int column, int margin) {
+        DefaultTableColumnModel colModel = (DefaultTableColumnModel) table.getColumnModel();
+        TableColumn col = colModel.getColumn(column);
+        int width;
+
+        TableCellRenderer renderer = col.getHeaderRenderer();
         
-        public CritField(String text, String idKriterium) {
-            super(text);
-            this.idKriterium = idKriterium;
+        if (renderer == null) {
+            renderer = table.getTableHeader().getDefaultRenderer();
         }
         
-        public String getIdKriterium() {
-            return idKriterium;
+        Component comp = renderer.getTableCellRendererComponent(
+                table, col.getHeaderValue(), false, false, 0, 0);
+        width = comp.getPreferredSize().width;
+
+        for (int r = 0; r < table.getRowCount(); r++) {
+            renderer = table.getCellRenderer(r, column);
+            comp = renderer.getTableCellRendererComponent(
+                    table, table.getValueAt(r, column), false, false, r, column);
+            int currentWidth = comp.getPreferredSize().width;
+            width = Math.max(width, currentWidth);
         }
-        
-        public int getIdKriteriumInt() {
-            return Integer.parseInt(idKriterium);
-        }
-        
-        @Override
-        public String toString() {
-            return this.getText();
-        }
-        
+
+        width += 2 * margin;
+
+        col.setPreferredWidth(width);
     }
-    
+
+}
+
+class CritField extends JLabel {
+
+    private String idKriterium;
+
+    public CritField(String text, String idKriterium) {
+        super(text);
+        this.idKriterium = idKriterium;
+    }
+
+    public String getIdKriterium() {
+        return idKriterium;
+    }
+
+    public int getIdKriteriumInt() {
+        return Integer.parseInt(idKriterium);
+    }
+
+    @Override
+    public String toString() {
+        return this.getText();
+    }
+
 }
