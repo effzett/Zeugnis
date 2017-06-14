@@ -719,7 +719,7 @@ public class SingletonSQLConnector {
 //     * @throws SQLException
 //     */
 //    public void updatePuple(String[] values, String idSchueler) throws SQLException {
-//        String[] puple = fetchPuple(Integer.parseInt(idSchueler));
+//        String[] puple = fetchPupil(Integer.parseInt(idSchueler));
 //        String sqlUpdateSchueler = "update SCHUELER set ";
 //        try (Statement statement = con.createStatement()) {
 //
@@ -837,7 +837,7 @@ public class SingletonSQLConnector {
      * @return Array mit den Daten der Schueler
      * @throws SQLException
      */
-    public ArrayList[] fetchPuples(int sYear, String sClass) throws SQLException {
+    public ArrayList[] fetchPupils(int sYear, String sClass) throws SQLException {
         ArrayList<ArrayList> result = new ArrayList<>();
 
         try (Statement statement = con.createStatement()) {
@@ -870,7 +870,7 @@ public class SingletonSQLConnector {
      * gefunden wird.
      * @throws SQLException
      */
-    public String[] fetchPuple(int idSchueler) throws SQLException {
+    public String[] fetchPupil(int idSchueler) throws SQLException {
         String[] result = new String[7];
 
         try (Statement statement = con.createStatement()) {

@@ -625,7 +625,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         jComboBox4.removeAllItems();
 
         try {
-            ArrayList[] fetchedPuples = connector.fetchPuples(sYear, sClass);
+            ArrayList[] fetchedPuples = connector.fetchPupils(sYear, sClass);
 
             for (int i = 0; i < fetchedPuples.length; i++) {
                 ArrayList<String> puple = fetchedPuples[i];
