@@ -51,7 +51,8 @@ public class DeleteCellEditor extends AbstractCellEditor implements TableCellEdi
                 if(model.getColumnName(i).equals("Id")) {
                     
                     try {
-                        SingletonSQLConnector.getInstance().deletePuple((String)model.getValueAt(row, i));
+//                        SingletonSQLConnector.getInstance().deletePuple((String)model.getValueAt(row, i));
+                        SingletonSQLConnector.getInstance()._deleteSchueler(Integer.parseInt((String)model.getValueAt(row, i)));
                         break;
                     } catch (SQLException ex) {
                         logger.severe(ex.getLocalizedMessage());

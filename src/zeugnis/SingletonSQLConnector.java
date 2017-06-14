@@ -797,37 +797,37 @@ public class SingletonSQLConnector {
 //
 //    }
 
-    /**
-     * Löschen eines Schülers mit den dazugehoerigen Zeugnissen.
-     *
-     * @param idschueler Die Id des zu loeschenden Datensatzes.
-     * @throws SQLException
-     */
-    public void deletePuple(String idSchueler) throws SQLException {
-        Integer idZeugnis1;
-        Integer idZeugnis2;
-
-        idZeugnis1 = this._getIdZeugnis(Integer.parseInt(idSchueler), 1);
-        idZeugnis2 = this._getIdZeugnis(Integer.parseInt(idSchueler), 2);
-
-        try (Statement statement = con.createStatement()) {
-            // Erst Kriterienlisten löschen
-            String sql = "delete from KRITERIUMSLISTE where ID_KRITERIUMSLISTE = " + idZeugnis1 + " OR ID_KRITERIUMSLISTE = " + idZeugnis2;
-            // logger.fine(sql);
-            statement.executeUpdate(sql);
-
-            // Dann Zeugnisse löschen
-            sql = "delete from ZEUGNIS where ID_ZEUGNIS = " + idZeugnis1 + " OR ID_ZEUGNIS = " + idZeugnis2;
-            // logger.fine(sql);
-            statement.executeUpdate(sql);
-
-            // Dann Schueler löschen
-            sql = "delete from SCHUELER where ID_Schueler = " + idSchueler;
-            // logger.fine(sql);
-            statement.executeUpdate(sql);
-        }
-
-    }
+//    /**
+//     * Löschen eines Schülers mit den dazugehoerigen Zeugnissen.
+//     *
+//     * @param idschueler Die Id des zu loeschenden Datensatzes.
+//     * @throws SQLException
+//     */
+//    public void deletePuple(String idSchueler) throws SQLException {
+//        Integer idZeugnis1;
+//        Integer idZeugnis2;
+//
+//        idZeugnis1 = this._getIdZeugnis(Integer.parseInt(idSchueler), 1);
+//        idZeugnis2 = this._getIdZeugnis(Integer.parseInt(idSchueler), 2);
+//
+//        try (Statement statement = con.createStatement()) {
+//            // Erst Kriterienlisten löschen
+//            String sql = "delete from KRITERIUMSLISTE where ID_KRITERIUMSLISTE = " + idZeugnis1 + " OR ID_KRITERIUMSLISTE = " + idZeugnis2;
+//            // logger.fine(sql);
+//            statement.executeUpdate(sql);
+//
+//            // Dann Zeugnisse löschen
+//            sql = "delete from ZEUGNIS where ID_ZEUGNIS = " + idZeugnis1 + " OR ID_ZEUGNIS = " + idZeugnis2;
+//            // logger.fine(sql);
+//            statement.executeUpdate(sql);
+//
+//            // Dann Schueler löschen
+//            sql = "delete from SCHUELER where ID_Schueler = " + idSchueler;
+//            // logger.fine(sql);
+//            statement.executeUpdate(sql);
+//        }
+//
+//    }
 
     /**
      * Gibt die Daten aller Schueler eines Jahrgangs und einer Klasse zurueck.
