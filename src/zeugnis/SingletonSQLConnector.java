@@ -604,16 +604,6 @@ public class SingletonSQLConnector {
 
     }
 
-    public Boolean existKriteriumsliste() throws SQLException {
-        try (Statement statement = con.createStatement()) {
-            String sql = "select * from KRITERIUMSLISTE";
-            // logger.fine(sql);
-            ResultSet set = statement.executeQuery(sql);
-
-            return set.next();
-        }
-    }
-
     /**
      * *
      * prüft, ob Datenbanken existieren Exception bei Zugriff auf DB ergibt
