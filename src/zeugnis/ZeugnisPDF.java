@@ -115,7 +115,7 @@ public class ZeugnisPDF  {
 
         // Hier können schon alle Werte aus der Datenbank geholt werden...
         id = idSCHUELER;
-        zid = connector.getIdZeugnis(id,Gui.getHYear());
+        zid = connector._getIdZeugnis(id,Gui.getHYear());
         
         logger.fine("ZeugnisPDF-idSCHUELER->" + String.valueOf(id));
         logger.fine("ZeugnisPDF-idZEUGNIS ->" + String.valueOf(zid));
@@ -144,7 +144,7 @@ public class ZeugnisPDF  {
         file = new File("./" + dirName + "/" + fileName); 
         
         for(Integer id : connector.getID_KriterienFromLernbereich("Arbeitsverhalten")){  // holt Reihenfolge
-            //logger.fine("ID_KRITERIUM= "+Integer.toString(id));
+            logger.fine("ID_KRITERIUM= "+Integer.toString(id));
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
@@ -152,7 +152,7 @@ public class ZeugnisPDF  {
         }
 
         for(Integer id : connector.getID_KriterienFromLernbereich("Sozialverhalten")){  // holt Reihenfolge
-            //logger.fine("ID_KRITERIUM= "+Integer.toString(id));
+            logger.fine("ID_KRITERIUM= "+Integer.toString(id));
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
@@ -179,7 +179,7 @@ public class ZeugnisPDF  {
         noteSozial = connector.getNoteSozial(zid);
         
         for(Integer id : connector.getID_KriterienFromLernbereich("Sprechen und Zuhören")){  // holt Reihenfolge
-            //logger.fine("ID_KRITERIUM= "+Integer.toString(id));
+            logger.fine("ID_KRITERIUM= "+Integer.toString(id));
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable

@@ -284,13 +284,73 @@ public class SingletonSQLConnector {
                     gebort,
                     newKlasse,
                     Integer.toString(newYear)};
-                if(!this.insertPuple(schueler)){
+//                if(!this.insertPuple(schueler)){
+                if(_insertSchueler() !=0 ){
+                    this._updateSchueler(schueler, idSchueler);
+                }
+                else{
                     // mindestens Fehlermeldung ausgeben...
-                    logger.fine("Konnte den Schüler nicht in die DB einfügen");
+                    logger.fine("Konnte den Schüler nicht in die DB einfügen");                    
                 }
                 // logger.fine(schueler.toString());
             }
 
+        }
+    }
+    
+    /**
+     * *
+     * Generiert Daten für ein neues Schuljahr legt kein neues Schuljahr an,
+     * sondern füllt nur die Daten in das neue Schuljahr Sollte nur einmal
+     * aufgerufen werden durch die GUI wenn ein neues Schuljahr generiert wird
+     *
+     * @param schuljahr
+     */
+    public void _generateNewYear(Integer schuljahr) throws SQLException {
+        Integer newYear = schuljahr;
+        Integer oldYear = schuljahr - 1;
+
+        // TODO Lernbereich für neues Schuljahr erstellen
+        // if(newYear not exist in LERNBEREICH)
+        if (newYear != this.getMaxSchuljahrFromLernbereich()) {
+            // Alle Daten von oldyear nehmen, aber mit ID_LERNBEREICH+1000 und newYear
+            appendNewYearLernbereich(newYear);
+        }
+
+        // TODO Kriterium Tabelle für neues Schuljahr erstellen
+        // if(newYear not exist in KRITERIUM)
+        if (newYear != this.getMaxSchuljahrFromKriterium()) {
+            // Alle Daten von oldyear nehmen, aber mit ID_KRITERIUM+1000 und newYear
+            // Achtung: ID_LERNBEREICH muss sich auf die richtigen Jahre in LERNBEREICH
+            // beziehen! Da immer +1000 sollte das so funktionieren....
+            appendNewYearKriterium(newYear);
+        }
+
+        for (Integer idSchueler : getIDSchueler(oldYear)) {
+            // logger.fine(idSchueler.toString());
+            // Für jeden Schuler durchführen...
+            String name = this.getSchuelerName(idSchueler);
+            String vorname = this.getSchuelerVorname(idSchueler);
+            String gebdatum = this.getSchuelerGebDatum(idSchueler);
+            String gebort = this.getSchuelerGebOrt(idSchueler);
+            String klasse = this.getSchuelerKlasse(idSchueler);
+
+            // Neue Klasse bestimmen
+            String newKlasse = getNewKlasse(klasse);
+
+            if (newKlasse.contains("2") || newKlasse.contains("3") || newKlasse.contains("4")) {   // 5. Klasse gibt's nicht
+                // Schueler einfügen
+                String[] schueler = new String[]{
+                    name,vorname,gebdatum,gebort,newKlasse,Integer.toString(newYear)};
+                idSchueler = this._insertSchueler(newKlasse,newYear);
+                if( idSchueler !=0 ){
+                    this._updateSchueler(schueler, idSchueler);
+                }
+                else{
+                    // mindestens Fehlermeldung ausgeben...
+                    logger.fine("Konnte den Schüler nicht in die DB einfügen");                    
+                }
+            }
         }
     }
 
@@ -601,7 +661,7 @@ public class SingletonSQLConnector {
     /**
      * *
      * Fügt für ein übergebenes Zeugnis alle zugehörigen Kriterien_IDs in die
-     * Datenbank mit der Bewertung 1 ein
+     * Datenbank mit der Bewertung 0 ein
      *
      * @param zid
      */
@@ -615,29 +675,16 @@ public class SingletonSQLConnector {
             lbid = this.getID_Lernbereiche(this.getZeugnisSchuljahr(zid), ks);
 
             for (Integer l : lbid) {
-                // logger.fine(Integer.toString(l));
-                // logger.fine(Integer.toString(this.getZeugnisSchuljahr(zid)));               
                 ArrayList<Integer> kid = new ArrayList<Integer>();  // ID_Kriterium
                 kid = this.getID_Kriterien(l);
                 for (Integer k : kid) {
-//                    // nur zum Testen...
-//                    if (l <= 2) {
-//                        bewertung = ThreadLocalRandom.current().nextInt(1, 4);
-//                    } else {
-//                        bewertung = ThreadLocalRandom.current().nextInt(1, 6) + 3;
-//                    }
-//                    // end testing
                     String[] s = {Integer.toString(zid), Integer.toString(k), Integer.toString(bewertung)};
-                    // logger.fine("----------------------->>>>>>>>>>>>>" + s[0] + " " + s[1] + " " + s[2]);
                     this.insertKriteriumsliste(s);
                 }
-
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(SingletonSQLConnector.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     public void insertKriteriumsliste(String[] values) throws SQLException {
@@ -647,7 +694,7 @@ public class SingletonSQLConnector {
                     + "," + values[1]
                     + "," + values[2]
                     + ")";
-            // logger.fine(sql);
+            logger.fine(sql);
             statement.executeUpdate(sql);
         }
 
@@ -1449,7 +1496,7 @@ public class SingletonSQLConnector {
                     + " AND (LERNBEREICH.KLASSENSTUFE=0 OR LERNBEREICH.KLASSENSTUFE =" + klassenstufe + ")"
                     + " AND LERNBEREICH.ID_LERNBEREICH=KRITERIUM.ID_LERNBEREICH "
                     + " AND LERNBEREICH.SCHULJAHR=KRITERIUM.SCHULJAHR";
-            // logger.fine(sql);
+            logger.fine(sql);
             ResultSet set = statement.executeQuery(sql);
             while (set.next()) {
                 result.add(set.getInt(1));
@@ -1513,7 +1560,7 @@ public class SingletonSQLConnector {
         sql += "GEBORT='" + gebort + "', ";
         sql += "KLASSE='" + klasse + "', ";
         sql += "SCHULJAHR=" + schuljahr;
-        sql += " where ID_SCHUELER='" + idSchueler + "'";
+        sql += " where ID_SCHUELER=" + idSchueler;
         try (Statement statement = con.createStatement()) {
             logger.fine(sql);
             statement.executeUpdate(sql);
@@ -1524,17 +1571,24 @@ public class SingletonSQLConnector {
     
     /***
      * _Routine für die nächste Version
-     * Fügt einen neuen Schüler in die Schülertabelle ein
+     * Fügt einen neuen Schüler in die Schülertabelle ein zu einem angegebenen Schuljahr
+     * Speziell zum Anlegen eines neuen Schuljahres
      * @return Rückgabe ist die nächste  zu vergebene SchuelerId im Erfolgsfall,
      *          ansonsten -1;
      */
-    public Integer _insertSchueler() throws SQLException{
+    public Integer _insertSchueler(String klasse, Integer schuljahr) throws SQLException{
         Integer idSchueler=0;   // Rueckgabewert
-        Integer schuljahr = Gui.getSYear();
-                
+        if(schuljahr==0){
+            schuljahr=2016;
+        }
+        if(klasse==null){
+            klasse="1a";
+        }
+        
         try (Statement statement = con.createStatement()) {
 
-            String sql = "insert into SCHUELER values('','', '', '', '', '', '')";
+            // Leeren Schueler anlegen...
+            String sql = "insert into SCHUELER(NAME,VORNAME,GEBDATUM,GEBORT,KLASSE,SCHULJAHR) values('','', '1999-01-01', '', '"+ klasse+ "', "+schuljahr+")";
             logger.fine(sql);
             
             int rows = statement.executeUpdate(sql,Statement.RETURN_GENERATED_KEYS);
@@ -1543,12 +1597,14 @@ public class SingletonSQLConnector {
                     idSchueler = rs.getInt(1);
                 }
             }
+            logger.fine(idSchueler.toString());
+            
             if (idSchueler != 0) {
                 int idZeugnis = _getIdZeugnis(idSchueler, 1);
-                sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, NOTE_ARBEIT, NOTE_SOZIAL, FEHLTAGE, FEHLTAGEOHNE, ENTWICKLUNG, BEMERKUNG, HALBJAHR, SCHULJAHR) values(" + idZeugnis
-                        + ", " + idSchueler + ", "+0+", "+0+", "+0+", "+0+", "+"' '"+", "+"' '"+", "+1+", "+schuljahr+")";
-                logger.fine("Leeres Zeugnis für Halbjahr 1 eingefügt: "+sql);
+                sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, NOTE_ARBEIT, NOTE_SOZIAL, FEHLTAGE, FEHLTAGEOHNE, ENTWICKLUNG, BEMERKUNG, HALBJAHR, SCHULJAHR) values(" 
+                        + idZeugnis+ ", " + idSchueler + ", "+0+", "+0+", "+0+", "+0+", "+"' '"+", "+"' '"+", "+1+", "+schuljahr+")";
                 statement.executeUpdate(sql);
+                logger.fine("Leeres Zeugnis für Halbjahr 1 eingefügt: "+sql);
                 
                 insertKriteriumslisteAll(idZeugnis);
                 logger.fine("Kriterien für Zeugnis Halbjahr 1 eingefügt");
@@ -1565,6 +1621,61 @@ public class SingletonSQLConnector {
         }
         return idSchueler;
     }
+
+        /***
+     * _Routine für die nächste Version
+     * Fügt einen neuen Schüler in die Schülertabelle ein
+     * @return Rückgabe ist die nächste  zu vergebene SchuelerId im Erfolgsfall,
+     *          ansonsten -1;
+     */
+    public Integer _insertSchueler() throws SQLException{
+        Integer idSchueler=0;   // Rueckgabewert
+        Integer schuljahr = Gui.getSYear();
+        String klasse = Gui.getSClass();
+        if(schuljahr==0){
+            schuljahr=2016;
+        }
+        if(klasse==null){
+            klasse="1a";
+        }
+        
+        try (Statement statement = con.createStatement()) {
+
+            // Leeren Schueler anlegen...
+            String sql = "insert into SCHUELER(NAME,VORNAME,GEBDATUM,GEBORT,KLASSE,SCHULJAHR) values('','', '1999-01-01', '', '"+ klasse+ "', "+schuljahr+")";
+            logger.fine(sql);
+            
+            int rows = statement.executeUpdate(sql,Statement.RETURN_GENERATED_KEYS);
+            try (ResultSet rs = statement.getGeneratedKeys()) {
+                while (rs.next()) {
+                    idSchueler = rs.getInt(1);
+                }
+            }
+            logger.fine(idSchueler.toString());
+            
+            if (idSchueler != 0) {
+                int idZeugnis = _getIdZeugnis(idSchueler, 1);
+                sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, NOTE_ARBEIT, NOTE_SOZIAL, FEHLTAGE, FEHLTAGEOHNE, ENTWICKLUNG, BEMERKUNG, HALBJAHR, SCHULJAHR) values(" 
+                        + idZeugnis+ ", " + idSchueler + ", "+0+", "+0+", "+0+", "+0+", "+"' '"+", "+"' '"+", "+1+", "+schuljahr+")";
+                statement.executeUpdate(sql);
+                logger.fine("Leeres Zeugnis für Halbjahr 1 eingefügt: "+sql);
+                
+                insertKriteriumslisteAll(idZeugnis);
+                logger.fine("Kriterien für Zeugnis Halbjahr 1 eingefügt");
+
+                idZeugnis = _getIdZeugnis(idSchueler, 2);
+                sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, NOTE_ARBEIT, NOTE_SOZIAL, FEHLTAGE, FEHLTAGEOHNE, ENTWICKLUNG, BEMERKUNG, HALBJAHR, SCHULJAHR) values(" + idZeugnis
+                        + ", " + idSchueler + ", "+0+", "+0+", "+0+", "+0+", "+"' '"+", "+"' '"+", "+2+", "+schuljahr+")";
+                logger.fine("Leeres Zeugnis für Halbjahr 2 eingefügt: "+sql);
+                statement.executeUpdate(sql);
+
+                insertKriteriumslisteAll(idZeugnis);
+                logger.fine("Kriterien für Zeugnis Halbjahr 2 eingefügt");
+            }
+        }
+        return idSchueler;
+    }
+
     
     /***
      * _Routine für die nächste Version

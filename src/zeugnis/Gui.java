@@ -571,7 +571,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             String curr = sf.format(Calendar.getInstance().getTime());
 
             if (newYear <= Integer.parseInt(curr)) {
-                connector.generateNewYear(newYear);
+                connector._generateNewYear(newYear);
                 
                 // Funktioniert nur bis zum Jahr 2099 :-)
                 jComboBox1.addItem(Integer.toString(newYear) + "/" + Integer.toString(newYear -1999));
