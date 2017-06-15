@@ -76,11 +76,16 @@
              minus the .jar extension. It should not have spaces.
              <property name="store.jar.name" value="MyJarName"/>
         -->
+        <tstamp>
+            <format property="NOW" pattern="dd.MM.yyyy" />
+        </tstamp>
         <property name="store.jar.name" value="Zeugnis"/>
         <property name="project.name" value="Zeugnisverwaltung Grundschule Brelingen" />
         <property name="version.num" value="1.0.0" />
         <property name="vendor.name" value="Team Zero" />
-        <property name="user.name" value="Zimmermann/Derigs" />
+        <property name="user.name" value="F. Zimmermann and  J. Derigs" />
+        <property name="built.date" value="${NOW}" />
+        
 
 
         <!-- don't edit below this line -->
@@ -103,7 +108,7 @@
                 <attribute name="Implementation-Version" value="${version.num}" />
                 <attribute name="Implementation-Vendor" value="${vendor.name}" />
                 <attribute name="Built-By" value="${user.name}"/>
-                <attribute name="Built-Date" value="${TODAY}"/>
+                <attribute name="Built-Date" value="${built.date}"/>
             </manifest>
         </jar>
 
