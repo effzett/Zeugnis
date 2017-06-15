@@ -1,13 +1,12 @@
 TODO:
 = Tab Schulklasse: Beim Verlassen des Feldes Geburtsortes gibt es eine ominöse DELETE Warnung = erledigt
 = Arbeits- und Sozialverhalten:  Kriterien anzeigen = erledigt
-  (operiert nicht auf Zeugnis-Tabelle; muss nochmal überdacht werden)
 = Neuen Jahrgang anlegen mit verschieben der alten Schüler  = erledigt
 = Schüler löschen inklusiver Zeugnisse und Kriteriumslisten = erledigt.
 = PDF's erzeugen: einen Klassenordner anlegen und dort alle Zeugnisse generieren = erledigt
 = Programm über beenden beenden = erledigt (Einfach beenden)
-* Hauptfunktionalität: Bewertungen eintragen im Zeugnis-TAB
-* Daten aus Zeugnis-TAB in die DB schrieben
+= Hauptfunktionalität: Bewertungen eintragen im Zeugnis-TAB
+= Daten aus Zeugnis-TAB in die DB schrieben
 ** Fehltage
 ** Bewertungen
 ** Bemerkungen
@@ -16,5 +15,8 @@ TODO:
 * Feld mit den Kriterien breiter machen und ggfs andere Felder darüber oder darunter setzen
 
 = Datepicker funktioniert noch nicht und bringt Programm zum Absturz = erledigt. war ein Problem mit idZeugnis!
-* Programmabbruch beim insert eines schon bestehenden Schülers wegen nicht abgefangenen SQL Fehler 
-* Duplicate key Exception muss abgefangen werden bei Zeugnis- und Schueler-Tabelle (insert und auch bei update, da primary key upgedatet wird)
+= Programmabbruch beim insert eines schon bestehenden Schülers wegen nicht abgefangenen SQL Fehler 
+= Duplicate key Exception muss abgefangen werden bei Zeugnis- und Schueler-Tabelle (insert und auch bei update, da primary key upgedatet wird)
+* Wirklich nur in die DB schreiben wenn die 3 Schlüsselfelder not null ???!
+* Linien bei der Tabelle für das Zeugnis damit man besser zielen kann
+* Halbjahr bei den Zeugnissen funktioniert noch nicht
