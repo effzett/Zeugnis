@@ -64,7 +64,10 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private Hashtable<Integer, Integer> idKriterien = null;
     private JComboBox stringBox = null;
     private JComboBox imageBox = null;
-    String version = this.getClass().getPackage().getImplementationVersion();
+    private String version = this.getClass().getPackage().getImplementationVersion();
+    private String vendor = this.getClass().getPackage().getImplementationVendor();
+    private String title = this.getClass().getPackage().getImplementationTitle();
+    
 
     /**
      * Creates new form Gui
@@ -91,6 +94,10 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
@@ -127,6 +134,42 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
+
+        jDialog1.setMinimumSize(new java.awt.Dimension(30, 20));
+        jDialog1.setSize(new java.awt.Dimension(400, 200));
+
+        jLabel10.setText("Version: ");
+        jLabel10.setText("Version: "+ version);
+
+        jLabel11.setText("Autor:");
+        jLabel11.setText("Autor: "+vendor);
+
+        jLabel12.setText("Titel:");
+        jLabel12.setText("Titel: "+title);
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(57, Short.MAX_VALUE))
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel11)
+                .addContainerGap(58, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Zeugnisverwaltung");
@@ -450,6 +493,11 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 jMenu3.setText("Hilfe");
 
                 jMenuItem3.setText("Info");
+                jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jMenuItem3ActionPerformed(evt);
+                    }
+                });
                 jMenu3.add(jMenuItem3);
 
                 jMenuBar1.add(jMenu3);
@@ -612,6 +660,12 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        jDialog1.setLocationRelativeTo(this);
+        jDialog1.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     public void fillTabFromTestimony() {
 
@@ -824,7 +878,11 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JComboBox jComboBox4;
     private javax.swing.JComboBox jComboBox5;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

@@ -79,6 +79,8 @@
         <property name="store.jar.name" value="Zeugnis"/>
         <property name="project.name" value="Zeugnisverwaltung Grundschule Brelingen" />
         <property name="version.num" value="1.0.0" />
+        <property name="vendor.name" value="Team Zero" />
+        <property name="user.name" value="Zimmermann/Derigs" />
 
 
         <!-- don't edit below this line -->
@@ -99,6 +101,9 @@
                 <attribute name="Main-Class" value="${main.class}"/>
                 <attribute name="Implementation-Title" value="${project.name}" />
                 <attribute name="Implementation-Version" value="${version.num}" />
+                <attribute name="Implementation-Vendor" value="${vendor.name}" />
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Built-Date" value="${TODAY}"/>
             </manifest>
         </jar>
 
