@@ -125,6 +125,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Zeugnisverwaltung");
@@ -444,6 +446,13 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 jMenu2.add(jMenuItem2);
 
                 jMenuBar1.add(jMenu2);
+
+                jMenu3.setText("Hilfe");
+
+                jMenuItem3.setText("Info");
+                jMenu3.add(jMenuItem3);
+
+                jMenuBar1.add(jMenu3);
 
                 setJMenuBar(jMenuBar1);
 
@@ -826,9 +835,11 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
