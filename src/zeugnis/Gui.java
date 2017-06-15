@@ -141,14 +141,23 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Version: ");
         jLabel10.setText(version);
+        if(version==null){
+            jLabel10.setText("1.0");
+        }
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Autor:");
         jLabel11.setText(vendor);
+        if(vendor==null){
+            jLabel11.setText("Team 0");
+        }
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Titel:");
         jLabel12.setText(title);
+        if(title==null){
+            jLabel12.setText("Zeugnisverwaltung Grundschule Brelingen");
+        }
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
