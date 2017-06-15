@@ -333,6 +333,9 @@ public class ZeugnisPDF  {
     private PdfPCell kreisViertel(int fraction,float pad, int hAlign,int vAlign,int border) throws IOException, BadElementException{
         PdfPCell cell;
 
+        URL url0 = this.getClass().getResource("pics/strich0.png");
+        Image img0 = Image.getInstance(url0);
+        img0.scalePercent(8f);
         URL url1 = this.getClass().getResource("pics/viertel0.png");
         Image img1 = Image.getInstance(url1);
         img1.scalePercent(8f);
@@ -347,6 +350,8 @@ public class ZeugnisPDF  {
         img4.scalePercent(8f);
 
         switch (fraction){
+            case 0: cell = new PdfPCell(img0);
+            break;
             case 1: cell = new PdfPCell(img1);
             break;
             case 2: cell = new PdfPCell(img2);
@@ -896,13 +901,15 @@ public class ZeugnisPDF  {
         cell2Bewertungsstufen1.setBorder(Rectangle.NO_BORDER);
         table2a.addCell(cell2Bewertungsstufen1);
 
-        PdfPCell cell2Sym0img;
-        cell2Sym0img = new PdfPCell(new Phrase("--",SMALL_FONT));
-        //cell2Bewertungsstufen1.setColspan(1);
-        cell2Sym0img.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell2Sym0img.setHorizontalAlignment(Element.ALIGN_RIGHT);
-        cell2Sym0img.setBorder(Rectangle.NO_BORDER);
-        table2a.addCell(cell2Sym0img);
+//        PdfPCell cell2Sym0img;
+//        cell2Sym0img = new PdfPCell(new Phrase("--",SMALL_FONT));
+//        //cell2Bewertungsstufen1.setColspan(1);
+//        cell2Sym0img.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//        cell2Sym0img.setHorizontalAlignment(Element.ALIGN_RIGHT);
+//        cell2Sym0img.setBorder(Rectangle.NO_BORDER);
+//        table2a.addCell(cell2Sym0img);
+
+        table2a.addCell(kreisViertel(0,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.NO_BORDER));
 
         PdfPCell cell2Sym0;
         cell2Sym0 = new PdfPCell(new Phrase(Sym0,SMALL_FONT));
@@ -1021,7 +1028,8 @@ public class ZeugnisPDF  {
         //cell2ATitle.setBorder(Rectangle.NO_BORDER);
 
         PdfPCell cell3Leer;
-        cell3Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+//        cell3Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+        cell3Leer = new PdfPCell(kreisViertel(0,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.BOX));
         //cell2ATitle.setColspan(4);
         cell3Leer.setVerticalAlignment(Element.ALIGN_MIDDLE);
         //cell2ATitle.setFixedHeight(30f);
@@ -1053,7 +1061,8 @@ public class ZeugnisPDF  {
         cell3sz.setPadding(pad);
         cell3sz.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-        cell3Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+//        cell3Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+        cell3Leer = new PdfPCell(kreisViertel(0,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.BOX));
         cell3Leer.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell3Leer.setPadding(pad);
         cell3Leer.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -1081,7 +1090,8 @@ public class ZeugnisPDF  {
         cell3sz.setPadding(pad);
         cell3sz.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-        cell3Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+//        cell3Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+        cell3Leer = new PdfPCell(kreisViertel(0,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.BOX));
         cell3Leer.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell3Leer.setPadding(pad);
         cell3Leer.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -1127,7 +1137,8 @@ public class ZeugnisPDF  {
         //cell2ATitle.setBorder(Rectangle.NO_BORDER);
 
         PdfPCell cell4Leer;
-        cell4Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+//        cell4Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+        cell4Leer = new PdfPCell(kreisViertel(0,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.BOX));
         //cell2ATitle.setColspan(4);
         cell4Leer.setVerticalAlignment(Element.ALIGN_MIDDLE);
         //cell2ATitle.setFixedHeight(30f);
@@ -1162,7 +1173,8 @@ public class ZeugnisPDF  {
         cell4gm.setHorizontalAlignment(Element.ALIGN_LEFT);
         //cell2ATitle.setBorder(Rectangle.NO_BORDER);
 
-        cell4Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+//        cell4Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+        cell4Leer = new PdfPCell(kreisViertel(0,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.BOX));
         cell4Leer.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell4Leer.setPadding(pad);
         cell4Leer.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -1186,7 +1198,8 @@ public class ZeugnisPDF  {
         cell4rf.setPadding(pad);
         cell4rf.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-        cell4Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+//        cell4Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+        cell4Leer = new PdfPCell(kreisViertel(0,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.BOX));
         cell4Leer.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell4Leer.setPadding(pad);
         cell4Leer.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -1231,7 +1244,8 @@ public class ZeugnisPDF  {
         cell5su.setHorizontalAlignment(Element.ALIGN_LEFT);
 
         PdfPCell cell5Leer;
-        cell5Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+//        cell5Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+        cell5Leer = new PdfPCell(kreisViertel(0,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.BOX));
         cell5Leer.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell5Leer.setPadding(pad);
         cell5Leer.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -1265,7 +1279,8 @@ public class ZeugnisPDF  {
         cell5su.setPadding(pad);
         cell5su.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-        cell5Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+//        cell5Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+        cell5Leer = new PdfPCell(kreisViertel(0,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.BOX));
         cell5Leer.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell5Leer.setPadding(pad);
         cell5Leer.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -1298,7 +1313,8 @@ public class ZeugnisPDF  {
         cell5su.setPadding(pad);
         cell5su.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-        cell5Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+//        cell5Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+        cell5Leer = new PdfPCell(kreisViertel(0,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.BOX));
         cell5Leer.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell5Leer.setPadding(pad);
         cell5Leer.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -1398,7 +1414,8 @@ public class ZeugnisPDF  {
             cell6su.setHorizontalAlignment(Element.ALIGN_LEFT);
 
             PdfPCell cell6Leer;
-            cell6Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+//            cell6Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+            cell6Leer = new PdfPCell(kreisViertel(0,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.BOX));
             cell6Leer.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell6Leer.setPadding(pad);
             cell6Leer.setHorizontalAlignment(Element.ALIGN_CENTER);

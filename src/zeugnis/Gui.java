@@ -859,7 +859,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
         imageComboBox.setModel(new javax.swing.DefaultComboBoxModel(new Object[]{
             "",
-            getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/leer0.png"))).getImage(), 20, 20, "4"),
+            getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/strich0.png"))).getImage(), 20, 20, "4"),
             getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/viertel0.png"))).getImage(), 20, 20, "5"),
             getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/halb0.png"))).getImage(), 20, 20, "6"),
             getScaledImage((new ImageIcon(getClass().getResource("/zeugnis/pics/dreiviertel0.png"))).getImage(), 20, 20, "7"),
