@@ -64,6 +64,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private Hashtable<Integer, Integer> idKriterien = null;
     private JComboBox stringBox = null;
     private JComboBox imageBox = null;
+    String version = this.getClass().getPackage().getImplementationVersion();
 
     /**
      * Creates new form Gui

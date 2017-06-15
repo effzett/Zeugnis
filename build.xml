@@ -77,6 +77,8 @@
              <property name="store.jar.name" value="MyJarName"/>
         -->
         <property name="store.jar.name" value="Zeugnis"/>
+        <property name="project.name" value="Zeugnisverwaltung Grundschule Brelingen" />
+        <property name="version.num" value="1.0.0" />
 
 
         <!-- don't edit below this line -->
@@ -95,6 +97,8 @@
             
             <manifest>
                 <attribute name="Main-Class" value="${main.class}"/>
+                <attribute name="Implementation-Title" value="${project.name}" />
+                <attribute name="Implementation-Version" value="${version.num}" />
             </manifest>
         </jar>
 

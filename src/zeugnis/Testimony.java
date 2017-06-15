@@ -59,6 +59,7 @@ public class Testimony {
             //FillDatabase fd = new FillDatabase(connector);
             //fd._insertClass();
 
+
         } catch (IOException ex) {
             logger.severe(ex.getLocalizedMessage());
         } catch (Exception ex) {
