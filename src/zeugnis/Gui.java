@@ -128,7 +128,6 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Zeugnisverwaltung");
         setIconImage((new ImageIcon(getClass().getResource("/zeugnis/pics/testimony_icon.png"))).getImage());
-        setPreferredSize(new java.awt.Dimension(1000, 490));
 
         jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
