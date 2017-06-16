@@ -689,11 +689,36 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     }//GEN-LAST:event_addSchoolYear
 
     private void changeTab(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_changeTab
+
         jComboBox2.setEnabled((jTabbedPane1.getSelectedIndex() != 0));
 
         if (jTabbedPane1.getSelectedIndex() == 1) {
+            Integer idSchueler;
+            Integer idZeugnis;
             fillPupleComboBox();
             fillTestimonyTable((String) jComboBox5.getItemAt(0));
+            try {
+                fillTestimonyNote((String) jComboBox5.getItemAt(0));
+            } catch (SQLException ex) {
+                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            if (jComboBox4.getSelectedItem() != null) {
+                idSchueler = Integer.parseInt(((String[]) jComboBox4.getSelectedItem())[1]);
+                idZeugnis = connector._getIdZeugnis(idSchueler, hYear);
+            } else {
+                return;
+            }
+
+            try {
+                if (connector.isZeugnisComplete(idZeugnis)) {
+                    jCheckBox1.setSelected(true);
+                } else {
+                    jCheckBox1.setSelected(false);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }//GEN-LAST:event_changeTab
@@ -844,6 +869,17 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 }
             }
         }
+        try {
+            if(connector.isZeugnisComplete(idZeugnis)){
+                jCheckBox1.setSelected(true);
+            }
+            else{
+                jCheckBox1.setSelected(false);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jComboBox6ActionPerformed
 
     public void fillTabFromTestimony() {
@@ -919,6 +955,12 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         }
 
         fillTestimonyTable((String) jComboBox5.getItemAt(0));
+        try {
+            fillTestimonyNote(selectedSubject);
+            logger.fine("--------->>>>>>>>"+selectedSubject);
+        } catch (SQLException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void fillTestimonyNote(String subject) throws SQLException{
@@ -941,6 +983,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             note = connector.getNoteSozial(idZeugnis);
             jComboBox6.setVisible(true);
         }
+        logger.fine("Hier müsste es doch gesetzt werden..."+note.toString());
         jComboBox6.setSelectedIndex(note);
         if(!subject.equals("Arbeitsverhalten") && !subject.equals("Sozialverhalten")){
             jComboBox6.setVisible(false);

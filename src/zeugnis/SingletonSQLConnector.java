@@ -1799,7 +1799,9 @@ public class SingletonSQLConnector {
         }
         
         // Hier noch weitere Tests auf Vollständigkeit in der Zeugnistabelle...
-        // ...
+        if(this.getNoteArbeit(idZeugnis)==0 || this.getNoteSozial(idZeugnis)==0){
+            retVal=false;
+        }
         return retVal;
     }
     
