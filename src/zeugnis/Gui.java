@@ -342,10 +342,20 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             jLabel7.setText("Fehltage");
 
             jSpinner1.setModel(new javax.swing.SpinnerNumberModel());
+            jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
+                public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                    jSpinner1StateChanged(evt);
+                }
+            });
 
-            jLabel8.setText("entschuldigte Fehltage");
+            jLabel8.setText("unentschuldigte Fehltage");
 
             jSpinner2.setModel(new javax.swing.SpinnerNumberModel());
+            jSpinner2.addChangeListener(new javax.swing.event.ChangeListener() {
+                public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                    jSpinner2StateChanged(evt);
+                }
+            });
 
             tableModel = new javax.swing.table.DefaultTableModel(
                 new String [] {
@@ -743,8 +753,50 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
     }//GEN-LAST:event_jTextArea1FocusLost
 
-    public void fillTabFromTestimony() {
+    private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
+        // TODO add your handling code here:
+        // Provisorium zum Testen...
+        Integer idSchueler;
+        Integer idZeugnis;
+        
+        if (jComboBox4.getSelectedItem() != null) {
+            idSchueler = Integer.parseInt( ( (String[]) jComboBox4.getSelectedItem())[1]);
+            idZeugnis = connector._getIdZeugnis(idSchueler, hYear);
+        }
+        else{
+            return;
+        }
+        String[] values = {idZeugnis.toString(),null,null,null,String.valueOf((Integer)jSpinner1.getValue()),null,null,null,null,null};
+        try {
+            connector.updateZeugnis(values);
+        } catch (SQLException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }//GEN-LAST:event_jSpinner1StateChanged
 
+    private void jSpinner2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner2StateChanged
+        // TODO add your handling code here:
+        // Provisorium zum Testen...
+        Integer idSchueler;
+        Integer idZeugnis;
+        
+        if (jComboBox4.getSelectedItem() != null) {
+            idSchueler = Integer.parseInt( ( (String[]) jComboBox4.getSelectedItem())[1]);
+            idZeugnis = connector._getIdZeugnis(idSchueler, hYear);
+        }
+        else{
+            return;
+        }
+        String[] values = {idZeugnis.toString(),null,null,null,null,String.valueOf((Integer)jSpinner2.getValue()),null,null,null,null};
+        try {
+            connector.updateZeugnis(values);
+        } catch (SQLException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jSpinner2StateChanged
+
+    public void fillTabFromTestimony() {
         if (jComboBox4.getSelectedItem() != null) {
             String idSchueler = ((String[]) jComboBox4.getSelectedItem())[1];
 
@@ -768,7 +820,6 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             } catch (SQLException ex) {
                 logger.severe(ex.getLocalizedMessage());
             }
-
         }
 
     }
