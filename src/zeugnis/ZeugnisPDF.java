@@ -59,6 +59,8 @@ public class ZeugnisPDF  {
  
     private final static Logger logger = Logger.getLogger(ZeugnisPDF.class.getName());
     
+    private int symbol1=2;   // das Symbol 0,1,2  für die x in den Tabellen A+S
+    private int symbol2=2;   // das Symbol 0,1,2  für die x in den Tabellen Rest
     private File file;
     private int id;
     private int zid;
@@ -159,22 +161,6 @@ public class ZeugnisPDF  {
             sVerhalten.add(ti);
         }
         
-//        // Arbeitsverhalten 
-//        for(Integer id : connector.getAVerhaltenID()){  // holt Reihenfolge
-//            TableItem ti = new TableItem();
-//            ti.setText(connector.getKriteriumText(id)); // holt Text
-//            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
-//            aVerhalten.add(ti);
-//        }
-        
-//        // Sozialverhalten 
-//        for(Integer id : connector.getSVerhaltenID()){  // holt Reihenfolge
-//            TableItem ti = new TableItem();
-//            ti.setText(connector.getKriteriumText(id)); // holt Text
-//            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
-//            sVerhalten.add(ti);
-//        }
-
         noteArbeit = connector.getNoteArbeit(zid);
         noteSozial = connector.getNoteSozial(zid);
         
@@ -330,6 +316,37 @@ public class ZeugnisPDF  {
         return cell;
     }
     
+    private PdfPCell checkCross(int symbol,float pad, int hAlign,int vAlign,int border) throws IOException, BadElementException{
+        PdfPCell cell;
+
+        URL cross1 = this.getClass().getResource("pics/cross0.png");
+        Image imgCross = Image.getInstance(cross1);
+        imgCross.scalePercent(4f);
+        URL cross2 = this.getClass().getResource("pics/redCross0.png");
+        Image imgCross2 = Image.getInstance(cross2);
+        imgCross2.scalePercent(4f);
+        URL check1 = this.getClass().getResource("pics/greenCheck0.png");
+        Image imgCheck = Image.getInstance(check1);
+        imgCheck.scalePercent(4f);
+    
+        switch (symbol){
+            case 0: cell = new PdfPCell(imgCheck);
+            break;
+            case 1: cell = new PdfPCell(imgCross);
+            break;
+            case 2: cell = new PdfPCell(imgCross2);
+            break;
+            default: cell= new PdfPCell();
+            break;
+        }
+        cell.setPadding(pad);
+        cell.setHorizontalAlignment(hAlign);
+        cell.setVerticalAlignment(vAlign);
+        cell.setBorder(border);
+        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+        return cell;
+    }
+    
     private PdfPCell kreisViertel(int fraction,float pad, int hAlign,int vAlign,int border) throws IOException, BadElementException{
         PdfPCell cell;
 
@@ -409,7 +426,7 @@ public class ZeugnisPDF  {
         return retCell;
     }
     
-    private PdfPTable asVerhalten(PdfPTable table,ArrayList verhalten,float pad){
+    private PdfPTable asVerhalten(PdfPTable table,ArrayList verhalten,float pad) throws IOException, BadElementException{
         for(Integer i=0; i<verhalten.size(); i++){
             PdfPCell cell2;
             cell2 = new PdfPCell(new Phrase( ((TableItem)verhalten.get(i)).getText() ,TINY_FONT));
@@ -420,9 +437,10 @@ public class ZeugnisPDF  {
             cell2.setHorizontalAlignment(Element.ALIGN_LEFT);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
             
-            
+            PdfPCell selection = new PdfPCell(checkCross(symbol1,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.BOX));
             PdfPCell cell2bewertungX;
-            cell2bewertungX = new PdfPCell(new Phrase("x" ,TINY_FONT));
+//            cell2bewertungX = new PdfPCell(new Phrase("x" ,TINY_FONT));
+            cell2bewertungX = selection;
             //cell2ATitle.setColspan(4);
             cell2bewertungX.setVerticalAlignment(Element.ALIGN_MIDDLE);
             //cell2bewertungX.setMinimumHeight(15);
@@ -466,7 +484,7 @@ public class ZeugnisPDF  {
         return table;
     }
     
-    private PdfPTable lernbereiche(PdfPTable table,ArrayList lernbereich,float pad){
+    private PdfPTable lernbereiche(PdfPTable table,ArrayList lernbereich,float pad) throws IOException, BadElementException{
         for(Integer i=0; i<lernbereich.size(); i++){
             PdfPCell cell2;
             cell2 = new PdfPCell(new Phrase( ((TableItem)lernbereich.get(i)).getText() ,TINY_FONT));
@@ -475,7 +493,9 @@ public class ZeugnisPDF  {
             cell2.setHorizontalAlignment(Element.ALIGN_LEFT);
             
             PdfPCell cell2bewertungX;
-            cell2bewertungX = new PdfPCell(new Phrase("x" ,TINY_FONT));
+            PdfPCell selection = new PdfPCell(checkCross(symbol2,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.BOX));
+//            cell2bewertungX = new PdfPCell(new Phrase("x" ,TINY_FONT));
+            cell2bewertungX = selection;
             cell2bewertungX.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell2bewertungX.setPadding(pad);
             cell2bewertungX.setHorizontalAlignment(Element.ALIGN_CENTER);
