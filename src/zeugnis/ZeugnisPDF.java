@@ -76,13 +76,17 @@ public class ZeugnisPDF  {
     private int fehltageohne;
     private String lernentwicklung;
     private String currDate;
-    private String[] asBewertungen = {  "verdient besondere Anerkennung",
-                                        "entspricht den Erwartungen in vollem Umfang",
-                                        "entspricht den Erwartungen",
-                                        "entspricht den Erwartungen mit Einschränkungen",
-                                        "entspricht nicht den Erwartungen"}; 
     private int noteArbeit;
     private int noteSozial;
+    private String noteArbeitString;
+    private String noteSozialString;
+    
+    private String[] asBewertungen = {  "entspricht nicht den Erwartungen",
+                                        "entspricht den Erwartungen mit Einschränkungen",
+                                        "entspricht den Erwartungen",
+                                        "entspricht den Erwartungen in vollem Umfang",
+                                        "verdient besondere Anerkennung"
+                                        }; 
         
     Hashtable<Integer,Integer> zeugnis;
     
@@ -145,7 +149,10 @@ public class ZeugnisPDF  {
         fehltage  = connector.getFehltage(zid);
         fehltageohne= connector.getFehltageOhne(zid);
         lernentwicklung = connector.getLernentwicklung(zid) + "\n\n" + connector.getBemerkung(zid);
-        
+        noteArbeit = connector.getNoteArbeit(zid);
+        noteSozial = connector.getNoteSozial(zid);
+        noteArbeitString = connector.asBewertungen(noteArbeit);
+        noteSozialString = connector.asBewertungen(noteSozial);
         // liefert alle im zeugnis abgelegten Kriterien mit Bewertungen
         zeugnis = connector.getID_KriterienZeugnis(zid);
         
@@ -176,8 +183,6 @@ public class ZeugnisPDF  {
             sVerhalten.add(ti);
         }
         
-        noteArbeit = connector.getNoteArbeit(zid);
-        noteSozial = connector.getNoteSozial(zid);
         
         for(Integer id : connector.getID_KriterienFromLernbereich("Sprechen und Zuhören")){  // holt Reihenfolge
             logger.fine("ID_KRITERIUM= "+Integer.toString(id));
@@ -850,10 +855,10 @@ public class ZeugnisPDF  {
                 
         PdfPCell cell2BewertungA;
         if(vorname.endsWith("s") || vorname.endsWith("x") || vorname.endsWith("z")){
-            cell2BewertungA = new PdfPCell(new Phrase(vorname + "' Verhalten " + asBewertungen[noteArbeit],NORMAL_FONT));            
+            cell2BewertungA = new PdfPCell(new Phrase(vorname + "' Arbeitsverhalten " + noteArbeitString,NORMAL_FONT));            
         }
         else{
-            cell2BewertungA = new PdfPCell(new Phrase(vorname + "s Verhalten " + asBewertungen[noteArbeit],NORMAL_FONT));                        
+            cell2BewertungA = new PdfPCell(new Phrase(vorname + "s Arbeitsverhalten " + noteArbeitString,NORMAL_FONT));                        
         }
         cell2BewertungA.setColspan(4);
         cell2BewertungA.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -876,10 +881,10 @@ public class ZeugnisPDF  {
                 
    PdfPCell cell2BewertungS;
         if(vorname.endsWith("s") || vorname.endsWith("x") || vorname.endsWith("z")){
-            cell2BewertungS = new PdfPCell(new Phrase(vorname + "' Verhalten " + asBewertungen[noteSozial],NORMAL_FONT));            
+            cell2BewertungS = new PdfPCell(new Phrase(vorname + "' Sozialverhalten " + noteSozialString,NORMAL_FONT));            
         }
         else{
-            cell2BewertungS = new PdfPCell(new Phrase(vorname + "s Verhalten " + asBewertungen[noteSozial],NORMAL_FONT));                        
+            cell2BewertungS = new PdfPCell(new Phrase(vorname + "s Sozialverhalten " + noteSozialString,NORMAL_FONT));                        
         }
         cell2BewertungS.setColspan(4);
         cell2BewertungS.setVerticalAlignment(Element.ALIGN_MIDDLE);
