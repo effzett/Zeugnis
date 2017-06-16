@@ -1139,6 +1139,49 @@ public class SingletonSQLConnector {
     }
 
     /**
+     * *
+     * Liefert die Lernentwicklung zurück
+     *
+     * @param zid
+     * @return
+     * @throws SQLException
+     */
+    public String getLernentwicklung(Integer zid) throws SQLException {
+        String retVal = "";
+        try (Statement statement = con.createStatement()) {
+            String sql = "select ENTWICKLUNG from ZEUGNIS where ID_ZEUGNIS=" + zid;
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            while (set.next()) {
+                retVal = set.getString(1);
+            }
+        }
+        return retVal;
+    }
+
+    /**
+     * *
+     * Liefert die Bemerkung zurück
+     *
+     * @param zid
+     * @return
+     * @throws SQLException
+     */
+    public String getBemerkung(Integer zid) throws SQLException {
+        String retVal = "";
+        try (Statement statement = con.createStatement()) {
+            String sql = "select BEMERKUNG from ZEUGNIS where ID_ZEUGNIS=" + zid;
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            while (set.next()) {
+                retVal = set.getString(1);
+            }
+        }
+        return retVal;
+    }
+
+    
+    /**
      * liefert eine Liste der ID_KRITERIUM des Arbeitsverhaltens für aktuelles
      * Schuljahr
      *

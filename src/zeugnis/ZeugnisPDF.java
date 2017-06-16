@@ -74,6 +74,7 @@ public class ZeugnisPDF  {
     private String gebort;
     private int fehltage;
     private int fehltageohne;
+    private String lernentwicklung;
     private String currDate;
     private String[] asBewertungen = {  "verdient besondere Anerkennung",
                                         "entspricht den Erwartungen in vollem Umfang",
@@ -143,6 +144,7 @@ public class ZeugnisPDF  {
         klasse    = Gui.getSClass();
         fehltage  = connector.getFehltage(zid);
         fehltageohne= connector.getFehltageOhne(zid);
+        lernentwicklung = connector.getLernentwicklung(zid) + "\n\n" + connector.getBemerkung(zid);
         
         // liefert alle im zeugnis abgelegten Kriterien mit Bewertungen
         zeugnis = connector.getID_KriterienZeugnis(zid);
@@ -603,7 +605,6 @@ public class ZeugnisPDF  {
         
 
         String Tage      = "Versäumte Unterrichtstage im 1. und 2. Halbjahr: "+ String.valueOf(fehltage) +  " davon unentschuldigt: " + String.valueOf(fehltageohne);
-        String Lernentwicklung = "Lernentwicklung (kurz!)\nInteressen\nLernstand Deutsch\nLernstand Mathe\nVeränderungsprozesse\nKnackpunkte";
         String Unterschriften1 = "___________________\nUnterschrift\nSchulleiter/in";
         String Unterschriften2 = "___________________\nUnterschrift\nKlassenlehrer/in";
         String Datum = "Datum: " + currDate;
@@ -744,7 +745,7 @@ public class ZeugnisPDF  {
 
         //Lernentwicklung
         PdfPCell cell1Lernentwicklung;
-        cell1Lernentwicklung = new PdfPCell(new Phrase(Lernentwicklung,NORMAL_FONT));
+        cell1Lernentwicklung = new PdfPCell(new Phrase(lernentwicklung,NORMAL_FONT));
         cell1Lernentwicklung.setColspan(3);
         cell1Lernentwicklung.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell1Lernentwicklung.setFixedHeight(300f);
