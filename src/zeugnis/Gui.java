@@ -322,12 +322,22 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
             jTextArea1.setColumns(20);
             jTextArea1.setRows(5);
+            jTextArea1.addFocusListener(new java.awt.event.FocusAdapter() {
+                public void focusLost(java.awt.event.FocusEvent evt) {
+                    jTextArea1FocusLost(evt);
+                }
+            });
             jScrollPane2.setViewportView(jTextArea1);
 
             jLabel6.setText("Bemerkungen");
 
             jTextField1.setColumns(20);
             jTextField1.setText("Wird versetzt nach Klasse...");
+            jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+                public void focusLost(java.awt.event.FocusEvent evt) {
+                    jTextField1FocusLost(evt);
+                }
+            });
 
             jLabel7.setText("Fehltage");
 
@@ -688,6 +698,50 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         jDialog1.setLocationRelativeTo(this);
         jDialog1.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+        // TODO add your handling code here:
+        // Provisorium zum Testen...
+        Integer idSchueler;
+        Integer idZeugnis;
+        
+        if (jComboBox4.getSelectedItem() != null) {
+            idSchueler = Integer.parseInt( ( (String[]) jComboBox4.getSelectedItem())[1]);
+            idZeugnis = connector._getIdZeugnis(idSchueler, hYear);
+        }
+        else{
+            return;
+        }
+        String[] values = {idZeugnis.toString(),null,null,null,null,null,null,jTextField1.getText(),null,null};
+        try {
+            connector.updateZeugnis(values);
+        } catch (SQLException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jTextField1FocusLost
+
+    private void jTextArea1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextArea1FocusLost
+        // TODO add your handling code here:
+        // Provisorium zum Testen...
+        Integer idSchueler;
+        Integer idZeugnis;
+        
+        if (jComboBox4.getSelectedItem() != null) {
+            idSchueler = Integer.parseInt( ( (String[]) jComboBox4.getSelectedItem())[1]);
+            idZeugnis = connector._getIdZeugnis(idSchueler, hYear);
+        }
+        else{
+            return;
+        }
+        String[] values = {idZeugnis.toString(),null,null,null,null,null,jTextArea1.getText(),null,null,null};
+        try {
+            connector.updateZeugnis(values);
+        } catch (SQLException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jTextArea1FocusLost
 
     public void fillTabFromTestimony() {
 
@@ -1075,6 +1129,9 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 try {
                     if(connector.isZeugnisComplete(idKriteriumliste)){
                         jCheckBox1.setSelected(true);
+                    }
+                    else{
+                        jCheckBox1.setSelected(false);
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
