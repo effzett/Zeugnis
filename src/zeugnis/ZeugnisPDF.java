@@ -149,6 +149,9 @@ public class ZeugnisPDF  {
         // liefert alle im zeugnis abgelegten Kriterien mit Bewertungen
         zeugnis = connector.getID_KriterienZeugnis(zid);
         
+        if(fehltageohne>fehltage){
+            fehltageohne=fehltage;
+        }
         String fileName = name+vorname+gebdatum+".pdf"; 
         String dirName = String.valueOf(Gui.getSYear())+String.valueOf(Gui.getHYear())+Gui.getSClass(); 
         File dir = new File("./" + dirName); 
