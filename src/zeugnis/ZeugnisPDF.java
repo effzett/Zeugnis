@@ -56,11 +56,12 @@ public class ZeugnisPDF  {
     private static final Font NORMAL_BOLD_FONT=new Font(Font.FontFamily.HELVETICA,12,Font.BOLD);
     private static final Font SMALL_BOLD_FONT=new Font(Font.FontFamily.HELVETICA,10,Font.BOLD);
     private static final Font NORMAL_FONT_RED=new Font(Font.FontFamily.HELVETICA,12,Font.NORMAL,BaseColor.RED);
- 
+    private static Config config = null;
+    
     private final static Logger logger = Logger.getLogger(ZeugnisPDF.class.getName());
     
-    private int symbol1=2;   // das Symbol 0,1,2  für die x in den Tabellen A+S
-    private int symbol2=2;   // das Symbol 0,1,2  für die x in den Tabellen Rest
+    private int symbol1;   // das Symbol 0,1,2  für die x in den Tabellen A+S
+    private int symbol2;   // das Symbol 0,1,2  für die x in den Tabellen Rest
     private File file;
     private int id;
     private int zid;
@@ -112,7 +113,16 @@ public class ZeugnisPDF  {
     public ZeugnisPDF(int idSCHUELER) throws IOException, DocumentException, SQLException, ParseException{
         
         SingletonSQLConnector connector = SingletonSQLConnector.getInstance();
+        config = Config.getInstance();
 
+        try{
+            symbol1 = Integer.parseInt(config.getProperty("symbol1"));
+            symbol2 = Integer.parseInt(config.getProperty("symbol2"));
+        }
+        catch(NumberFormatException e){
+            symbol1=2;
+            symbol2=2;
+        }
         this.zeugnis = new Hashtable<Integer,Integer>();
 
         // Hier können schon alle Werte aus der Datenbank geholt werden...
