@@ -1728,4 +1728,35 @@ public class SingletonSQLConnector {
         }
         return retVal;
     }
+    
+    /***
+     * Ermittelt, ob in der Kriterienliste Bewertungen mit 0 existieren
+     * Nur Leere Kriteriumtextzeilen dürfen 0-Werte enthalten
+     * Damit kann eine Lämpchen gesteuert werden, das anzeigt, ob das Zeugnis
+     * komplett ausgefüllt wurde.
+     * @param idZeugnis
+     * @return 
+     */
+    public boolean isZeugnisComplete(Integer idZeugnis) throws SQLException{
+        boolean retVal=true;
+
+        try (Statement statement = con.createStatement()) {
+
+            String sql = "select KRITERIUMSLISTE.ID_KRITERIUM, KRITERIUM.KRITERIUMTEXT, KRITERIUMSLISTE.BEWERTUNG "+
+                    "from KRITERIUM,KRITERIUMSLISTE where "+
+                    "KRITERIUMSLISTE.ID_KRITERIUM=KRITERIUM.ID_KRITERIUM AND KRITERIUMSLISTE.ID_KRITERIUMSLISTE=" + idZeugnis;
+            logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            while (set.next()) {
+                if((!set.getString(2).isEmpty()) && (set.getInt(3)==0)){ // zählen nur Einträge wo Kriteriumtext nicht leer
+                    retVal=false;
+                    break;
+                }
+            }
+        }
+        
+        // Hier noch weitere Tests auf Vollständigkeit in der Zeugnistabelle...
+        // ...
+        return retVal;
+    }
 }
