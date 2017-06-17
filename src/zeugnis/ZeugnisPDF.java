@@ -10,7 +10,6 @@ import java.io.IOException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.Font;
@@ -20,27 +19,18 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
-import static com.itextpdf.text.pdf.PdfName.URL;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -311,31 +301,7 @@ public class ZeugnisPDF  {
         cell.setBorder(Rectangle.NO_BORDER);
         return cell;
     }
-    
-    /**
-     * soll später die generische Funktion zur Zellerzeugung sein...
-     * @param text
-     * @param hAlign
-     * @param vAlign
-     * @param colSpan
-     * @param font
-     * @param border
-     * @param pad
-     * @param height
-     * @return cell
-     */
-    private PdfPCell createCell(String text, int hAlign, int vAlign, int colSpan, Font font,int border,float pad,float height){
-        PdfPCell cell;
-        cell = new PdfPCell(new Phrase(text,font));
-        cell.setColspan(colSpan);
-        cell.setHorizontalAlignment(hAlign);
-        cell.setHorizontalAlignment(vAlign);
-        cell.setPadding(pad);
-        cell.setFixedHeight(height);
-        cell.setBorder(border);
-        return cell;
-    }
-    
+        
     private PdfPCell checkCross(int symbol,float pad, int hAlign,int vAlign,int border) throws IOException, BadElementException{
         PdfPCell cell;
 
@@ -575,11 +541,11 @@ public class ZeugnisPDF  {
         return table;
     }
 
-    
-    private void makeCrossOnRightPosition(){
-        
-    }
-    
+
+    /***
+     * Zeigt die generierte PDF Datei im Standard PDF-Viewer an
+     * @throws IOException 
+     */
     public void display() throws IOException {
         Desktop desktop = Desktop.getDesktop();
         if (desktop != null && desktop.isSupported(Desktop.Action.OPEN)) {
@@ -597,10 +563,8 @@ public class ZeugnisPDF  {
     */
     public void CreatePDF() throws IOException, DocumentException, SQLException{
         float pad= 6.0f;
-
-        // wird später alles aus der DB geholt
         
-        // Einige String für die Ausgabe...
+        // Einige Strings für die Ausgabe...
         String Schuljahr = "Schuljahr " + Integer.toString(schuljahr) + "/" + Integer.toString(schuljahr+1);
         String Halbjahr;
         if(halbjahr==1){
@@ -615,20 +579,20 @@ public class ZeugnisPDF  {
         String Tage      = "Versäumte Unterrichtstage im 1. und 2. Halbjahr: "+ String.valueOf(fehltage) +  " davon unentschuldigt: " + String.valueOf(fehltageohne);
         String Unterschriften1 = "___________________\nUnterschrift\nSchulleiter/in";
         String Unterschriften2 = "___________________\nUnterschrift\nKlassenlehrer/in";
-        String Datum = "Datum: " + currDate;
         String Unterschriften3 = "___________________\nUnterschrift\nErziehungsberechtigte/r";
+        String Datum = "Datum: " + currDate;
         
 
-        String AundS = "Arbeits- und Sozialverhalten";
-        String ATitle = "Arbeitsverhalten\n\n" + vorname + "...";
-        String STitle = "Sozialverhalten\n\n"  + vorname + "...";
+        String AundS        = "Arbeits- und Sozialverhalten";
+        String ATitle       = "Arbeitsverhalten\n\n" + vorname + "...";
+        String STitle       = "Sozialverhalten\n\n"  + vorname + "...";
         String Selten       = "selten";
         String Wechselnd    = "wechselnd";
         String Ueberwiegend = "überwiegend";
 
-        String Erklaerungen = "Erklärungen";
-        String BewertungsstufenAS = "Bewertungsstufen für das Arbeits- und Sozialverhalten:";
-        String Symbole = "Symbolerläuterungen für die Unterrichtsfächer:";
+        String Erklaerungen         = "Erklärungen";
+        String BewertungsstufenAS   = "Bewertungsstufen für das Arbeits- und Sozialverhalten:";
+        String Symbole              = "Symbolerläuterungen für die Unterrichtsfächer:";
         
         String Sym0 = "Das Thema wurde noch nicht bearbeitet";
         String Sym1 = "Die Kompetenz ist in Ansätzen vorhanden";
@@ -636,8 +600,8 @@ public class ZeugnisPDF  {
         String Sym3 = "Die Kompetenz ist weitgehend gesichert";
         String Sym4 = "Die Kompetenz ist gesichert";
         
-        String deutschS          = "Deutsch ";
-        String matheS            = "Mathematik ";
+        String deutschS         = "Deutsch ";
+        String matheS           = "Mathematik ";
         String sachunterrichtS  = "Sachunterricht ";
         String musikS           = "Musik ";
         String religionS        = "Religion ";
@@ -657,10 +621,9 @@ public class ZeugnisPDF  {
         String rf       = "Raum und Form\n\n" + vorname + "...";
         String su       = vorname + "...";
         
-        PdfWriter writer = null;
+        // Ausgabedokument erzeugen
         Document doc=new Document(PageSize.A4,50,50,20,30);
-//        writer=PdfWriter.getInstance(doc,new FileOutputStream(new File(String.valueOf(Gui.getSYear())+String.valueOf(Gui.getHYear())+Gui.getSClass()+name+vorname+".pdf")));
-        writer=PdfWriter.getInstance(doc,new FileOutputStream(file));
+        PdfWriter writer = PdfWriter.getInstance(doc,new FileOutputStream(file));
         doc.open();
 
         // Logo
@@ -683,7 +646,6 @@ public class ZeugnisPDF  {
         
         
         // Adresse
-        
         PdfPCell cell1Adresse;
         cell1Adresse = new PdfPCell(new Phrase("Grundschule Brelingen, Schulstraße 10, 30900 Wedemark",NORMAL_FONT));
         cell1Adresse.setColspan(3);

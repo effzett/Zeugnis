@@ -539,37 +539,37 @@ public class SingletonSQLConnector {
 
     }
 
-    /**
-     * Gibt den Inhalt einer Zeile der Tabelle Zeugnis als String[] zurueck. Die
-     * Reihenfolge im Array ist die gleich wie die der Spalten in der Tabelle.
-     *
-     * @param idZeugnis IDZeugnis
-     * @return die Daten der abgefragten Zeile oder NULL wenn kein Ergebnis
-     * gefunden wird.
-     * @throws java.sql.SQLException
-     */
-    public String[] fetchZeugnis(int idZeugnis) throws SQLException {
-        String[] result = new String[9];
-
-        try (Statement statement = con.createStatement()) {
-            String sql = "select * from ZEUGNIS where ID_ZEUGNIS = " + idZeugnis;
-            // logger.fine(sql);
-            ResultSet set = statement.executeQuery(sql);
-
-            if (set.next()) {
-
-                for (int i = 0; i < result.length; i++) {
-                    result[i] = set.getNString(i + 1);
-                }
-
-                return result;
-            } else {
-                return null;
-            }
-
-        }
-
-    }
+//    /**
+//     * Gibt den Inhalt einer Zeile der Tabelle Zeugnis als String[] zurueck. Die
+//     * Reihenfolge im Array ist die gleich wie die der Spalten in der Tabelle.
+//     *
+//     * @param idZeugnis IDZeugnis
+//     * @return die Daten der abgefragten Zeile oder NULL wenn kein Ergebnis
+//     * gefunden wird.
+//     * @throws java.sql.SQLException
+//     */
+//    public String[] fetchZeugnis(int idZeugnis) throws SQLException {
+//        String[] result = new String[9];
+//
+//        try (Statement statement = con.createStatement()) {
+//            String sql = "select * from ZEUGNIS where ID_ZEUGNIS = " + idZeugnis;
+//            // logger.fine(sql);
+//            ResultSet set = statement.executeQuery(sql);
+//
+//            if (set.next()) {
+//
+//                for (int i = 0; i < result.length; i++) {
+//                    result[i] = set.getNString(i + 1);
+//                }
+//
+//                return result;
+//            } else {
+//                return null;
+//            }
+//
+//        }
+//
+//    }
 
     /**
      * Gibt den Inhalt einer Zeile der Tabelle Zeugnis als String[] zurueck. Die
@@ -851,39 +851,39 @@ public class SingletonSQLConnector {
         return result.toArray(new ArrayList[0]);
     }
 
-    /**
-     * Gibt die Daten eines Schuelers zurueck. Oder null wenn kein Schueler
-     * unter der uebergebenen ID zu finden ist.
-     *
-     * @param idSchueler Die Schueler Id
-     * @return Die Daten des Schuelers oder null wenn der Schueler nicht
-     * gefunden wird.
-     * @throws SQLException
-     */
-    public String[] fetchPupil(int idSchueler) throws SQLException {
-        String[] result = new String[7];
-
-        try (Statement statement = con.createStatement()) {
-            String sql = "select * from SCHUELER where ID_SCHUELER = " + idSchueler;
-            logger.fine(sql);
-            ResultSet set = statement.executeQuery(sql);
-
-            if (set.next()) {
-                result[0] = set.getString(1);
-                result[1] = set.getString(2);
-                result[2] = set.getString(3);
-                result[3] = set.getString(4);
-                result[4] = set.getString(5);
-                result[5] = set.getString(6);
-                result[6] = set.getString(7);
-                return result;
-            } else {
-                return null;
-            }
-
-        }
-
-    }
+//    /**
+//     * Gibt die Daten eines Schuelers zurueck. Oder null wenn kein Schueler
+//     * unter der uebergebenen ID zu finden ist.
+//     *
+//     * @param idSchueler Die Schueler Id
+//     * @return Die Daten des Schuelers oder null wenn der Schueler nicht
+//     * gefunden wird.
+//     * @throws SQLException
+//     */
+//    public String[] fetchPupil(int idSchueler) throws SQLException {
+//        String[] result = new String[7];
+//
+//        try (Statement statement = con.createStatement()) {
+//            String sql = "select * from SCHUELER where ID_SCHUELER = " + idSchueler;
+//            logger.fine(sql);
+//            ResultSet set = statement.executeQuery(sql);
+//
+//            if (set.next()) {
+//                result[0] = set.getString(1);
+//                result[1] = set.getString(2);
+//                result[2] = set.getString(3);
+//                result[3] = set.getString(4);
+//                result[4] = set.getString(5);
+//                result[5] = set.getString(6);
+//                result[6] = set.getString(7);
+//                return result;
+//            } else {
+//                return null;
+//            }
+//
+//        }
+//
+//    }
 
     /**
      * Fuellt die übergebene JTable direkt mit Daten aus der Datenbank.
@@ -961,25 +961,25 @@ public class SingletonSQLConnector {
         return result.toArray(new String[0]);
     }
 
-    /**
-     * liefert das Schuljahr aus der Schuelertabelle für die idSchueler
-     *
-     * @param idSCHUELER
-     * @return
-     * @throws SQLException
-     */
-    public String getSchuelerSchuljahr(int idSCHUELER) throws SQLException {
-        String name = "";
-        try (Statement statement = con.createStatement()) {
-            String sql = "select SCHULJAHR from SCHUELER where ID_SCHUELER = " + idSCHUELER;
-            //logger.fine(sql);
-            ResultSet set = statement.executeQuery(sql);
-            while (set.next()) {
-                name = set.getString(1);
-            }
-        }
-        return name;
-    }
+//    /**
+//     * liefert das Schuljahr aus der Schuelertabelle für die idSchueler
+//     *
+//     * @param idSCHUELER
+//     * @return
+//     * @throws SQLException
+//     */
+//    public String getSchuelerSchuljahr(int idSCHUELER) throws SQLException {
+//        String name = "";
+//        try (Statement statement = con.createStatement()) {
+//            String sql = "select SCHULJAHR from SCHUELER where ID_SCHUELER = " + idSCHUELER;
+//            //logger.fine(sql);
+//            ResultSet set = statement.executeQuery(sql);
+//            while (set.next()) {
+//                name = set.getString(1);
+//            }
+//        }
+//        return name;
+//    }
 
     /**
      * liefert das Schuljahr aus der Zeugnistabelle für die idZeugnis
@@ -1181,51 +1181,51 @@ public class SingletonSQLConnector {
     }
 
     
-    /**
-     * liefert eine Liste der ID_KRITERIUM des Arbeitsverhaltens für aktuelles
-     * Schuljahr
-     *
-     * @return
-     * @throws SQLException
-     */
-    public ArrayList<Integer> getAVerhaltenID() throws SQLException {
-        ArrayList<Integer> result = new ArrayList<Integer>();
+//    /**
+//     * liefert eine Liste der ID_KRITERIUM des Arbeitsverhaltens für aktuelles
+//     * Schuljahr
+//     *
+//     * @return
+//     * @throws SQLException
+//     */
+//    public ArrayList<Integer> getAVerhaltenID() throws SQLException {
+//        ArrayList<Integer> result = new ArrayList<Integer>();
+//
+//        try (Statement statement = con.createStatement()) {
+//            String sql = "select ID_KRITERIUM from KRITERIUM,LERNBEREICH where LERNBEREICH.ID_LERNBEREICH=1 AND KLASSENSTUFE=0 AND LERNBEREICH.SCHULJAHR =" + Gui.getSYear()
+//                    + " AND LERNBEREICH.SCHULJAHR=KRITERIUM.SCHULJAHR AND LERNBEREICH.ID_LERNBEREICH=KRITERIUM.ID_LERNBEREICH";
+//            //logger.fine(sql);
+//            ResultSet set = statement.executeQuery(sql);
+//
+//            while (set.next()) {
+//                result.add(set.getInt(1));
+//            }
+//        }
+//        return result;
+//    }
 
-        try (Statement statement = con.createStatement()) {
-            String sql = "select ID_KRITERIUM from KRITERIUM,LERNBEREICH where LERNBEREICH.ID_LERNBEREICH=1 AND KLASSENSTUFE=0 AND LERNBEREICH.SCHULJAHR =" + Gui.getSYear()
-                    + " AND LERNBEREICH.SCHULJAHR=KRITERIUM.SCHULJAHR AND LERNBEREICH.ID_LERNBEREICH=KRITERIUM.ID_LERNBEREICH";
-            //logger.fine(sql);
-            ResultSet set = statement.executeQuery(sql);
-
-            while (set.next()) {
-                result.add(set.getInt(1));
-            }
-        }
-        return result;
-    }
-
-    /**
-     * liefert eine Liste der ID_KRITERIUM des Sozialverhaltens für aktuelles
-     * Schuljahr
-     *
-     * @return
-     * @throws SQLException
-     */
-    public ArrayList<Integer> getSVerhaltenID() throws SQLException {
-        ArrayList<Integer> result = new ArrayList<Integer>();
-
-        try (Statement statement = con.createStatement()) {
-            String sql = "select ID_KRITERIUM from KRITERIUM,LERNBEREICH where LERNBEREICH.ID_LERNBEREICH=2 AND KLASSENSTUFE=0 AND LERNBEREICH.SCHULJAHR =" + Gui.getSYear()
-                    + " AND LERNBEREICH.SCHULJAHR=KRITERIUM.SCHULJAHR AND LERNBEREICH.ID_LERNBEREICH=KRITERIUM.ID_LERNBEREICH";
-            //logger.fine(sql);
-            ResultSet set = statement.executeQuery(sql);
-
-            while (set.next()) {
-                result.add(set.getInt(1));
-            }
-        }
-        return result;
-    }
+//    /**
+//     * liefert eine Liste der ID_KRITERIUM des Sozialverhaltens für aktuelles
+//     * Schuljahr
+//     *
+//     * @return
+//     * @throws SQLException
+//     */
+//    public ArrayList<Integer> getSVerhaltenID() throws SQLException {
+//        ArrayList<Integer> result = new ArrayList<Integer>();
+//
+//        try (Statement statement = con.createStatement()) {
+//            String sql = "select ID_KRITERIUM from KRITERIUM,LERNBEREICH where LERNBEREICH.ID_LERNBEREICH=2 AND KLASSENSTUFE=0 AND LERNBEREICH.SCHULJAHR =" + Gui.getSYear()
+//                    + " AND LERNBEREICH.SCHULJAHR=KRITERIUM.SCHULJAHR AND LERNBEREICH.ID_LERNBEREICH=KRITERIUM.ID_LERNBEREICH";
+//            //logger.fine(sql);
+//            ResultSet set = statement.executeQuery(sql);
+//
+//            while (set.next()) {
+//                result.add(set.getInt(1));
+//            }
+//        }
+//        return result;
+//    }
 
     /**
      * liefert die Note (0-4) für das Arbeitsverhalten aus dem Zeugnis
@@ -1363,30 +1363,30 @@ public class SingletonSQLConnector {
         return resultHT;
     }
 
-    /**
-     * liefert eine Liste der Lernbereiche für das aktuelle Schuljahr und die
-     * aktuelle Klassenstufe
-     *
-     * @param schuljahr
-     * @param klassenstufe
-     * @return result
-     * @throws java.sql.SQLException
-     */
-    public ArrayList<String> getLernbereiche() throws SQLException {
-        ArrayList<String> result = new ArrayList<>();
-        try (Statement statement = con.createStatement()) {
-
-            String sql = "select LERNBEREICH from LERNBEREICH where KLASSENSTUFE="
-                    + Gui.getSClass().substring(0, 1) + " AND SCHULJAHR ="
-                    + Gui.getSYear();
-            ResultSet set = statement.executeQuery(sql);
-
-            while (set.next()) {
-                result.add(set.getString(1));
-            }
-        }
-        return result;
-    }
+//    /**
+//     * liefert eine Liste der Lernbereiche für das aktuelle Schuljahr und die
+//     * aktuelle Klassenstufe
+//     *
+//     * @param schuljahr
+//     * @param klassenstufe
+//     * @return result
+//     * @throws java.sql.SQLException
+//     */
+//    public ArrayList<String> getLernbereiche() throws SQLException {
+//        ArrayList<String> result = new ArrayList<>();
+//        try (Statement statement = con.createStatement()) {
+//
+//            String sql = "select LERNBEREICH from LERNBEREICH where KLASSENSTUFE="
+//                    + Gui.getSClass().substring(0, 1) + " AND SCHULJAHR ="
+//                    + Gui.getSYear();
+//            ResultSet set = statement.executeQuery(sql);
+//
+//            while (set.next()) {
+//                result.add(set.getString(1));
+//            }
+//        }
+//        return result;
+//    }
 
     /**
      * liefert eine Liste der Lernbereiche, für das aktuelle Schuljahr und die
@@ -1469,34 +1469,7 @@ public class SingletonSQLConnector {
 //    public Integer getIdZeugnisMemory(String name, String vorname, String date, String jahr, String halbjahr){
 //        return (name+vorname+date+jahr+halbjahr).hashCode();
 //    }
-    
-    /***
-     * aktualisiert ein Kriterium und die Bewertung in einem Zeugnis
-     * @param zid
-     * @param idKriterium
-     * @param bewertung
-     * @throws SQLException 
-     */
-    public void updateZeugniszeile(Integer zid, Integer idKriterium, Integer bewertung) throws SQLException{
-    
-        try (Statement statement = con.createStatement()) {
-            String sql = "update KRITERIUMSLISTE set ";
-            if (zid != null) {
-                sql += "ID_KRITERIUMSLISTE = " + zid + ", ";
-            }
-            if (idKriterium != null) {
-                sql += "ID_KRITERIUM = " + idKriterium + ", ";
-            }
-            if (bewertung != null) {
-                sql += "BEWERTUNG = " + bewertung + ", ";
-            }
-            sql = (sql.substring(0, sql.length() - 2)) + " where ID_KRITERIUMSLISTE = " + zid;
-            // logger.fine(sql);
-            statement.executeUpdate(sql);
-        }
         
-    }
-    
     /**
      * liefert ID_Kritierien bei Eingabe eines Lernbereichs zu aktuellem
      * Schuljahr und Klassenstufe
