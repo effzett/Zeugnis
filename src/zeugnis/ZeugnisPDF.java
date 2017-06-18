@@ -327,35 +327,33 @@ public class ZeugnisPDF  {
 
         URL url1 = this.getClass().getResource("pics/cross0.png");
         Image img1 = Image.getInstance(url1);
-        img1.scalePercent(4f);
+        img1.scalePercent(4.5f);
         URL url2 = this.getClass().getResource("pics/redCross0.png");
         Image img2 = Image.getInstance(url2);
-        img2.scalePercent(4f);
+        img2.scalePercent(4.5f);
         URL url3 = this.getClass().getResource("pics/greenCheck0.png");
         Image img3 = Image.getInstance(url3);
-        img3.scalePercent(4f);
+        img3.scalePercent(4.5f);
         URL url4 = this.getClass().getResource("pics/checkBig0.png");
         Image img4 = Image.getInstance(url4);
-        img4.scalePercent(4f);
+        img4.scalePercent(4.5f);
         URL url5 = this.getClass().getResource("pics/checkCircle0.png");
         Image img5 = Image.getInstance(url5);
-        img5.scalePercent(4f);
+        img5.scalePercent(4.5f);
         URL url6 = this.getClass().getResource("pics/checkDoubleCircle0.png");
         Image img6 = Image.getInstance(url6);
-        img6.scalePercent(4f);
+        img6.scalePercent(4.5f);
         URL url7 = this.getClass().getResource("pics/checkInvers0.png");
         Image img7 = Image.getInstance(url7);
-        img7.scalePercent(4f);
+        img7.scalePercent(4.5f);
         URL url8 = this.getClass().getResource("pics/checkman0.png");
         Image img8 = Image.getInstance(url8);
-        img8.scalePercent(4f);
+        img8.scalePercent(4.5f);
         URL url9 = this.getClass().getResource("pics/smiley0.png");
         Image img9 = Image.getInstance(url9);
-        img9.scalePercent(4f);
+        img9.scalePercent(4.5f);
     
         switch (symbol){
-            case 0: cell = new PdfPCell(img3);
-            break;
             case 1: cell = new PdfPCell(img1);
             break;
             case 2: cell = new PdfPCell(img2);
