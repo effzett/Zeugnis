@@ -149,6 +149,8 @@ public class ZeugnisPDF  {
         if(fehltageohne>fehltage){
             fehltageohne=fehltage;
         }
+        
+        // Erzeugung des Namens und des Ordners
         String fileName = name+vorname+gebdatum+".pdf"; 
         String dirName = String.valueOf(Gui.getSYear())+String.valueOf(Gui.getHYear())+Gui.getSClass(); 
         File dir = new File("./" + dirName); 
@@ -294,14 +296,31 @@ public class ZeugnisPDF  {
         return newSdf.format(date);
     }
     
+    /***
+     * Erzeugt eine leere Zeile als Abstandshalter
+     * @param colspan
+     * @param fixedHeight
+     * @return 
+     */
     private PdfPCell emptyLine(int colspan, float fixedHeight){
         PdfPCell cell = new PdfPCell();
-        cell.setColspan(6);
-        cell.setFixedHeight(15f);
+        cell.setColspan(colspan);
+        cell.setFixedHeight(fixedHeight);
         cell.setBorder(Rectangle.NO_BORDER);
         return cell;
     }
         
+    /***
+     * Wählt ein Symbol aus für die Kreuze in den Tabellen und liefert cell
+     * @param symbol
+     * @param pad
+     * @param hAlign
+     * @param vAlign
+     * @param border
+     * @return
+     * @throws IOException
+     * @throws BadElementException 
+     */
     private PdfPCell checkCross(int symbol,float pad, int hAlign,int vAlign,int border) throws IOException, BadElementException{
         PdfPCell cell;
 
@@ -333,6 +352,17 @@ public class ZeugnisPDF  {
         return cell;
     }
     
+    /***
+     * Liefert ein cell mit einem Kreissymbol für den angegebenen Index
+     * @param fraction
+     * @param pad
+     * @param hAlign
+     * @param vAlign
+     * @param border
+     * @return
+     * @throws IOException
+     * @throws BadElementException 
+     */
     private PdfPCell kreisViertel(int fraction,float pad, int hAlign,int vAlign,int border) throws IOException, BadElementException{
         PdfPCell cell;
 
@@ -374,6 +404,16 @@ public class ZeugnisPDF  {
         return cell;
     }
     
+    /***
+     * Erzeugt cell für die Header Zeile
+     * @param page
+     * @param vorname
+     * @param name
+     * @param geb
+     * @param currdate
+     * @param colspan
+     * @return 
+     */
     private PdfPCell header(int page,String vorname,String name,String geb, String currdate, int colspan){
         PdfPCell retCell = new PdfPCell(new Phrase("Seite "+ String.valueOf(page) +
                 " des Grundschulzeugnisses von " + vorname + " "+ name + " (" + gebdatum + ") " + 
@@ -404,6 +444,12 @@ public class ZeugnisPDF  {
         return retCell;
     }
     
+    /***
+     * Erzeugt cell mit Selten/Wechselnd/Überwiegend
+     * @param s
+     * @param pad
+     * @return 
+     */
     private PdfPCell seweue(String s, float pad){
         PdfPCell retCell = new PdfPCell(new Phrase(s,TINY_FONT));
         retCell.setVerticalAlignment(Element.ALIGN_TOP);
@@ -412,6 +458,15 @@ public class ZeugnisPDF  {
         return retCell;
     }
     
+    /***
+     * Erzeugt ein table Objekt das Arbeits- und Sozialverhalten
+     * @param table
+     * @param verhalten
+     * @param pad
+     * @return
+     * @throws IOException
+     * @throws BadElementException 
+     */
     private PdfPTable asVerhalten(PdfPTable table,ArrayList verhalten,float pad) throws IOException, BadElementException{
         for(Integer i=0; i<verhalten.size(); i++){
             PdfPCell cell2;
@@ -470,6 +525,15 @@ public class ZeugnisPDF  {
         return table;
     }
     
+    /***
+     * Erzeugt eine Liste mit Kriterien und Bewertungsspalten
+     * @param table
+     * @param lernbereich
+     * @param pad
+     * @return
+     * @throws IOException
+     * @throws BadElementException 
+     */
     private PdfPTable lernbereiche(PdfPTable table,ArrayList lernbereich,float pad) throws IOException, BadElementException{
         for(Integer i=0; i<lernbereich.size(); i++){
             PdfPCell cell2;
@@ -556,7 +620,7 @@ public class ZeugnisPDF  {
     }
     
     /**
-    * 
+    * Erzeugt das Zeugnis PDF in einem definierten Ordner
     * @throws IOException
     * @throws DocumentException
     * @throws SQLException 
@@ -830,7 +894,7 @@ public class ZeugnisPDF  {
         //cell2ATitle.setBorder(Rectangle.NO_BORDER);
         table2.addCell(cell2BewertungA);
         
-        table2.addCell(emptyLine(4,30f));
+        table2.addCell(emptyLine(4,15f));
               
         PdfPCell cell2STitle = new PdfPCell(title2(STitle,1,50f,pad));
 
