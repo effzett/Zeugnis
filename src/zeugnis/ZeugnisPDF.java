@@ -1170,7 +1170,35 @@ public class ZeugnisPDF  {
         table3.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
         
         table3 = lernbereiche(table3,lesenZL,pad);
+
+        // Sprache und Sprachgebrauch untersuchen
+        cell3EmptyLine = new PdfPCell(new Phrase("",NORMAL_BOLD_FONT));
+        cell3EmptyLine.setColspan(6);
+        cell3EmptyLine.setFixedHeight(15f);
+        cell3EmptyLine.setBorder(Rectangle.NO_BORDER);
         
+        cell3sz = new PdfPCell(new Phrase(sp,NORMAL_FONT));
+        cell3sz.setVerticalAlignment(Element.ALIGN_TOP);
+        cell3sz.setFixedHeight(50f);
+        cell3sz.setPadding(pad);
+        cell3sz.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+//        cell3Leer = new PdfPCell(new Phrase("--",TINY_FONT));
+        cell3Leer = new PdfPCell(kreisViertel(0,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.BOX));
+        cell3Leer.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cell3Leer.setPadding(pad);
+        cell3Leer.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+        table3.addCell(cell3EmptyLine);
+        table3.addCell(cell3sz);
+        table3.addCell(cell3Leer);
+        table3.addCell(kreisViertel(1,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+        table3.addCell(kreisViertel(2,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+        table3.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+        table3.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
+        
+        table3 = lernbereiche(table3,sprachZL,pad);
+       
         doc.add(table3);
         doc.newPage();
 
