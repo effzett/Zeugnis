@@ -1628,6 +1628,8 @@ public class SingletonSQLConnector {
         if(klasse==null){
             klasse="1a";
         }
+        // Neue Klasse bestimmen
+        String newKlasse = getNewKlasse(klasse);    // Neue Klasse für Versetzung:
         
         try (Statement statement = con.createStatement()) {
 
@@ -1655,7 +1657,7 @@ public class SingletonSQLConnector {
 
                 idZeugnis = _getIdZeugnis(idSchueler, 2);
                 sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, NOTE_ARBEIT, NOTE_SOZIAL, FEHLTAGE, FEHLTAGEOHNE, ENTWICKLUNG, BEMERKUNG, HALBJAHR, SCHULJAHR) values(" + idZeugnis
-                        + ", " + idSchueler + ", "+0+", "+0+", "+0+", "+0+", "+"' '"+", "+"' '"+", "+2+", "+schuljahr+")";
+                        + ", " + idSchueler + ", "+0+", "+0+", "+0+", "+0+", "+"' '"+", "+"'Versetzt nach Klasse "+ newKlasse +".', "+2+", "+schuljahr+")";
                 logger.fine("Leeres Zeugnis für Halbjahr 2 eingefügt: "+sql);
                 statement.executeUpdate(sql);
 
