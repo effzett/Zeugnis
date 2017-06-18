@@ -80,23 +80,23 @@ public class ZeugnisPDF  {
         
     Hashtable<Integer,Integer> zeugnis;
     
-    private ArrayList aVerhalten    = new ArrayList<TableItem>();
-    private ArrayList sVerhalten    = new ArrayList<TableItem>();
-    private ArrayList sprechenZL    = new ArrayList<TableItem>();
-    private ArrayList schreibenZL   = new ArrayList<TableItem>();
-    private ArrayList lesenZL       = new ArrayList<TableItem>();
-    private ArrayList sprachZL      = new ArrayList<TableItem>();
-    private ArrayList zahlenZL      = new ArrayList<TableItem>();
-    private ArrayList groessenZL    = new ArrayList<TableItem>();
-    private ArrayList raumZL        = new ArrayList<TableItem>();
-    private ArrayList sachunterricht = new ArrayList<TableItem>(); // 1
-    private ArrayList musik         = new ArrayList<TableItem>();  // 2
-    private ArrayList religion      = new ArrayList<TableItem>();  // 3
-    private ArrayList kunst         = new ArrayList<TableItem>();  // 4
-    private ArrayList sport         = new ArrayList<TableItem>();  // 5
-    private ArrayList werken        = new ArrayList<TableItem>();  // 6
-    private ArrayList textil        = new ArrayList<TableItem>();  // 7
-    private ArrayList englisch      = new ArrayList<TableItem>();  // 8
+    private ArrayList aVerhalten        = new ArrayList<TableItem>();
+    private ArrayList sVerhalten        = new ArrayList<TableItem>();
+    private ArrayList sprechenZL        = new ArrayList<TableItem>();
+    private ArrayList schreibenZL       = new ArrayList<TableItem>();
+    private ArrayList lesenZL           = new ArrayList<TableItem>();
+    private ArrayList sprachZL          = new ArrayList<TableItem>();
+    private ArrayList zahlenZL          = new ArrayList<TableItem>();
+    private ArrayList groessenZL        = new ArrayList<TableItem>();
+    private ArrayList raumZL            = new ArrayList<TableItem>();
+    private ArrayList sachunterrichtZL  = new ArrayList<TableItem>();  // 1
+    private ArrayList musikZL           = new ArrayList<TableItem>();  // 2
+    private ArrayList religionZL        = new ArrayList<TableItem>();  // 3
+    private ArrayList kunstZL           = new ArrayList<TableItem>();  // 4
+    private ArrayList sportZL           = new ArrayList<TableItem>();  // 5
+    private ArrayList werkenZL          = new ArrayList<TableItem>();  // 6
+    private ArrayList textilZL          = new ArrayList<TableItem>();  // 7
+    private ArrayList englischZL        = new ArrayList<TableItem>();  // 8
     
     /**
      * Erzeugt eine Zeugnisklasse und füllt Variablen aus der DB
@@ -110,6 +110,7 @@ public class ZeugnisPDF  {
         SingletonSQLConnector connector = SingletonSQLConnector.getInstance();
         config = Config.getInstance();
 
+        // Liest die Daten zur Wahl der Ankreuzsymbole aus der config.properties
         try{
             symbol1 = Integer.parseInt(config.getProperty("symbol1"));
             symbol2 = Integer.parseInt(config.getProperty("symbol2"));
@@ -120,7 +121,7 @@ public class ZeugnisPDF  {
         }
         this.zeugnis = new Hashtable<Integer,Integer>();
 
-        // Hier können schon alle Werte aus der Datenbank geholt werden...
+        // Daten aus der DB holen...
         id = idSCHUELER;
         zid = connector._getIdZeugnis(id,Gui.getHYear());
         
@@ -230,56 +231,56 @@ public class ZeugnisPDF  {
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
-            sachunterricht.add(ti);
+            sachunterrichtZL.add(ti);
         }
 
         for(Integer id : connector.getID_KriterienFromLernbereich("Musik")){  // holt Reihenfolge
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
-            musik.add(ti);
+            musikZL.add(ti);
         }
 
         for(Integer id : connector.getID_KriterienFromLernbereich("Religion")){  // holt Reihenfolge
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
-            religion.add(ti);
+            religionZL.add(ti);
         }
 
         for(Integer id : connector.getID_KriterienFromLernbereich("Kunst")){  // holt Reihenfolge
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
-            kunst.add(ti);
+            kunstZL.add(ti);
         }
 
         for(Integer id : connector.getID_KriterienFromLernbereich("Sport")){  // holt Reihenfolge
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
-            sport.add(ti);
+            sportZL.add(ti);
         }
 
         for(Integer id : connector.getID_KriterienFromLernbereich("Werken")){  // holt Reihenfolge
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
-            werken.add(ti);
+            werkenZL.add(ti);
         }
 
         for(Integer id : connector.getID_KriterienFromLernbereich("Textil")){  // holt Reihenfolge
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
-            textil.add(ti);
+            textilZL.add(ti);
         }
 
         for(Integer id : connector.getID_KriterienFromLernbereich("Englisch")){  // holt Reihenfolge
             TableItem ti = new TableItem();
             ti.setText(connector.getKriteriumText(id)); // holt Text
             ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
-            englisch.add(ti);
+            englischZL.add(ti);
         }
     }
     
@@ -1352,7 +1353,7 @@ public class ZeugnisPDF  {
         table5.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
         table5.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
         
-        table5 = lernbereiche(table5,sachunterricht,pad);
+        table5 = lernbereiche(table5,sachunterrichtZL,pad);
         
         table5.addCell(emptyLine(6,15f));
         // *********************************************************************
@@ -1386,7 +1387,7 @@ public class ZeugnisPDF  {
         table5.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
         table5.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
         
-        table5 = lernbereiche(table5,musik,pad);
+        table5 = lernbereiche(table5,musikZL,pad);
         
         table5.addCell(emptyLine(6,15f));
         // *********************************************************************
@@ -1420,7 +1421,7 @@ public class ZeugnisPDF  {
         table5.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
         table5.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
         
-        table5 = lernbereiche(table5,religion,pad);
+        table5 = lernbereiche(table5,religionZL,pad);
         
         doc.add(table5);
         // ************************************* Klasse 1 und 2
@@ -1449,7 +1450,7 @@ public class ZeugnisPDF  {
             table5a.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
             table5a.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
         
-            table5a = lernbereiche(table5a,kunst,pad);
+            table5a = lernbereiche(table5a,kunstZL,pad);
         
             table5a.addCell(emptyLine(6,15f));
         // *********************************************************************
@@ -1472,7 +1473,7 @@ public class ZeugnisPDF  {
             table5a.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
             table5a.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
         
-            table5a = lernbereiche(table5a,sport,pad);
+            table5a = lernbereiche(table5a,sportZL,pad);
         
         // *********************************************************************
             doc.add(table5a);
@@ -1522,7 +1523,7 @@ public class ZeugnisPDF  {
             table6.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
             table6.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
         
-            table6 = lernbereiche(table6,kunst,pad);
+            table6 = lernbereiche(table6,kunstZL,pad);
         
             table6.addCell(emptyLine(6,15f));
         // *********************************************************************
@@ -1545,7 +1546,7 @@ public class ZeugnisPDF  {
             table6.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
             table6.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
         
-            table6 = lernbereiche(table6,sport,pad);
+            table6 = lernbereiche(table6,sportZL,pad);
         
             table6.addCell(emptyLine(6,15f));
         // *********************************************************************
@@ -1567,7 +1568,7 @@ public class ZeugnisPDF  {
             table6.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
             table6.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
         
-            table6 = lernbereiche(table6,werken,pad);
+            table6 = lernbereiche(table6,werkenZL,pad);
         
             table6.addCell(emptyLine(6,15f));
         // *********************************************************************
@@ -1589,7 +1590,7 @@ public class ZeugnisPDF  {
             table6.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
             table6.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
         
-            table6 = lernbereiche(table6,textil,pad);
+            table6 = lernbereiche(table6,textilZL,pad);
         
             table6.addCell(emptyLine(6,15f));
         // *********************************************************************
@@ -1624,7 +1625,7 @@ public class ZeugnisPDF  {
             table7.addCell(kreisViertel(3,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
             table7.addCell(kreisViertel(4,pad,Element.ALIGN_CENTER,Element.ALIGN_MIDDLE,Rectangle.BOX));
         
-            table7 = lernbereiche(table7,englisch,pad);
+            table7 = lernbereiche(table7,englischZL,pad);
         
             table7.addCell(emptyLine(6,15f));
         // *********************************************************************
