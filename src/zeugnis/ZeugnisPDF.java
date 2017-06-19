@@ -116,8 +116,8 @@ public class ZeugnisPDF  {
             symbol2 = Integer.parseInt(config.getProperty("symbol2"));
         }
         catch(NumberFormatException e){
-            symbol1=2;
-            symbol2=2;
+            symbol1=9;
+            symbol2=6;
         }
         this.zeugnis = new Hashtable<Integer,Integer>();
 
@@ -325,33 +325,48 @@ public class ZeugnisPDF  {
     private PdfPCell checkCross(int symbol,float pad, int hAlign,int vAlign,int border) throws IOException, BadElementException{
         PdfPCell cell;
 
-        URL url1 = this.getClass().getResource("pics/cross0.png");
+        URL url1 = this.getClass().getResource("pics/img01.png");
         Image img1 = Image.getInstance(url1);
         img1.scalePercent(4.5f);
-        URL url2 = this.getClass().getResource("pics/redCross0.png");
+        URL url2 = this.getClass().getResource("pics/img02.png");
         Image img2 = Image.getInstance(url2);
         img2.scalePercent(4.5f);
-        URL url3 = this.getClass().getResource("pics/greenCheck0.png");
+        URL url3 = this.getClass().getResource("pics/img03.png");
         Image img3 = Image.getInstance(url3);
         img3.scalePercent(4.5f);
-        URL url4 = this.getClass().getResource("pics/checkBig0.png");
+        URL url4 = this.getClass().getResource("pics/img04.png");
         Image img4 = Image.getInstance(url4);
         img4.scalePercent(4.5f);
-        URL url5 = this.getClass().getResource("pics/checkCircle0.png");
+        URL url5 = this.getClass().getResource("pics/img05.png");
         Image img5 = Image.getInstance(url5);
         img5.scalePercent(4.5f);
-        URL url6 = this.getClass().getResource("pics/checkDoubleCircle0.png");
+        URL url6 = this.getClass().getResource("pics/img06.png");
         Image img6 = Image.getInstance(url6);
         img6.scalePercent(4.5f);
-        URL url7 = this.getClass().getResource("pics/checkInvers0.png");
+        URL url7 = this.getClass().getResource("pics/img07.png");
         Image img7 = Image.getInstance(url7);
         img7.scalePercent(4.5f);
-        URL url8 = this.getClass().getResource("pics/checkman0.png");
+        URL url8 = this.getClass().getResource("pics/img08.png");
         Image img8 = Image.getInstance(url8);
         img8.scalePercent(4.5f);
-        URL url9 = this.getClass().getResource("pics/smiley0.png");
+        URL url9 = this.getClass().getResource("pics/img09.png");
         Image img9 = Image.getInstance(url9);
         img9.scalePercent(4.5f);
+        URL url10 = this.getClass().getResource("pics/img10.png");
+        Image img10 = Image.getInstance(url10);
+        img10.scalePercent(4.5f);
+        URL url11 = this.getClass().getResource("pics/img11.png");
+        Image img11 = Image.getInstance(url11);
+        img11.scalePercent(4.5f);
+        URL url12 = this.getClass().getResource("pics/img12.png");
+        Image img12 = Image.getInstance(url12);
+        img12.scalePercent(4.5f);
+        URL url13 = this.getClass().getResource("pics/img13.png");
+        Image img13 = Image.getInstance(url13);
+        img13.scalePercent(4.5f);
+        URL url14 = this.getClass().getResource("pics/img14.png");
+        Image img14 = Image.getInstance(url14);
+        img14.scalePercent(4.5f);
     
         switch (symbol){
             case 1: cell = new PdfPCell(img1);
@@ -371,6 +386,16 @@ public class ZeugnisPDF  {
             case 8: cell = new PdfPCell(img8);
             break;
             case 9: cell = new PdfPCell(img9);
+            break;
+            case 10: cell = new PdfPCell(img10);
+            break;
+            case 11: cell = new PdfPCell(img11);
+            break;
+            case 12: cell = new PdfPCell(img12);
+            break;
+            case 13: cell = new PdfPCell(img13);
+            break;
+            case 14: cell = new PdfPCell(img14);
             break;
             default: cell= new PdfPCell();
             break;
