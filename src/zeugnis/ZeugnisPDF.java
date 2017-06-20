@@ -50,8 +50,8 @@ public class ZeugnisPDF  {
     
     private final static Logger logger = Logger.getLogger(ZeugnisPDF.class.getName());
     
-    private int symbol1;   // das Symbol 0,1,2  für die x in den Tabellen A+S
-    private int symbol2;   // das Symbol 0,1,2  für die x in den Tabellen Rest
+    private static int symbol1;   // das Symbol 0,1,2  für die x in den Tabellen A+S
+    private static int symbol2;   // das Symbol 0,1,2  für die x in den Tabellen Rest
     private File file;
     private int id;
     private int zid;
@@ -534,7 +534,7 @@ public class ZeugnisPDF  {
             cell2.setHorizontalAlignment(Element.ALIGN_LEFT);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
             
-            PdfPCell selection = new PdfPCell(checkCross(symbol1,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.BOX));
+            PdfPCell selection = new PdfPCell(checkCross(getSymbol1(),pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.BOX));
             PdfPCell cell2bewertungX;
 //            cell2bewertungX = new PdfPCell(new Phrase("x" ,TINY_FONT));
             cell2bewertungX = selection;
@@ -599,7 +599,7 @@ public class ZeugnisPDF  {
             cell2.setHorizontalAlignment(Element.ALIGN_LEFT);
             
             PdfPCell cell2bewertungX;
-            PdfPCell selection = new PdfPCell(checkCross(symbol2,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.BOX));
+            PdfPCell selection = new PdfPCell(checkCross(getSymbol2(),pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.BOX));
 //            cell2bewertungX = new PdfPCell(new Phrase("x" ,TINY_FONT));
             cell2bewertungX = selection;
             cell2bewertungX.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -1692,5 +1692,33 @@ public class ZeugnisPDF  {
         doc.addSubject("Zeugnis");
         doc.close();
         writer.close();
+    }
+
+    /**
+     * @return the symbol1
+     */
+    public static int getSymbol1() {
+        return symbol1;
+    }
+
+    /**
+     * @param symbol the symbol1 to set
+     */
+    public static void setSymbol1(int symbol) {
+        symbol1 = symbol;
+    }
+
+    /**
+     * @return the symbol2
+     */
+    public static int getSymbol2() {
+        return symbol2;
+    }
+
+    /**
+     * @param symbol the symbol2 to set
+     */
+    public static void setSymbol2(int symbol) {
+        symbol2 = symbol;
     }
 }

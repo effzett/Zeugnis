@@ -39,7 +39,7 @@ public class Config extends Properties {
                 setProperty("derbyPassword", "zeugnis");
                 setProperty("classes", "1a,1b,2a,2b,3a,3b,4a,4b");
                 setProperty("symbol1", "9");
-                setProperty("symbol2", "6");               
+                setProperty("symbol2", "6");                              
                 store(new FileWriter(configFile),
                         "Default Config created at " + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
             }
@@ -47,7 +47,6 @@ public class Config extends Properties {
         } catch (IOException ex) {
             logger.severe(ex.getLocalizedMessage());
         }
-
     }
 
     public static Config getInstance() {
@@ -57,6 +56,26 @@ public class Config extends Properties {
     private static class ConfigHolder {
 
         private static final Config INSTANCE = new Config();
+    }
+    
+    public void storeProperties(){
+        File jarFile = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+        String jarPath = jarFile.getParent();
+        File configFile = new File(jarPath + File.separator + "config.properties");
+        setProperty("installDir", jarPath);
+        setProperty("startDerby", "1");
+        setProperty("derbyUser", "zeugnis");
+        setProperty("derbyPassword", "zeugnis");
+        setProperty("classes", "1a,1b,2a,2b,3a,3b,4a,4b");
+        setProperty("symbol1", String.valueOf(ZeugnisPDF.getSymbol1()));
+        setProperty("symbol2", String.valueOf(ZeugnisPDF.getSymbol2()));
+        try {
+            store(new FileWriter(configFile),
+                    "Modificated Config created at " + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
+        } catch (IOException ex) {
+            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }
