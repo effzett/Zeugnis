@@ -360,7 +360,7 @@ public class SingletonSQLConnector {
                 Integer notenbereich = set.getInt(4);
                 Integer schuljahr = set.getInt(5);
                 String sql2 = "insert into LERNBEREICH values("
-                        + Integer.toString(idLernbereich + 1000) + ",'"
+                        + Integer.toString(idLernbereich + 10000) + ",'"
                         + lernbereich + "',"
                         + Integer.toString(klassenstufe) + ","
                         + Integer.toString(notenbereich) + ","
@@ -389,8 +389,8 @@ public class SingletonSQLConnector {
                 String kriteriumtext = set.getString(3);
                 Integer schuljahr = set.getInt(4);
                 String sql2 = "insert into KRITERIUM values("
-                        + Integer.toString(idKriterium + 1000) + ","
-                        + Integer.toString(idLernbereich + 1000) + ",'"
+                        + Integer.toString(idKriterium + 10000) + ","
+                        + Integer.toString(idLernbereich + 10000) + ",'"
                         + kriteriumtext + "',"
                         + Integer.toString(newYear) + ")";
                 setInput.add(sql2);
