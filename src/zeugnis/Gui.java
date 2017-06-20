@@ -159,7 +159,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         jLabel10.setText("Version: ");
         jLabel10.setText(version);
         if(version==null){
-            jLabel10.setText("1.0");
+            jLabel10.setText("1.2-alpha");
         }
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -480,6 +480,15 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                     }, 4);
                     tableModel.addTableModelListener(this);
                     jTable3.setModel(tableModel);
+                    TableColumn col30 = jTable3.getColumnModel().getColumn(0);
+                    col30.setMinWidth(57);
+                    col30.setMaxWidth(57);
+                    TableColumn col31 = jTable3.getColumnModel().getColumn(1);
+                    col31.setMinWidth(74);
+                    col31.setMaxWidth(74);
+                    TableColumn col32 = jTable3.getColumnModel().getColumn(2);
+                    col32.setMinWidth(70);
+                    col32.setMaxWidth(70);
                     jScrollPane4.setViewportView(jTable3);
 
                     jLabel13.setText("Indikatoren");
@@ -490,6 +499,15 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                         }, 4);
                         tableModel.addTableModelListener(this);
                         jTable4.setModel(tableModel);
+                        TableColumn col40 = jTable4.getColumnModel().getColumn(0);
+                        col40.setMinWidth(57);
+                        col40.setMaxWidth(57);
+                        TableColumn col41 = jTable4.getColumnModel().getColumn(1);
+                        col41.setMinWidth(74);
+                        col41.setMaxWidth(74);
+                        TableColumn col42 = jTable4.getColumnModel().getColumn(2);
+                        col42.setMinWidth(70);
+                        col42.setMaxWidth(70);
                         jScrollPane5.setViewportView(jTable4);
 
                         jLabel14.setText("Lernbereiche");
