@@ -138,6 +138,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         jComboBox8 = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        jButton2 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
@@ -559,6 +561,20 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
                         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+                        jButton2.setText("Update");
+                        jButton2.addActionListener(new java.awt.event.ActionListener() {
+                            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                jButton2ActionPerformed(evt);
+                            }
+                        });
+
+                        jButton4.setText("Reset");
+                        jButton4.addActionListener(new java.awt.event.ActionListener() {
+                            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                jButton4ActionPerformed(evt);
+                            }
+                        });
+
                         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
                         jPanel4.setLayout(jPanel4Layout);
                         jPanel4Layout.setHorizontalGroup(
@@ -566,8 +582,15 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel14)
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton4)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton2))
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(jLabel14)
+                                        .addGap(0, 0, Short.MAX_VALUE))
                                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -584,8 +607,11 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addGap(24, 24, 24)
-                                        .addComponent(jLabel13)
+                                        .addGap(19, 19, 19)
+                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel13)
+                                            .addComponent(jButton2)
+                                            .addComponent(jButton4))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(29, 29, 29)
@@ -893,7 +919,6 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             }
 
         }
-
     }//GEN-LAST:event_changeTab
 
     private void changeSubject(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeSubject
@@ -915,8 +940,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         // Store properties
-        Config config = Config.getInstance();
-        config.storeProperties();
+        Config conf = Config.getInstance();
+        conf.storeProperties();
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -1070,6 +1095,21 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         config.setProperty("symbol2",String.valueOf(jComboBox8.getSelectedIndex()+1) );
         ZeugnisPDF.setSymbol2( (jComboBox8.getSelectedIndex()+1) );
     }//GEN-LAST:event_jComboBox8ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        // Gesamte Tabelle updaten
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void updateKriteriumDB(){
+        connector.updateKriteriumDB(jTable3);
+    }
+    
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        fillKriteriumTable();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     public void fillTabFromTestimony() {
         if (jComboBox4.getSelectedItem() != null) {
@@ -1309,7 +1349,9 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
@@ -1372,9 +1414,10 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         // Geprueft wird anhand der Anzahle der Spalten.
         // 7 Spalten = Die Schuelertabelle
         // 2 Spalten = Die Zeugnistabelle
+        // 4 Spalten = Die Kriteriumtabelle
         TableModel model = (TableModel) e.getSource();
 
-        if (model.getColumnCount() == 7) {
+        if (model.getColumnCount() == 7) {  // Schülertabelle
 
             if (e.getType() == TableModelEvent.UPDATE && tableModelEventEnabled) {
                 int row = e.getFirstRow();
@@ -1462,8 +1505,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
             }
 
-        } else {
-
+        }
+        if (model.getColumnCount() == 2) { // Bewertung
             if (e.getType() == TableModelEvent.UPDATE && tableModelEventEnabled) {
 
                 try {
@@ -1502,10 +1545,9 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 int idKriteriumliste = connector._getIdZeugnis(Integer.parseInt(((String[]) jComboBox4.getSelectedItem())[1]), hYear);
 
                 try {
-                    if(connector.isZeugnisComplete(idKriteriumliste)){
+                    if (connector.isZeugnisComplete(idKriteriumliste)) {
                         jCheckBox1.setSelected(true);
-                    }
-                    else{
+                    } else {
                         jCheckBox1.setSelected(false);
                     }
                 } catch (SQLException ex) {
@@ -1513,8 +1555,17 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 }
             }
 
+        } else {
+            if (model.getColumnCount() == 4) { // Kriterium
+              if (e.getType() == TableModelEvent.UPDATE && tableModelEventEnabled) {
+                int row = e.getFirstRow();
+                int idColumn = 0;
+                
+                // TODO
+                connector.updateKriteriumDB(jTable1);
+              }
+            }
         }
-
     }
 
     public static int getSYear() {

@@ -1561,6 +1561,11 @@ public class SingletonSQLConnector {
          try (Statement statement = con.createStatement()) {
              statement.executeUpdate(sql);
          }
+    }
+    
+    public void updateKriteriumDB(JTable table){
+        String sql ="";
+        logger.fine(sql);
         
     }
 
