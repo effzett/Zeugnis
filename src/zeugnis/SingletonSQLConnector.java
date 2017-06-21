@@ -1563,10 +1563,19 @@ public class SingletonSQLConnector {
          }
     }
     
-    public void updateKriteriumDB(JTable table){
-        String sql ="";
-        logger.fine(sql);
+    public void updateKriteriumDB(JTable table, int row, int col) throws SQLException{
+        String year = String.valueOf(table.getValueAt(row, 0));
+        String idLernbereich = String.valueOf(table.getValueAt(row, 1));
+        String idKriterium = String.valueOf(table.getValueAt(row, 2));
+        String value = String.valueOf(table.getValueAt(row, col));
         
+        String sql ="update KRITERIUM set KRITERIUMTEXT='"+value+"' WHERE SCHULJAHR="+year+
+                " AND ID_LERNBEREICH="+idLernbereich+" AND ID_KRITERIUM="+idKriterium;
+        logger.fine(sql+"->"+String.valueOf(row)+" "+String.valueOf(col));
+        try (Statement statement = con.createStatement()) {
+             statement.executeUpdate(sql);
+        }
+
     }
 
     /***
