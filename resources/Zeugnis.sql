@@ -481,13 +481,13 @@ INSERT INTO KRITERIUM VALUES (2690, 430,'wendet Überarbeitungsmethoden an.',201
 INSERT INTO KRITERIUM VALUES (2700, 430,'',2016);
 
 -- 4 Lesen - mit Texten und Medien umgehen
-INSERT INTO KRITERIUM VALUES (2710, 440'kann altersgemäße Texte sinnverstehend lesen.',2016);
-INSERT INTO KRITERIUM VALUES (2720, 440'kann unterschiedlichen Medien Informationen entnehmen und Schlussfolgerungen ziehen.',2016);
-INSERT INTO KRITERIUM VALUES (2730, 440'liest geübte Texte flüssig und betont vor.',2016);
-INSERT INTO KRITERIUM VALUES (2740, 440'liest ungeübte Texte flüssig und betont vor.',2016);
-INSERT INTO KRITERIUM VALUES (2750, 440'kann grundlegende Texterschließungsverfahren anwenden.',2016);
-INSERT INTO KRITERIUM VALUES (2760, 440'versteht schriftliche Handlungsanweisungen und setzt diese selbstständig um.',2016);
-INSERT INTO KRITERIUM VALUES (2770, 440'',2016);
+INSERT INTO KRITERIUM VALUES (2710, 440,'kann altersgemäße Texte sinnverstehend lesen.',2016);
+INSERT INTO KRITERIUM VALUES (2720, 440,'kann unterschiedlichen Medien Informationen entnehmen und Schlussfolgerungen ziehen.',2016);
+INSERT INTO KRITERIUM VALUES (2730, 440,'liest geübte Texte flüssig und betont vor.',2016);
+INSERT INTO KRITERIUM VALUES (2740, 440,'liest ungeübte Texte flüssig und betont vor.',2016);
+INSERT INTO KRITERIUM VALUES (2750, 440,'kann grundlegende Texterschließungsverfahren anwenden.',2016);
+INSERT INTO KRITERIUM VALUES (2760, 440,'versteht schriftliche Handlungsanweisungen und setzt diese selbstständig um.',2016);
+INSERT INTO KRITERIUM VALUES (2770, 440,'',2016);
 
 -- 4 Sprache und Sprachgebrauch untersuchen
 INSERT INTO KRITERIUM VALUES (2780, 450,'kann die behandelten Wortarten unterscheiden und benennen.',2016);

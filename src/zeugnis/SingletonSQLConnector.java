@@ -134,7 +134,6 @@ public class SingletonSQLConnector {
             }
         }
         return retVal;
-
     }
 
 //    /**
@@ -915,7 +914,50 @@ public class SingletonSQLConnector {
         }
 
     }
+    
+    public void fillKriteriumTable(JTable table, String sYear, String sClass) throws SQLException{
+        
+         try (Statement statement = con.createStatement()) {
+            String sql = "select KRITERIUM.SCHULJAHR, KRITERIUM.ID_LERNBEREICH, KRITERIUM.ID_KRITERIUM, KRITERIUM.KRITERIUMTEXT from KRITERIUM,LERNBEREICH where KRITERIUM.SCHULJAHR = " 
+                    + sYear +" AND KRITERIUM.ID_LERNBEREICH=LERNBEREICH.ID_LERNBEREICH AND (LERNBEREICH.KLASSENSTUFE=0 OR LERNBEREICH.KLASSENSTUFE="+ sClass.substring(0, 1)+") order by KRITERIUM.ID_KRITERIUM asc";
+            // logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
 
+            while (set.next()) {
+                Object[] row = new Object[4];
+                row[0] = set.getString(1);
+                row[1] = set.getString(2);
+                row[2] = set.getString(3);
+                row[3] = set.getString(4);
+                model.addRow(row);
+            }
+        }
+    }
+
+    public void fillLernbereichTable(JTable table, String sYear, String sClass) throws SQLException{
+        
+         try (Statement statement = con.createStatement()) {
+            String sql = "select SCHULJAHR, KLASSENSTUFE, ID_LERNBEREICH, LERNBEREICH from LERNBEREICH where SCHULJAHR = " 
+                    + sYear +" AND (KLASSENSTUFE=0 OR KLASSENSTUFE="+ sClass.substring(0, 1)+") order by ID_LERNBEREICH asc";
+            // logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+
+            while (set.next()) {
+                Object[] row = new Object[4];
+                row[0] = set.getString(1);
+                row[1] = set.getString(2);
+                row[2] = set.getString(3);
+                row[3] = set.getString(4);
+                model.addRow(row);
+            }
+        }
+    }
+    
+    
 //    /**
 //     * Prueft auf die Existenz eines Schuelers ueber den PrimaryKey.
 //     *
@@ -1519,7 +1561,21 @@ public class SingletonSQLConnector {
          try (Statement statement = con.createStatement()) {
              statement.executeUpdate(sql);
          }
+    }
+    
+    public void updateKriteriumDB(JTable table, int row, int col) throws SQLException{
+        String year = String.valueOf(table.getValueAt(row, 0));
+        String idLernbereich = String.valueOf(table.getValueAt(row, 1));
+        String idKriterium = String.valueOf(table.getValueAt(row, 2));
+        String value = String.valueOf(table.getValueAt(row, col));
         
+        String sql ="update KRITERIUM set KRITERIUMTEXT='"+value+"' WHERE SCHULJAHR="+year+
+                " AND ID_LERNBEREICH="+idLernbereich+" AND ID_KRITERIUM="+idKriterium;
+        logger.fine(sql+"->"+String.valueOf(row)+" "+String.valueOf(col));
+        try (Statement statement = con.createStatement()) {
+             statement.executeUpdate(sql);
+        }
+
     }
 
     /***
