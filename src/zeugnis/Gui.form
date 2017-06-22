@@ -661,7 +661,7 @@
                       </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="TableColumn col40 = jTable4.getColumnModel().getColumn(0);&#xa;col40.setMinWidth(57);&#xa;col40.setMaxWidth(57);&#xa;TableColumn col41 = jTable4.getColumnModel().getColumn(1);&#xa;col41.setMinWidth(74);&#xa;col41.setMaxWidth(74);&#xa;TableColumn col42 = jTable4.getColumnModel().getColumn(2);&#xa;col42.setMinWidth(70);&#xa;col42.setMaxWidth(70);"/>
-                        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="tableModel = new javax.swing.table.DefaultTableModel(&#xa;    new String [] {&#xa;        &quot;Schuljahr&quot;, &quot;Klassenstufe&quot;, &quot;Lernbereich&quot;, &quot;Text&quot; &#xa;    }, 4);&#xa;tableModel.addTableModelListener(this);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="tableModel = new javax.swing.table.DefaultTableModel(&#xa;    new String [] {&#xa;        &quot;Schuljahr&quot;, &quot;Klassenstufe&quot;, &quot;Lernbereich&quot;, &quot;Text&quot; &#xa;    }, 4);&#xa;//tableModel.addTableModelListener(this);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>

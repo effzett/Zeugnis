@@ -497,7 +497,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                         new String [] {
                             "Schuljahr", "Klassenstufe", "Lernbereich", "Text"
                         }, 4);
-                        tableModel.addTableModelListener(this);
+                        //tableModel.addTableModelListener(this);
                         jTable4.setModel(tableModel);
                         TableColumn col40 = jTable4.getColumnModel().getColumn(0);
                         col40.setMinWidth(57);
@@ -1516,7 +1516,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 }
             }
 
-        } else {
+        } else {    // Kriterium und Lernbereich Tabellen
             if (model.getColumnCount() == 4) { // Kriterium
               if (e.getType() == TableModelEvent.UPDATE && tableModelEventEnabled) {
                 int row = e.getFirstRow();
