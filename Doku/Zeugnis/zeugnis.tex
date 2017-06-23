@@ -1,0 +1,199 @@
+\documentclass[a4paper,notitlepage]{scrartcl}
+
+\usepackage{color}
+\usepackage{ngerman}
+\usepackage{graphicx}
+\areaset[1cm]{16cm}{26cm}
+\usepackage{float}
+\usepackage{fancybox}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{pifont}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{scrpage2}
+\usepackage[german]{varioref}
+\usepackage{colortbl} % Farbige Tabellen
+\usepackage{tabularx} % Mehrzeilige Tabellenzellen (nicht benutzt)
+\usepackage{longtable}
+%\usepackage[german,scrtime,time]{prelim2e}
+\usepackage{marginnote}
+\graphicspath{{./jpg/}}
+\DeclareGraphicsExtensions{.jpg,.eps,.png}
+%\usepackage{courier}
+
+
+% Wenn pdflatex benutzt wird sollen die 
+% installierten! frutiger-Fonts verwendet werden
+% Ansonsten cmbright
+\ifpdfoutput %
+{%
+\usepackage[scaled=0.90]{frutiger}
+\renewcommand\familydefault{\sfdefault}
+%\DeclareFixedFont\ott{T1}{phv}{mc}{n}{10pt
+}%
+{%
+\usepackage{cmbright}
+}%
+
+% falls man das auch noch "andern m"ochte
+\newcommand{\z}{{\ott Zeugnis}}
+\newcommand{\zjar}{Zeugnis.jar}
+\newcommand{\zversion}{V1.2.0-alpha}
+\newcommand\ott{\tt}
+\newcommand\java{{\sl Java}}
+
+%\newcommand{\ffile}[1]{\par\centerline{\tt#1}\par}
+\newcommand{\ffile}[1]{{\tt#1}}
+\newcommand{\cfile}[1]{{\tt#1}}
+\newcommand{\ttctable}[1]{\centerline{\tt#1}}
+\newcommand{\sname}[1]{\emph{#1}}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{OliveGreen}{rgb}{0,0.5,0}
+\definecolor{pastellblau}{rgb}{0.85,0.95,1.0} 
+
+%\newcolumntype{g}{>{\columncolor[gray]{0.9}}l}
+\newcolumntype{g}{>{\columncolor{pastellblau}}l}
+
+\lstset{numbers=left,numbersep=5pt,numberstyle=\tiny,%
+    frame=none,basicstyle=\scriptsize\ttfamily,breaklines=true,%
+    captionpos=b,backgroundcolor=\color{listinggray}}
+
+%\addtokomafont{caption}{\huge}
+%\setkomafont{captionlabel}{\huge\bfseries}
+
+%\newcolumntype{C}[1]{>{\centerring\arraybackslash}p{#1}}
+
+%\makeatletter
+%\renewcommand{\l@section}[2]{%
+%\addvspace{5ex}%
+%%\noindent%
+%\makebox[0pt][l]{\rule[-3pt]{\textwidth}{0.5pt}}
+%{\large\textbf{#1}}\hfill#2
+%\par%
+%}
+
+\parindent0cm
+\parskip1ex
+
+\begin{document}
+
+\titlehead{\centerline{Frank Zimmermann und Jürgen Derigs\ding{70} Software Dokumentation \ding{70} Zeugnis}}
+%\titlehead{\includegraphics{zenlogo}}
+\subject{Dokumentation}
+\title{\zjar\\[1.0ex]\large\zversion\\[1.5ex] \small Letztes Änderungsdatum \today}
+\author{Frank Zimmermann\thanks{frank.zimmermann@zenmeister.de} \and Jürgen Derigs\thanks{juergen@derigs.de}}
+\date{Erstellungsdatum: 22. Juni 2017}
+
+%\maketitle
+%\thispagestyle{empty}
+
+%\titlehead{Kopf der Titelei}
+%\subject{subject: Beispiel}
+%\title{Titel des Dokumentes}
+%\subtitle{Eine grosse Titelei als Beispiel auf goLaTeX.de}
+%\author{Max Muster \and goLaTeX\thanks{Fussnote zum Autor}}
+%\date{01.01.0001}
+%\publishers{Betreut und herausgegeben von Prof. Dr. rer. LaTeX}
+%\extratitle{\centering Schmutztitel \\ goLaTeX (C) 2009 \\ ISBN 978-3865412911}
+%\uppertitleback{Obiger Titelrückentitel}
+%\lowertitleback{Für dieses Beispiel wird keine Haftung übernommen.}
+%\dedication{Dieses Beispiel widme ich\\allen LaTeX Usern}
+\maketitle
+
+%\section{Motivation}
+\begin{abstract}
+\parindent0cm
+Diese Dokumentation beschreibt das Programm \z\ .\\
+Das Programm verwaltet Zeugnisse für die Grundschule. 
+und wurde speziell auf spezielle Anforderungen der Grundschule in Brelingen geschrieben.
+\end{abstract}
+
+%\begin{minipage}{\textwidth}
+%\rule{\linewidth}{1pt}
+%\tableofcontents
+%\rule{\linewidth}{1pt}
+%\end{minipage}
+\rule{\linewidth}{1pt}
+\tableofcontents
+\rule{\linewidth}{1pt}
+
+\newpage
+
+\section{Funktion des Programms}
+Das Programm \z\ verwaltet Schüler in Schulklassen und erstellt Zeugnisse als PDF-Dokumente.
+
+Im Programm können Schülerlisten für die ersten vier Grundschulklassen eingegeben
+werden\footnote{Sollten mehr als 2 Klassen pro Klassenstufe benötigt werden, so kann das in der erzeugten Konfigurationsdatei {\ott config.properties} erweitert werden.}.
+
+Als übergeordnete Daten werden das Schuljahr, das Halbjahr und die Klasse benötigt.
+Das Halbjahr spielt für die Schulklasse keine Rolle, sondern nur zur Angabe im Zeugnis.
+Die Schülerliste für eine Klasse und ein Schuljahr ist unabhängig vom Halbjahr.
+Für jeden Schüler in einem Schuljahr und in einer Klasse gibt es zwei Zeugnisse: 1.~Halbjahr und 2.Halbjahr.
+
+Um einen Schüler in eine Schülerliste für eine Klasse eintragen zu können, werden 
+Nachname, Vorname und Geburtstag benötigt. Die Angabe des Geburtsortes ist optional.
+Fehlt eine der 3 notwendigen Angaben, so werden die Daten nicht in die Datenbank übernommen.
+
+Die Schülerdaten können editiert werden, gelöscht werden und es können neue Datensätze eingefügt werden. Werden Schüler aus einer Klassenliste gelöscht, so werden auch die zugeordneten Zeugnisse für das 1. und 2. Halbjahr gelöscht.
+
+\subsection{Programmaufbau}
+Das Programm ist in 4 Bereiche unterteilt:
+
+\begin{itemize}
+\item Als  übergeordnete Daten werden oben das Schuljahr, das Halbjahr und die Schulklasse. 
+\item Der linke Reiter {\ott Schulklassen} verwaltet die Schülerlisten für die angegebenen übergeordneten Daten (Das Halbjahr ist unerheblich).
+\item Der mittlere Reiter {\ott Zeugnis}dient zur Verwaltung eines spezifischen Zeugnis für die übergordneten Daten und den im entsprechenden Feld angewählten Schüler.
+\item Der rechte Reiter {\ott Konfiguration} sollte nur in besonderen Situationen benutzt werden, da hier die Indikatoren für die übergeordneten Daten und die verschiedenen Lernbereiche editiert werden können. Änderungen wirken sich auch auf schon produzierte Zeugnisse aus und daher sollte hier nur im Notfall editiert werden.
+\end{itemize}
+\section{Benutzung}
+Das Programm \zjar\ ist in der Programmiersprache \java\ in der Version 1.8 geschrieben und benötigt zur Ausführung eine entprechende Java Runtime--Version 
+(JRE 1.8\footnote{http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html}).
+
+Wenn die Java Runtime installiert ist, kann das Programm \zjar\ mit einem Doppelklick gestartet werden.
+
+Beim erstmaligen Start des Programms \zjar\ werden folgende Dateien und Ordner in dem Verzeichnis erzeugt, aus dem das Programm gestartet wurde.
+
+\begin{itemize}
+\item {\ott config.properties} (Datei)
+\item {\ott derby.log} (Datei)
+\item {\ott Zeugnis} (Verzeichnis)
+\end{itemize}
+
+Das Verzeichnis {\ott Zeugnis} beinhaltet die Programm--interne Datenbank.
+Der Name des Verzeichnises und der gesamte Inhalt sollte nicht verändert! Diese Verzeichnis wird nur vom Programm geschrieben und gelesen.
+
+Da das Verzeichnis {\ott Zeugnis} die Datenbank darstellt, kann dieses Verzeichnis kopiert und weitergegeben werden, um die Datenbank weiterzugeben.
+
+Ist dieses komplette Verzeichnis nicht vorhanden, wird es mit Initialenwerten angelegt. Das bedeutet,
+dass keine Schüler oder Schulklassen vorhanden sind und nur die initialen Lernbereiche und Indikatoren in der Datenbank vorhanden sind. 
+
+Die Datei {\ott derby.log} wird nur vom Programm beschrieben und hat keine weitere Bedeutung für den Benutzer. Wird diese Datei gelöscht, wird die Funktion des Programmes nicht beeinträchtigt und dient nur im Fehlerfall den Entwicklern gewisse Aktionen nachzuvollziehen.
+
+Die Datei {\ott config.properties} beinhaltet einige Initialwerte aus dem Programm.
+Einige dieser Werte können vom Benutzer verändert werden, da diese Werte bei nachfolgenden Aufrufen des Programms ausgelesen werden. Sollte diese Datei gelöscht werden, wird sie beim nächsten Aufruf des Programms mit den Programm--internen Initialwerten neu erzeugt. Fehlerhafte Werte in dieser Konfigurationsdatei können aber die Funktionsfähigkeit des Programms beeinträchtigen.
+
+\subsection{Schnittstellen}
+Das Programm besitzt keine Schnittstellen zu externen Programmen.
+Es ist bisher kein Export in einem speziellen Format vorgesehen.
+Die einzige Ausgabe ist das Zeugnis selbst in einem PDF--Format.
+
+\section{Neues Schuljahr}
+Im Menü {\ott Bearbeiten} kann ein neues Schuljahr angelegt werden. Dazu werden alle Daten (Lernbereiche und Indikatoren) auf ein neues Schuljahr übertragen.
+Im neuen Schuljahr wurden die Schülerlisten von den vorherigen Klassen übernommen:
+Schüler aus der Klasse 1a wurden im neuen Schuljahr in die Klasse 2a kopiert usw. .
+
+Ein neues Schuljahr kann nur in der 2.~Hälfte des Schuljahres angelegt werden.
+Also im Schuljahr 2016/17 kann erst im Jahr 2017 ein neues Schuljahr 2017/18 angelegt werden.
+Schuljahre können nicht wieder gelöscht werden.
+
+\section{Speicherorte}
+Wenn die Zeugnisse abgespeichert werden, werden automatisch Ordner im Verzeichnis des Programms angelegt, in denen das Schuljahr, das Halbjahr und die Schlklasse kodiert sind, als z.B.
+{\ott 201611a} für das Schuljahr 2016/17, das erste Halbjahr und die Klasse 1a oder z.B. {\ott 201724b}
+für das Schuljahr 2017/18, das 2.~Halbjahr und die Klasse 4b.
+Wann immer ein Zeugnis generiert wird (auch zur Anzeige) werden diese Zeugnisse in diesen Ordner gespeichert. Alte Zeugnisse werden automatisch überschrieben.
+
+Im Schulklassen--Reiter gibt es einen Button, der für jeden Schüler ein Zeugnis generiert und in den entsprechenden Ordner abspeichert.
+\end{document}
