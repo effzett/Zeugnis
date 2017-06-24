@@ -1,4 +1,4 @@
-\documentclass[a4paper,notitlepage]{scrartcl}
+\documentclass[a4paper,notitlepage,parskip]{scrartcl}
 
 \usepackage{color}
 \usepackage{ngerman}
@@ -20,6 +20,7 @@
 \usepackage{longtable}
 \usepackage[german,scrtime,time]{prelim2e}
 \usepackage{marginnote}
+\usepackage{pdfpages}
 \graphicspath{{./jpg/}}
 \DeclareGraphicsExtensions{.jpg,.eps,.png}
 %\usepackage{courier}
@@ -107,10 +108,10 @@
 
 %\section{Motivation}
 \begin{abstract}
-\parindent0cm
-Diese Dokumentation beschreibt das Programm \z\ .\\
-Das Programm verwaltet Zeugnisse für die Grundschule. 
-und wurde speziell auf spezielle Anforderungen der Grundschule in Brelingen geschrieben.
+\noindent
+Diese Dokumentation beschreibt das Programm \z\ .
+
+\noindent Das Programm verwaltet Zeugnisse für die Grundschule und wurde speziell auf spezielle Anforderungen der Grundschule in Brelingen geschrieben.
 \end{abstract}
 
 %\begin{minipage}{\textwidth}
@@ -181,29 +182,29 @@ Das Programm ist in 4 Bereiche unterteilt:
 Als übergeordnete Daten werden das Schuljahr, das Halbjahr und die Klasse benötigt.
 Alle Daten, wie Schulklassen, Zeugnisse und auch die ggfs. modifizierten Indikatoren beziehen sich auf diese übergeordneten Werte. Dabei ist das Halbjahr nur beim Ausdruck des Zeugnisses relevant und ist für die Schülerlisten und Indikatoren nicht relevant, da bei den letzteren das Halbjahr nicht berücksichtigt wird; sowohl die Schülerlisten als auch die Indikatoren gelten immer für das gesamte ausgewählte Schuljahr.
 
-Für die Generation, Anzeige und den Ausdruck des Zeugnisses muss natürlich das richtige Halbjahr angegeben werden.
+Für die Erzeugung, Anzeige und den Ausdruck des Zeugnisses muss natürlich das richtige Halbjahr angegeben werden.
 Für jeden Schüler in einem Schuljahr und in einer Klasse gibt es zwei Zeugnisse: 1.~Halbjahr und 2.Halbjahr.
 
 \subsection{Schulklassen}
 
 Um einen Schüler in eine Schülerliste für eine Klasse eintragen zu können, muss zunächst eine neue Zeile mit dem entsprechenden Button erzeugt werden. Anschließend können die Daten für den neuen Schüler eingetragen werden. 
 
-Damit der Schüler in der Datenbank abgespeichert wird und nicht nur in der Liste erscheint (und beim nächsten Aufruf nicht mehr vorhanden ist) müssen folgende Daten ausgefüllt werden: {\ott Nachname}, {\ott Vorname} und {\ott Geburtstag}. Erst dann wird der Datensatz in die Datenbank geschrieben. Die Angabe des Geburtsortes ist optional.
+Damit der Schüler in der Datenbank abgespeichert wird und nicht nur in der Liste erscheint (und beim nächsten Aufruf nicht mehr vorhanden ist) müssen folgende Daten ausgefüllt werden: {\ott Nachname}, {\ott Vorname} und {\ott Geburtstag}. Erst dann wird der Datensatz in die Datenbank geschrieben. Die Angabe des Geburtsortes ist optional. Der {\ott Geburtstag} ist immer auf den aktuellen Tag vorselektiert.
 Fehlt eine der 3 notwendigen Angaben, so werden die Daten nicht in die Datenbank übernommen und sind beim nächsten Aufruf dieses Dialogs nicht vorhanden.
 
 Bei der Angabe des Geburtsdatum ist zu beachten, dass es aus einem Kalender gewählt werden muss und es zur Zeit erst nach dem Verlassen des Feldes angezeigt wird.
-Sowohl Name, Vorname und Geburtsort dürfen eine Länge{} von 30 Zeichen nicht überschreiten, was typischerweise ausreichen sollte. 
+Sowohl Name, Vorname und Geburtsort dürfen eine Länge von 30 Zeichen nicht überschreiten, was typischerweise ausreichen sollte. 
 
 Die Schülerdaten können editiert werden\footnote{Wenn später die 3 notwendigen Daten gelöscht werden, bleibt dieser Datensatz trotzdem in der Datenbank erhalten}, gelöscht werden und es können neue Datensätze eingefügt werden. Werden Schüler aus einer Klassenliste gelöscht, so werden auch die zugeordneten Zeugnisse für das 1. und 2.~Halbjahr gelöscht.
 Wenn vorher die entsprechenden Zeugnisse zur Anzeige gebracht oder auf andere Art abgespeichert wurden, werden diese PDF--Dateien natürlich nicht gelöscht und bleiben im Dateisystem erhalten. Hier müssten die entsprechenden Zeugnisse bei Bedarf manuell gelöscht werden.
 
-Abbildung~\ref{Schulklassen} auf Seite~\pageref{Schulklassen} zeigt die Dialogmaske für die Eingabe der Schüler.
+Abbildung~\ref{fig:Schulklassen} auf Seite~\pageref{fig:Schulklassen} zeigt die Dialogmaske für die Eingabe der Schüler.
 
 \begin{figure}[ht]
 \centering
 \centerline{\includegraphics[width=1.0\textwidth]{Schulklassen}}
-\label{Schulklassen}
 \caption{Eingabe der Schüler}
+\label{fig:Schulklassen}
 \end{figure}
 
 \subsection{Zeugnis}
@@ -225,36 +226,36 @@ Ist das 2.~Halbjahr vorgewählt worden, so erscheint hier standardmäßig der Text:
 Die gesamten Fehltage und die Fehltage ohne Entschuldigung können darunter angegeben werden.
 Dabei sollte beachtet werden, dass im Falle einer widersprüchlichen Angabe wie z.B. Fehltage ohne Entschuldigung sind mehr als gesamte Fehltage, die Fehltage ohne Entschuldigung im Ausdruck korrigiert werden, damit keine peinlichen Zeugnisse erstellt werden. 
 
-Die Bewertungen werden über eine Auswahlbox gewählt, die erscheint, wenn man rechts neben den entsprechenden Indikator klickt. Für die Indikatoren der Lernbereiche {\ott Arbeits-- und Sozialverhalten} werden die Bewertungen in Textform ausgewählt. Für den Rest der Bewertungen werden teilweise gefüllte Kreise bereitgestellt.
+Die Bewertungen werden über eine Auswahlbox gewählt, die erscheint, wenn man rechts neben den entsprechenden Indikator klickt. Für die Indikatoren der Lernbereiche \emph{Arbeits-- und Sozialverhalten} werden die Bewertungen in Textform ausgewählt. Für den Rest der Bewertungen werden teilweise gefüllte Kreise bereitgestellt.
 
 Die Gesamtbewertungen für die Lernbereiche \emph{Arbeits-- und Sozialverhalten} werden unter der rechten Tabelle als Combo--Box dargestellt und können direkt ausgewählt werden.
 
 Für jeden Lernbereich müssen so die Indikatoren bewertet werden.
-Ist zu jedem Indikator eine Bewertung erfolgt (Bewertungsfeld $!=$ leer) erscheint ein Häkchen neben dem Schülernamen, der anzeigt, dass das Zeugnis nun komplett ist und gedruckt werden kann.
+Ist zu jedem Indikator eine Bewertung erfolgt (Bewertungsfeld ist nicht leer) erscheint ein Häkchen neben dem Schülernamen, der anzeigt, dass das Zeugnis nun komplett ist und gedruckt werden kann.
 
-Abbildung~\ref{Zeugnisse} auf Seite~\pageref{Zeugnisse} zeigt die Eingabe der Bewertungen für die Lernbereiche \emph{Arbeits-- und Sozialverhalten}.
-Abbildung~\ref{Zeugnisse2} auf Seite~\pageref{Zeugnisse2} zeigt die Eingabe der Bewertungen für die anderen Lernbereiche.
+Abbildung~\ref{fig:Zeugnisse} auf Seite~\pageref{fig:Zeugnisse} zeigt die Eingabe der Bewertungen für die Lernbereiche \emph{Arbeits-- und Sozialverhalten}.
+Abbildung~\ref{fig:Zeugnisse2} auf Seite~\pageref{fig:Zeugnisse2} zeigt die Eingabe der Bewertungen für die anderen Lernbereiche.
 
 \begin{figure}[ht]
 \centering
 \centerline{\includegraphics[width=1.0\textwidth]{Zeugnisse}}
-\label{Zeugnisse}
 \caption{Ausfüllen der Zeugnisse (Arbeits-- und Sozialverhalten)}
+\label{fig:Zeugnisse}
 \end{figure}
 
 \begin{figure}[ht]
 \centering
 \centerline{\includegraphics[width=1.0\textwidth]{Zeugnisse2}}
-\label{Zeugnisse2}
 \caption{Ausfüllen der Zeugnisse (andere Lernbereiche)}
+\label{fig:Zeugnisse2}
 \end{figure}
 
 \subsection{Konfiguration}
 \begin{figure}[ht]
 \centering
 \centerline{\includegraphics[width=1.0\textwidth]{Konfiguration}}
-\label{Konfiguration}
 \caption{Verändern der Indikatoren und Zeugnissymbole}
+\label{fig:Konfiguration}
 \end{figure}
 \subsubsection{Symbole}
 Die Symbole, die im Ausdruck bei den Indikatoren erscheinen können hier verändert werden.
@@ -282,11 +283,11 @@ Indikatoren, die keinen Text besitzen und die später ein leeres Bewertungsfeld b
 
 Für alle Lernbereiche ausser \emph{Arbeits-- und Sozialverhalten} gibt es immer ein leeres Indikatorfeld, für Erweiterungen, so dass mindestens ein weiterer Indikator hinzugefügt werden kann\footnote{In Folgeversionen wird das eventuell erweitert.}.
 
-Abbildung~\ref{Konfiguration} auf Seite~\pageref{Konfiguration} zeigt die Eingabe der Bewertungen für die anderen Lernbereiche.
+Abbildung~\ref{fig:Konfiguration} auf Seite~\pageref{fig:Konfiguration} zeigt die Eingabe der Bewertungen für die anderen Lernbereiche.
 
 \subsubsection{Änderungen in {\ott config.properties}}
 \label{configKlassen}
-Ind der Konfigurationsdatei {\ott config.properties} können einige Werte des Programms konfiguriert werden, die dann beim nächsten Start des Programms initial verwendet werden.
+In der Konfigurationsdatei {\ott config.properties} können einige Werte des Programms konfiguriert werden, die dann beim nächsten Start des Programms initial verwendet werden.
 
 Zum einen sind das die Symbole in den ausgedruckten Zeugnisse, die auch im Programm verändert werden können.
 Wichtig ist hier, dass zur Zeit nur 14 Symbole zur Verfügung stehen (1\dots14). Zahlen, die nicht in diesem Bereich liegen, könnten zu Fehlern führen.
@@ -300,20 +301,29 @@ Die einzige Ausgabe ist das Zeugnis selbst in einem PDF--Format.
 
 \section{Neues Schuljahr}
 Im Menü {\ott Bearbeiten} kann ein neues Schuljahr angelegt werden. Dazu werden alle vorhandenen Grunddaten (Lernbereiche und Indikatoren) auf ein neues Schuljahr übertragen.
-Im neuen Schuljahr wurden die Schülerlisten von den vorherigen Klassen übernommen:
-Schüler aus der Klasse 1a wurden im neuen Schuljahr in die Klasse 2a kopiert usw. .
+Im neuen Schuljahr werden die Schülerlisten von den vorherigen Klassen übernommen:
+Schüler aus der Klasse 1a werden im neuen Schuljahr in die Klasse 2a kopiert usw. .
 Die pro Schüler generierten Halbjahreszeugnisse sind zunächst leer.
 
 Ein neues Schuljahr kann nur in der 2.~Hälfte des Schuljahres angelegt werden.
 Also im Schuljahr 2016/17 kann erst im Jahr 2017 ein neues Schuljahr 2017/18 angelegt werden. Weitere Schuljahre können nun erst wieder im Jahre 2018 angelegt werden. Schuljahre können nicht wieder gelöscht werden.
-Die Indikatoren und Lernbereiche werden immer aus dem aktuellen Schuljahr in das neue Schuljahr kopiert; das ist besonders wichtig, wenn die Indikatoren vorher manuell editiert wurden.
+Die Indikatoren und Lernbereiche werden immer aus dem \emph{aktuellen} Schuljahr in das neue Schuljahr kopiert; das ist besonders wichtig, wenn die Indikatoren vorher manuell editiert wurden.
 
 \section{Speicherorte}
-Wenn die Zeugnisse abgespeichert werden, werden automatisch Ordner im Verzeichnis des Programms angelegt, in denen das Schuljahr, das Halbjahr und die Schlklasse kodiert sind, als z.B.
-{\ott 201611a} für das Schuljahr 2016/17, das erste Halbjahr und die Klasse 1a oder z.B. {\ott 201724b}
+Wenn die Zeugnisse abgespeichert werden, werden automatisch Ordner im Verzeichnis des Programms angelegt, in denen das Schuljahr, das Halbjahr und die Schulklasse kodiert sind, als z.B.
+{\ott\bf 201611a} für das Schuljahr 2016/17, das erste Halbjahr und die Klasse 1a oder z.B. {\ott\bf 201724b}
 für das Schuljahr 2017/18, das 2.~Halbjahr und die Klasse 4b.
 Wann immer ein Zeugnis generiert wird (auch zur Anzeige) werden diese Zeugnisse in diesen Ordner gespeichert. Alte Zeugnisse werden automatisch überschrieben.
 
 Im Schulklassen--Reiter gibt es einen Button, der für alle dort aufgeführten Schüler ein Zeugnis generiert und in den entsprechenden Ordner abspeichert.
+
+\section{Beispielausdruck}
+Hier folgt ein Beispielausdruck eines Zeugnisses, das vollständig ausgefüllt wurde.
+
+\includepdf[pages=-]{ZeugnisMustermann.pdf}
+
+\section{Schlussbemerkung}
+Dieses Programm ist die erste Version und kann daher noch einige Fehler enthalten.
+Fehler sollten daher den Autoren per Email gemeldet werden.
 
 \end{document}

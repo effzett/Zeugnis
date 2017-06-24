@@ -747,7 +747,8 @@ public class ZeugnisPDF  {
         doc.open();
 
         // Logo
-        URL url = this.getClass().getResource("pics/GSBrelingen.jpg");
+//        URL url = this.getClass().getResource("pics/GSBrelingen.jpg");
+        URL url = this.getClass().getResource("pics/GSBrelingen.png");
         Image img = Image.getInstance(url);
         double moremargin=doc.getPageSize().getWidth()*0.0;
         float scaler = ((doc.getPageSize().getWidth() - doc.leftMargin() - doc.rightMargin()- (float)moremargin) / img.getWidth()) * 100;
