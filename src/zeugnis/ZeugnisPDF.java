@@ -696,7 +696,7 @@ public class ZeugnisPDF  {
         String Klasse    = "Klasse "+ klasse;
         
 
-        String Tage      = "Versäumte Unterrichtstage im 1. und 2. Halbjahr: "+ String.valueOf(fehltage) +  " davon unentschuldigt: " + String.valueOf(fehltageohne);
+        String Tage      = "Versäumte Unterrichtstage im "+Halbjahr+": "+ String.valueOf(fehltage) +  " davon unentschuldigt: " + String.valueOf(fehltageohne);
         String Unterschriften1 = "___________________\nUnterschrift\nSchulleiter/in";
         String Unterschriften2 = "___________________\nUnterschrift\nKlassenlehrer/in";
         String Unterschriften3 = "___________________\nUnterschrift\nErziehungsberechtigte/r";
