@@ -78,6 +78,8 @@
 \parindent0cm
 \parskip1ex
 
+\hyphenation{ge-star-tet}
+
 \begin{document}
 
 \titlehead{\centerline{Frank Zimmermann und Jürgen Derigs\ding{70} Software Dokumentation \ding{70} Zeugnis}}
@@ -123,34 +125,18 @@ und wurde speziell auf spezielle Anforderungen der Grundschule in Brelingen gesc
 \newpage
 
 \section{Funktion des Programms}
-Das Programm \z\ verwaltet Schüler in Schulklassen und erstellt Zeugnisse als PDF-Dokumente.
+Das Programm \z\ verwaltet Schüler in Schülerlisten bzw. Schulklassen und erstellt Zeugnisse als PDF-Dokumente.
 
 Im Programm können Schülerlisten für die ersten vier Grundschulklassen eingegeben
 werden\footnote{Sollten mehr als 2 Klassen pro Klassenstufe benötigt werden, so kann das in der erzeugten Konfigurationsdatei {\ott config.properties} erweitert werden.}.
 
-Als übergeordnete Daten werden das Schuljahr, das Halbjahr und die Klasse benötigt.
-Das Halbjahr spielt für die Schulklasse keine Rolle, sondern nur zur Angabe im Zeugnis.
-Die Schülerliste für eine Klasse und ein Schuljahr ist unabhängig vom Halbjahr.
-Für jeden Schüler in einem Schuljahr und in einer Klasse gibt es zwei Zeugnisse: 1.~Halbjahr und 2.Halbjahr.
+Für jeden Schüler können dann Zeugnisse ausgefüllt und anschliessend als PDF--Datei gespeichert und gedruckt werden.
 
-Um einen Schüler in eine Schülerliste für eine Klasse eintragen zu können, werden 
-Nachname, Vorname und Geburtstag benötigt. Die Angabe des Geburtsortes ist optional.
-Fehlt eine der 3 notwendigen Angaben, so werden die Daten nicht in die Datenbank übernommen.
-
-Die Schülerdaten können editiert werden, gelöscht werden und es können neue Datensätze eingefügt werden. Werden Schüler aus einer Klassenliste gelöscht, so werden auch die zugeordneten Zeugnisse für das 1. und 2. Halbjahr gelöscht.
-
-\subsection{Programmaufbau}
-Das Programm ist in 4 Bereiche unterteilt:
-
-\begin{itemize}
-\item Als  übergeordnete Daten werden oben das Schuljahr, das Halbjahr und die Schulklasse. 
-\item Der linke Reiter {\ott Schulklassen} verwaltet die Schülerlisten für die angegebenen übergeordneten Daten (Das Halbjahr ist unerheblich).
-\item Der mittlere Reiter {\ott Zeugnis}dient zur Verwaltung eines spezifischen Zeugnis für die übergordneten Daten und den im entsprechenden Feld angewählten Schüler.
-\item Der rechte Reiter {\ott Konfiguration} sollte nur in besonderen Situationen benutzt werden, da hier die Indikatoren für die übergeordneten Daten und die verschiedenen Lernbereiche editiert werden können. Änderungen wirken sich auch auf schon produzierte Zeugnisse aus und daher sollte hier nur im Notfall editiert werden.
-\end{itemize}
 \section{Benutzung}
 Das Programm \zjar\ ist in der Programmiersprache \java\ in der Version 1.8 geschrieben und benötigt zur Ausführung eine entprechende Java Runtime--Version 
 (JRE 1.8\footnote{http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html}).
+Da Java sowohl auf Windows, Linux und Apple verfügbar ist, kann das Programm auf all diesen Platformen genutzt werden.
+
 
 Wenn die Java Runtime installiert ist, kann das Programm \zjar\ mit einem Doppelklick gestartet werden.
 
@@ -163,7 +149,7 @@ Beim erstmaligen Start des Programms \zjar\ werden folgende Dateien und Ordner i
 \end{itemize}
 
 Das Verzeichnis {\ott Zeugnis} beinhaltet die Programm--interne Datenbank.
-Der Name des Verzeichnises und der gesamte Inhalt sollte nicht verändert! Diese Verzeichnis wird nur vom Programm geschrieben und gelesen.
+Der Name des Verzeichnisses und der gesamte Inhalt sollte nicht verändert! Diese Verzeichnis wird nur vom Programm geschrieben und gelesen.
 
 Da das Verzeichnis {\ott Zeugnis} die Datenbank darstellt, kann dieses Verzeichnis kopiert und weitergegeben werden, um die Datenbank weiterzugeben.
 
@@ -175,9 +161,87 @@ Die Datei {\ott derby.log} wird nur vom Programm beschrieben und hat keine weite
 Die Datei {\ott config.properties} beinhaltet einige Initialwerte aus dem Programm.
 Einige dieser Werte können vom Benutzer verändert werden, da diese Werte bei nachfolgenden Aufrufen des Programms ausgelesen werden. Sollte diese Datei gelöscht werden, wird sie beim nächsten Aufruf des Programms mit den Programm--internen Initialwerten neu erzeugt. Fehlerhafte Werte in dieser Konfigurationsdatei können aber die Funktionsfähigkeit des Programms beeinträchtigen.
 
+
+\section{Programmaufbau}
+Das Programm ist in 4 Bereiche unterteilt:
+
+\begin{itemize}
+\item Als  übergeordnete Daten werden oben das Schuljahr, das Halbjahr und die Schulklasse gewählt. 
+\item Der linke Reiter {\ott Schulklassen} verwaltet die Schülerlisten für die angegebenen übergeordneten Daten (Das Halbjahr ist dabei unerheblich).
+\item Der mittlere Reiter {\ott Zeugnisse} dient zur Verwaltung eines spezifischen Zeugnis für die übergordneten Daten und den im entsprechenden Feld angewählten Schüler.
+\item Der rechte Reiter {\ott Konfiguration} sollte nur in besonderen Situationen benutzt werden, da hier die Indikatoren für die übergeordneten Daten und die verschiedenen Lernbereiche editiert werden können. Änderungen wirken sich auch auf schon produzierte Zeugnisse aus und daher sollte hier nur im Notfall editiert werden.
+\end{itemize}
+
+\subsection{Übergeordnete Daten}
+Als übergeordnete Daten werden das Schuljahr, das Halbjahr und die Klasse benötigt.
+Alle Daten, wie Schulklassen, Zeugnisse und auch die ggfs. modifizierten Indikatoren beziehen sich auf diese übergeordneten Werte. Dabei ist das Halbjahr nur beim Ausdruck des Zeugnisses relevant und ist für die Schülerlisten und Indikatoren nicht relevant, da bei den letzteren das Halbjahr nicht berücksichtigt wird; sowohl die Schülerlisten als auch die Indikatoren gelten immer für das gesamte ausgewählte Schuljahr.
+
+Für die Generation, Anzeige und den Ausdruck des Zeugnisses muss natürlich das richtige Halbjahr angegeben werden.
+Für jeden Schüler in einem Schuljahr und in einer Klasse gibt es zwei Zeugnisse: 1.~Halbjahr und 2.Halbjahr.
+
+\subsection{Schulklassen}
+
+Um einen Schüler in eine Schülerliste für eine Klasse eintragen zu können, muss zunächst eine neu Zeile mit dem entsprechenden Button erzeugt werden. Anschließend werden die Daten für den neuen Schüler eingetragen. 
+
+Damit der Schüler in der Datenbank abgespeichert wird und nicht nur in der Liste erscheint (und beim nächsten Aufruf nicht mehr vorhanden ist) müssen folgende Daten ausgefüllt werden: {\ott Nachname}, {\ott Vorname} und {\ott Geburtstag}. Erst dann wird der Datensatz in die Datenbank geschrieben. Die Angabe des Geburtsortes ist optional.
+Fehlt eine der 3 notwendigen Angaben, so werden die Daten nicht in die Datenbank übernommen und sind beim nächsten Aufruf dieses Dialogs nicht vorhanden.
+
+Bei der Angabe des Geburtsdatum ist zu beachten, dass es aus einem Kalender gewählt werden muss und es zur Zeit erst nach verlassen des Feldes angezeigt wird.
+Sowohl Name, Vorname und Geburtsort dürfen eine Länge von 30 Zeichen nicht überschreiten, was typischerweise ausreichen sollte. 
+
+Die Schülerdaten können editiert werden\footnote{Wenn später die 3 notwendigen Daten gelöscht werden, bleibt dieser Datensatz trotzdem in der Datenbank erhalten}, gelöscht werden und es können neue Datensätze eingefügt werden. Werden Schüler aus einer Klassenliste gelöscht, so werden auch die zugeordneten Zeugnisse für das 1. und 2.~Halbjahr gelöscht.
+Wenn vorher die entsprechenden Zeugnisse zur Anzeige gebracht oder auf andere Art abgespeichert wurden, werden diese DAteien natürlich nicht gelöscht und bleiben im Dateisystem erhalten. Hier müssten die entsprechenden Zeugnisse bei Bedarf manuell gelöscht werden.
+
+\begin{figure}[ht]
+\centering
+\centerline{\includegraphics[width=1.0\textwidth]{Schulklassen}}
+\label{Schulklassen}
+\caption{Eingabe der Schüler}
+\end{figure}
+
+\subsection{Zeugnis}
+Durch Klick auf den Reiter {\ott Zeugnisse} gelangt man in den Eingabemodus für die Zeugnisse.
+
+Hier wählt man zunächst den aktuellen Schüler.
+Gegebenenfalls muss man vorher das Schuljahr, das Halbjahr und die Klasse im übergeordnetem Bereich vorwählen.
+
+Dann werden im linken Bereich der gewünschte Lernbereich ausgewählt, dessen Indikatoren dann in der rechten Tabelle erscheinen.
+Für die Lernbereiche Arbeits-- und Sozialverhalten erscheint speziell noch eine Auswahlbox unter der Tabelle, in der man die Gesamtnote wählen kann. 
+
+Im linken Bereich kann man freien Text für die Lernentwicklung angeben. Dabei sind zur Zeit keine Textformatierungen wie fett oder kursiv erlaubt.
+
+Im Bemerkungsfeld werden standardisierte Mitteilungen eingegeben.
+Ist das 2.~Halbjahr vorgewählt worden, so erscheint hier standardmäßig der Text: \emph{Versetzt nach Klasse..}.
+
+Die gesamte Fehltage und die Fehltage ohne Entschuldigung können darunter angegeben werden.
+Dabei sollte beachtet werden, dass im Falle einer widersprüchlichen Angabe wie z.B. Fehltage ohne Entschuldigung sind mehr als gesamte Fehltage, die Fehltage ohne Entschuldigung im Ausdruck korrigiert werden, damit keine peinlichen Zeugnisse erstellt werden.
+
+Die Bewertungen werden über eine Auswahlbox gewählt, die erscheint, wenn man rechts neben den entsprechenden Indikator klickt. Für die Indikatoren der Lernbereiche {\ott Arbeits-- und Sozialverhalten} werden die Bewertungen in Textform ausgewählt. Für den Rest der Bewertungen werden teilweise gefüllte Kreise bereitgestellt.
+
+\begin{figure}[ht]
+\centering
+\centerline{\includegraphics[width=1.0\textwidth]{Zeugnisse}}
+\label{Zeugnisse}
+\caption{Ausfüllen der Zeugnisse}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\centerline{\includegraphics[width=1.0\textwidth]{Zeugnisse2}}
+\label{Zeugnisse2}
+\caption{Ausfüllen der Zeugnisse2}
+\end{figure}
+
+\subsection{Konfiguration}
+\begin{figure}[ht]
+\centering
+\centerline{\includegraphics[width=1.0\textwidth]{Konfiguration}}
+\label{Konfiguration}
+\caption{Verändern der Indikatoren und Zeugnissymbole}
+\end{figure}
+
 \subsection{Schnittstellen}
-Das Programm besitzt keine Schnittstellen zu externen Programmen.
-Es ist bisher kein Export in einem speziellen Format vorgesehen.
+Das Programm besitzt keine Schnittstellen zu externen Programmen. Es ist zur Zeit kein Import oder Export möglich.
 Die einzige Ausgabe ist das Zeugnis selbst in einem PDF--Format.
 
 \section{Neues Schuljahr}
