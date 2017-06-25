@@ -855,7 +855,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
     private void changeTab(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_changeTab
 
-        jComboBox2.setEnabled((jTabbedPane1.getSelectedIndex() != 0));
+        jComboBox2.setEnabled((jTabbedPane1.getSelectedIndex() == 1));
 
         if (jTabbedPane1.getSelectedIndex() == 1) { // Zeugnis
             Integer idSchueler;
