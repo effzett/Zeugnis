@@ -18,6 +18,10 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -1086,17 +1090,26 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        File file=new File(this.getClass().getResource("pics/zeugnis.pdf").getFile());
-
+        String inputPdf = "pics/zeugnis.pdf";
+        Path tempOutput=null;
+        try {
+            tempOutput = Files.createTempFile("TempManualZeugnis", ".pdf");
+            tempOutput.toFile().deleteOnExit();
+            InputStream is = this.getClass().getResourceAsStream(inputPdf);
+            Files.copy(is, tempOutput, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         Desktop desktop = Desktop.getDesktop();
         if (desktop != null && desktop.isSupported(Desktop.Action.OPEN)) {
             try {
-                desktop.open(file);
+                desktop.open(tempOutput.toFile());
             } catch (IOException ex) {
                 Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            System.err.println("PDF-Datei kann nicht angezeigt werden: " + file.getPath());
+            System.err.println("PDF-Datei kann nicht angezeigt werden: " + tempOutput.toFile().getPath());
         }
 
     }//GEN-LAST:event_jMenuItem4ActionPerformed
