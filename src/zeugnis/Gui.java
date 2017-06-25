@@ -234,14 +234,21 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             TableColumn column = jTable1.getColumnModel().getColumn(0);
             column.setWidth(0);
             column.setMaxWidth(0);
+            column.setMinWidth(0);
             column = jTable1.getColumnModel().getColumn(3);
             column.setCellEditor(new zeugnis.DateCellEditor());
+            column.setMaxWidth(85);
+            column.setMinWidth(85);
             column = jTable1.getColumnModel().getColumn(5);
             column.setCellEditor(new zeugnis.DeleteCellEditor());
             column.setCellRenderer(new IconCellRenderer());
+            column.setMaxWidth(60);
+            column.setMinWidth(60);
             column = jTable1.getColumnModel().getColumn(6);
             column.setCellEditor(new PdfCellEditor());
             column.setCellRenderer(new IconCellRenderer());
+            column.setMaxWidth(98);
+            column.setMinWidth(98);
             jScrollPane1.setViewportView(jTable1);
 
             jButton1.setText("Neue Zeile");
