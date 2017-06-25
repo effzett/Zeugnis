@@ -9,12 +9,14 @@ import com.itextpdf.text.DocumentException;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -150,6 +152,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
 
         jDialog1.setMinimumSize(new java.awt.Dimension(30, 20));
@@ -695,6 +698,14 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
                         jMenu3.setText("Hilfe");
 
+                        jMenuItem4.setText("Dokumentation");
+                        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+                            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                jMenuItem4ActionPerformed(evt);
+                            }
+                        });
+                        jMenu3.add(jMenuItem4);
+
                         jMenuItem3.setText("Info");
                         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
                             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1073,6 +1084,23 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         ZeugnisPDF.setSymbol2( (jComboBox8.getSelectedIndex()+1) );
     }//GEN-LAST:event_jComboBox8ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        File file=new File(this.getClass().getResource("pics/zeugnis.pdf").getFile());
+
+        Desktop desktop = Desktop.getDesktop();
+        if (desktop != null && desktop.isSupported(Desktop.Action.OPEN)) {
+            try {
+                desktop.open(file);
+            } catch (IOException ex) {
+                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            System.err.println("PDF-Datei kann nicht angezeigt werden: " + file.getPath());
+        }
+
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     
     public void fillTabFromTestimony() {
         if (jComboBox4.getSelectedItem() != null) {
@@ -1346,6 +1374,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

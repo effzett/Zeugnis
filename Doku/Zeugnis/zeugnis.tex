@@ -159,7 +159,7 @@ Der Name des Verzeichnisses und der gesamte Inhalt sollte nicht verändert! Diese
 
 Da das Verzeichnis {\ott Zeugnis} die Datenbank darstellt, kann dieses Verzeichnis kopiert und weitergegeben werden, um die Datenbank weiterzugeben.
 
-Ist dieses komplette Verzeichnis nicht vorhanden, wird es mit Initialenwerten angelegt. Das bedeutet,
+Ist dieses komplette Verzeichnis nicht vorhanden, wird es mit Initialwerten angelegt. Das bedeutet,
 dass keine Schüler oder Schulklassen vorhanden sind und nur die initialen Lernbereiche und Indikatoren in der Datenbank vorhanden sind. 
 
 Die Datei {\ott derby.log} wird nur vom Programm beschrieben und hat keine weitere Bedeutung für den Benutzer. Wird diese Datei gelöscht, wird die Funktion des Programmes nicht beeinträchtigt und dient nur im Fehlerfall den Entwicklern gewisse Aktionen nachzuvollziehen.
@@ -180,10 +180,10 @@ Das Programm ist in 4 Bereiche unterteilt:
 
 \subsection{Übergeordnete Daten}
 Als übergeordnete Daten werden das Schuljahr, das Halbjahr und die Klasse benötigt.
-Alle Daten, wie Schulklassen, Zeugnisse und auch die ggfs. modifizierten Indikatoren beziehen sich auf diese übergeordneten Werte. Dabei ist das Halbjahr nur beim Ausdruck des Zeugnisses relevant und ist für die Schülerlisten und Indikatoren nicht relevant, da bei den letzteren das Halbjahr nicht berücksichtigt wird; sowohl die Schülerlisten als auch die Indikatoren gelten immer für das gesamte ausgewählte Schuljahr.
+Alle Daten, wie Schulklassen, Zeugnisse und auch die ggfs. modifizierten Indikatoren beziehen sich auf diese übergeordneten Werte. Dabei ist das Halbjahr nur beim Ausdruck des Zeugnisses relevant und ist für die Schülerlisten und Indikatoren nicht relevant. Sowohl die Schülerlisten als auch die Indikatoren gelten immer für das gesamte ausgewählte Schuljahr.
 
 Für die Erzeugung, Anzeige und den Ausdruck des Zeugnisses muss natürlich das richtige Halbjahr angegeben werden.
-Für jeden Schüler in einem Schuljahr und in einer Klasse gibt es zwei Zeugnisse: 1.~Halbjahr und 2.Halbjahr.
+Für jeden Schüler in einem Schuljahr und in einer Klasse gibt es zwei Zeugnisse: 1.~Halbjahr und 2.Halbjahr. Das Halbjahr kann nur im Reiter {\ott Zeugnisse} eingestellt werden.
 
 \subsection{Schulklassen}
 
