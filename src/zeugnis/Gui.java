@@ -1436,6 +1436,23 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                     values[4] = (String) jComboBox3.getSelectedItem();
                     values[5] = ((String) jComboBox1.getSelectedItem()).substring(0, 4);
 
+                    // pruefen ob name, vorname und gebort <= 30 Zeichen
+                    boolean isTooLong=false; 
+                    if(values[0].length()>30){
+                        values[0]=values[0].substring(0, 30);
+                        isTooLong=true;
+                    }
+                    if(values[1].length()>30){
+                        values[1]=values[1].substring(0, 30);
+                        isTooLong=true;
+                    }
+                    if(values[3].length()>30){
+                        values[3]=values[3].substring(0, 30);
+                        isTooLong=true;
+                    }
+                    if(isTooLong){
+                        JOptionPane.showMessageDialog(null, "Achtung: Wert in der Datenbank wird auf 30 Zeichen begrenzt!");
+                    }
                     try {
                         tableModelEventEnabled = false;
                         // insert
