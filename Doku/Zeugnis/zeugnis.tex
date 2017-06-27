@@ -137,13 +137,15 @@ Für jeden Schüler können dann Zeugnisse ausgefüllt und anschliessend als PDF--Da
 \subsection{Plattform}
 Das Programm \zjar\ ist in der Programmiersprache \java\ in der Version 1.8 geschrieben und benötigt zur Ausführung eine entprechende Java Runtime--Version 
 (JRE 1.8\footnote{http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html}).
-Da Java sowohl auf Windows, Linux und Apple verfügbar ist, kann das Programm auf all diesen Platformen genutzt werden.
+Da Java sowohl auf Windows, Linux und Apple verfügbar ist, kann das Programm auf all diesen Platformen genutzt werden. Das Programm wurde unter Windows~7, Windows~10 und OSC~10.10.5 getestet.
 
 Das Programm nutzt zur Anzeige der erzeugten PDF--Datei den PDF--Viewer, der auf dem System zur Anzeige von PDF--Dateien konfiguriert ist. Sollte kein PDF--Viewer auf dem System vorhanden sein, so kann man sich unter verschiedenen Anbietern im Internet einen geeigneten Anbieter für seine Plattform auswählen und installieren.
 
 \subsection{Aufruf}
 Wenn die Java Runtime installiert ist, kann das Programm \zjar\ mit einem Doppelklick gestartet werden. Sollte kein Programm mit der Dateiendung {\ott .jar} assoziert sein, so kann man das Programm auch per Kommandozeile aufrufen:\\
 {\ott java -jar Zeugnis.jar}
+
+Da beim ersten Aufruf des Programms auch die initiale Datenbank mit den Lernbereichen und Indikatoren erstellt werden muss, dauert der erste Aufruf des Programms etwas länger.
 
 \subsection{Erzeugte Dateien und Ordner}
 Beim erstmaligen Start des Programms \zjar\ werden folgende Dateien und Ordner in dem Verzeichnis erzeugt, aus dem das Programm gestartet wurde.
