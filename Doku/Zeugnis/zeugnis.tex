@@ -7,7 +7,7 @@
 \usepackage{float}
 \usepackage{fancybox}
 \usepackage[T1]{fontenc}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage{pifont}
 \usepackage{url}
 \usepackage{booktabs}
@@ -83,11 +83,11 @@
 
 \begin{document}
 
-\titlehead{\centerline{Frank Zimmermann und Jürgen Derigs\ding{70} Software Dokumentation \ding{70} Zeugnis}}
+\titlehead{\centerline{Frank Zimmermann und JÃ¼rgen Derigs\ding{70} Software Dokumentation \ding{70} Zeugnis}}
 %\titlehead{\includegraphics{zenlogo}}
 \subject{Dokumentation}
-\title{\zjar\\[1.0ex]\large\zversion\\[1.5ex] \small Letztes Änderungsdatum \today}
-\author{Frank Zimmermann\thanks{frank.zimmermann@zenmeister.de} \and Jürgen Derigs\thanks{juergen@derigs.de}}
+\title{\zjar\\[1.0ex]\large\zversion\\[1.5ex] \small Letztes Ã„nderungsdatum \today}
+\author{Frank Zimmermann\thanks{frank.zimmermann@zenmeister.de} \and JÃ¼rgen Derigs\thanks{juergen@derigs.de}}
 \date{Erstellungsdatum: 22. Juni 2017}
 
 %\maketitle
@@ -101,8 +101,8 @@
 %\date{01.01.0001}
 %\publishers{Betreut und herausgegeben von Prof. Dr. rer. LaTeX}
 %\extratitle{\centering Schmutztitel \\ goLaTeX (C) 2009 \\ ISBN 978-3865412911}
-%\uppertitleback{Obiger Titelrückentitel}
-%\lowertitleback{Für dieses Beispiel wird keine Haftung übernommen.}
+%\uppertitleback{Obiger TitelrÃ¼ckentitel}
+%\lowertitleback{FÃ¼r dieses Beispiel wird keine Haftung Ã¼bernommen.}
 %\dedication{Dieses Beispiel widme ich\\allen LaTeX Usern}
 \maketitle
 
@@ -111,7 +111,7 @@
 \noindent
 Diese Dokumentation beschreibt das Programm \z\ .
 
-\noindent Das Programm verwaltet Zeugnisse für die Grundschule und wurde speziell auf spezielle Anforderungen der Grundschule in Brelingen geschrieben.
+\noindent Das Programm verwaltet Zeugnisse fÃ¼r die Grundschule und wurde speziell auf spezielle Anforderungen der Grundschule in Brelingen geschrieben.
 \end{abstract}
 
 %\begin{minipage}{\textwidth}
@@ -126,26 +126,26 @@ Diese Dokumentation beschreibt das Programm \z\ .
 \newpage
 
 \section{Funktion des Programms}
-Das Programm \z\ verwaltet Schüler in Schülerlisten bzw. Schulklassen und erstellt Zeugnisse als PDF-Dokumente.
+Das Programm \z\ verwaltet SchÃ¼ler in SchÃ¼lerlisten bzw. Schulklassen und erstellt Zeugnisse als PDF-Dokumente.
 
-Im Programm können Schülerlisten für die ersten vier Grundschulklassen eingegeben
-werden\footnote{Sollten mehr als 2 Klassen pro Klassenstufe benötigt werden, so kann das in der erzeugten Konfigurationsdatei {\ott config.properties} erweitert werden (siehe auch Abschn.~\ref{configKlassen} auf Seite~\pageref{configKlassen}).}.
+Im Programm kÃ¶nnen SchÃ¼lerlisten fÃ¼r die ersten vier Grundschulklassen eingegeben
+werden\footnote{Sollten mehr als 2 Klassen pro Klassenstufe benÃ¶tigt werden, so kann das in der erzeugten Konfigurationsdatei {\ott config.properties} erweitert werden (siehe auch Abschn.~\ref{configKlassen} auf Seite~\pageref{configKlassen}).}.
 
-Für jeden Schüler können dann Zeugnisse ausgefüllt und anschliessend als PDF--Datei gespeichert, angezeigt und gedruckt werden.
+FÃ¼r jeden SchÃ¼ler kÃ¶nnen dann Zeugnisse ausgefÃ¼llt und anschliessend als PDF--Datei gespeichert, angezeigt und gedruckt werden.
 
 \section{Benutzung}
 \subsection{Plattform}
-Das Programm \zjar\ ist in der Programmiersprache \java\ in der Version 1.8 geschrieben und benötigt zur Ausführung eine entprechende Java Runtime--Version 
+Das Programm \zjar\ ist in der Programmiersprache \java\ in der Version 1.8 geschrieben und benÃ¶tigt zur AusfÃ¼hrung eine entprechende Java Runtime--Version 
 (JRE 1.8\footnote{http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html}).
-Da Java sowohl auf Windows, Linux und Apple verfügbar ist, kann das Programm auf all diesen Platformen genutzt werden. Das Programm wurde unter Windows~7, Windows~10 und OSC~10.10.5 getestet.
+Da Java sowohl auf Windows, Linux und Apple verfÃ¼gbar ist, kann das Programm auf all diesen Platformen genutzt werden. Das Programm wurde unter Windows~7, Windows~10 und OSC~10.10.5 getestet.
 
-Das Programm nutzt zur Anzeige der erzeugten PDF--Datei den PDF--Viewer, der auf dem System zur Anzeige von PDF--Dateien konfiguriert ist. Sollte kein PDF--Viewer auf dem System vorhanden sein, so kann man sich unter verschiedenen Anbietern im Internet einen geeigneten Anbieter für seine Plattform auswählen und installieren.
+Das Programm nutzt zur Anzeige der erzeugten PDF--Datei den PDF--Viewer, der auf dem System zur Anzeige von PDF--Dateien konfiguriert ist. Sollte kein PDF--Viewer auf dem System vorhanden sein, so kann man sich unter verschiedenen Anbietern im Internet einen geeigneten Anbieter fÃ¼r seine Plattform auswÃ¤hlen und installieren.
 
 \subsection{Aufruf}
 Wenn die Java Runtime installiert ist, kann das Programm \zjar\ mit einem Doppelklick gestartet werden. Sollte kein Programm mit der Dateiendung {\ott .jar} assoziert sein, so kann man das Programm auch per Kommandozeile aufrufen:\\
 {\ott java -jar Zeugnis.jar}
 
-Da beim ersten Aufruf des Programms auch die initiale Datenbank mit den Lernbereichen und Indikatoren erstellt werden muss, dauert der erste Aufruf des Programms etwas länger.
+Da beim ersten Aufruf des Programms auch die initiale Datenbank mit den Lernbereichen und Indikatoren erstellt werden muss, dauert der erste Aufruf des Programms etwas lÃ¤nger.
 
 \subsection{Erzeugte Dateien und Ordner}
 Beim erstmaligen Start des Programms \zjar\ werden folgende Dateien und Ordner in dem Verzeichnis erzeugt, aus dem das Programm gestartet wurde.
@@ -157,98 +157,98 @@ Beim erstmaligen Start des Programms \zjar\ werden folgende Dateien und Ordner i
 \end{itemize}
 
 Das Verzeichnis {\ott Zeugnis} beinhaltet die Programm--interne Datenbank.
-Der Name des Verzeichnisses und der gesamte Inhalt sollte nicht verändert! Diese Verzeichnis wird nur vom Programm geschrieben und gelesen.
+Der Name des Verzeichnisses und der gesamte Inhalt sollte nicht verÃ¤ndert! Diese Verzeichnis wird nur vom Programm geschrieben und gelesen.
 
 Da das Verzeichnis {\ott Zeugnis} die Datenbank darstellt, kann dieses Verzeichnis kopiert und weitergegeben werden, um die Datenbank weiterzugeben.
 
 Ist dieses komplette Verzeichnis nicht vorhanden, wird es mit Initialwerten angelegt. Das bedeutet,
-dass keine Schüler oder Schulklassen vorhanden sind und nur die initialen Lernbereiche und Indikatoren in der Datenbank vorhanden sind. 
+dass keine SchÃ¼ler oder Schulklassen vorhanden sind und nur die initialen Lernbereiche und Indikatoren in der Datenbank vorhanden sind. 
 
-Die Datei {\ott derby.log} wird nur vom Programm beschrieben und hat keine weitere Bedeutung für den Benutzer. Wird diese Datei gelöscht, wird die Funktion des Programmes nicht beeinträchtigt und dient nur im Fehlerfall den Entwicklern gewisse Aktionen nachzuvollziehen.
+Die Datei {\ott derby.log} wird nur vom Programm beschrieben und hat keine weitere Bedeutung fÃ¼r den Benutzer. Wird diese Datei gelÃ¶scht, wird die Funktion des Programmes nicht beeintrÃ¤chtigt und dient nur im Fehlerfall den Entwicklern gewisse Aktionen nachzuvollziehen.
 
 Die Datei {\ott config.properties} beinhaltet einige Initialwerte aus dem Programm.
-Einige dieser Werte können vom Benutzer verändert werden, da diese Werte bei nachfolgenden Aufrufen des Programms ausgelesen werden. Sollte diese Datei gelöscht werden, wird sie beim nächsten Aufruf des Programms mit den Programm--internen Initialwerten neu erzeugt. Fehlerhafte Werte in dieser Konfigurationsdatei können aber die Funktionsfähigkeit des Programms beeinträchtigen.
+Einige dieser Werte kÃ¶nnen vom Benutzer verÃ¤ndert werden, da diese Werte bei nachfolgenden Aufrufen des Programms ausgelesen werden. Sollte diese Datei gelÃ¶scht werden, wird sie beim nÃ¤chsten Aufruf des Programms mit den Programm--internen Initialwerten neu erzeugt. Fehlerhafte Werte in dieser Konfigurationsdatei kÃ¶nnen aber die FunktionsfÃ¤higkeit des Programms beeintrÃ¤chtigen.
 
 
 \section{Programmaufbau}
 Das Programm ist in 4 Bereiche unterteilt:
 
 \begin{itemize}
-\item Als  übergeordnete Daten werden oben das Schuljahr, das Halbjahr und die Schulklasse gewählt. 
-\item Der linke Reiter {\ott Schulklassen} verwaltet die Schülerlisten für die angegebenen übergeordneten Daten (Das Halbjahr ist dabei unerheblich).
-\item Der mittlere Reiter {\ott Zeugnisse} dient zur Verwaltung eines spezifischen Zeugnis für die übergeordneten Daten und den im entsprechenden Feld angewählten Schüler.
-\item Der rechte Reiter {\ott Konfiguration} sollte nur in besonderen Situationen benutzt werden, da hier die Indikatoren für die übergeordneten Daten und die verschiedenen Lernbereiche editiert werden können. Änderungen wirken sich auch auf schon produzierte Zeugnisse aus und daher sollte hier nur im Notfall editiert werden.
+\item Als  Ã¼bergeordnete Daten werden oben das Schuljahr, das Halbjahr und die Schulklasse gewÃ¤hlt. 
+\item Der linke Reiter {\ott Schulklassen} verwaltet die SchÃ¼lerlisten fÃ¼r die angegebenen Ã¼bergeordneten Daten (Das Halbjahr ist dabei unerheblich).
+\item Der mittlere Reiter {\ott Zeugnisse} dient zur Verwaltung eines spezifischen Zeugnis fÃ¼r die Ã¼bergeordneten Daten und den im entsprechenden Feld angewÃ¤hlten SchÃ¼ler.
+\item Der rechte Reiter {\ott Konfiguration} sollte nur in besonderen Situationen benutzt werden, da hier die Indikatoren fÃ¼r die Ã¼bergeordneten Daten und die verschiedenen Lernbereiche editiert werden kÃ¶nnen. Ã„nderungen wirken sich auch auf schon produzierte Zeugnisse aus und daher sollte hier nur im Notfall editiert werden.
 \end{itemize}
 
-\subsection{Übergeordnete Daten}
-Als übergeordnete Daten werden das Schuljahr, das Halbjahr und die Klasse benötigt.
-Alle Daten, wie Schulklassen, Zeugnisse und auch die ggfs. modifizierten Indikatoren beziehen sich auf diese übergeordneten Werte. Dabei ist das Halbjahr nur beim Ausdruck des Zeugnisses relevant und ist für die Schülerlisten und Indikatoren nicht relevant. Sowohl die Schülerlisten als auch die Indikatoren gelten immer für das gesamte ausgewählte Schuljahr.
+\subsection{Ãœbergeordnete Daten}
+Als Ã¼bergeordnete Daten werden das Schuljahr, das Halbjahr und die Klasse benÃ¶tigt.
+Alle Daten, wie Schulklassen, Zeugnisse und auch die ggfs. modifizierten Indikatoren beziehen sich auf diese Ã¼bergeordneten Werte. Dabei ist das Halbjahr nur beim Ausdruck des Zeugnisses relevant und ist fÃ¼r die SchÃ¼lerlisten und Indikatoren nicht relevant. Sowohl die SchÃ¼lerlisten als auch die Indikatoren gelten immer fÃ¼r das gesamte ausgewÃ¤hlte Schuljahr.
 
-Für die Erzeugung, Anzeige und den Ausdruck des Zeugnisses muss natürlich das richtige Halbjahr angegeben werden.
-Für jeden Schüler in einem Schuljahr und in einer Klasse gibt es zwei Zeugnisse: 1.~Halbjahr und 2.Halbjahr. Das Halbjahr kann nur im Reiter {\ott Zeugnisse} eingestellt werden.
+FÃ¼r die Erzeugung, Anzeige und den Ausdruck des Zeugnisses muss natÃ¼rlich das richtige Halbjahr angegeben werden.
+FÃ¼r jeden SchÃ¼ler in einem Schuljahr und in einer Klasse gibt es zwei Zeugnisse: 1.~Halbjahr und 2.Halbjahr. Das Halbjahr kann nur im Reiter {\ott Zeugnisse} eingestellt werden.
 
 \subsection{Schulklassen}
 
-Um einen Schüler in eine Schülerliste für eine Klasse eintragen zu können, muss zunächst eine neue Zeile mit dem entsprechenden Button erzeugt werden. Anschließend können die Daten für den neuen Schüler eingetragen werden. 
+Um einen SchÃ¼ler in eine SchÃ¼lerliste fÃ¼r eine Klasse eintragen zu kÃ¶nnen, muss zunÃ¤chst eine neue Zeile mit dem entsprechenden Button erzeugt werden. AnschlieÃŸend kÃ¶nnen die Daten fÃ¼r den neuen SchÃ¼ler eingetragen werden. 
 
-Damit der Schüler in der Datenbank abgespeichert wird und nicht nur in der Liste erscheint (und beim nächsten Aufruf nicht mehr vorhanden ist) müssen folgende Daten ausgefüllt werden: {\ott Nachname}, {\ott Vorname} und {\ott Geburtstag}. Erst dann wird der Datensatz in die Datenbank geschrieben. Die Angabe des Geburtsortes ist optional. Der {\ott Geburtstag} ist immer auf den aktuellen Tag vorselektiert.
-Fehlt eine der 3 notwendigen Angaben, so werden die Daten nicht in die Datenbank übernommen und sind beim nächsten Aufruf dieses Dialogs nicht vorhanden.
+Damit der SchÃ¼ler in der Datenbank abgespeichert wird und nicht nur in der Liste erscheint (und beim nÃ¤chsten Aufruf nicht mehr vorhanden ist) mÃ¼ssen folgende Daten ausgefÃ¼llt werden: {\ott Nachname}, {\ott Vorname} und {\ott Geburtstag}. Erst dann wird der Datensatz in die Datenbank geschrieben. Die Angabe des Geburtsortes ist optional. Der {\ott Geburtstag} ist immer auf den aktuellen Tag vorselektiert.
+Fehlt eine der 3 notwendigen Angaben, so werden die Daten nicht in die Datenbank Ã¼bernommen und sind beim nÃ¤chsten Aufruf dieses Dialogs nicht vorhanden.
 
-Bei der Angabe des Geburtsdatum ist zu beachten, dass es aus einem Kalender gewählt werden muss und es zur Zeit erst nach dem Verlassen des Feldes angezeigt wird.
-Sowohl Name, Vorname und Geburtsort dürfen eine Länge von 30 Zeichen nicht überschreiten, was typischerweise ausreichen sollte. 
+Bei der Angabe des Geburtsdatum ist zu beachten, dass es aus einem Kalender gewÃ¤hlt werden muss und es zur Zeit erst nach dem Verlassen des Feldes angezeigt wird.
+Sowohl Name, Vorname und Geburtsort dÃ¼rfen eine LÃ¤nge von 30 Zeichen nicht Ã¼berschreiten, was typischerweise ausreichen sollte. 
 
-Die Schülerdaten können editiert werden\footnote{Wenn später die 3 notwendigen Daten gelöscht werden, bleibt dieser Datensatz trotzdem in der Datenbank erhalten}, gelöscht werden und es können neue Datensätze eingefügt werden. Werden Schüler aus einer Klassenliste gelöscht, so werden auch die zugeordneten Zeugnisse für das 1. und 2.~Halbjahr gelöscht.
-Wenn vorher die entsprechenden Zeugnisse zur Anzeige gebracht oder auf andere Art abgespeichert wurden, werden diese PDF--Dateien natürlich nicht gelöscht und bleiben im Dateisystem erhalten. Hier müssten die entsprechenden Zeugnisse bei Bedarf manuell gelöscht werden.
+Die SchÃ¼lerdaten kÃ¶nnen editiert werden\footnote{Wenn spÃ¤ter die 3 notwendigen Daten gelÃ¶scht werden, bleibt dieser Datensatz trotzdem in der Datenbank erhalten}, gelÃ¶scht werden und es kÃ¶nnen neue DatensÃ¤tze eingefÃ¼gt werden. Werden SchÃ¼ler aus einer Klassenliste gelÃ¶scht, so werden auch die zugeordneten Zeugnisse fÃ¼r das 1. und 2.~Halbjahr gelÃ¶scht.
+Wenn vorher die entsprechenden Zeugnisse zur Anzeige gebracht oder auf andere Art abgespeichert wurden, werden diese PDF--Dateien natÃ¼rlich nicht gelÃ¶scht und bleiben im Dateisystem erhalten. Hier mÃ¼ssten die entsprechenden Zeugnisse bei Bedarf manuell gelÃ¶scht werden.
 
-Abbildung~\ref{fig:Schulklassen} auf Seite~\pageref{fig:Schulklassen} zeigt die Dialogmaske für die Eingabe der Schüler.
+Abbildung~\ref{fig:Schulklassen} auf Seite~\pageref{fig:Schulklassen} zeigt die Dialogmaske fÃ¼r die Eingabe der SchÃ¼ler.
 
 \begin{figure}[ht]
 \centering
 \centerline{\includegraphics[width=1.0\textwidth]{Schulklassen}}
-\caption{Eingabe der Schüler}
+\caption{Eingabe der SchÃ¼ler}
 \label{fig:Schulklassen}
 \end{figure}
 
 \subsection{Zeugnis}
-Durch Klick auf den Reiter {\ott Zeugnisse} gelangt man in den Eingabemodus für die Zeugnisse.
+Durch Klick auf den Reiter {\ott Zeugnisse} gelangt man in den Eingabemodus fÃ¼r die Zeugnisse.
 
-Hier wählt man zunächst den aktuellen Schüler.
-Gegebenenfalls muss man vorher das Schuljahr, das Halbjahr und die Klasse im übergeordneten Bereich vorwählen.
-Zu beachten ist, dass es für die Zeugnisse wichtig ist, ob sie für das 1. oder für das 2. Halbjahr gelten sollen,
-da dies im Ausdruck natürlich gekennzeichnet wird.
+Hier wÃ¤hlt man zunÃ¤chst den aktuellen SchÃ¼ler.
+Gegebenenfalls muss man vorher das Schuljahr, das Halbjahr und die Klasse im Ã¼bergeordneten Bereich vorwÃ¤hlen.
+Zu beachten ist, dass es fÃ¼r die Zeugnisse wichtig ist, ob sie fÃ¼r das 1. oder fÃ¼r das 2. Halbjahr gelten sollen,
+da dies im Ausdruck natÃ¼rlich gekennzeichnet wird.
 
-Dann werden im linken Bereich der gewünschte Lernbereich ausgewählt, dessen Indikatoren dann in der rechten Tabelle erscheinen.
-Für die Lernbereiche Arbeits-- und Sozialverhalten erscheint speziell noch eine Auswahlbox unter der Tabelle, in der man die Gesamtnote wählen kann. 
+Dann werden im linken Bereich der gewÃ¼nschte Lernbereich ausgewÃ¤hlt, dessen Indikatoren dann in der rechten Tabelle erscheinen.
+FÃ¼r die Lernbereiche Arbeits-- und Sozialverhalten erscheint speziell noch eine Auswahlbox unter der Tabelle, in der man die Gesamtnote wÃ¤hlen kann. 
 
-Im linken Bereich kann man auch freien Text für die Lernentwicklung oder anderen Text angeben. Dabei sind zur Zeit keine Textformatierungen wie fett oder kursiv erlaubt, um ein konsistentes Erscheinungsbild zu erhalten.
+Im linken Bereich kann man auch freien Text fÃ¼r die Lernentwicklung oder anderen Text angeben. Dabei sind zur Zeit keine Textformatierungen wie fett oder kursiv erlaubt, um ein konsistentes Erscheinungsbild zu erhalten.
 
 Im Bemerkungsfeld werden mehr standardisierte kurze Mitteilungen eingegeben.
-Ist das 2.~Halbjahr vorgewählt worden, so erscheint hier standardmäßig der Text: \emph{Versetzt nach Klasse..{\ott Folgeklasse}}.
+Ist das 2.~Halbjahr vorgewÃ¤hlt worden, so erscheint hier standardmÃ¤ÃŸig der Text: \emph{Versetzt nach Klasse..{\ott Folgeklasse}}.
 
-Die gesamten Fehltage und die Fehltage ohne Entschuldigung können darunter angegeben werden.
-Dabei sollte beachtet werden, dass im Falle einer widersprüchlichen Angabe wie z.B. Fehltage ohne Entschuldigung sind mehr als gesamte Fehltage, die Fehltage ohne Entschuldigung im Ausdruck korrigiert werden, damit keine peinlichen Zeugnisse erstellt werden. 
+Die gesamten Fehltage und die Fehltage ohne Entschuldigung kÃ¶nnen darunter angegeben werden.
+Dabei sollte beachtet werden, dass im Falle einer widersprÃ¼chlichen Angabe wie z.B. Fehltage ohne Entschuldigung sind mehr als gesamte Fehltage, die Fehltage ohne Entschuldigung im Ausdruck korrigiert werden, damit keine peinlichen Zeugnisse erstellt werden. 
 
-Die Bewertungen werden über eine Auswahlbox gewählt, die erscheint, wenn man rechts neben den entsprechenden Indikator klickt. Für die Indikatoren der Lernbereiche \emph{Arbeits-- und Sozialverhalten} werden die Bewertungen in Textform ausgewählt. Für den Rest der Bewertungen werden teilweise gefüllte Kreise bereitgestellt.
+Die Bewertungen werden Ã¼ber eine Auswahlbox gewÃ¤hlt, die erscheint, wenn man rechts neben den entsprechenden Indikator klickt. FÃ¼r die Indikatoren der Lernbereiche \emph{Arbeits-- und Sozialverhalten} werden die Bewertungen in Textform ausgewÃ¤hlt. FÃ¼r den Rest der Bewertungen werden teilweise gefÃ¼llte Kreise bereitgestellt.
 
-Die Gesamtbewertungen für die Lernbereiche \emph{Arbeits-- und Sozialverhalten} werden unter der rechten Tabelle als Combo--Box dargestellt und können direkt ausgewählt werden.
+Die Gesamtbewertungen fÃ¼r die Lernbereiche \emph{Arbeits-- und Sozialverhalten} werden unter der rechten Tabelle als Combo--Box dargestellt und kÃ¶nnen direkt ausgewÃ¤hlt werden.
 
-Für jeden Lernbereich müssen so die Indikatoren bewertet werden.
-Ist zu jedem Indikator eine Bewertung erfolgt (Bewertungsfeld ist nicht leer) erscheint ein Häkchen neben dem Schülernamen, der anzeigt, dass das Zeugnis nun komplett ist und gedruckt werden kann.
+FÃ¼r jeden Lernbereich mÃ¼ssen so die Indikatoren bewertet werden.
+Ist zu jedem Indikator eine Bewertung erfolgt (Bewertungsfeld ist nicht leer) erscheint ein HÃ¤kchen neben dem SchÃ¼lernamen, der anzeigt, dass das Zeugnis nun komplett ist und gedruckt werden kann.
 
-Abbildung~\ref{fig:Zeugnisse} auf Seite~\pageref{fig:Zeugnisse} zeigt die Eingabe der Bewertungen für die Lernbereiche \emph{Arbeits-- und Sozialverhalten}.
-Abbildung~\ref{fig:Zeugnisse2} auf Seite~\pageref{fig:Zeugnisse2} zeigt die Eingabe der Bewertungen für die anderen Lernbereiche.
+Abbildung~\ref{fig:Zeugnisse} auf Seite~\pageref{fig:Zeugnisse} zeigt die Eingabe der Bewertungen fÃ¼r die Lernbereiche \emph{Arbeits-- und Sozialverhalten}.
+Abbildung~\ref{fig:Zeugnisse2} auf Seite~\pageref{fig:Zeugnisse2} zeigt die Eingabe der Bewertungen fÃ¼r die anderen Lernbereiche.
 
 \begin{figure}[ht]
 \centering
 \centerline{\includegraphics[width=1.0\textwidth]{Zeugnisse}}
-\caption{Ausfüllen der Zeugnisse (Arbeits-- und Sozialverhalten)}
+\caption{AusfÃ¼llen der Zeugnisse (Arbeits-- und Sozialverhalten)}
 \label{fig:Zeugnisse}
 \end{figure}
 
 \begin{figure}[ht]
 \centering
 \centerline{\includegraphics[width=1.0\textwidth]{Zeugnisse2}}
-\caption{Ausfüllen der Zeugnisse (andere Lernbereiche)}
+\caption{AusfÃ¼llen der Zeugnisse (andere Lernbereiche)}
 \label{fig:Zeugnisse2}
 \end{figure}
 
@@ -256,71 +256,71 @@ Abbildung~\ref{fig:Zeugnisse2} auf Seite~\pageref{fig:Zeugnisse2} zeigt die Eing
 \begin{figure}[ht]
 \centering
 \centerline{\includegraphics[width=1.0\textwidth]{Konfiguration}}
-\caption{Verändern der Indikatoren und Zeugnissymbole}
+\caption{VerÃ¤ndern der Indikatoren und Zeugnissymbole}
 \label{fig:Konfiguration}
 \end{figure}
 \subsubsection{Symbole}
-Die Symbole, die im Ausdruck bei den Indikatoren erscheinen können hier verändert werden.
+Die Symbole, die im Ausdruck bei den Indikatoren erscheinen kÃ¶nnen hier verÃ¤ndert werden.
 
 \emph{Symbol1} ist das Symbol, dass beim Arbeits-- und Sozialverhalten verwendet wird. \emph{Symbol2} ist das Symbol, dass bei den anderen Lernbereichen verwendet wird.
 
-Änderungen, die hier gemacht werden, werden auch in der {\ott config.properties}--Datei abgespeichert und stehen beim nächsten Aufruf des Programms wieder zur Verfügung.
+Ã„nderungen, die hier gemacht werden, werden auch in der {\ott config.properties}--Datei abgespeichert und stehen beim nÃ¤chsten Aufruf des Programms wieder zur VerfÃ¼gung.
 \subsubsection{Indikatoren}
-Sollte es mal notwendig sein, die Formulierungen der Indikatoren zu verändern, ist dies hier möglich.
-Da diese Formulierungen aber von allen Zeugnissen mit den übergeorneten Parametern verwendet werden, sollte man dies mit Vorsicht benutzen.
+Sollte es mal notwendig sein, die Formulierungen der Indikatoren zu verÃ¤ndern, ist dies hier mÃ¶glich.
+Da diese Formulierungen aber von allen Zeugnissen mit den Ã¼bergeorneten Parametern verwendet werden, sollte man dies mit Vorsicht benutzen.
 
-Da man hier direkt in die zugrunde liegende Datenbank schreibt, ist es nötig, zu verstehen, wie die Daten organisiert sind.
+Da man hier direkt in die zugrunde liegende Datenbank schreibt, ist es nÃ¶tig, zu verstehen, wie die Daten organisiert sind.
 
-Die untere angezeigte Tabelle (Lernbereich) dient nur zur Übersicht und kann nicht editiert werden.
-Es können also keine neuen Lernbereiche erzeugt, vorhandene verändert oder gelöscht werden, da dies weitreichende Folgen auch für den Ausdruck hätte.
+Die untere angezeigte Tabelle (Lernbereich) dient nur zur Ãœbersicht und kann nicht editiert werden.
+Es kÃ¶nnen also keine neuen Lernbereiche erzeugt, vorhandene verÃ¤ndert oder gelÃ¶scht werden, da dies weitreichende Folgen auch fÃ¼r den Ausdruck hÃ¤tte.
 
-Für jedes Schuljahr und für jede Klassenstufe gibt es eigene Lernbereiche, die einmal in Textform und zum anderen als Nummer angesprochen werden können.
+FÃ¼r jedes Schuljahr und fÃ¼r jede Klassenstufe gibt es eigene Lernbereiche, die einmal in Textform und zum anderen als Nummer angesprochen werden kÃ¶nnen.
 
-Diese Tabelle ist deshalb hier aufgeführt, damit man weiss, für welchen Lernbereich man gegebenenfalls die Indikatoren verändern möchte und nicht versehentlich die gleichlautenden Indikatoren für andere Klassenstufen oder Schuljahre verändert. Der Lernbereich \emph{Schreiben} für das Schuljahr 2016/17 und die erste Klassenstufe hat z.B. die Nummer $40$.
-Der Lernbereich \emph{Schreiben} für das Schuljahr 2016/17 und die vierte Klassenstufe hat z.B. die Nummer $430$; indem man oben die entsprechende Klasse einstellt kommt man zu diesen Werten.
+Diese Tabelle ist deshalb hier aufgefÃ¼hrt, damit man weiss, fÃ¼r welchen Lernbereich man gegebenenfalls die Indikatoren verÃ¤ndern mÃ¶chte und nicht versehentlich die gleichlautenden Indikatoren fÃ¼r andere Klassenstufen oder Schuljahre verÃ¤ndert. Der Lernbereich \emph{Schreiben} fÃ¼r das Schuljahr 2016/17 und die erste Klassenstufe hat z.B. die Nummer $40$.
+Der Lernbereich \emph{Schreiben} fÃ¼r das Schuljahr 2016/17 und die vierte Klassenstufe hat z.B. die Nummer $430$; indem man oben die entsprechende Klasse einstellt kommt man zu diesen Werten.
 
-In der oberen Tabelle kann man nun gezielt den Text der Indikatoren für diesen Lernbereich verändern. Sobald man dort das editierte Feld verlässt, wird die Änderung in die Datenbank übernommen und steht beim nächsten Ausfüllen oder Anzeigen des Zeugnisses zur Verfügung.
+In der oberen Tabelle kann man nun gezielt den Text der Indikatoren fÃ¼r diesen Lernbereich verÃ¤ndern. Sobald man dort das editierte Feld verlÃ¤sst, wird die Ã„nderung in die Datenbank Ã¼bernommen und steht beim nÃ¤chsten AusfÃ¼llen oder Anzeigen des Zeugnisses zur VerfÃ¼gung.
 
-Indikatoren, die keinen Text besitzen und die später ein leeres Bewertungsfeld besitzen, werden im Ausdruck des Zeugnisses nicht berücksichtigt.
+Indikatoren, die keinen Text besitzen und die spÃ¤ter ein leeres Bewertungsfeld besitzen, werden im Ausdruck des Zeugnisses nicht berÃ¼cksichtigt.
 
-Für alle Lernbereiche ausser \emph{Arbeits-- und Sozialverhalten} gibt es immer ein leeres Indikatorfeld, für Erweiterungen, so dass mindestens ein weiterer Indikator hinzugefügt werden kann\footnote{In Folgeversionen wird das eventuell erweitert.}.
+FÃ¼r alle Lernbereiche ausser \emph{Arbeits-- und Sozialverhalten} gibt es immer ein leeres Indikatorfeld, fÃ¼r Erweiterungen, so dass mindestens ein weiterer Indikator hinzugefÃ¼gt werden kann\footnote{In Folgeversionen wird das eventuell erweitert.}.
 
-Abbildung~\ref{fig:Konfiguration} auf Seite~\pageref{fig:Konfiguration} zeigt die Eingabe der Bewertungen für die anderen Lernbereiche.
+Abbildung~\ref{fig:Konfiguration} auf Seite~\pageref{fig:Konfiguration} zeigt die Eingabe der Bewertungen fÃ¼r die anderen Lernbereiche.
 
-\subsubsection{Änderungen in {\ott config.properties}}
+\subsubsection{Ã„nderungen in {\ott config.properties}}
 \label{configKlassen}
-In der Konfigurationsdatei {\ott config.properties} können einige Werte des Programms konfiguriert werden, die dann beim nächsten Start des Programms initial verwendet werden.
+In der Konfigurationsdatei {\ott config.properties} kÃ¶nnen einige Werte des Programms konfiguriert werden, die dann beim nÃ¤chsten Start des Programms initial verwendet werden.
 
-Zum einen sind das die Symbole in den ausgedruckten Zeugnisse, die auch im Programm verändert werden können.
-Wichtig ist hier, dass zur Zeit nur 14 Symbole zur Verfügung stehen (1\dots14). Zahlen, die nicht in diesem Bereich liegen, könnten zu Fehlern führen.
+Zum einen sind das die Symbole in den ausgedruckten Zeugnisse, die auch im Programm verÃ¤ndert werden kÃ¶nnen.
+Wichtig ist hier, dass zur Zeit nur 14 Symbole zur VerfÃ¼gung stehen (1\dots14). Zahlen, die nicht in diesem Bereich liegen, kÃ¶nnten zu Fehlern fÃ¼hren.
 
-Zum anderen können hier die Klassen eingegeben werden, die verwendet werden sollen (1a,1b,2a,\dots).
+Zum anderen kÃ¶nnen hier die Klassen eingegeben werden, die verwendet werden sollen (1a,1b,2a,\dots).
 Zur Zeit sollten die Klassen in diesem Format eingegeben werden, da das Programm intern davon ausgeht, dass die erste Stelle die Klassenstufe angibt und die zweite Stelle ein Buchstabe ist.
 
 \subsection{Schnittstellen}
-Das Programm besitzt keine Schnittstellen zu externen Programmen. Es ist zur Zeit kein Import oder Export möglich.
+Das Programm besitzt keine Schnittstellen zu externen Programmen. Es ist zur Zeit kein Import oder Export mÃ¶glich.
 Die einzige Ausgabe ist das Zeugnis selbst in einem PDF--Format.
 
 \section{Neues Schuljahr}
-Im Menü {\ott Bearbeiten} kann ein neues Schuljahr angelegt werden. Dazu werden alle vorhandenen Grunddaten (Lernbereiche und Indikatoren) auf ein neues Schuljahr übertragen.
-Im neuen Schuljahr werden die Schülerlisten von den vorherigen Klassen übernommen:
-Schüler aus der Klasse 1a werden im neuen Schuljahr in die Klasse 2a kopiert usw. .
-Die pro Schüler generierten Halbjahreszeugnisse sind zunächst leer.
+Im MenÃ¼ {\ott Bearbeiten} kann ein neues Schuljahr angelegt werden. Dazu werden alle vorhandenen Grunddaten (Lernbereiche und Indikatoren) auf ein neues Schuljahr Ã¼bertragen.
+Im neuen Schuljahr werden die SchÃ¼lerlisten von den vorherigen Klassen Ã¼bernommen:
+SchÃ¼ler aus der Klasse 1a werden im neuen Schuljahr in die Klasse 2a kopiert usw. .
+Die pro SchÃ¼ler generierten Halbjahreszeugnisse sind zunÃ¤chst leer.
 
-Ein neues Schuljahr kann nur in der 2.~Hälfte des Schuljahres angelegt werden.
-Also im Schuljahr 2016/17 kann erst im Jahr 2017 ein neues Schuljahr 2017/18 angelegt werden. Weitere Schuljahre können nun erst wieder im Jahre 2018 angelegt werden. Schuljahre können nicht wieder gelöscht werden.
+Ein neues Schuljahr kann nur in der 2.~HÃ¤lfte des Schuljahres angelegt werden.
+Also im Schuljahr 2016/17 kann erst im Jahr 2017 ein neues Schuljahr 2017/18 angelegt werden. Weitere Schuljahre kÃ¶nnen nun erst wieder im Jahre 2018 angelegt werden. Schuljahre kÃ¶nnen nicht wieder gelÃ¶scht werden.
 Die Indikatoren und Lernbereiche werden immer aus dem \emph{aktuellen} Schuljahr in das neue Schuljahr kopiert; das ist besonders wichtig, wenn die Indikatoren vorher manuell editiert wurden.
 
 \section{Speicherorte}
 Wenn die Zeugnisse abgespeichert werden, werden automatisch Ordner im Verzeichnis des Programms angelegt, in denen das Schuljahr, das Halbjahr und die Schulklasse kodiert sind, als z.B.
-{\ott\bf 201611a} für das Schuljahr 2016/17, das erste Halbjahr und die Klasse 1a oder z.B. {\ott\bf 201724b}
-für das Schuljahr 2017/18, das 2.~Halbjahr und die Klasse 4b.
-Wann immer ein Zeugnis generiert wird (auch zur Anzeige) werden diese Zeugnisse in diesen Ordner gespeichert. Alte Zeugnisse werden automatisch überschrieben.
+{\ott\bf 201611a} fÃ¼r das Schuljahr 2016/17, das erste Halbjahr und die Klasse 1a oder z.B. {\ott\bf 201724b}
+fÃ¼r das Schuljahr 2017/18, das 2.~Halbjahr und die Klasse 4b.
+Wann immer ein Zeugnis generiert wird (auch zur Anzeige) werden diese Zeugnisse in diesen Ordner gespeichert. Alte Zeugnisse werden automatisch Ã¼berschrieben.
 
-Im Schulklassen--Reiter gibt es einen Button, der für alle dort aufgeführten Schüler ein Zeugnis generiert und in den entsprechenden Ordner abspeichert.
+Im Schulklassen--Reiter gibt es einen Button, der fÃ¼r alle dort aufgefÃ¼hrten SchÃ¼ler ein Zeugnis generiert und in den entsprechenden Ordner abspeichert.
 
 \section{Beispielausdruck}
-Hier folgt ein Beispielausdruck eines Zeugnisses, das vollständig ausgefüllt wurde.
+Hier folgt ein Beispielausdruck eines Zeugnisses, das vollstÃ¤ndig ausgefÃ¼llt wurde.
 
 \includepdf[pages=-]{MustermannMax.pdf}
 
