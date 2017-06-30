@@ -99,6 +99,195 @@ public class ZeugnisPDF  {
     private ArrayList englischZL        = new ArrayList<TableItem>();  // 8
     
     /**
+     * Erzeugt eine Zeugnis für die Statistik
+     * @param liste
+     * @throws IOException
+     * @throws DocumentException
+     * @throws SQLException 
+     */
+    public ZeugnisPDF(ArrayList<Integer> liste) throws IOException, DocumentException, SQLException, ParseException{
+        
+        SingletonSQLConnector connector = SingletonSQLConnector.getInstance();
+        config = Config.getInstance();
+
+        // Liest die Daten zur Wahl der Ankreuzsymbole aus der config.properties
+        try{
+            symbol1 = Integer.parseInt(config.getProperty("symbol1"));
+            symbol2 = Integer.parseInt(config.getProperty("symbol2"));
+        }
+        catch(NumberFormatException e){
+            symbol1=9;
+            symbol2=6;
+        }
+        this.zeugnis = new Hashtable<Integer,Integer>();
+
+        for(Integer id: liste){
+            
+            zid = connector._getIdZeugnis(id,Gui.getHYear());           
+        }
+
+        
+        //logger.fine("ZeugnisPDF-idSCHUELER->" + String.valueOf(id));
+        //logger.fine("ZeugnisPDF-idZEUGNIS ->" + String.valueOf(zid));
+
+        //Alle nötigen Felder werden aus der Datenbank gefüllt
+        currDate = (new SimpleDateFormat("dd.MM.yyyy")).format(new Date());
+        name      = "Mustermann";
+        vorname   = "Maxi";
+        gebdatum  = currDate;
+        gebort    = connector.getSchuelerGebOrt(liste); // häufigster Ort
+        schuljahr = Gui.getSYear();
+        halbjahr  = Gui.getHYear();
+        klasse    = Gui.getSClass();
+        fehltage  = connector.getFehltage(liste);
+        fehltageohne= connector.getFehltageOhne(liste);
+        lernentwicklung = connector.getLernentwicklung(zid) + "\n\n" + connector.getBemerkung(zid);
+        noteArbeit = connector.getNoteArbeit(zid);
+        noteSozial = connector.getNoteSozial(zid);
+        noteArbeitString = connector.asBewertungen(noteArbeit);
+        noteSozialString = connector.asBewertungen(noteSozial);
+        // liefert alle im zeugnis abgelegten Kriterien mit Bewertungen
+        zeugnis = connector.getID_KriterienZeugnis(zid);
+        
+        // Ab hier sollte das Statistikzeugnis stehen...
+        if(fehltageohne>fehltage){
+            fehltageohne=fehltage;
+        }
+        
+        // Erzeugung des Namens und des Ordners
+        String fileName = name+vorname+gebdatum+".pdf"; 
+        String dirName = String.valueOf(Gui.getSYear())+String.valueOf(Gui.getHYear())+Gui.getSClass(); 
+        File dir = new File("./" + dirName); 
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+        file = new File("./" + dirName + "/" + fileName); 
+        
+        for(Integer id : connector.getID_KriterienFromLernbereich("Arbeitsverhalten")){  // holt Reihenfolge
+            //logger.fine("ID_KRITERIUM= "+Integer.toString(id));
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            aVerhalten.add(ti);
+        }
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Sozialverhalten")){  // holt Reihenfolge
+            //logger.fine("ID_KRITERIUM= "+Integer.toString(id));
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            sVerhalten.add(ti);
+        }
+        
+        
+        for(Integer id : connector.getID_KriterienFromLernbereich("Sprechen und Zuhören")){  // holt Reihenfolge
+            //logger.fine("ID_KRITERIUM= "+Integer.toString(id));
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            sprechenZL.add(ti);
+        }
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Schreiben")){  // holt Reihenfolge
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            schreibenZL.add(ti);
+        }
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Lesen")){  // holt Reihenfolge
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            lesenZL.add(ti);
+        }
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Sprache")){  // holt Reihenfolge
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            sprachZL.add(ti);
+        }
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Zahlen")){  // holt Reihenfolge
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            zahlenZL.add(ti);
+        }
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Größen")){  // holt Reihenfolge
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            groessenZL.add(ti);
+        }
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Raum")){  // holt Reihenfolge
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            raumZL.add(ti);
+        }
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Sachunterricht")){  // holt Reihenfolge
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            sachunterrichtZL.add(ti);
+        }
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Musik")){  // holt Reihenfolge
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            musikZL.add(ti);
+        }
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Religion")){  // holt Reihenfolge
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            religionZL.add(ti);
+        }
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Kunst")){  // holt Reihenfolge
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            kunstZL.add(ti);
+        }
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Sport")){  // holt Reihenfolge
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            sportZL.add(ti);
+        }
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Werken")){  // holt Reihenfolge
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            werkenZL.add(ti);
+        }
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Textil")){  // holt Reihenfolge
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            textilZL.add(ti);
+        }
+
+        for(Integer id : connector.getID_KriterienFromLernbereich("Englisch")){  // holt Reihenfolge
+            TableItem ti = new TableItem();
+            ti.setText(connector.getKriteriumText(id)); // holt Text
+            ti.setBewertung(zeugnis.get(id));           // holt Bewertung aus Hashtable
+            englischZL.add(ti);
+        }
+    }
+    
+        /**
      * Erzeugt eine Zeugnisklasse und füllt Variablen aus der DB
      * @param idSCHUELER
      * @throws IOException
@@ -283,6 +472,7 @@ public class ZeugnisPDF  {
             englischZL.add(ti);
         }
     }
+
     
     /**
      * Konvertiert das Datum von "yyyy-MM-dd" nach "dd.MM.yyyy"

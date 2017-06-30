@@ -19,7 +19,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -1124,6 +1126,48 @@ public class SingletonSQLConnector {
         }
         return gebort;
     }
+    
+    /**
+     * liefert den häufigsten Geburtsort für die Liste der idSchueler
+     *
+     * @param liste
+     * @return
+     * @throws SQLException
+     */
+    public String getSchuelerGebOrt(ArrayList<Integer> liste) throws SQLException {
+        String gebort = "";
+        Map<String, Integer> locations = new HashMap<>();
+        int max=-1;
+        
+        // Bei gleicher Häufigkeit zählt der letzte Eintrag
+        for (Integer idSchueler : liste) {
+            String ort="";
+            try (Statement statement = con.createStatement()) {
+                String sql = "select GEBORT from SCHUELER where ID_SCHUELER = " + idSchueler;
+                //logger.fine(sql);
+                ResultSet set = statement.executeQuery(sql);
+                while (set.next()) {
+                    ort = set.getString(1);
+                }
+            }
+            if( !locations.containsKey(ort)){    
+                locations.put(ort, 0);       // Ort eintragen mit zaehler=0
+                if(max<0){
+                    max=0;
+                    gebort = ort;           
+                }
+            }
+            else {
+                int count = locations.get(ort) + 1;
+                locations.put(ort, count);    // Zähler für Ort inkrementieren
+                if(count>max){
+                    max=count;
+                    gebort = ort;
+                }
+            }
+        }
+        return gebort;
+    }
 
     public String getSchuelerKlasse(int idSCHUELER) throws SQLException {
         String klasse = "";
@@ -1159,6 +1203,35 @@ public class SingletonSQLConnector {
         return retVal;
     }
 
+        /**
+     * liefert die mittleren Fehltage für Statistik
+     *
+     * @param liste
+     * @return
+     * @throws SQLException
+     */
+    public Integer getFehltage(ArrayList<Integer> liste) throws SQLException {
+        Integer retVal = 0;
+        Integer count =0;
+
+        for (Integer id : liste) {
+            Integer zid= this._getIdZeugnis(id, Gui.getHYear());
+            Integer fehl=0;
+            try (Statement statement = con.createStatement()) {
+                String sql = "select FEHLTAGE from ZEUGNIS where ID_ZEUGNIS=" + zid;
+                //logger.fine(sql);
+                ResultSet set = statement.executeQuery(sql);
+                while (set.next()) {
+                    fehl = set.getInt(1);
+                    count++;
+                    retVal+=fehl;
+                }
+            }
+        }
+        retVal = (Integer)Math.round((float)retVal/count);
+        return retVal;
+    }
+
     /**
      * liefert die Fehltage ohne Entsch aus dem Zeugnis
      *
@@ -1177,6 +1250,36 @@ public class SingletonSQLConnector {
                 retVal = set.getInt(1);
             }
         }
+        return retVal;
+    }
+
+        /**
+     * liefert die mittleren Fehltage ohne Entsch für Statistik
+     *
+     * @param liste
+     * @return
+     * @throws SQLException
+     */
+    public Integer getFehltageOhne(ArrayList<Integer> liste) throws SQLException {
+        Integer retVal = 0;
+        Integer count = 0;
+
+        for (Integer id : liste) {
+            Integer zid= this._getIdZeugnis(id, Gui.getHYear());
+            Integer fehl=0;
+            try (Statement statement = con.createStatement()) {
+                String sql = "select FEHLTAGEOHNE from ZEUGNIS where ID_ZEUGNIS=" + zid;
+                //logger.fine(sql);
+                ResultSet set = statement.executeQuery(sql);
+
+                while (set.next()) {
+                    fehl = set.getInt(1);
+                    count++;
+                    retVal+=fehl;
+                }
+            }
+        }
+        retVal = (Integer) Math.round((float) retVal / count);
         return retVal;
     }
 

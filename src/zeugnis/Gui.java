@@ -113,6 +113,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox();
@@ -266,6 +267,13 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 }
             });
 
+            jButton2.setText("Klassenstatistik");
+            jButton2.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton2ActionPerformed(evt);
+                }
+            });
+
             javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
             jPanel2.setLayout(jPanel2Layout);
             jPanel2Layout.setHorizontalGroup(
@@ -273,9 +281,11 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jButton1)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGap(26, 26, 26)
                     .addComponent(jButton3)
-                    .addContainerGap(537, Short.MAX_VALUE))
+                    .addGap(27, 27, 27)
+                    .addComponent(jButton2)
+                    .addContainerGap(346, Short.MAX_VALUE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE))
             );
@@ -285,7 +295,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                     .addGap(0, 406, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton1)
-                        .addComponent(jButton3)))
+                        .addComponent(jButton3)
+                        .addComponent(jButton2)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1112,6 +1123,28 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        // Hier wird ein Zeugnis generiert, dass ein Mittelwert (Median?) der Klasse darstellt
+        // Nennen wir es mal Dieter Durchschnitt, geb. in Median
+        // Liste der Schueler generieren...
+        ArrayList<Integer> liste = new ArrayList<>();                
+        try {
+            liste = connector.listIdSchueler();
+        } catch (SQLException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // Statistik bilden...
+        try {
+            ZeugnisPDF zeugnis = new ZeugnisPDF(liste);
+            zeugnis.CreatePDF();    // uses private Variables to print pdf
+        } catch (IOException | DocumentException | SQLException | ParseException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     
     public void fillTabFromTestimony() {
         if (jComboBox4.getSelectedItem() != null) {
@@ -1351,6 +1384,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBox1;
