@@ -1373,7 +1373,7 @@ public class SingletonSQLConnector {
 //    }
 
     /**
-     * liefert die Note (0-4) für das Arbeitsverhalten aus dem Zeugnis
+     * liefert die Note (0-5) für das Arbeitsverhalten aus dem Zeugnis
      *
      * @param zid
      * @return
@@ -1395,7 +1395,40 @@ public class SingletonSQLConnector {
     }
 
     /**
-     * liefert die Note (0-4) für das Sozialverhalten aus dem Zeugnis
+     * liefert die mittlere Note (0-5) für das Arbeitsverhalten für Statistik
+     *
+     * @param liste
+     * @return
+     * @throws SQLException
+     */
+    public Integer getNoteArbeit(ArrayList<Integer> liste) throws SQLException {
+        Integer retVal = 0;
+        Integer count = 0;
+
+        for (Integer id : liste) {
+            Integer zid= this._getIdZeugnis(id, Gui.getHYear());
+            Integer note=0;
+
+            try (Statement statement = con.createStatement()) {
+                String sql = "select NOTE_ARBEIT from ZEUGNIS where ID_ZEUGNIS=" + zid;
+                //logger.fine(sql);
+                ResultSet set = statement.executeQuery(sql);
+
+                while (set.next()) {
+                    note = set.getInt(1);
+                    count++;
+                    retVal+=note;
+                }
+            }
+        }
+        logger.fine(String.valueOf(retVal) + " und count="+String.valueOf(count));
+        retVal = (Integer)Math.round((float)retVal/count);
+        logger.fine(String.valueOf(retVal) + " und count="+String.valueOf(count));
+        return retVal;
+    }
+
+    /**
+     * liefert die Note (0-5) für das Sozialverhalten aus dem Zeugnis
      *
      * @param zid
      * @return
@@ -1413,6 +1446,39 @@ public class SingletonSQLConnector {
                 retVal = set.getInt(1);
             }
         }
+        return retVal;
+    }
+
+    /**
+     * liefert die mittlere Note (0-5) für das Sozialverhalten für Statistik
+     *
+     * @param liste
+     * @return
+     * @throws SQLException
+     */
+    public Integer getNoteSozial(ArrayList<Integer> liste) throws SQLException {
+        Integer retVal = 0;
+        Integer count = 0;
+
+        for (Integer id : liste) {
+            Integer zid= this._getIdZeugnis(id, Gui.getHYear());
+            Integer note=0;
+
+            try (Statement statement = con.createStatement()) {
+                String sql = "select NOTE_SOZIAL from ZEUGNIS where ID_ZEUGNIS=" + zid;
+                //logger.fine(sql);
+                ResultSet set = statement.executeQuery(sql);
+
+                while (set.next()) {
+                    note = set.getInt(1);
+                    count++;
+                    retVal+=note;
+                }
+            }
+        }
+        logger.fine(String.valueOf(retVal) + " und count="+String.valueOf(count));
+        retVal = (Integer)Math.round((float)retVal/count);
+        logger.fine(String.valueOf(retVal) + " und count="+String.valueOf(count));
         return retVal;
     }
 

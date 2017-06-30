@@ -936,6 +936,11 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         fillTabFromTestimony();
         selectedSubject = (String) jComboBox5.getSelectedItem();
         fillTestimonyTable(selectedSubject);
+        try {
+            fillTestimonyNote(selectedSubject);
+        } catch (SQLException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_changePuple
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
