@@ -113,6 +113,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jCheckBox2 = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox();
@@ -276,6 +277,9 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 }
             });
 
+            jCheckBox2.setText("vollständig");
+            jCheckBox2.setEnabled(false);
+
             javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
             jPanel2.setLayout(jPanel2Layout);
             jPanel2Layout.setHorizontalGroup(
@@ -287,7 +291,9 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                     .addComponent(jButton3)
                     .addGap(27, 27, 27)
                     .addComponent(jButton2)
-                    .addContainerGap(364, Short.MAX_VALUE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 238, Short.MAX_VALUE)
+                    .addComponent(jCheckBox2)
+                    .addGap(24, 24, 24))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE))
             );
@@ -298,7 +304,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton1)
                         .addComponent(jButton3)
-                        .addComponent(jButton2)))
+                        .addComponent(jButton2)
+                        .addComponent(jCheckBox2)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -885,6 +892,32 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
         jComboBox2.setEnabled((jTabbedPane1.getSelectedIndex() == 1));
 
+        if(jTabbedPane1.getSelectedIndex() == 0) {  // Schulklasse
+            // checken ob alle Zeugnisse vollständig
+            boolean completeFlag = true;
+            try {
+                ArrayList<Integer> liste = connector.listIdSchueler();
+                for (Integer id : liste) {
+                    Integer zid = connector._getIdZeugnis(id, hYear);
+                    try {
+                        if (!connector.isZeugnisComplete(zid)) {
+                            completeFlag = false;
+                            break;
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            logger.fine(String.valueOf(completeFlag));
+            if (completeFlag == true) {
+                jCheckBox2.setSelected(true);
+            } else {
+                jCheckBox2.setSelected(false);
+            }
+        }
         if (jTabbedPane1.getSelectedIndex() == 1) { // Zeugnis
             Integer idSchueler;
             Integer idZeugnis;
@@ -1396,6 +1429,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox3;
@@ -1565,7 +1599,6 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 }
 
             }
-
         }
         if (model.getColumnCount() == 2) { // Bewertung
             if (e.getType() == TableModelEvent.UPDATE && tableModelEventEnabled) {
