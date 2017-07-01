@@ -47,7 +47,7 @@
             <Property name="text" type="java.lang.String" value="Version: "/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jLabel10.setText(version);&#xa;if(version==null){&#xa;    jLabel10.setText(&quot;1.2-alpha&quot;);&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jLabel10.setText(version);&#xa;if(version==null){&#xa;    jLabel10.setText(&quot;1.3-alpha&quot;);&#xa;}"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel11">
@@ -56,7 +56,7 @@
             <Property name="text" type="java.lang.String" value="Autor:"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jLabel11.setText(vendor);&#xa;if(vendor==null){&#xa;jLabel11.setText(&quot;Team 0&quot;);&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jLabel11.setText(vendor);&#xa;if(vendor==null){&#xa;jLabel11.setText(&quot;Team Zero&quot;);&#xa;}"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel12">

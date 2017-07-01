@@ -167,14 +167,14 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         jLabel10.setText("Version: ");
         jLabel10.setText(version);
         if(version==null){
-            jLabel10.setText("1.2-alpha");
+            jLabel10.setText("1.3-alpha");
         }
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Autor:");
         jLabel11.setText(vendor);
         if(vendor==null){
-            jLabel11.setText("Team 0");
+            jLabel11.setText("Team Zero");
         }
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
