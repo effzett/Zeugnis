@@ -542,6 +542,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                         jLabel15.setText("Symbol1");
 
                         jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Symbol 1", "Symbol 2", "Symbol 3", "Symbol 4", "Symbol 5", "Symbol 6", "Symbol 7", "Symbol 8", "Symbol 9", "Symbol 10", "Symbol 11", "Symbol 12", "Symbol 13", "Symbol 14" }));
+                        jComboBox7.setSelectedIndex(0);
                         jComboBox7.addActionListener(new java.awt.event.ActionListener() {
                             public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 jComboBox7ActionPerformed(evt);
@@ -549,6 +550,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                         });
 
                         jComboBox8.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Symbol 1", "Symbol 2", "Symbol 3", "Symbol 4", "Symbol 5", "Symbol 6", "Symbol 7", "Symbol 8", "Symbol 9", "Symbol 10", "Symbol 11", "Symbol 12", "Symbol 13", "Symbol 14" }));
+                        jComboBox8.setSelectedIndex(0);
                         jComboBox8.addActionListener(new java.awt.event.ActionListener() {
                             public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 jComboBox8ActionPerformed(evt);
@@ -689,7 +691,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
                         jMenu1.setText("Datei");
 
-                        jMenuItem1.setText("Beenden");
+                        jMenuItem1.setText("Sichern und Beenden");
                         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
                             public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 jMenuItem1ActionPerformed(evt);
@@ -912,8 +914,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             }
         }
         if (jTabbedPane1.getSelectedIndex() == 2) { // Konfiguration
-            jComboBox7.setSelectedIndex(Integer.parseInt(config.getProperty("symbol1"))-1);
-            jComboBox8.setSelectedIndex(Integer.parseInt(config.getProperty("symbol2"))-1);
+            jComboBox7.setSelectedIndex(Integer.parseInt(config.getProperty("symbol1","9"))-1);
+            jComboBox8.setSelectedIndex(Integer.parseInt(config.getProperty("symbol2","6"))-1);
             try {
                 connector.fillKriteriumTable(jTable3,String.valueOf(sYear),sClass);
                 connector.fillLernbereichTable(jTable4,String.valueOf(sYear),sClass);
@@ -1095,7 +1097,6 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         // TODO add your handling code here:
         config.setProperty("symbol1",String.valueOf(jComboBox7.getSelectedIndex()+1) );
         ZeugnisPDF.setSymbol1( (jComboBox7.getSelectedIndex()+1) );
-
     }//GEN-LAST:event_jComboBox7ActionPerformed
 
     private void jComboBox8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox8ActionPerformed
