@@ -225,7 +225,7 @@ public class ZeugnisPDF  {
                 //logger.fine("ID_KRITERIUM= "+Integer.toString(idK));
                 TableItem ti = new TableItem();
                 ti.setText(connector.getKriteriumText(idK)); // holt Text
-                ti.setBewertung(zeugnis.get(idK));           // holt Bewertung aus Hashtable
+                ti.setBewertung((zeugnis.get(idK)==0)?3:zeugnis.get(idK));           // holt Bewertung aus Hashtable
                 sprechenZLX.add(ti);
                 if(count==0){
                     sprechenZL.add(ti);                    
@@ -235,7 +235,7 @@ public class ZeugnisPDF  {
             for (Integer idK : connector.getID_KriterienFromLernbereich("Schreiben")) {  // holt Reihenfolge
                 TableItem ti = new TableItem();
                 ti.setText(connector.getKriteriumText(idK)); // holt Text
-                ti.setBewertung(zeugnis.get(idK));           // holt Bewertung aus Hashtable
+                ti.setBewertung((zeugnis.get(idK)==0)?3:zeugnis.get(idK));           // holt Bewertung aus Hashtable
                 schreibenZLX.add(ti);
                 if(count==0){
                     schreibenZL.add(ti);                    
@@ -245,7 +245,7 @@ public class ZeugnisPDF  {
             for (Integer idK : connector.getID_KriterienFromLernbereich("Lesen")) {  // holt Reihenfolge
                 TableItem ti = new TableItem();
                 ti.setText(connector.getKriteriumText(idK)); // holt Text
-                ti.setBewertung(zeugnis.get(idK));           // holt Bewertung aus Hashtable
+                ti.setBewertung((zeugnis.get(idK)==0)?3:zeugnis.get(idK));           // holt Bewertung aus Hashtable
                 lesenZLX.add(ti);
                 if(count==0){
                     lesenZL.add(ti);                    
@@ -255,7 +255,7 @@ public class ZeugnisPDF  {
             for (Integer idK : connector.getID_KriterienFromLernbereich("Sprache")) {  // holt Reihenfolge
                 TableItem ti = new TableItem();
                 ti.setText(connector.getKriteriumText(idK)); // holt Text
-                ti.setBewertung(zeugnis.get(idK));           // holt Bewertung aus Hashtable
+                ti.setBewertung((zeugnis.get(idK)==0)?3:zeugnis.get(idK));           // holt Bewertung aus Hashtable
                 sprachZLX.add(ti);
                 if(count==0){
                     sprachZL.add(ti);                    
@@ -265,7 +265,7 @@ public class ZeugnisPDF  {
             for (Integer idK : connector.getID_KriterienFromLernbereich("Zahlen")) {  // holt Reihenfolge
                 TableItem ti = new TableItem();
                 ti.setText(connector.getKriteriumText(idK)); // holt Text
-                ti.setBewertung(zeugnis.get(idK));           // holt Bewertung aus Hashtable
+                ti.setBewertung((zeugnis.get(idK)==0)?3:zeugnis.get(idK));           // holt Bewertung aus Hashtable
                 zahlenZLX.add(ti);
                 if(count==0){
                     zahlenZL.add(ti);                    
@@ -274,7 +274,7 @@ public class ZeugnisPDF  {
             for (Integer idK : connector.getID_KriterienFromLernbereich("Größen")) {  // holt Reihenfolge
                 TableItem ti = new TableItem();
                 ti.setText(connector.getKriteriumText(idK)); // holt Text
-                ti.setBewertung(zeugnis.get(idK));           // holt Bewertung aus Hashtable
+                ti.setBewertung((zeugnis.get(idK)==0)?3:zeugnis.get(idK));           // holt Bewertung aus Hashtable
                 groessenZLX.add(ti);
                 if(count==0){
                     groessenZL.add(ti);                    
@@ -283,7 +283,7 @@ public class ZeugnisPDF  {
             for (Integer idK : connector.getID_KriterienFromLernbereich("Raum")) {  // holt Reihenfolge
                 TableItem ti = new TableItem();
                 ti.setText(connector.getKriteriumText(idK)); // holt Text
-                ti.setBewertung(zeugnis.get(idK));           // holt Bewertung aus Hashtable
+                ti.setBewertung((zeugnis.get(idK)==0)?3:zeugnis.get(idK));           // holt Bewertung aus Hashtable
                 raumZLX.add(ti);
                 if(count==0){
                     raumZL.add(ti);                    
@@ -292,7 +292,7 @@ public class ZeugnisPDF  {
             for (Integer idK : connector.getID_KriterienFromLernbereich("Sachunterricht")) {  // holt Reihenfolge
                 TableItem ti = new TableItem();
                 ti.setText(connector.getKriteriumText(idK)); // holt Text
-                ti.setBewertung(zeugnis.get(idK));           // holt Bewertung aus Hashtable
+                ti.setBewertung((zeugnis.get(idK)==0)?3:zeugnis.get(idK));           // holt Bewertung aus Hashtable
                 sachunterrichtZLX.add(ti);
                 if(count==0){
                     sachunterrichtZL.add(ti);                    
@@ -301,7 +301,7 @@ public class ZeugnisPDF  {
             for (Integer idK : connector.getID_KriterienFromLernbereich("Musik")) {  // holt Reihenfolge
                 TableItem ti = new TableItem();
                 ti.setText(connector.getKriteriumText(idK)); // holt Text
-                ti.setBewertung(zeugnis.get(idK));           // holt Bewertung aus Hashtable
+                ti.setBewertung((zeugnis.get(idK)==0)?3:zeugnis.get(idK));           // holt Bewertung aus Hashtable
                 musikZLX.add(ti);
                 if(count==0){
                     musikZL.add(ti);                    
@@ -310,7 +310,7 @@ public class ZeugnisPDF  {
             for (Integer idK : connector.getID_KriterienFromLernbereich("Religion")) {  // holt Reihenfolge
                 TableItem ti = new TableItem();
                 ti.setText(connector.getKriteriumText(idK)); // holt Text
-                ti.setBewertung(zeugnis.get(idK));           // holt Bewertung aus Hashtable
+                ti.setBewertung((zeugnis.get(idK)==0)?3:zeugnis.get(idK));           // holt Bewertung aus Hashtable
                 religionZLX.add(ti);
                 if(count==0){
                     religionZL.add(ti);                    
@@ -319,7 +319,7 @@ public class ZeugnisPDF  {
             for (Integer idK : connector.getID_KriterienFromLernbereich("Kunst")) {  // holt Reihenfolge
                 TableItem ti = new TableItem();
                 ti.setText(connector.getKriteriumText(idK)); // holt Text
-                ti.setBewertung(zeugnis.get(idK));           // holt Bewertung aus Hashtable
+                ti.setBewertung((zeugnis.get(idK)==0)?3:zeugnis.get(idK));           // holt Bewertung aus Hashtable
                 kunstZLX.add(ti);
                 if(count==0){
                     kunstZL.add(ti);                    
@@ -328,7 +328,7 @@ public class ZeugnisPDF  {
             for (Integer idK : connector.getID_KriterienFromLernbereich("Sport")) {  // holt Reihenfolge
                 TableItem ti = new TableItem();
                 ti.setText(connector.getKriteriumText(idK)); // holt Text
-                ti.setBewertung(zeugnis.get(idK));           // holt Bewertung aus Hashtable
+                ti.setBewertung((zeugnis.get(idK)==0)?3:zeugnis.get(idK));           // holt Bewertung aus Hashtable
                 sportZLX.add(ti);
                 if(count==0){
                     sportZL.add(ti);                    
@@ -337,7 +337,7 @@ public class ZeugnisPDF  {
             for (Integer idK : connector.getID_KriterienFromLernbereich("Werken")) {  // holt Reihenfolge
                 TableItem ti = new TableItem();
                 ti.setText(connector.getKriteriumText(idK)); // holt Text
-                ti.setBewertung(zeugnis.get(idK));           // holt Bewertung aus Hashtable
+                ti.setBewertung((zeugnis.get(idK)==0)?3:zeugnis.get(idK));           // holt Bewertung aus Hashtable
                 werkenZLX.add(ti);
                 if(count==0){
                     werkenZL.add(ti);                    
@@ -346,7 +346,7 @@ public class ZeugnisPDF  {
             for (Integer idK : connector.getID_KriterienFromLernbereich("Textil")) {  // holt Reihenfolge
                 TableItem ti = new TableItem();
                 ti.setText(connector.getKriteriumText(idK)); // holt Text
-                ti.setBewertung(zeugnis.get(idK));           // holt Bewertung aus Hashtable
+                ti.setBewertung((zeugnis.get(idK)==0)?3:zeugnis.get(idK));           // holt Bewertung aus Hashtable
                 textilZLX.add(ti);
                 if(count==0){
                     textilZL.add(ti);                    
@@ -355,7 +355,7 @@ public class ZeugnisPDF  {
             for (Integer idK : connector.getID_KriterienFromLernbereich("Englisch")) {  // holt Reihenfolge
                 TableItem ti = new TableItem();
                 ti.setText(connector.getKriteriumText(idK)); // holt Text
-                ti.setBewertung(zeugnis.get(idK));           // holt Bewertung aus Hashtable
+                ti.setBewertung((zeugnis.get(idK)==0)?3:zeugnis.get(idK));           // holt Bewertung aus Hashtable
                 englischZLX.add(ti);
                 if(count==0){
                     englischZL.add(ti);                    
