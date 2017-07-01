@@ -267,7 +267,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 }
             });
 
-            jButton2.setText("Klassenstatistik");
+            jButton2.setText("Durchschnitt");
             jButton2.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     jButton2ActionPerformed(evt);
@@ -285,7 +285,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                     .addComponent(jButton3)
                     .addGap(27, 27, 27)
                     .addComponent(jButton2)
-                    .addContainerGap(346, Short.MAX_VALUE))
+                    .addContainerGap(364, Short.MAX_VALUE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE))
             );
@@ -1140,14 +1140,15 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        // Statistik bilden...
-        try {
-            ZeugnisPDF zeugnis = new ZeugnisPDF(liste);
-            zeugnis.CreatePDF();    // uses private Variables to print pdf
-        } catch (IOException | DocumentException | SQLException | ParseException ex) {
-            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        if (liste.size() > 0) {
+            // Statistik bilden...
+            try {
+                ZeugnisPDF zeugnis = new ZeugnisPDF(liste);
+                zeugnis.CreatePDF();    // uses private Variables to print pdf
+            } catch (IOException | DocumentException | SQLException | ParseException ex) {
+                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-
     }//GEN-LAST:event_jButton2ActionPerformed
 
     
