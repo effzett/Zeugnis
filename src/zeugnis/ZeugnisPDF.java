@@ -51,8 +51,8 @@ public class ZeugnisPDF  {
     
     private final static Logger logger = Logger.getLogger(ZeugnisPDF.class.getName());
     
-    private static int symbol1;   // das Symbol 0,1,2  für die x in den Tabellen A+S
-    private static int symbol2;   // das Symbol 0,1,2  für die x in den Tabellen Rest
+    private static int symbol1;   // das Symbol 0,1,2..  für die x in den Tabellen A+S
+    private static int symbol2;   // das Symbol 0,1,2..  für die x in den Tabellen Rest
     private File file;
     private int id;
     private int zid;
@@ -133,8 +133,8 @@ public class ZeugnisPDF  {
 
         //Alle nötigen Felder werden aus der Datenbank gefüllt
         currDate = (new SimpleDateFormat("dd.MM.yyyy")).format(new Date());
-        name      = "Mustermann";
-        vorname   = "Maxi";
+        name      = config.getProperty("sName", "Mustermann");
+        vorname   = config.getProperty("sVorname", "Maxi");
         gebdatum  = currDate;
         gebort    = connector.getSchuelerGebOrt(liste); // häufigster Ort
         schuljahr = Gui.getSYear();
@@ -143,8 +143,8 @@ public class ZeugnisPDF  {
         fehltage  = connector.getFehltage(liste);
         fehltageohne= connector.getFehltageOhne(liste);
         lernentwicklung = "Dies ist ein Musterzeugnis mit durchschnittlichen Werten!\n\n"+
-            "Name: Mustermann\n"+
-            "Vorname: Maxi\n"+
+            "Name: "+name+"\n"+
+            "Vorname: "+vorname+"\n"+
             "Geburtsdatum: aktuelles Datum\n"+
             "Geburtsort: der häufigste Geburtsort\n"+
             "Fehltage: arithmetisches Mittel aller Fehltage\n"+

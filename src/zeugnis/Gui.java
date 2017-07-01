@@ -73,7 +73,6 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private String version = this.getClass().getPackage().getImplementationVersion();
     private String vendor = this.getClass().getPackage().getImplementationVendor();
     private String title = this.getClass().getPackage().getImplementationTitle();
-    
 
     /**
      * Creates new form Gui
@@ -268,6 +267,9 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             });
 
             jButton2.setText("Durchschnitt");
+            String vn = config.getProperty("sVorname", "Britta");
+            String nn = config.getProperty("sName", "Brelingen");
+            jButton2.setText(vn+" "+nn);
             jButton2.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     jButton2ActionPerformed(evt);

@@ -319,6 +319,9 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String vn = config.getProperty(&quot;sVorname&quot;, &quot;Britta&quot;);&#xa;String nn = config.getProperty(&quot;sName&quot;, &quot;Brelingen&quot;);&#xa;jButton2.setText(vn+&quot; &quot;+nn);"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>

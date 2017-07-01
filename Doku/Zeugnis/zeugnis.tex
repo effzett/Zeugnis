@@ -137,9 +137,9 @@ Für jeden Schüler können dann Zeugnisse ausgefüllt und anschliessend als PDF
 \subsection{Plattform}
 Das Programm \zjar\ ist in der Programmiersprache \java\ in der Version 1.8 geschrieben und benötigt zur Ausführung eine entprechende Java Runtime--Version 
 (JRE 1.8\footnote{http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html}).
-Da Java sowohl auf Windows, Linux und Apple verfügbar ist, kann das Programm auf all diesen Platformen genutzt werden. Das Programm wurde unter Windows~7, Windows~10 und OSC~10.10.5 getestet.
+Da Java sowohl auf Windows, Linux und Apple verfügbar ist, kann das Programm auf all diesen Platformen genutzt werden. Das Programm wurde unter Windows~7, Windows~10 und OSX~10.10.5 getestet.
 
-Das Programm nutzt zur Anzeige der erzeugten PDF--Datei den PDF--Viewer, der auf dem System zur Anzeige von PDF--Dateien konfiguriert ist. Sollte kein PDF--Viewer auf dem System vorhanden sein, so kann man sich unter verschiedenen Anbietern im Internet einen geeigneten Anbieter für seine Plattform auswählen und installieren.
+Das Programm nutzt zur Anzeige der erzeugten PDF--Datei den PDF--Viewer, der auf dem System zur Anzeige von PDF--Dateien konfiguriert ist. Sollte kein PDF--Viewer auf dem System vorhanden sein, so kann man sich unter verschiedenen Anbietern im Internet einen geeigneten Anbieter für seine Plattform auswählen und installieren\footnote{Windows: z.B. SumatraPDF; Mac: z.B. Skim}.
 
 \subsection{Aufruf}
 Wenn die Java Runtime installiert ist, kann das Programm \zjar\ mit einem Doppelklick gestartet werden. Sollte kein Programm mit der Dateiendung {\ott .jar} assoziert sein, so kann man das Programm auch per Kommandozeile aufrufen:\\
@@ -312,24 +312,39 @@ Also im Schuljahr 2016/17 kann erst im Jahr 2017 ein neues Schuljahr 2017/18 ang
 Die Indikatoren und Lernbereiche werden immer aus dem \emph{aktuellen} Schuljahr in das neue Schuljahr kopiert; das ist besonders wichtig, wenn die Indikatoren vorher manuell editiert wurden.
 
 \section{Durchschnitt}
-Bei den Schulklassen gibt es noch einen Button mit der Aufschrift \emph{Durchschnitt}.
+Bei den Schulklassen gibt es noch einen Button mit der Aufschrift \emph{Maxi Mustermann}.
 Wenn man diesen Button drückt, wird im aktuellen Ordner für die Zeugnisse ein Zeugnis mit Durchschnittswerten aus der Klasse angelegt. Wenn kein Schüler in der Klasse vorhanden ist, wird keine Datei erzeugt.
 
 Folgende Werte werden dann in das Zeugnis eingetragen:
 
+\begin{center}
+\begin{tabular}{rl}
+\hline
+\emph{Name}                    	& Mustermann\\
+\emph{Vorname} 					& Maxi\\
+\emph{Geburtsdatum} 			& aktuelles Datum\\
+\emph{Geburtsort} 				& der häufigste Geburtsort\\
+\emph{Fehltage} 				& arithmetisches Mittel aller Fehltage\\
+\emph{Fehltage ohne Entsch.} 	& arithmetisches Mittel aller Fehltage ohne Entschuldigung\\
+\emph{Lernentwicklung} 			& dieser Erklärungstext\\
+\emph{Note Arbeitsverhalten} 	& arithmetisches Mittel aller Noten\\
+\emph{Note Sozialverhalten} 	& arithmetisches Mittel aller Noten\\
+\emph{Bewertungen Lernbereiche} & arithmetische Mittel der Bewertungen\\
+\hline
+\end{tabular}
+\end{center}
+
+
+Der Name \emph{Maxi Mustermann} ist nur ein Default Name. Falls noch keine {\ott config.properties} angelegt wurde, wird dieser als Standardname verwendet. Sobald die Datei {\ott config.properties} 
+erzeugt wurde, kann man in der {\ott config.properties} den Namen verändern:
+
 \begin{itemize}
 \setlength{\itemindent}{3.5cm}
-\item[Name] Mustermann
-\item[Vorname] Maxi
-\item[Geburtsdatum] aktuelles Datum
-\item[Geburtsort] der häufigste Geburtsort
-\item[Fehltage] arithmetisches Mittel aller Fehltage
-\item[Fehltage ohne Entsch.] arithmetisches Mittel aller Fehltage ohne Entschuldigung
-\item[Lernentwicklung] Diesen Erklärungstext
-\item[Note Arbeitsverhalten] arithmetisches Mittel aller Noten
-\item[Note Sozialverhalten] arithmetisches Mittel aller Noten
-\item[Bewertungen Lernbereiche] arithmetische Mittel der Bewertungen
+\item[sName] Nachname
+\item[sVorname] Vorname
 \end{itemize}
+
+Der neue Name erscheint dann auf dem Button und in dem entsprechenden Durchschnittszeugnis.
 \section{Speicherorte}
 Wenn die Zeugnisse abgespeichert werden, werden automatisch Ordner im Verzeichnis des Programms angelegt, in denen das Schuljahr, das Halbjahr und die Schulklasse kodiert sind, als z.B.
 {\ott\normalfont\bfseries 201611a} für das Schuljahr 2016/17, das erste Halbjahr und die Klasse 1a oder z.B. {\ott\normalfont\bfseries 201724b}

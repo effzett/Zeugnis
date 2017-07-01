@@ -39,7 +39,10 @@ public class Config extends Properties {
                 setProperty("derbyPassword", "zeugnis");
                 setProperty("classes", "1a,1b,2a,2b,3a,3b,4a,4b");
                 setProperty("symbol1", "9");
-                setProperty("symbol2", "6");                              
+                setProperty("symbol2", "6");
+                setProperty("sName", "Mustermann");
+                setProperty("sVorname", "Maxi");
+
                 store(new FileWriter(configFile),
                         "Default Config created at " + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
             }
@@ -69,6 +72,8 @@ public class Config extends Properties {
         setProperty("classes", "1a,1b,2a,2b,3a,3b,4a,4b");
         setProperty("symbol1", String.valueOf(ZeugnisPDF.getSymbol1()));
         setProperty("symbol2", String.valueOf(ZeugnisPDF.getSymbol2()));
+        setProperty("sName", this.getProperty("sName", "Mustermann"));
+        setProperty("sVorname", this.getProperty("sVorname", "Maxi"));
         try {
             store(new FileWriter(configFile),
                     "Modificated Config created at " + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
