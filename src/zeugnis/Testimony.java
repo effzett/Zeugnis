@@ -71,7 +71,6 @@ public class Testimony {
                 new Gui().setVisible(true);
             }
         });
-
     }
 
     /**
