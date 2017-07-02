@@ -15,6 +15,8 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -90,6 +92,16 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         fillKriteriumTable();
         fillLernbereichTable();
         fillSubjectComboBox();
+        this.addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent e)
+                {
+                    System.out.print("Storing config.properties...");
+                    config.storeProperties();
+                    System.out.println("done. :-)");                    
+                    e.getWindow().dispose();
+                }
+        });
     }
 
     /**
@@ -984,7 +996,9 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         // TODO add your handling code here:
         // Store properties
         Config conf = Config.getInstance();
+        System.out.print("Storing config.properties...");
         conf.storeProperties();
+        System.out.println("done. :-)");                    
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
