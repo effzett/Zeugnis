@@ -17,6 +17,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -1005,10 +1006,13 @@ public class ZeugnisPDF  {
         
 
         String Tage      = "Versäumte Unterrichtstage im "+Halbjahr+": "+ String.valueOf(fehltage) +  " davon unentschuldigt: " + String.valueOf(fehltageohne);
-        String Unterschriften1 = "___________________\nUnterschrift\nSchulleiter/in";
-        String Unterschriften2 = "___________________\nUnterschrift\nKlassenlehrer/in";
-        String Unterschriften3 = "___________________\nUnterschrift\nErziehungsberechtigte/r";
-        String Datum = "Datum: " + currDate;
+        String Unterschriften1 = "_______________________\nUnterschrift\nKlassenlehrer/in";
+        String Unterschriften2 = "_______________________\nUnterschrift\nSchulleiter/in";
+        String Unterschriften3 = "_______________________\nUnterschrift\nErziehungsberechtigte/r";
+        String DatumLine       = "_______________________\nDatum";
+        
+    //    String Datum = "Datum: " + currDate;
+        String Datum = currDate;
         
 
         String AundS        = "Arbeits- und Sozialverhalten";
@@ -1056,11 +1060,11 @@ public class ZeugnisPDF  {
 
         // Logo
 //        URL url = this.getClass().getResource("pics/GSBrelingen.jpg");
-        URL url = this.getClass().getResource("pics/GSBrelingen.png");
+        URL url = this.getClass().getResource("pics/GSKopfLogo300.png");
         Image img = Image.getInstance(url);
         double moremargin=doc.getPageSize().getWidth()*0.0;
         float scaler = ((doc.getPageSize().getWidth() - doc.leftMargin() - doc.rightMargin()- (float)moremargin) / img.getWidth()) * 100;
-        img.scalePercent(scaler);
+        img.scalePercent(scaler*0.7f);
         
         // Seite 1 *************************************************************
         // Tablestruktur aufbauen...
@@ -1076,9 +1080,9 @@ public class ZeugnisPDF  {
         
         // Adresse
         PdfPCell cell1Adresse;
-        cell1Adresse = new PdfPCell(new Phrase("Grundschule Brelingen, Schulstraße 10, 30900 Wedemark",NORMAL_FONT));
+        cell1Adresse = new PdfPCell(new Phrase("Grundschule Brelingen • Schulstraße 10 • 30900 Wedemark • GS.Brelingen@Wedemark.de",SMALL_FONT));
         cell1Adresse.setColspan(3);
-        cell1Adresse.setFixedHeight(60f);
+        cell1Adresse.setFixedHeight(30f);
         cell1Adresse.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell1Adresse.setBorder(Rectangle.NO_BORDER);
                 
@@ -1147,7 +1151,7 @@ public class ZeugnisPDF  {
         cell1Lernentwicklung = new PdfPCell(new Phrase(lernentwicklung,NORMAL_FONT));
         cell1Lernentwicklung.setColspan(3);
         cell1Lernentwicklung.setHorizontalAlignment(Element.ALIGN_LEFT);
-        cell1Lernentwicklung.setFixedHeight(300f);
+        cell1Lernentwicklung.setFixedHeight(350f);
         cell1Lernentwicklung.setPadding(pad);
         //cell1Lernentwicklung.setBorder(Rectangle.NO_BORDER);
         
@@ -1176,12 +1180,19 @@ public class ZeugnisPDF  {
         cell1Unterschriften2.setBorder(Rectangle.NO_BORDER);
 
         PdfPCell cell1Datum;
-        cell1Datum = new PdfPCell(new Phrase(Datum,SMALL_FONT));
+        Phrase p1 = new Phrase(Datum+"\n",NORMAL_FONT);
+        Phrase p2 = new Phrase(DatumLine+"\n ",SMALL_FONT);
+        Paragraph par1 = new Paragraph(p1);
+        par1.add(p2);
+        cell1Datum = new PdfPCell(par1);
+        //cell1Datum.addElement(p1);
+        //cell1Datum.addElement(p2);
         //cell1Unterschriften.setColspan(3);
-        cell1Datum.setHorizontalAlignment(Element.ALIGN_LEFT);
+        cell1Datum.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell1Datum.setVerticalAlignment(Element.ALIGN_BOTTOM);
         cell1Datum.setFixedHeight(60f);
         cell1Datum.setBorder(Rectangle.NO_BORDER);
+
         
         cell1Empty = new PdfPCell(new Phrase("",SMALL_FONT));
         //cell1Unterschriften.setColspan(3);
@@ -1189,7 +1200,12 @@ public class ZeugnisPDF  {
         cell1Empty.setBorder(Rectangle.NO_BORDER);
 
         PdfPCell cell1Unterschriften3;
-        cell1Unterschriften3 = new PdfPCell(new Phrase(Unterschriften3,SMALL_FONT));
+        Phrase p3 = new Phrase(" \n",NORMAL_FONT);
+        Phrase p4 = new Phrase(Unterschriften3,SMALL_FONT);
+        Paragraph par2 = new Paragraph(p3);
+        par2.add(p4);
+//        cell1Unterschriften3 = new PdfPCell(new Phrase(Unterschriften3,SMALL_FONT));
+        cell1Unterschriften3 = new PdfPCell(par2);
         //cell1Unterschriften3.setColspan(2);
         cell1Unterschriften3.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell1Unterschriften3.setVerticalAlignment(Element.ALIGN_BOTTOM);
