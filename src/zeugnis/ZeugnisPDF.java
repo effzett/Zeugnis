@@ -44,6 +44,7 @@ public class ZeugnisPDF  {
     private static final Font NAME_FONT=new Font(Font.FontFamily.HELVETICA,26,Font.NORMAL);
     private static final Font SMALL_FONT=new Font(Font.FontFamily.HELVETICA,10,Font.NORMAL);
     private static final Font TINY_FONT=new Font(Font.FontFamily.HELVETICA,9,Font.NORMAL);
+    private static final Font MICRO_FONT=new Font(Font.FontFamily.HELVETICA,7,Font.NORMAL);    
     private static final Font BIG_FONT=new Font(Font.FontFamily.HELVETICA,36,Font.BOLD);
     private static final Font NORMAL_BOLD_FONT=new Font(Font.FontFamily.HELVETICA,12,Font.BOLD);
     private static final Font SMALL_BOLD_FONT=new Font(Font.FontFamily.HELVETICA,10,Font.BOLD);
@@ -1006,10 +1007,10 @@ public class ZeugnisPDF  {
         
 
         String Tage      = "Versäumte Unterrichtstage im "+Halbjahr+": "+ String.valueOf(fehltage) +  " davon unentschuldigt: " + String.valueOf(fehltageohne);
-        String Unterschriften1 = "_______________________\nUnterschrift\nKlassenlehrer/in";
-        String Unterschriften2 = "_______________________\nUnterschrift\nSchulleiter/in";
-        String Unterschriften3 = "_______________________\nUnterschrift einer/eines \nErziehungsberechtigten";
-        String DatumLine       = "_______________________\nAusstellungsort\n und Datum";
+        String Unterschriften1 = "________________________________________\n\n Klassenlehrer / Klassenlehrerin";
+        String Unterschriften2 = "________________________________________\n\n Schulleiter / Schulleiterin";
+        String Unterschriften3 = "________________________________________\n\n Unterschrift einer/eines Erziehungsberechtigten";
+        String DatumLine       = "________________________________________\n\n Ausstellungsort und Datum";
         
     //    String Datum = "Datum: " + currDate;
         String Datum = currDate;
@@ -1068,7 +1069,7 @@ public class ZeugnisPDF  {
         
         // Seite 1 *************************************************************
         // Tablestruktur aufbauen...
-        PdfPTable table1 = new PdfPTable(3);
+        PdfPTable table1 = new PdfPTable(new float[] { 36, 28, 36 });
         table1.setWidthPercentage(100);
         
         PdfPCell cell1Logo;
@@ -1157,7 +1158,7 @@ public class ZeugnisPDF  {
         
         // Unterschriften
         PdfPCell cell1Unterschriften1;
-        cell1Unterschriften1 = new PdfPCell(new Phrase(Unterschriften1,SMALL_FONT));
+        cell1Unterschriften1 = new PdfPCell(new Phrase(Unterschriften1,MICRO_FONT));
         //cell1Unterschriften.setColspan(3);
         cell1Unterschriften1.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell1Unterschriften1.setVerticalAlignment(Element.ALIGN_BOTTOM);
@@ -1172,7 +1173,7 @@ public class ZeugnisPDF  {
 
         
         PdfPCell cell1Unterschriften2;
-        cell1Unterschriften2 = new PdfPCell(new Phrase(Unterschriften2,SMALL_FONT));
+        cell1Unterschriften2 = new PdfPCell(new Phrase(Unterschriften2,MICRO_FONT));
         //cell1Unterschriften2.setColspan(2);
         cell1Unterschriften2.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell1Unterschriften2.setVerticalAlignment(Element.ALIGN_BOTTOM);
@@ -1180,8 +1181,8 @@ public class ZeugnisPDF  {
         cell1Unterschriften2.setBorder(Rectangle.NO_BORDER);
 
         PdfPCell cell1Datum;
-        Phrase p1 = new Phrase("Brelingen, den "+Datum+"\n",NORMAL_FONT);
-        Phrase p2 = new Phrase(DatumLine,SMALL_FONT);
+        Phrase p1 = new Phrase("Brelingen, den "+Datum+"\n",SMALL_FONT);
+        Phrase p2 = new Phrase(DatumLine,MICRO_FONT);
         Paragraph par1 = new Paragraph(p1);
         par1.add(p2);
         cell1Datum = new PdfPCell(par1);
@@ -1195,7 +1196,7 @@ public class ZeugnisPDF  {
 
         
         PdfPCell cell1Gesehen;
-        cell1Gesehen = new PdfPCell(new Phrase("\n\n gesehen:",TINY_FONT));
+        cell1Gesehen = new PdfPCell(new Phrase("",NORMAL_FONT));
         cell1Gesehen.setHorizontalAlignment(Element.ALIGN_RIGHT);
         cell1Gesehen.setVerticalAlignment(Element.ALIGN_CENTER);        
         //cell1Unterschriften.setColspan(3);
@@ -1203,8 +1204,8 @@ public class ZeugnisPDF  {
         cell1Gesehen.setBorder(Rectangle.NO_BORDER);
 
         PdfPCell cell1Unterschriften3;
-        Phrase p3 = new Phrase(" \n",NORMAL_FONT);
-        Phrase p4 = new Phrase(Unterschriften3,SMALL_FONT);
+        Phrase p3 = new Phrase("gesehen:                                             \u00a0\n",TINY_FONT);
+        Phrase p4 = new Phrase(Unterschriften3,MICRO_FONT);
         Paragraph par2 = new Paragraph(p3);
         par2.add(p4);
         cell1Unterschriften3 = new PdfPCell(par2);
