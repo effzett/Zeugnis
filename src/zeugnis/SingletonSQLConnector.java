@@ -496,7 +496,7 @@ public class SingletonSQLConnector {
 //    }
 
     /**
-     * Zum Update eines Zeugnisses. Es wird ein String[9] erwartet. Die Felder
+     * Zum Update eines Zeugnisses. Es wird ein String[11] erwartet. Die Felder
      * die NULL sind werden ignoriert. Das Feld ID_SCHUELER muß gefuellt sein.
      *
      * @param values Die Werte in der Reihenfolge der Tabellenspalten.
@@ -533,6 +533,13 @@ public class SingletonSQLConnector {
             if (values[9] != null) {
                 sql += "SCHULJAHR = " + values[9] + ", ";
             }
+            if (values[10] != null) {
+                sql += "TEXT_ARBEIT = '" + values[10] + "', ";
+            }
+            if (values[11] != null) {
+                sql += "TEXT_SOZIAL = '" + values[11] + "', ";
+            }
+
             sql = (sql.substring(0, sql.length() - 2)) + " where ID_ZEUGNIS = " + values[0];
             // logger.fine(sql);
             statement.executeUpdate(sql);

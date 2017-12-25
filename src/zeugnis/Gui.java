@@ -182,7 +182,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         jLabel10.setText("Version: ");
         jLabel10.setText(version);
         if(version==null){
-            jLabel10.setText("1.3-alpha");
+            jLabel10.setText("1.4-alpha");
         }
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1046,7 +1046,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         else{
             return;
         }
-        String[] values = {idZeugnis.toString(),null,null,null,null,null,jTextArea1.getText(),null,null,null};
+        String[] values = {idZeugnis.toString(),null,null,null,null,null,jTextArea1.getText(),null,null,null,null,null};
         try {
             connector.updateZeugnis(values);
         } catch (SQLException ex) {
@@ -1068,7 +1068,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         else{
             return;
         }
-        String[] values = {idZeugnis.toString(),null,null,null,String.valueOf((Integer)jSpinner1.getValue()),null,null,null,null,null};
+        String[] values = {idZeugnis.toString(),null,null,null,String.valueOf((Integer)jSpinner1.getValue()),null,null,null,null,null,null,null};
         try {
             connector.updateZeugnis(values);
         } catch (SQLException ex) {
@@ -1090,7 +1090,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         else{
             return;
         }
-        String[] values = {idZeugnis.toString(),null,null,null,null,String.valueOf((Integer)jSpinner2.getValue()),null,null,null,null};
+        String[] values = {idZeugnis.toString(),null,null,null,null,String.valueOf((Integer)jSpinner2.getValue()),null,null,null,null,null,null};
         try {
             connector.updateZeugnis(values);
         } catch (SQLException ex) {
@@ -1116,14 +1116,14 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             
             if (jComboBox5.getSelectedItem().equals("Arbeitsverhalten")) {// Bestimmen, ob gerade Arbeit oder Sozial angezeigt wird
                 try { // Arbeit
-                    String[] values = {idZeugnis.toString(), null, String.valueOf(note), null, null, null, null, null, null, null};
+                    String[] values = {idZeugnis.toString(), null, String.valueOf(note), null, null, null, null, null, null, null, null, null};
                     connector.updateZeugnis(values);
                 } catch (SQLException ex) {
                     Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else { //  Sozial
                 try {
-                    String[] values = {idZeugnis.toString(), null, null, String.valueOf(note), null, null, null, null, null, null};
+                    String[] values = {idZeugnis.toString(), null, null, String.valueOf(note), null, null, null, null, null, null, null, null};
                     connector.updateZeugnis(values);
                 } catch (SQLException ex) {
                     Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
@@ -1216,7 +1216,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         else{
             return;
         }
-        String[] values = {idZeugnis.toString(),null,null,null,null,null,null,jTextArea2.getText(),null,null};
+        String[] values = {idZeugnis.toString(),null,null,null,null,null,null,jTextArea2.getText(),null,null,null,null};
         try {
             connector.updateZeugnis(values);
         } catch (SQLException ex) {
