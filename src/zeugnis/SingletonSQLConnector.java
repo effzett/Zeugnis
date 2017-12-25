@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.apache.derby.drda.NetworkServerControl;
@@ -522,10 +523,10 @@ public class SingletonSQLConnector {
                 sql += "FEHLTAGEOHNE = " + values[5] + ", ";
             }
             if (values[6] != null) {
-                sql += "ENTWICKLUNG = '" + values[6] + "', ";
+                sql += "ENTWICKLUNG = '" + values[6].substring(0,Math.min(values[6].length(),3000)) + "', ";
             }
             if (values[7] != null) {
-                sql += "BEMERKUNG = '" + values[7] + "', ";
+                sql += "BEMERKUNG = '" + values[7].substring(0,Math.min(values[7].length(),1500)) + "', ";
             }
             if (values[8] != null) {
                 sql += "HALBJAHR = " + values[8] + ", ";
@@ -534,15 +535,18 @@ public class SingletonSQLConnector {
                 sql += "SCHULJAHR = " + values[9] + ", ";
             }
             if (values[10] != null) {
-                sql += "TEXT_ARBEIT = '" + values[10] + "', ";
+                sql += "TEXT_ARBEIT = '" + values[10].substring(0,Math.min(values[10].length(),500)) + "', ";
             }
             if (values[11] != null) {
-                sql += "TEXT_SOZIAL = '" + values[11] + "', ";
+                sql += "TEXT_SOZIAL = '" + values[11].substring(0,Math.min(values[11].length(),500)) + "', ";
             }
 
             sql = (sql.substring(0, sql.length() - 2)) + " where ID_ZEUGNIS = " + values[0];
             // logger.fine(sql);
             statement.executeUpdate(sql);
+        }
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, ex, "SQL-Fehler", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -1925,7 +1929,7 @@ public class SingletonSQLConnector {
             if (idSchueler != 0) {
                 int idZeugnis = _getIdZeugnis(idSchueler, 1);
                 sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, NOTE_ARBEIT, NOTE_SOZIAL, FEHLTAGE, FEHLTAGEOHNE, ENTWICKLUNG, BEMERKUNG, HALBJAHR, SCHULJAHR) values(" 
-                        + idZeugnis+ ", " + idSchueler + ", "+0+", "+0+", "+0+", "+0+", "+"' '"+", "+"' '"+", "+1+", "+schuljahr+")";
+                        + idZeugnis+ ", " + idSchueler + ", "+0+", "+0+", "+0+", "+0+", "+"''"+", "+"''"+", "+1+", "+schuljahr+")";
                 statement.executeUpdate(sql);
                 logger.fine("Leeres Zeugnis für Halbjahr 1 eingefügt: "+sql);
                 
@@ -1934,7 +1938,7 @@ public class SingletonSQLConnector {
 
                 idZeugnis = _getIdZeugnis(idSchueler, 2);
                 sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, NOTE_ARBEIT, NOTE_SOZIAL, FEHLTAGE, FEHLTAGEOHNE, ENTWICKLUNG, BEMERKUNG, HALBJAHR, SCHULJAHR) values(" + idZeugnis
-                        + ", " + idSchueler + ", "+0+", "+0+", "+0+", "+0+", "+"' '"+", "+"'Versetzt nach Klasse "+ newKlasse +".', "+2+", "+schuljahr+")";
+                        + ", " + idSchueler + ", "+0+", "+0+", "+0+", "+0+", "+"''"+", "+"'Versetzt nach Klasse "+ newKlasse +".', "+2+", "+schuljahr+")";
                 logger.fine("Leeres Zeugnis für Halbjahr 2 eingefügt: "+sql);
                 statement.executeUpdate(sql);
 

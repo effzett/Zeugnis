@@ -46,6 +46,8 @@ import javax.swing.JTable;
 import javax.swing.ListCellRenderer;
 import static javax.swing.SwingConstants.CENTER;
 import javax.swing.UIManager;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableColumnModel;
@@ -386,7 +388,10 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             jLabel5.setText("Lernentwicklungsbericht");
 
             jTextArea1.setColumns(20);
+            jTextArea1.setLineWrap(true);
             jTextArea1.setRows(5);
+            jTextArea1.setToolTipText("RETURN für neue Zeile");
+            jTextArea1.setWrapStyleWord(true);
             jTextArea1.addFocusListener(new java.awt.event.FocusAdapter() {
                 public void focusLost(java.awt.event.FocusEvent evt) {
                     jTextArea1FocusLost(evt);
@@ -445,7 +450,10 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 });
 
                 jTextArea2.setColumns(20);
+                jTextArea2.setLineWrap(true);
                 jTextArea2.setRows(5);
+                jTextArea2.setToolTipText("RETURN für neue Zeile");
+                jTextArea2.setWrapStyleWord(true);
                 jTextArea2.addFocusListener(new java.awt.event.FocusAdapter() {
                     public void focusLost(java.awt.event.FocusEvent evt) {
                         jTextArea2FocusLost(evt);
@@ -454,8 +462,28 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 jScrollPane6.setViewportView(jTextArea2);
 
                 jTextArea3.setColumns(20);
-                jTextArea3.setRows(5);
-                jTextArea3.setText("Kommentarfunktion noch nicht ausprogrammiert!");
+                jTextArea3.setLineWrap(true);
+                jTextArea3.setRows(4);
+                jTextArea3.setToolTipText("RETURN für neue Zeile");
+                jTextArea3.setWrapStyleWord(true);
+                jTextArea3.setAutoscrolls(false);
+                jTextArea3.getDocument().addDocumentListener(new DocumentListener() {
+                    public void changedUpdate(DocumentEvent e) {
+                        check();
+                    }
+                    public void removeUpdate(DocumentEvent e) {
+                        check();
+                    }
+                    public void insertUpdate(DocumentEvent e) {
+                        check();
+                    }
+
+                    public void check() {
+                        if (jTextArea3.getLineCount()>4){//make sure no more than 2 lines
+                            JOptionPane.showMessageDialog(null, "Fehler: Nicht mehr als 4 Zeilen!");
+                        }
+                    }
+                });
                 jTextArea3.addFocusListener(new java.awt.event.FocusAdapter() {
                     public void focusLost(java.awt.event.FocusEvent evt) {
                         jTextArea3FocusLost(evt);
@@ -1833,3 +1861,5 @@ class CritField extends JLabel {
     }
 
 }
+
+

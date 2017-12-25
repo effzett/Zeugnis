@@ -77,6 +77,8 @@ public class ZeugnisPDF  {
     private int noteSozial;
     private String noteArbeitString;
     private String noteSozialString;
+    private String textArbeit;
+    private String textSozial;
     
     private String[] asBewertungen = {  "entspricht nicht den Erwartungen",
                                         "entspricht den Erwartungen mit Einschränkungen",
@@ -137,7 +139,7 @@ public class ZeugnisPDF  {
         //logger.fine("ZeugnisPDF-idSCHUELER->" + String.valueOf(idK));
         //logger.fine("ZeugnisPDF-idZEUGNIS ->" + String.valueOf(zid));
 
-        //Alle nötigen Felder werden aus der Datenbank gefüllt
+        //Alle nötigen Felder werden ohne Datenbank gefüllt
         currDate = (new SimpleDateFormat("dd.MM.yyyy")).format(new Date());
         name      = config.getProperty("sName", "Mustermann");
         vorname   = config.getProperty("sVorname", "Maxi");
@@ -163,7 +165,7 @@ public class ZeugnisPDF  {
         noteSozial = connector.getNoteSozial(liste);
         noteArbeitString = connector.asBewertungen(noteArbeit);
         noteSozialString = connector.asBewertungen(noteSozial);
-        
+
         // Ab hier sollte das Statistikzeugnis stehen...
         if(fehltageohne>fehltage){
             fehltageohne=fehltage;
@@ -452,11 +454,14 @@ public class ZeugnisPDF  {
         klasse    = Gui.getSClass();
         fehltage  = connector.getFehltage(zid);
         fehltageohne= connector.getFehltageOhne(zid);
-        lernentwicklung = connector.getLernentwicklung(zid) + "\n\n" + connector.getBemerkung(zid);
+        lernentwicklung = connector.getLernentwicklung(zid) + "\n\n" + "Bemerkungen:\n" + connector.getBemerkung(zid);
         noteArbeit = connector.getNoteArbeit(zid);
         noteSozial = connector.getNoteSozial(zid);
         noteArbeitString = connector.asBewertungen(noteArbeit);
         noteSozialString = connector.asBewertungen(noteSozial);
+        textArbeit = connector.getTextArbeit(zid);
+        textSozial = connector.getTextSozial(zid);
+        
         // liefert alle im zeugnis abgelegten Kriterien mit Bewertungen
         zeugnis = connector.getID_KriterienZeugnis(zid);
         
@@ -840,12 +845,13 @@ public class ZeugnisPDF  {
      * @throws BadElementException 
      */
     private PdfPTable asVerhalten(PdfPTable table,ArrayList verhalten,float pad) throws IOException, BadElementException{
+        Integer mH = 15;
         for(Integer i=0; i<verhalten.size(); i++){
             PdfPCell cell2;
             cell2 = new PdfPCell(new Phrase( ((TableItem)verhalten.get(i)).getText() ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            //cell2.setMinimumHeight(15);
+            cell2.setMinimumHeight(mH);
             cell2.setPadding(pad);
             cell2.setHorizontalAlignment(Element.ALIGN_LEFT);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
@@ -856,7 +862,7 @@ public class ZeugnisPDF  {
             cell2bewertungX = selection;
             //cell2ATitle.setColspan(4);
             cell2bewertungX.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            //cell2bewertungX.setMinimumHeight(15);
+            cell2bewertungX.setMinimumHeight(mH);
             cell2bewertungX.setPadding(pad);
             cell2bewertungX.setHorizontalAlignment(Element.ALIGN_CENTER);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
@@ -865,7 +871,7 @@ public class ZeugnisPDF  {
             cell2bewertung = new PdfPCell(new Phrase("" ,TINY_FONT));
             //cell2ATitle.setColspan(4);
             cell2bewertung.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            //cell2bewertung.setMinimumHeight(15);
+            cell2bewertung.setMinimumHeight(mH);
             cell2bewertung.setPadding(pad);
             cell2bewertung.setHorizontalAlignment(Element.ALIGN_CENTER);
             //cell2ATitle.setBorder(Rectangle.NO_BORDER);
@@ -1255,7 +1261,7 @@ public class ZeugnisPDF  {
         String head = vorname + " " + name + ", geboren am " + gebdatum;
         event.setHeader(head);
         // Tablestruktur aufbauen...
-        //pad=2.5f;
+        pad=3.0f;
         PdfPTable table2 = new PdfPTable(4);
         table2.setWidths(new float[] { 58, 14,14,14 });
         table2.setWidthPercentage(100);
@@ -1277,7 +1283,15 @@ public class ZeugnisPDF  {
         table2.addCell(cell2Ueberwiegend);
         
         table2 = asVerhalten(table2,aVerhalten,pad);
-                
+        
+        PdfPCell cell2KommentarA;
+        cell2KommentarA = new PdfPCell(new Paragraph(textArbeit,TINY_FONT));
+        cell2KommentarA.setColspan(4);
+        cell2KommentarA.setBorder(Rectangle.LEFT | Rectangle.RIGHT );
+        cell2KommentarA.setPadding(pad);
+        cell2KommentarA.setHorizontalAlignment(Element.ALIGN_LEFT);
+        table2.addCell(cell2KommentarA);  
+        
         PdfPCell cell2BewertungA;
         if(vorname.endsWith("s") || vorname.endsWith("x") || vorname.endsWith("z")){
             cell2BewertungA = new PdfPCell(new Phrase(vorname + "' Arbeitsverhalten " + noteArbeitString,NORMAL_FONT));            
@@ -1290,7 +1304,7 @@ public class ZeugnisPDF  {
         //cell2BewertungA.setFixedHeight(45f);
         cell2BewertungA.setPadding(pad);
         cell2BewertungA.setHorizontalAlignment(Element.ALIGN_LEFT);
-        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+        cell2BewertungA.setBorder(Rectangle.LEFT | Rectangle.BOTTOM | Rectangle.RIGHT);
         table2.addCell(cell2BewertungA);
         
         table2.addCell(emptyLine(4,15f));
@@ -1303,8 +1317,16 @@ public class ZeugnisPDF  {
         table2.addCell(cell2Ueberwiegend);
         
         table2 = asVerhalten(table2,sVerhalten,pad);
-                
-   PdfPCell cell2BewertungS;
+      
+        PdfPCell cell2KommentarS;
+        cell2KommentarS = new PdfPCell(new Paragraph(textSozial,TINY_FONT));
+        cell2KommentarS.setColspan(4);
+        cell2KommentarS.setBorder(Rectangle.LEFT | Rectangle.RIGHT );
+        cell2KommentarS.setPadding(pad);
+        cell2KommentarS.setHorizontalAlignment(Element.ALIGN_LEFT);
+        table2.addCell(cell2KommentarS);  
+        
+        PdfPCell cell2BewertungS;
         if(vorname.endsWith("s") || vorname.endsWith("x") || vorname.endsWith("z")){
             cell2BewertungS = new PdfPCell(new Phrase(vorname + "' Sozialverhalten " + noteSozialString,NORMAL_FONT));            
         }
@@ -1316,7 +1338,7 @@ public class ZeugnisPDF  {
         //cell2BewertungA.setFixedHeight(45f);
         cell2BewertungS.setPadding(pad);
         cell2BewertungS.setHorizontalAlignment(Element.ALIGN_LEFT);
-        //cell2ATitle.setBorder(Rectangle.NO_BORDER);
+        cell2BewertungS.setBorder(Rectangle.LEFT | Rectangle.BOTTOM | Rectangle.RIGHT);
         table2.addCell(cell2BewertungS);
 
         table2.addCell(emptyLine(4,15f));
@@ -2155,7 +2177,7 @@ public class ZeugnisPDF  {
                     tableHeader.addCell("");
                     
                     tableFooter.writeSelectedRows(0, -1, 54, 30, writer.getDirectContent());
-                    tableHeader.writeSelectedRows(0, -1, 54, 825, writer.getDirectContent());
+                    tableHeader.writeSelectedRows(0, -1, 50, 825, writer.getDirectContent());
                 } catch (DocumentException de) {
                     throw new ExceptionConverter(de);
                 }                

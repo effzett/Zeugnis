@@ -480,7 +480,10 @@
                     <Component class="javax.swing.JTextArea" name="jTextArea1">
                       <Properties>
                         <Property name="columns" type="int" value="20"/>
+                        <Property name="lineWrap" type="boolean" value="true"/>
                         <Property name="rows" type="int" value="5"/>
+                        <Property name="toolTipText" type="java.lang.String" value="RETURN f&#xfc;r neue Zeile"/>
+                        <Property name="wrapStyleWord" type="boolean" value="true"/>
                       </Properties>
                       <Events>
                         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextArea1FocusLost"/>
@@ -595,7 +598,10 @@
                     <Component class="javax.swing.JTextArea" name="jTextArea2">
                       <Properties>
                         <Property name="columns" type="int" value="20"/>
+                        <Property name="lineWrap" type="boolean" value="true"/>
                         <Property name="rows" type="int" value="5"/>
+                        <Property name="toolTipText" type="java.lang.String" value="RETURN f&#xfc;r neue Zeile"/>
+                        <Property name="wrapStyleWord" type="boolean" value="true"/>
                       </Properties>
                       <Events>
                         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextArea2FocusLost"/>
@@ -613,12 +619,18 @@
                     <Component class="javax.swing.JTextArea" name="jTextArea3">
                       <Properties>
                         <Property name="columns" type="int" value="20"/>
-                        <Property name="rows" type="int" value="5"/>
-                        <Property name="text" type="java.lang.String" value="Kommentarfunktion noch nicht ausprogrammiert!"/>
+                        <Property name="lineWrap" type="boolean" value="true"/>
+                        <Property name="rows" type="int" value="4"/>
+                        <Property name="toolTipText" type="java.lang.String" value="RETURN f&#xfc;r neue Zeile"/>
+                        <Property name="wrapStyleWord" type="boolean" value="true"/>
+                        <Property name="autoscrolls" type="boolean" value="false"/>
                       </Properties>
                       <Events>
                         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextArea3FocusLost"/>
                       </Events>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTextArea3.getDocument().addDocumentListener(new DocumentListener() {&#xa;  public void changedUpdate(DocumentEvent e) {&#xa;    check();&#xa;  }&#xa;  public void removeUpdate(DocumentEvent e) {&#xa;    check();&#xa;  }&#xa;  public void insertUpdate(DocumentEvent e) {&#xa;    check();&#xa;  }&#xa;&#xa;  public void check() {&#xa;     if (jTextArea3.getLineCount()&gt;4){//make sure no more than 2 lines&#xa;       JOptionPane.showMessageDialog(null, &quot;Fehler: Nicht mehr als 4 Zeilen!&quot;);&#xa;     }&#xa;  }&#xa;});"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
