@@ -1050,7 +1050,8 @@ public class ZeugnisPDF  {
         String werkenS          = "Werken ";
         String englischS        = "Englisch ";
         
-        String jStufe   = "Jahrgangsstufe "+ Gui.getSClass().substring(0, 1);
+//        String jStufe   = "Jahrgangsstufe "+ Gui.getSClass().substring(0, 1);
+        String jStufe   = "";
         String sz       = "Sprechen und Zuhören\n\n" + vorname + "...";
         String sch      = "Schreiben\n\n" + vorname + "...";
         String les      = "Lesen - mit Texten und Medien umgehen\n\n" + vorname + "...";
@@ -2000,6 +2001,7 @@ public class ZeugnisPDF  {
             table7.setWidths(new float[] { 60,8,8,8,8,8 });
             table7.setWidthPercentage(100);
         
+
             PdfPCell cell7Header = emptyLine(6,10f);            
             
             table7.addCell(cell7Header);
