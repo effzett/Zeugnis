@@ -711,7 +711,7 @@ public class ZeugnisPDF  {
             break;
             case 14: cell = new PdfPCell(img14);
             break;
-            default: cell= new PdfPCell();
+            default: cell= new PdfPCell(img1);
             break;
         }
         cell.setPadding(pad);
