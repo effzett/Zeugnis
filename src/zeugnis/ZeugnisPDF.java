@@ -16,10 +16,14 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.ExceptionConverter;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfPageEventHelper;
+import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Desktop;
 import java.io.File;
@@ -770,25 +774,27 @@ public class ZeugnisPDF  {
         return cell;
     }
     
-    /***
-     * Erzeugt cell für die Header Zeile
-     * @param page
-     * @param vorname
-     * @param name
-     * @param geb
-     * @param currdate
-     * @param colspan
-     * @return 
-     */
-    private PdfPCell header(int page,String vorname,String name,String geb, String currdate, int colspan){
-        PdfPCell retCell = new PdfPCell(new Phrase("Seite "+ String.valueOf(page) +
-                " des Grundschulzeugnisses von " + vorname + " "+ name + " (" + gebdatum + ") " + 
-                " vom " +currDate,SMALL_FONT));
-        retCell.setColspan(colspan);
-        retCell.setHorizontalAlignment(Element.ALIGN_LEFT);
-        retCell.setBorder(Rectangle.NO_BORDER);
-        return retCell;
-    }
+//    /***
+//     * Erzeugt cell für die Header Zeile
+//     * @param page
+//     * @param vorname
+//     * @param name
+//     * @param geb
+//     * @param currdate
+//     * @param colspan
+//     * @return 
+//     */
+//    private PdfPCell header(int page,String vorname,String name,String geb, String currdate, int colspan){
+////        PdfPCell retCell = new PdfPCell(new Phrase("Seite "+ String.valueOf(page) +
+////                " des Grundschulzeugnisses von " + vorname + " "+ name + " (" + gebdatum + ") " + 
+////                " vom " +currDate,SMALL_FONT));
+//        PdfPCell retCell = new PdfPCell(new Phrase("Seite "+ String.valueOf(page) +
+//                " des Grundschulzeugnisses von " + vorname + " "+ name + ", geboren am " + gebdatum,SMALL_FONT));
+//        retCell.setColspan(colspan);
+//        retCell.setHorizontalAlignment(Element.ALIGN_LEFT);
+//        retCell.setBorder(Rectangle.NO_BORDER);
+//        return retCell;
+//    }
     
     private PdfPCell title1(String s,int colspan,float minheight){
         PdfPCell retCell = new PdfPCell(new Phrase(s,NORMAL_BOLD_FONT));
@@ -1057,8 +1063,14 @@ public class ZeugnisPDF  {
         // Ausgabedokument erzeugen
         Document doc=new Document(PageSize.A4,50,50,20,30);
         PdfWriter writer = PdfWriter.getInstance(doc,new FileOutputStream(file));
-        doc.open();
 
+        
+        // Für header und footer
+        TableHeader event = new TableHeader();
+        event.setHeader("");
+        writer.setPageEvent(event);
+        
+        doc.open();
         // Logo
 //        URL url = this.getClass().getResource("pics/GSBrelingen.jpg");
         URL url = this.getClass().getResource("pics/GSKopfLogo300.png");
@@ -1239,13 +1251,15 @@ public class ZeugnisPDF  {
         doc.newPage();
         
         // Seite 2 *************************************************************
+        String head = vorname + " " + name + ", geboren am " + gebdatum;
+        event.setHeader(head);
         // Tablestruktur aufbauen...
         //pad=2.5f;
         PdfPTable table2 = new PdfPTable(4);
         table2.setWidths(new float[] { 58, 14,14,14 });
         table2.setWidthPercentage(100);
         
-        PdfPCell cell2Header = new PdfPCell(header(2,vorname,name,gebdatum,currDate,4));
+        PdfPCell cell2Header = emptyLine(4,10f);
         PdfPCell cell2AundS  = new PdfPCell(title1(AundS,4,35f));
         PdfPCell cell2ATitle = new PdfPCell(title2(ATitle,1,50f,pad));
 
@@ -1456,8 +1470,7 @@ public class ZeugnisPDF  {
         table3.setWidths(new float[] { 60,8,8,8,8,8 });
         table3.setWidthPercentage(100);
         
-        PdfPCell cell3Header = header(3,vorname,name,gebdatum,currDate,6);
-        
+        PdfPCell cell3Header = emptyLine(6,10f);
         PdfPCell cell3Deutsch;
         cell3Deutsch = new PdfPCell(new Phrase(deutschS + jStufe,NORMAL_BOLD_FONT));
         cell3Deutsch.setColspan(6);
@@ -1593,7 +1606,7 @@ public class ZeugnisPDF  {
         table4.setWidths(new float[] { 60,8,8,8,8,8 });
         table4.setWidthPercentage(100);
         
-        PdfPCell cell4Header = header(4,vorname,name,gebdatum,currDate,6);
+        PdfPCell cell4Header = emptyLine(6,10f);
         
         PdfPCell cell4Mathe;
         cell4Mathe = new PdfPCell(new Phrase(matheS + jStufe,NORMAL_BOLD_FONT));
@@ -1701,7 +1714,7 @@ public class ZeugnisPDF  {
         table5.setWidths(new float[] { 60,8,8,8,8,8 });
         table5.setWidthPercentage(100);
         
-        PdfPCell cell5Header = header(5,vorname,name,gebdatum,currDate,6);
+        PdfPCell cell5Header = emptyLine(6,10f);
 
         // *********************************************************************
         PdfPCell cell5Sachunterricht;
@@ -1871,8 +1884,7 @@ public class ZeugnisPDF  {
             table6.setWidths(new float[] { 60,8,8,8,8,8 });
             table6.setWidthPercentage(100);
         
-            PdfPCell cell6Header = header(6,vorname,name,gebdatum,currDate,6);
-
+            PdfPCell cell6Header = emptyLine(6,10f);
         // *********************************************************************
             PdfPCell cell6Kunst;
             cell6Kunst = new PdfPCell(new Phrase(kunstS + jStufe,NORMAL_BOLD_FONT));
@@ -1988,7 +2000,8 @@ public class ZeugnisPDF  {
             table7.setWidths(new float[] { 60,8,8,8,8,8 });
             table7.setWidthPercentage(100);
         
-            PdfPCell cell7Header = header(7,vorname,name,gebdatum,currDate,6);
+            PdfPCell cell7Header = emptyLine(6,10f);            
+            
             table7.addCell(cell7Header);
 
             PdfPCell cell7Englisch;
@@ -2070,4 +2083,94 @@ public class ZeugnisPDF  {
     public static void setSymbol2(int symbol) {
         symbol2 = symbol;
     }
+    
+    
+    
+    
+    class TableHeader extends PdfPageEventHelper {
+        /** The header text. */
+        String header;
+        /** The template with the total number of pages. */
+        PdfTemplate total;
+ 
+        /**
+         * Allows us to change the content of the header.
+         * @param header The new header String
+         */
+        public void setHeader(String header) {
+            this.header = header;
+        }
+ 
+        /**
+         * Creates the PdfTemplate that will hold the total number of pages.
+         * @see com.itextpdf.text.pdf.PdfPageEventHelper#onOpenDocument(
+         *      com.itextpdf.text.pdf.PdfWriter, com.itextpdf.text.Document)
+         */
+        public void onOpenDocument(PdfWriter writer, Document document) {
+            total = writer.getDirectContent().createTemplate(30, 16);
+        }
+ 
+        /**
+         * Adds a header to every page
+         * @see com.itextpdf.text.pdf.PdfPageEventHelper#onEndPage(
+         *      com.itextpdf.text.pdf.PdfWriter, com.itextpdf.text.Document)
+         */
+        public void onEndPage(PdfWriter writer, Document document) {
+            PdfPTable tableFooter = new PdfPTable(3);
+            PdfPTable tableHeader = new PdfPTable(3);
+            
+            if (!this.header.isEmpty()) {
+                try {
+                    tableFooter.setWidths(new int[]{24, 24, 2});
+                    tableFooter.setTotalWidth(527);
+                    tableFooter.setLockedWidth(true);
+                    tableHeader.setWidths(new int[]{24, 24, 2});
+                    tableHeader.setTotalWidth(527);
+                    tableHeader.setLockedWidth(true);
+                    
+
+                    // Column 1
+                    tableFooter.getDefaultCell().setFixedHeight(20);                    
+                    tableHeader.getDefaultCell().setFixedHeight(20);
+                    tableFooter.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+                    tableHeader.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+                    tableFooter.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
+                    tableHeader.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+
+                    PdfPCell cellHeader = new PdfPCell(new Phrase(header,SMALL_FONT));
+                    cellHeader.setBorder(Rectangle.NO_BORDER);
+                    tableHeader.addCell(cellHeader);
+                    tableFooter.addCell("");
+                    
+                    // Column 2
+                    tableFooter.addCell( new Phrase(String.format("Seite %d von ", writer.getPageNumber()) , SMALL_FONT) );
+                    tableHeader.addCell("");
+                    
+                    // Column 3
+                    PdfPCell cell = new PdfPCell(Image.getInstance(total));
+                    cell.setBorder(Rectangle.NO_BORDER);
+                    tableFooter.addCell(cell);
+                    tableHeader.addCell("");
+                    
+                    tableFooter.writeSelectedRows(0, -1, 54, 30, writer.getDirectContent());
+                    tableHeader.writeSelectedRows(0, -1, 54, 825, writer.getDirectContent());
+                } catch (DocumentException de) {
+                    throw new ExceptionConverter(de);
+                }                
+            }
+        }
+ 
+        /**
+         * Fills out the total number of pages before the document is closed.
+         * @see com.itextpdf.text.pdf.PdfPageEventHelper#onCloseDocument(
+         *      com.itextpdf.text.pdf.PdfWriter, com.itextpdf.text.Document)
+         */
+        public void onCloseDocument(PdfWriter writer, Document document) {
+            ColumnText.showTextAligned(total, Element.ALIGN_LEFT,
+                    new Phrase(String.valueOf(writer.getPageNumber()),SMALL_FONT),2, 4, 0);
+        }
+    }
+
+    
+    
 }
