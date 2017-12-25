@@ -1346,7 +1346,7 @@ public class ZeugnisPDF  {
         // Tablestruktur aufbauen...
         // Legende...
         PdfPTable table2a = new PdfPTable(4);
-        table2a.setWidths(new float[] { 10, 45,10,45 });
+        table2a.setWidths(new float[] { 3, 50,8,44 });
         table2a.setWidthPercentage(100);
 
         
@@ -1379,12 +1379,17 @@ public class ZeugnisPDF  {
 
         float height=20.0f;
         PdfPCell cell2Bewertungsstufen1;
+        PdfPCell cell2Item;
+        
+        cell2Item = new PdfPCell(new Phrase("—"));
         cell2Bewertungsstufen1 = new PdfPCell(new Phrase("\""+asBewertungen[0]+"\"",SMALL_FONT));
-        cell2Bewertungsstufen1.setColspan(2);
+        //cell2Bewertungsstufen1.setColspan(2);
         cell2Bewertungsstufen1.setMinimumHeight(height);
         cell2Bewertungsstufen1.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell2Bewertungsstufen1.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell2Bewertungsstufen1.setBorder(Rectangle.NO_BORDER);
+        cell2Item.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Item);
         table2a.addCell(cell2Bewertungsstufen1);
 
 //        PdfPCell cell2Sym0img;
@@ -1407,11 +1412,13 @@ public class ZeugnisPDF  {
 
         PdfPCell cell2Bewertungsstufen2;
         cell2Bewertungsstufen2 = new PdfPCell(new Phrase("\""+asBewertungen[1]+"\"",SMALL_FONT));
-        cell2Bewertungsstufen2.setColspan(2);
+        //cell2Bewertungsstufen2.setColspan(2);
         cell2Bewertungsstufen2.setMinimumHeight(height);
         cell2Bewertungsstufen2.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell2Bewertungsstufen2.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell2Bewertungsstufen2.setBorder(Rectangle.NO_BORDER);
+        cell2Item.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Item);
         table2a.addCell(cell2Bewertungsstufen2);
 
         table2a.addCell(kreisViertel(1,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.NO_BORDER));
@@ -1426,11 +1433,12 @@ public class ZeugnisPDF  {
 
         PdfPCell cell2Bewertungsstufen3;
         cell2Bewertungsstufen3 = new PdfPCell(new Phrase("\""+asBewertungen[2]+"\"",SMALL_FONT));
-        cell2Bewertungsstufen3.setColspan(2);
+        //cell2Bewertungsstufen3.setColspan(2);
         cell2Bewertungsstufen3.setMinimumHeight(height);
         cell2Bewertungsstufen3.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell2Bewertungsstufen3.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell2Bewertungsstufen3.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Item);
         table2a.addCell(cell2Bewertungsstufen3);
 
         table2a.addCell(kreisViertel(2,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP, Rectangle.NO_BORDER));
@@ -1445,11 +1453,12 @@ public class ZeugnisPDF  {
 
         PdfPCell cell2Bewertungsstufen4;
         cell2Bewertungsstufen4 = new PdfPCell(new Phrase("\""+asBewertungen[3]+"\"",SMALL_FONT));
-        cell2Bewertungsstufen4.setColspan(2);
+        //cell2Bewertungsstufen4.setColspan(2);
         cell2Bewertungsstufen4.setMinimumHeight(height);
         cell2Bewertungsstufen4.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell2Bewertungsstufen4.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell2Bewertungsstufen4.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Item);
         table2a.addCell(cell2Bewertungsstufen4);
 
         table2a.addCell(kreisViertel(3,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP,Rectangle.NO_BORDER));
@@ -1464,11 +1473,12 @@ public class ZeugnisPDF  {
 
         PdfPCell cell2Bewertungsstufen5;
         cell2Bewertungsstufen5 = new PdfPCell(new Phrase("\""+asBewertungen[4]+"\"",SMALL_FONT));
-        cell2Bewertungsstufen5.setColspan(2);
+        //cell2Bewertungsstufen5.setColspan(2);
         cell2Bewertungsstufen5.setMinimumHeight(height);
         cell2Bewertungsstufen5.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell2Bewertungsstufen5.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell2Bewertungsstufen5.setBorder(Rectangle.NO_BORDER);
+        table2a.addCell(cell2Item);
         table2a.addCell(cell2Bewertungsstufen5);
 
         table2a.addCell(kreisViertel(4,pad,Element.ALIGN_RIGHT,Element.ALIGN_TOP, Rectangle.NO_BORDER));

@@ -182,12 +182,12 @@ INSERT INTO KRITERIUM VALUES (410, 60,'',2017);
 -- 1 Zahlen und Operationen
 INSERT INTO KRITERIUM VALUES (420, 70,'kennt im Zahlenraum bis 20 alle Zahlen und kann diese richtig schreiben.',2017);
 INSERT INTO KRITERIUM VALUES (430, 70,'kennt die Zeichen +, -, =, <, sowie > und kann sie richtig verwenden.',2017);
-INSERT INTO KRITERIUM VALUES (440, 70,'kann Additionsaufgaben ohne Zehnerübergang im Zahlenraum bis 10 sicher lösen.',2017);
-INSERT INTO KRITERIUM VALUES (450, 70,'kann Subtraktionsaufgaben ohne Zehnerübergang im Zahlenraum bis 10 sicher lösen.',2017);
-INSERT INTO KRITERIUM VALUES (460, 70,'kann Additionsaufgaben ohne Zehnerübergang im Zahlenraum bis 20 sicher lösen.',2017);
-INSERT INTO KRITERIUM VALUES (470, 70,'kann Additionsaufgaben mit Zehnerübergang im Zahlenraum bis 20 sicher lösen.',2017);
-INSERT INTO KRITERIUM VALUES (480, 70,'kann Subtraktionsaufgaben ohne Zehnerübergang im Zahlenraum bis 20 sicher lösen.',2017);
-INSERT INTO KRITERIUM VALUES (490, 70,'kann Subtraktionsaufgaben mit Zehnerübergang im Zahlenraum bis 20 sicher lösen.',2017);
+INSERT INTO KRITERIUM VALUES (440, 70,'kann Additionsaufgaben ohne Zehnerübergang im Zahlenraum bis 10 lösen.',2017);
+INSERT INTO KRITERIUM VALUES (450, 70,'kann Subtraktionsaufgaben ohne Zehnerübergang im Zahlenraum bis 10 lösen.',2017);
+INSERT INTO KRITERIUM VALUES (460, 70,'kann Additionsaufgaben ohne Zehnerübergang im Zahlenraum bis 20 lösen.',2017);
+INSERT INTO KRITERIUM VALUES (470, 70,'kann Additionsaufgaben mit Zehnerübergang im Zahlenraum bis 20 lösen.',2017);
+INSERT INTO KRITERIUM VALUES (480, 70,'kann Subtraktionsaufgaben ohne Zehnerübergang im Zahlenraum bis 20 lösen.',2017);
+INSERT INTO KRITERIUM VALUES (490, 70,'kann Subtraktionsaufgaben mit Zehnerübergang im Zahlenraum bis 20 lösen.',2017);
 INSERT INTO KRITERIUM VALUES (500, 70,'',2017);
 
 -- 1 Größen und Messen
@@ -266,21 +266,21 @@ INSERT INTO KRITERIUM VALUES (1000, 180,'',2017);
 INSERT INTO KRITERIUM VALUES (1010, 190,'kennt im Zahlenraum bis 100 alle Zahlen und kann diese richtig schreiben.',2017);
 INSERT INTO KRITERIUM VALUES (1020, 190,'kann Größer- und Kleinerbeziehungen angeben und notieren.',2017);
 INSERT INTO KRITERIUM VALUES (1030, 190,'vergleicht, strukturiert und zerlegt Zahlen.',2017);
-INSERT INTO KRITERIUM VALUES (1040, 190,'kann Additionsaufgaben ohne Zehnerübergang im Zahlenraum bis 100 sicher lösen.',2017);
-INSERT INTO KRITERIUM VALUES (1050, 190,'kann Subtraktionsaufgaben ohne Zehnerübergang im Zahlenraum bis 100 sicher lösen.',2017);
-INSERT INTO KRITERIUM VALUES (1060, 190,'kann Additionsaufgaben mit Zehnerübergang im Zahlenraum bis 100 sicher lösen.',2017);
-INSERT INTO KRITERIUM VALUES (1070, 190,'kann Subtraktionsaufgaben mit Zehnerübergang im Zahlenraum bis 100 sicher lösen.',2017);
-INSERT INTO KRITERIUM VALUES (1080, 190,'kann die Aufgaben des Einmaleins sicher lösen.',2017);
-INSERT INTO KRITERIUM VALUES (1090, 190,'kann Divisionsaufgaben im Zahlenraum bis 100 sicher lösen.',2017);
+INSERT INTO KRITERIUM VALUES (1040, 190,'kann Additionsaufgaben ohne Zehnerübergang im Zahlenraum bis 100 lösen.',2017);
+INSERT INTO KRITERIUM VALUES (1050, 190,'kann Subtraktionsaufgaben ohne Zehnerübergang im Zahlenraum bis 100 lösen.',2017);
+INSERT INTO KRITERIUM VALUES (1060, 190,'kann Additionsaufgaben mit Zehnerübergang im Zahlenraum bis 100 lösen.',2017);
+INSERT INTO KRITERIUM VALUES (1070, 190,'kann Subtraktionsaufgaben mit Zehnerübergang im Zahlenraum bis 100 lösen.',2017);
+INSERT INTO KRITERIUM VALUES (1080, 190,'kann die Aufgaben des Einmaleins lösen.',2017);
+INSERT INTO KRITERIUM VALUES (1090, 190,'kann Divisionsaufgaben im Zahlenraum bis 100 lösen.',2017);
 INSERT INTO KRITERIUM VALUES (1100, 190,'erklärt Rechenwege und stellt diese dar.',2017);
 INSERT INTO KRITERIUM VALUES (1110, 190,'kann mathematische Zusammenhänge entdecken und beschreiben.',2017);
 INSERT INTO KRITERIUM VALUES (1120, 190,'wendet Rechenstrategien an.',2017);
 INSERT INTO KRITERIUM VALUES (1130, 190,'',2017);
 
 -- 2 Größen und Messen
-INSERT INTO KRITERIUM VALUES (1140, 200,'kennt die erarbeiteten Einheiten des Bereichs „Geld“ und kann mit diesen auch in Sachsituationen sicher rechnen.',2017);
-INSERT INTO KRITERIUM VALUES (1150, 200,'kennt die erarbeiteten Einheiten des Bereichs „Zeit“ und kann mit diesen auch in Sachsituationen sicher rechnen.',2017);
-INSERT INTO KRITERIUM VALUES (1160, 200,'kennt die erarbeiteten Einheiten des Bereichs „Längen“ und kann mit diesen auch in Sachsituationen sicher rechnen.',2017);
+INSERT INTO KRITERIUM VALUES (1140, 200,'kennt die erarbeiteten Einheiten des Bereichs „Geld“ und kann mit diesen auch in Sachsituationen rechnen.',2017);
+INSERT INTO KRITERIUM VALUES (1150, 200,'kennt die erarbeiteten Einheiten des Bereichs „Zeit“ und kann mit diesen auch in Sachsituationen rechnen.',2017);
+INSERT INTO KRITERIUM VALUES (1160, 200,'kennt die erarbeiteten Einheiten des Bereichs „Längen“ und kann mit diesen auch in Sachsituationen rechnen.',2017);
 INSERT INTO KRITERIUM VALUES (1170, 200,'kann einfache Sachaufgaben lösen und passende Antworten zu Fragestellungen finden.',2017);
 INSERT INTO KRITERIUM VALUES (1180, 200,'',2017);
 
@@ -365,7 +365,7 @@ INSERT INTO KRITERIUM VALUES (1750, 300,'',2017);
 INSERT INTO KRITERIUM VALUES (1760, 310,'hat alle Aufgaben des kleinen Einmaleins automatisiert.',2017);
 INSERT INTO KRITERIUM VALUES (1770, 310,'beherrscht die Divisionsaufgaben im Zahlenraum bis 100.',2017);
 INSERT INTO KRITERIUM VALUES (1780, 310,'kann Divisionsaufgaben mit Rest berechnen.',2017);
-INSERT INTO KRITERIUM VALUES (1790, 310,'kann sich im Zahlenraum bis 1000 sicher orientieren.',2017);
+INSERT INTO KRITERIUM VALUES (1790, 310,'kann sich im Zahlenraum bis 1000 orientieren.',2017);
 INSERT INTO KRITERIUM VALUES (1800, 310,'kann im Zahlenraum bis 1000 Additionsaufgaben halbschriftlich lösen.',2017);
 INSERT INTO KRITERIUM VALUES (1810, 310,'kann im Zahlenraum bis 1000 Subtraktionsaufgaben halbschriftlich lösen.',2017);
 INSERT INTO KRITERIUM VALUES (1820, 310,'kann im Zahlenraum bis 1000 Additionsaufgaben schriftlich lösen.',2017);
@@ -379,10 +379,10 @@ INSERT INTO KRITERIUM VALUES (1890, 310,'wendet Rechenstrategien an.',2017);
 INSERT INTO KRITERIUM VALUES (1900, 310,'',2017);
 
 -- 3 Größen und Messen
-INSERT INTO KRITERIUM VALUES (1910, 320,'kennt die erarbeiteten Einheiten des Bereichs „Geld“ und kann mit diesen auch in Sachsituationen sicher rechnen.',2017);
-INSERT INTO KRITERIUM VALUES (1920, 320,'kennt die erarbeiteten Einheiten des Bereichs „Zeit“ und kann mit diesen auch in Sachsituationen sicher rechnen.',2017);
-INSERT INTO KRITERIUM VALUES (1930, 320,'kennt die erarbeiteten Einheiten des Bereichs „Längen“ und kann mit diesen auch in Sachsituationen sicher rechnen.',2017);
-INSERT INTO KRITERIUM VALUES (1940, 320,'kennt die erarbeiteten Einheiten des Bereichs „Gewichte“ und kann mit diesen auch in Sachsituationen sicher rechnen.',2017);
+INSERT INTO KRITERIUM VALUES (1910, 320,'kennt die erarbeiteten Einheiten des Bereichs „Geld“ und kann mit diesen auch in Sachsituationen rechnen.',2017);
+INSERT INTO KRITERIUM VALUES (1920, 320,'kennt die erarbeiteten Einheiten des Bereichs „Zeit“ und kann mit diesen auch in Sachsituationen rechnen.',2017);
+INSERT INTO KRITERIUM VALUES (1930, 320,'kennt die erarbeiteten Einheiten des Bereichs „Längen“ und kann mit diesen auch in Sachsituationen rechnen.',2017);
+INSERT INTO KRITERIUM VALUES (1940, 320,'kennt die erarbeiteten Einheiten des Bereichs „Gewichte“ und kann mit diesen auch in Sachsituationen rechnen.',2017);
 INSERT INTO KRITERIUM VALUES (1950, 320,'kann Sachaufgaben lösen und passende Fragestellungen zu Sachverhalten finden.',2017);
 INSERT INTO KRITERIUM VALUES (1960, 320,'',2017);
 
@@ -501,7 +501,7 @@ INSERT INTO KRITERIUM VALUES (2830, 450,'kann die wörtlichen Rede in eigenen Te
 INSERT INTO KRITERIUM VALUES (2840, 450,'',2017);
 
 -- 4 Zahlen und Operationen
-INSERT INTO KRITERIUM VALUES (2850, 460,'kann sich im Zahlenraum bis 1 Million sicher orientieren.',2017);
+INSERT INTO KRITERIUM VALUES (2850, 460,'kann sich im Zahlenraum bis 1 Million orientieren.',2017);
 INSERT INTO KRITERIUM VALUES (2860, 460,'kann im Zahlenraum bis 1 Million Multiplikationsaufgaben halbschriftlich lösen.',2017);
 INSERT INTO KRITERIUM VALUES (2870, 460,'kann im Zahlenraum bis 1 Million Divisionsaufgaben halbschriftlich lösen.',2017);
 INSERT INTO KRITERIUM VALUES (2880, 460,'beherrscht das Verfahren der schriftlichen Multiplikation.',2017);
@@ -513,9 +513,9 @@ INSERT INTO KRITERIUM VALUES (2930, 460,'wendet Rechenstrategien an.',2017);
 INSERT INTO KRITERIUM VALUES (2940, 460,'',2017);
 
 -- 4 Größen und Messen
-INSERT INTO KRITERIUM VALUES (2950, 470,'kennt die erarbeiteten Einheiten des Bereichs „Zeit“ und kann mit diesen auch in Sachsituationen sicher rechnen.',2017);
-INSERT INTO KRITERIUM VALUES (2960, 470,'kennt die erarbeiteten Einheiten des Bereichs „Längen“ und kann mit diesen auch in Sachsituationen sicher rechnen.',2017);
-INSERT INTO KRITERIUM VALUES (2970, 470,'kennt die erarbeiteten Einheiten des Bereichs „Gewichte“ und kann mit diesen auch in Sachsituationen sicher rechnen.',2017);
+INSERT INTO KRITERIUM VALUES (2950, 470,'kennt die erarbeiteten Einheiten des Bereichs „Zeit“ und kann mit diesen auch in Sachsituationen rechnen.',2017);
+INSERT INTO KRITERIUM VALUES (2960, 470,'kennt die erarbeiteten Einheiten des Bereichs „Längen“ und kann mit diesen auch in Sachsituationen rechnen.',2017);
+INSERT INTO KRITERIUM VALUES (2970, 470,'kennt die erarbeiteten Einheiten des Bereichs „Gewichte“ und kann mit diesen auch in Sachsituationen rechnen.',2017);
 INSERT INTO KRITERIUM VALUES (2980, 470,'kann Sachaufgaben lösen und passende Fragestellungen zu Sachverhalten finden.',2017);
 INSERT INTO KRITERIUM VALUES (2990, 470,'',2017);
 
