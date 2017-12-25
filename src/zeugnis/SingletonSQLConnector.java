@@ -1848,7 +1848,7 @@ public class SingletonSQLConnector {
     public Integer _insertSchueler(String klasse, Integer schuljahr) throws SQLException{
         Integer idSchueler=0;   // Rueckgabewert
         if(schuljahr==0){
-            schuljahr=2016;
+            schuljahr=2017;
         }
         if(klasse==null){
             klasse="1a";
@@ -1904,7 +1904,7 @@ public class SingletonSQLConnector {
         Integer schuljahr = Gui.getSYear();
         String klasse = Gui.getSClass();
         if(schuljahr==0){
-            schuljahr=2016;
+            schuljahr=2017;
         }
         if(klasse==null){
             klasse="1a";
