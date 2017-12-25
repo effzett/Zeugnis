@@ -1435,6 +1435,28 @@ public class SingletonSQLConnector {
     }
 
     /**
+     * liefert den Bemerkungstext für das Arbeitsverhalten aus dem Zeugnis
+     *
+     * @param zid
+     * @return
+     * @throws SQLException
+     */
+    public String getTextArbeit(Integer zid) throws SQLException {
+        String retVal = "";
+
+        try (Statement statement = con.createStatement()) {
+            String sql = "select TEXT_ARBEIT from ZEUGNIS where ID_ZEUGNIS=" + zid;
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+
+            while (set.next()) {
+                retVal = set.getString(1);
+            }
+        }
+        return retVal;
+    }
+
+    /**
      * liefert die Note (0-5) für das Sozialverhalten aus dem Zeugnis
      *
      * @param zid
@@ -1489,6 +1511,29 @@ public class SingletonSQLConnector {
         return retVal;
     }
 
+    /**
+     * liefert den Bemerkungstext für das Sozialverhalten aus dem Zeugnis
+     *
+     * @param zid
+     * @return
+     * @throws SQLException
+     */
+    public String getTextSozial(Integer zid) throws SQLException {
+        String retVal = "";
+
+        try (Statement statement = con.createStatement()) {
+            String sql = "select TEXT_SOZIAL from ZEUGNIS where ID_ZEUGNIS=" + zid;
+            //logger.fine(sql);
+            ResultSet set = statement.executeQuery(sql);
+
+            while (set.next()) {
+                retVal = set.getString(1);
+            }
+        }
+        return retVal;
+    }
+    
+    
     /**
      * liefert den Kriteriumtext zur übergebenen idKriterium
      *

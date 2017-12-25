@@ -315,7 +315,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             jPanel2Layout.setVerticalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addGap(0, 448, Short.MAX_VALUE)
+                    .addGap(0, 449, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton1)
                         .addComponent(jButton3)
@@ -324,7 +324,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 118, Short.MAX_VALUE)))
+                        .addGap(0, 119, Short.MAX_VALUE)))
             );
 
             jTabbedPane1.addTab("Schulklassen", jPanel2);
@@ -453,11 +453,14 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 });
                 jScrollPane6.setViewportView(jTextArea2);
 
-                jTextArea3.setEditable(false);
                 jTextArea3.setColumns(20);
                 jTextArea3.setRows(5);
                 jTextArea3.setText("Kommentarfunktion noch nicht ausprogrammiert!");
-                jTextArea3.setEnabled(false);
+                jTextArea3.addFocusListener(new java.awt.event.FocusAdapter() {
+                    public void focusLost(java.awt.event.FocusEvent evt) {
+                        jTextArea3FocusLost(evt);
+                    }
+                });
                 jScrollPane7.setViewportView(jTextArea3);
 
                 javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -522,17 +525,15 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                                                 .addComponent(jLabel5)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 14, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(jLabel6)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                     .addComponent(jLabel7)
                                                     .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel8)
@@ -656,7 +657,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(15, 15, 15)
                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(290, Short.MAX_VALUE))
+                                .addContainerGap(291, Short.MAX_VALUE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1225,6 +1226,32 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
     }//GEN-LAST:event_jTextArea2FocusLost
 
+    private void jTextArea3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextArea3FocusLost
+        // TODO add your handling code here:
+        Integer idSchueler;
+        Integer idZeugnis;
+        
+        if (jComboBox4.getSelectedItem() != null) {
+            idSchueler = Integer.parseInt( ( (String[]) jComboBox4.getSelectedItem())[1]);
+            idZeugnis = connector._getIdZeugnis(idSchueler, hYear);
+        }
+        else{
+            return;
+        }
+        String[] values  = {idZeugnis.toString(),null,null,null,null,null,null,null,null,null,null,null};
+        if(jComboBox5.getSelectedItem().equals("Arbeitsverhalten")){
+            values[10] = jTextArea3.getText();
+        }
+        if(jComboBox5.getSelectedItem().equals("Sozialverhalten")){
+            values[11] = jTextArea3.getText();
+        }
+        try {
+            connector.updateZeugnis(values);
+        } catch (SQLException ex) {
+            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTextArea3FocusLost
+
     
     public void fillTabFromTestimony() {
         if (jComboBox4.getSelectedItem() != null) {
@@ -1322,11 +1349,13 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         if(subject.equals("Arbeitsverhalten")){
             note = connector.getNoteArbeit(idZeugnis);
             jComboBox6.setVisible(true);
+            jTextArea3.setText(connector.getTextArbeit(idZeugnis));
             jScrollPane7.setVisible(true);
         }
         if(subject.equals("Sozialverhalten")){
             note = connector.getNoteSozial(idZeugnis);
             jComboBox6.setVisible(true);
+            jTextArea3.setText(connector.getTextSozial(idZeugnis));
             jScrollPane7.setVisible(true);
         }
         logger.fine("Hier müsste es doch gesetzt werden..."+note.toString());
