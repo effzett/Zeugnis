@@ -1162,7 +1162,7 @@ public class ZeugnisPDF  {
 
         //Lernentwicklung
         PdfPCell cell1Lernentwicklung;
-        cell1Lernentwicklung = new PdfPCell(new Phrase(lernentwicklung,NORMAL_FONT));
+        cell1Lernentwicklung = new PdfPCell(new Phrase(lernentwicklung,SMALL_FONT));
         cell1Lernentwicklung.setColspan(3);
         cell1Lernentwicklung.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell1Lernentwicklung.setFixedHeight(350f);
