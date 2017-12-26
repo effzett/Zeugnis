@@ -167,6 +167,9 @@ public class ZeugnisPDF  {
             "Note Arbeitsverhalten: arithmetisches Mittel aller Noten\n"+
             "Note Sozialverhalten: arithmetisches Mittel aller Noten\n"+
             "Bewertungen Lernbereiche: arithmetische Mittel der Bewertungen";
+        bemerkungen = "";
+        lernentwicklungTitle = "Lernentwicklungsbericht\n\n";
+        bemerkungenTitle = "Bemerkungen\n\n";
         noteArbeit = connector.getNoteArbeit(liste);
         noteSozial = connector.getNoteSozial(liste);
         noteArbeitString = connector.asBewertungen(noteArbeit);
