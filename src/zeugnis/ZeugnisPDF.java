@@ -455,9 +455,8 @@ public class ZeugnisPDF  {
         klasse    = Gui.getSClass();
         fehltage  = connector.getFehltage(zid);
         fehltageohne= connector.getFehltageOhne(zid);
-        lernentwicklung = connector.getLernentwicklung(zid);
-        bemerkungen = (connector.getBemerkung(zid).isEmpty())?"":"Bemerkungen:\n" + connector.getBemerkung(zid); // + " \n\u00a0";
-
+        lernentwicklung = (connector.getLernentwicklung(zid).isEmpty())?"":"Lernentwicklungsbericht:\n\n" + connector.getLernentwicklung(zid); 
+        bemerkungen = (connector.getBemerkung(zid).isEmpty())?"":"Bemerkungen:\n\n" + connector.getBemerkung(zid);
         noteArbeit = connector.getNoteArbeit(zid);
         noteSozial = connector.getNoteSozial(zid);
         noteArbeitString = connector.asBewertungen(noteArbeit);
