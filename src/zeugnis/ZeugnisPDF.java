@@ -47,6 +47,7 @@ public class ZeugnisPDF  {
     private static final Font BIGGER_FONT=new Font(Font.FontFamily.HELVETICA,14,Font.NORMAL);
     private static final Font NAME_FONT=new Font(Font.FontFamily.HELVETICA,26,Font.NORMAL);
     private static final Font SMALL_FONT=new Font(Font.FontFamily.HELVETICA,10,Font.NORMAL);
+    private static final Font SMALLBOLDITALIC_FONT=new Font(Font.FontFamily.HELVETICA,10,Font.BOLDITALIC);    
     private static final Font TINY_FONT=new Font(Font.FontFamily.HELVETICA,9,Font.NORMAL);
     private static final Font MICRO_FONT=new Font(Font.FontFamily.HELVETICA,7,Font.NORMAL);    
     private static final Font BIG_FONT=new Font(Font.FontFamily.HELVETICA,36,Font.BOLD);
@@ -72,6 +73,8 @@ public class ZeugnisPDF  {
     private int fehltage;
     private int fehltageohne;
     private String lernentwicklung;
+    private String lernentwicklungTitle;
+    private String bemerkungenTitle;
     private String bemerkungen;
     private String currDate;
     private int noteArbeit;
@@ -455,8 +458,10 @@ public class ZeugnisPDF  {
         klasse    = Gui.getSClass();
         fehltage  = connector.getFehltage(zid);
         fehltageohne= connector.getFehltageOhne(zid);
-        lernentwicklung = (connector.getLernentwicklung(zid).isEmpty())?"":"Lernentwicklungsbericht:\n\n" + connector.getLernentwicklung(zid); 
-        bemerkungen = (connector.getBemerkung(zid).isEmpty())?"":"Bemerkungen:\n\n" + connector.getBemerkung(zid);
+        lernentwicklungTitle = "Lernentwicklungsbericht:\n\n";
+        bemerkungenTitle = "Bemerkungen:\n\n";
+        lernentwicklung = connector.getLernentwicklung(zid); 
+        bemerkungen = connector.getBemerkung(zid);
         noteArbeit = connector.getNoteArbeit(zid);
         noteSozial = connector.getNoteSozial(zid);
         noteArbeitString = connector.asBewertungen(noteArbeit);
@@ -1169,10 +1174,29 @@ public class ZeugnisPDF  {
         cell1Tage.setBorder(Rectangle.NO_BORDER);
 
         //Lernentwicklung
+        Paragraph lern = new Paragraph();
+        Paragraph bem = new Paragraph();
         PdfPTable table = new PdfPTable(1);
-        PdfPCell le = new PdfPCell(new Phrase(lernentwicklung,SMALL_FONT));
+        Phrase lernTitle = new Phrase(lernentwicklungTitle,SMALLBOLDITALIC_FONT);
+        Phrase bemTitle = new Phrase(bemerkungenTitle,SMALLBOLDITALIC_FONT);
+        Phrase lernText = new Phrase(lernentwicklung,SMALL_FONT);
+        Phrase bemText = new Phrase(bemerkungen,SMALL_FONT);        
+        if(lernentwicklung.isEmpty()){
+            ;
+        }else{
+            lern.add(lernTitle);
+        }
+        if(bemerkungen.isEmpty()){
+            ;
+        }else{
+            bem.add(bemTitle);
+        }
+        lern.add(lernText);
+        bem.add(bemText);
+        PdfPCell le = new PdfPCell(lern);
+        PdfPCell be = new PdfPCell(bem);
+        
         le.setVerticalAlignment(Element.ALIGN_TOP);
-        PdfPCell be = new PdfPCell(new Phrase(bemerkungen,SMALL_FONT));
         be.setVerticalAlignment(Element.ALIGN_BOTTOM);
         le.setBorder(Rectangle.NO_BORDER);
         be.setBorder(Rectangle.NO_BORDER);
