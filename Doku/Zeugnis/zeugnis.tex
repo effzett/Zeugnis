@@ -159,7 +159,7 @@ Beim erstmaligen Start des Programms \zjar\ werden folgende Dateien und Ordner i
 Das Verzeichnis {\ott Zeugnis} beinhaltet die Programm--interne Datenbank.
 Der Name des Verzeichnisses und der gesamte Inhalt sollte nicht verändert! Diese Verzeichnis wird nur vom Programm geschrieben und gelesen.
 
-Da das Verzeichnis {\ott Zeugnis} die Datenbank darstellt, kann dieses Verzeichnis kopiert und weitergegeben werden, um die Datenbank weiterzugeben.
+Da das Verzeichnis {\ott Zeugnis} die Datenbank darstellt, kann dieses Verzeichnis kopiert und weitergegeben werden, um die Datenbank weiterzugeben. Das Verzeichnis {\ott Zeugnis} sollte dann in der gleichen Ebene wie das Zeugnisprogramm liegen.
 
 Ist dieses komplette Verzeichnis nicht vorhanden, wird es mit Initialwerten angelegt. Das bedeutet,
 dass keine Schüler oder Schulklassen vorhanden sind und nur die initialen Lernbereiche und Indikatoren in der Datenbank vorhanden sind. 
@@ -185,7 +185,7 @@ Als übergeordnete Daten werden das Schuljahr, das Halbjahr und die Klasse benö
 Alle Daten, wie Schulklassen, Zeugnisse und auch die ggfs. modifizierten Indikatoren beziehen sich auf diese übergeordneten Werte. Dabei ist das Halbjahr nur beim Ausdruck des Zeugnisses relevant und ist für die Schülerlisten und Indikatoren nicht relevant. Sowohl die Schülerlisten als auch die Indikatoren gelten immer für das gesamte ausgewählte Schuljahr.
 
 Für die Erzeugung, Anzeige und den Ausdruck des Zeugnisses muss natürlich das richtige Halbjahr angegeben werden.
-Für jeden Schüler in einem Schuljahr und in einer Klasse gibt es zwei Zeugnisse: 1.~Halbjahr und 2.Halbjahr. Das Halbjahr kann nur im Reiter {\ott Zeugnisse} eingestellt werden.
+Für jeden Schüler in einem Schuljahr und in einer Klasse gibt es zwei Zeugnisse: 1.~Halbjahr und 1.~und~2.Halbjahr. Das Halbjahr kann nur im Reiter {\ott Zeugnisse} eingestellt werden. Dabei wählt 1 das 1.~Halbjahr aus und 2 das 1.~und2.~Halbjahr.
 
 \subsection{Schulklassen}
 
@@ -211,6 +211,7 @@ Abbildung~\ref{fig:Schulklassen} auf Seite~\pageref{fig:Schulklassen} zeigt die 
 
 Wenn alle Zeugnisse für diese Klasse vollständig bearbeitet wurden und in keinem mehr der Initialwert vorhanden ist, wird rechts unten angezeigt, ob die Schulklasse vollständig ausgefüllt ist.
 Dann können alle PDF--Zeugnisse und auch das Durchschnittszeugnis sinnvoll generiert werden\footnote{Man kann die PDF--Zeugnisse natürlich auch unvollständig generieren lassen. Die Anzeige dient nur als Hilfestellung.}.
+
 \subsection{Zeugnis}
 Durch Klick auf den Reiter {\ott Zeugnisse} gelangt man in den Eingabemodus für die Zeugnisse.
 
@@ -219,21 +220,19 @@ Gegebenenfalls muss man vorher das Schuljahr, das Halbjahr und die Klasse im üb
 Zu beachten ist, dass es für die Zeugnisse wichtig ist, ob sie für das 1. oder für das 2. Halbjahr gelten sollen, da dies im Ausdruck natürlich gekennzeichnet wird.
 
 Dann werden im linken Bereich der gewünschte Lernbereich ausgewählt, dessen Indikatoren dann in der rechten Tabelle erscheinen.
-Für die Lernbereiche Arbeits-- und Sozialverhalten erscheint speziell noch eine Auswahlbox unter der Tabelle, in der man die Gesamtnote wählen kann. 
+Für die Lernbereiche Arbeits-- und Sozialverhalten erscheint speziell noch ein Kommentarbereich für freien Text\footnote{5 Zeilen sollten nicht überschritten werden} und eine Auswahlbox unter der Tabelle, in der man die standardisierte Gesamtnote wählen kann. 
 
-Im linken Bereich kann man auch freien Text für die Lernentwicklung oder anderen Text angeben. Dabei sind zur Zeit keine Textformatierungen wie fett oder kursiv erlaubt, um ein konsistentes Erscheinungsbild zu erhalten.
+Im linken Bereich kann man auch freien Text für die Lernentwicklung und für Bemerkungen angeben. Dabei sind zur Zeit keine Textformatierungen wie fett oder kursiv erlaubt, um ein konsistentes Erscheinungsbild zu erhalten.
 
-Im Bemerkungsfeld werden mehr standardisierte kurze Mitteilungen eingegeben.
+Im Bemerkungsfeld werden kurze Bemerkungen eingegeben.
 Ist das 2.~Halbjahr vorgewählt worden, so erscheint hier standardmäßig der Text: \emph{Versetzt nach Klasse..{\ott Folgeklasse}}.
+
+Die Länge des Textes speziell die Zeilenanzahl wird z.Z. nicht überprüft\footnote{Achtung: Bei zuvielen Zeilen, kann das Gesamtlayout zerrissen werden!}. Für den Lernentwicklungsbericht sind 3000 Zeichen, für die Bemerkungen sind 1500 Zeichen und für die Kommentare bei dem Arbeits-- und Sozialverhalten sind jeweils 500 Zeichen vorgesehen. Alles darüber hinausgehende wird hart abgeschnitten und wird nicht in der Datenbank gespeichert.
 
 Die gesamten Fehltage und die Fehltage ohne Entschuldigung können darunter angegeben werden.
 Dabei sollte beachtet werden, dass im Falle einer widersprüchlichen Angabe wie z.B. Fehltage ohne Entschuldigung sind mehr als gesamte Fehltage, die Fehltage ohne Entschuldigung im Ausdruck korrigiert werden, damit keine peinlichen Zeugnisse erstellt werden. 
 
 Die Bewertungen werden über eine Auswahlbox gewählt, die erscheint, wenn man rechts neben den entsprechenden Indikator klickt. Für die Indikatoren der Lernbereiche \emph{Arbeits-- und Sozialverhalten} werden die Bewertungen in Textform ausgewählt. Für den Rest der Bewertungen werden teilweise gefüllte Kreise bereitgestellt.
-
-Die Gesamtbewertungen für die Lernbereiche \emph{Arbeits-- und Sozialverhalten} werden unter der rechten Tabelle als Combo--Box dargestellt und können direkt ausgewählt werden.
-
-Darüber können noch Kommentare zum Arbeits- und Sozialverhalten geschrieben werden.
 
 Für jeden Lernbereich müssen so die Indikatoren bewertet werden.
 Ist zu jedem Indikator eine Bewertung erfolgt (Bewertungsfeld ist nicht leer) erscheint ein Häkchen neben dem Schülernamen, der anzeigt, dass das Zeugnis nun komplett ist und gedruckt werden kann.
