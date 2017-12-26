@@ -72,6 +72,7 @@ public class ZeugnisPDF  {
     private int fehltage;
     private int fehltageohne;
     private String lernentwicklung;
+    private String bemerkungen;
     private String currDate;
     private int noteArbeit;
     private int noteSozial;
@@ -454,7 +455,9 @@ public class ZeugnisPDF  {
         klasse    = Gui.getSClass();
         fehltage  = connector.getFehltage(zid);
         fehltageohne= connector.getFehltageOhne(zid);
-        lernentwicklung = connector.getLernentwicklung(zid) + "\n\n" + "Bemerkungen:\n" + connector.getBemerkung(zid);
+        lernentwicklung = connector.getLernentwicklung(zid);
+        bemerkungen = (connector.getBemerkung(zid).isEmpty())?"":"Bemerkungen:\n" + connector.getBemerkung(zid); // + " \n\u00a0";
+
         noteArbeit = connector.getNoteArbeit(zid);
         noteSozial = connector.getNoteSozial(zid);
         noteArbeitString = connector.asBewertungen(noteArbeit);
@@ -1019,8 +1022,8 @@ public class ZeugnisPDF  {
         
 
         String Tage      = "Versäumte Unterrichtstage im "+Halbjahr+": "+ String.valueOf(fehltage) +  " davon unentschuldigt: " + String.valueOf(fehltageohne);
-        String Unterschriften1 = "________________________________________\n\n Klassenlehrer / Klassenlehrerin";
-        String Unterschriften2 = "________________________________________\n\n Schulleiter / Schulleiterin";
+        String Unterschriften1 = "________________________________________\n\n Klassenlehrerin / Klassenlehrer";
+        String Unterschriften2 = "________________________________________\n\n Schulleiterin / Schulleiter";
         String Unterschriften3 = "________________________________________\n\n Unterschrift einer/eines Erziehungsberechtigten";
         String DatumLine       = "________________________________________\n\n Ausstellungsort und Datum";
         
@@ -1167,13 +1170,22 @@ public class ZeugnisPDF  {
         cell1Tage.setBorder(Rectangle.NO_BORDER);
 
         //Lernentwicklung
+        PdfPTable table = new PdfPTable(1);
+        PdfPCell le = new PdfPCell(new Phrase(lernentwicklung,SMALL_FONT));
+        le.setVerticalAlignment(Element.ALIGN_TOP);
+        PdfPCell be = new PdfPCell(new Phrase(bemerkungen,SMALL_FONT));
+        be.setVerticalAlignment(Element.ALIGN_BOTTOM);
+        le.setBorder(Rectangle.NO_BORDER);
+        be.setBorder(Rectangle.NO_BORDER);
+        table.addCell(le);
+        table.addCell(be);
         PdfPCell cell1Lernentwicklung;
-        cell1Lernentwicklung = new PdfPCell(new Phrase(lernentwicklung,SMALL_FONT));
+        cell1Lernentwicklung = new PdfPCell(table);
         cell1Lernentwicklung.setColspan(3);
         cell1Lernentwicklung.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell1Lernentwicklung.setFixedHeight(350f);
         cell1Lernentwicklung.setPadding(pad);
-        //cell1Lernentwicklung.setBorder(Rectangle.NO_BORDER);
+//        cell1Lernentwicklung.setBorder(Rectangle.NO_BORDER);
         
         // Unterschriften
         PdfPCell cell1Unterschriften1;

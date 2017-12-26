@@ -629,7 +629,7 @@
                         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextArea3FocusLost"/>
                       </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTextArea3.getDocument().addDocumentListener(new DocumentListener() {&#xa;  public void changedUpdate(DocumentEvent e) {&#xa;    check();&#xa;  }&#xa;  public void removeUpdate(DocumentEvent e) {&#xa;    check();&#xa;  }&#xa;  public void insertUpdate(DocumentEvent e) {&#xa;    check();&#xa;  }&#xa;&#xa;  public void check() {&#xa;     if (jTextArea3.getLineCount()&gt;4){//make sure no more than 2 lines&#xa;       JOptionPane.showMessageDialog(null, &quot;Fehler: Nicht mehr als 4 Zeilen!&quot;);&#xa;     }&#xa;  }&#xa;});"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTextArea3.getDocument().addDocumentListener(new DocumentListener() {&#xa;  public void changedUpdate(DocumentEvent e) {&#xa;    check();&#xa;  }&#xa;  public void removeUpdate(DocumentEvent e) {&#xa;    check();&#xa;  }&#xa;  public void insertUpdate(DocumentEvent e) {&#xa;    check();&#xa;  }&#xa;&#xa;  public void check() {&#xa;     if (jTextArea3.getLineCount()&gt;5){//make sure no more than 2 lines&#xa;       JOptionPane.showMessageDialog(null, &quot;Fehler: Nicht mehr als 5 Zeilen!&quot;);&#xa;     }&#xa;  }&#xa;});"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>

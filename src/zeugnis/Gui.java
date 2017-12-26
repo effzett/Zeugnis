@@ -479,8 +479,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                     }
 
                     public void check() {
-                        if (jTextArea3.getLineCount()>4){//make sure no more than 2 lines
-                            JOptionPane.showMessageDialog(null, "Fehler: Nicht mehr als 4 Zeilen!");
+                        if (jTextArea3.getLineCount()>5){//make sure no more than 2 lines
+                            JOptionPane.showMessageDialog(null, "Fehler: Nicht mehr als 5 Zeilen!");
                         }
                     }
                 });
