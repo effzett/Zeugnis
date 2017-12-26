@@ -47,8 +47,10 @@ public class ZeugnisPDF  {
     private static final Font BIGGER_FONT=new Font(Font.FontFamily.HELVETICA,14,Font.NORMAL);
     private static final Font NAME_FONT=new Font(Font.FontFamily.HELVETICA,26,Font.NORMAL);
     private static final Font SMALL_FONT=new Font(Font.FontFamily.HELVETICA,10,Font.NORMAL);
+    private static final Font SMALLITALIC_FONT=new Font(Font.FontFamily.HELVETICA,10,Font.ITALIC);
     private static final Font SMALLBOLDITALIC_FONT=new Font(Font.FontFamily.HELVETICA,10,Font.BOLDITALIC);    
     private static final Font TINY_FONT=new Font(Font.FontFamily.HELVETICA,9,Font.NORMAL);
+    private static final Font TINYITALIC_FONT=new Font(Font.FontFamily.HELVETICA,9,Font.ITALIC);
     private static final Font MICRO_FONT=new Font(Font.FontFamily.HELVETICA,7,Font.NORMAL);    
     private static final Font BIG_FONT=new Font(Font.FontFamily.HELVETICA,36,Font.BOLD);
     private static final Font NORMAL_BOLD_FONT=new Font(Font.FontFamily.HELVETICA,12,Font.BOLD);
@@ -458,8 +460,8 @@ public class ZeugnisPDF  {
         klasse    = Gui.getSClass();
         fehltage  = connector.getFehltage(zid);
         fehltageohne= connector.getFehltageOhne(zid);
-        lernentwicklungTitle = "Lernentwicklungsbericht:\n\n";
-        bemerkungenTitle = "Bemerkungen:\n\n";
+        lernentwicklungTitle = "Lernentwicklungsbericht\n\n";
+        bemerkungenTitle = "Bemerkungen\n\n";
         lernentwicklung = connector.getLernentwicklung(zid); 
         bemerkungen = connector.getBemerkung(zid);
         noteArbeit = connector.getNoteArbeit(zid);
@@ -1179,8 +1181,8 @@ public class ZeugnisPDF  {
         PdfPTable table = new PdfPTable(1);
         Phrase lernTitle = new Phrase(lernentwicklungTitle,SMALLBOLDITALIC_FONT);
         Phrase bemTitle = new Phrase(bemerkungenTitle,SMALLBOLDITALIC_FONT);
-        Phrase lernText = new Phrase(lernentwicklung,SMALL_FONT);
-        Phrase bemText = new Phrase(bemerkungen,SMALL_FONT);        
+        Phrase lernText = new Phrase(lernentwicklung,SMALLITALIC_FONT);
+        Phrase bemText = new Phrase(bemerkungen,SMALLITALIC_FONT); 
         if(lernentwicklung.isEmpty()){
             ;
         }else{
@@ -1320,7 +1322,7 @@ public class ZeugnisPDF  {
         table2 = asVerhalten(table2,aVerhalten,pad);
         
         PdfPCell cell2KommentarA;
-        cell2KommentarA = new PdfPCell(new Paragraph(textArbeit,TINY_FONT));
+        cell2KommentarA = new PdfPCell(new Paragraph(textArbeit,TINYITALIC_FONT));
         cell2KommentarA.setColspan(4);
         cell2KommentarA.setBorder(Rectangle.LEFT | Rectangle.RIGHT );
         cell2KommentarA.setPadding(pad);
@@ -1354,7 +1356,7 @@ public class ZeugnisPDF  {
         table2 = asVerhalten(table2,sVerhalten,pad);
       
         PdfPCell cell2KommentarS;
-        cell2KommentarS = new PdfPCell(new Paragraph(textSozial,TINY_FONT));
+        cell2KommentarS = new PdfPCell(new Paragraph(textSozial,TINYITALIC_FONT));
         cell2KommentarS.setColspan(4);
         cell2KommentarS.setBorder(Rectangle.LEFT | Rectangle.RIGHT );
         cell2KommentarS.setPadding(pad);

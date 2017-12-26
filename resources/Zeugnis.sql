@@ -540,11 +540,15 @@ INSERT INTO KRITERIUM VALUES (3120, 490,'präsentiert Arbeitsergebnisse in geeig
 INSERT INTO KRITERIUM VALUES (3130, 500,'versteht einfache Fragen und Aussagen und reagiert angemessen.',2017);
 INSERT INTO KRITERIUM VALUES (3140, 500,'versteht Anweisungen im Unterrichtsalltag.',2017);
 INSERT INTO KRITERIUM VALUES (3150, 500,'kann Hörtexten wesentliche Informationen entnehmen.',2017);
-INSERT INTO KRITERIUM VALUES (3160, 500,'zeigt beim Sprechen ein angemessene Aussprache.',2017);
-INSERT INTO KRITERIUM VALUES (3170, 500,'liest bekannte Arbeitsanweisungen selbständig und setzt sie um.',2017);
-INSERT INTO KRITERIUM VALUES (3180, 500,'kann kurze bekannte Sätze vorlesen und verstehen.',2017);
-INSERT INTO KRITERIUM VALUES (3190, 500,'stellt eigene kurze Texte nach Vorlage her.',2017);
-INSERT INTO KRITERIUM VALUES (3200, 500,'benutzt Nachschlagemöglichkeiten.',2017);
+INSERT INTO KRITERIUM VALUES (3160, 500,'kann Abbildungen in einfachen Wörtern/Sätzen frei beschreiben.',2017);
+INSERT INTO KRITERIUM VALUES (3170, 500,'kann Schriftbilder dem bekannten Klang/Lautbild zuordnen.',2017);
+INSERT INTO KRITERIUM VALUES (3180, 500,'kann Wörter und kurze bekannte Sätze vorlesen und verstehen.',2017);
+INSERT INTO KRITERIUM VALUES (3190, 500,'schreibt bekannte Wörter richtig nach Vorlage ab.',2017);
+--INSERT INTO KRITERIUM VALUES (3160, 500,'zeigt beim Sprechen ein angemessene Aussprache.',2017);
+--INSERT INTO KRITERIUM VALUES (3170, 500,'liest bekannte Arbeitsanweisungen selbständig und setzt sie um.',2017);
+--INSERT INTO KRITERIUM VALUES (3180, 500,'kann kurze bekannte Sätze vorlesen und verstehen.',2017);
+--INSERT INTO KRITERIUM VALUES (3190, 500,'stellt eigene kurze Texte nach Vorlage her.',2017);
+--INSERT INTO KRITERIUM VALUES (3200, 500,'benutzt Nachschlagemöglichkeiten.',2017);
 
 -- 4 Sport
 INSERT INTO KRITERIUM VALUES (3210, 510,'beteiligt sich gern an sportlichen Aktivitäten und zeigt Einsatzbereitschaft.',2017);
