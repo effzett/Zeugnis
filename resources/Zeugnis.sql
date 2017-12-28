@@ -372,7 +372,7 @@ INSERT INTO KRITERIUM VALUES (1820, 310,'kann im Zahlenraum bis 1000 Additionsau
 INSERT INTO KRITERIUM VALUES (1830, 310,'kann im Zahlenraum bis 1000 Subtraktionsaufgaben schriftlich lösen.',2017);
 INSERT INTO KRITERIUM VALUES (1840, 310,'kann im Zahlenraum bis 1000 Multiplikationsaufgaben halbschriftlich lösen.',2017);
 INSERT INTO KRITERIUM VALUES (1845, 310,'kann im Zahlenraum bis 1000 Divisionssaufgaben halbschriftlich lösen.',2017);
-INSERT INTO KRITERIUM VALUES (1850, 310,'kann Subtraktionsaufgaben mit Zehnerübergang im Zahlenraum bis 100 lösen.',2017);
+INSERT INTO KRITERIUM VALUES (1850, 310,'kann Subtraktionsaufgaben mit Zehnerübergang im Zahlenraum bis 1000 lösen.',2017);
 INSERT INTO KRITERIUM VALUES (1860, 310,'kann Kopfrechenaufgaben lösen.',2017);
 INSERT INTO KRITERIUM VALUES (1870, 310,'erklärt Rechenwege und stellt diese dar.',2017);
 INSERT INTO KRITERIUM VALUES (1880, 310,'kann mathematische Zusammenhänge entdecken und beschreiben.',2017);
