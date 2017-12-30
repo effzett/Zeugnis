@@ -988,6 +988,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             Integer idSchueler;
             Integer idZeugnis;
             fillPupleComboBox();
+            jComboBox5.setSelectedIndex(0);
             fillTestimonyTable((String) jComboBox5.getItemAt(0));
             try {
                 fillTestimonyNote((String) jComboBox5.getItemAt(0));
