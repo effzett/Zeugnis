@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Sat Dec 30 12:55:51 CET 2017:
-Booten von Derby-Version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): Instanz a816c00e-0160-a747-3c0a-00000e761b20
-für Datenbankverzeichnis /Users/internet/NetBeansProjects/Zeugnis/Zeugnis mit Class Loader sun.misc.Launcher$AppClassLoader@5caf905d
+Sun Dec 31 22:04:21 CET 2017:
+Booten von Derby-Version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): Instanz a816c00e-0160-ae63-c225-00000e745dd0
+für Datenbankverzeichnis /Users/internet/NetBeansProjects/Zeugnis/Zeugnis mit Class Loader sun.misc.Launcher$AppClassLoader@a09ee92
 Geladen aus file:/Users/internet/NetBeansProjects/Zeugnis/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_73-b02
