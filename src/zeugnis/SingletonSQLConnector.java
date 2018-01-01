@@ -62,7 +62,9 @@ public class SingletonSQLConnector {
             newKlasse = newKlasse.replace('2', '3');
             newKlasse = newKlasse.replace('1', '2');
         } else {
-            logger.severe("Die Klassenbezeichnung entspricht nicht 1a,1b,1c,2a,2b,etc.");
+            if(!klasse.matches("[4].")){
+                logger.severe("Die Klassenbezeichnung entspricht nicht 1a,1b,1c,2a,2b,etc.");
+            }
         }
         return newKlasse;
     }
