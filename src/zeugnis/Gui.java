@@ -979,12 +979,13 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             setProgress(0);
             jProgressBar1.setVisible(false);
             bgt_active = false;
+            jComboBox1.setEnabled(true);
+            jComboBox3.setEnabled(true);
         }
 
         @Override
         protected Void doInBackground() {
             setProgress(0);
-            bgt_active = true;
             ArrayList<Integer> liste = new ArrayList<>();
             try {
                 liste = connector.listIdSchueler();
@@ -1023,6 +1024,9 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 }
         );
         jProgressBar1.setVisible(true);
+        jComboBox1.setEnabled(false);
+        jComboBox3.setEnabled(false);
+        bgt_active = true;
         bg.execute();
 //        ArrayList<Integer> liste = new ArrayList<>();                
 //        try {
@@ -1408,6 +1412,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             setProgress(0);
             jProgressBar1.setVisible(false);
             bgt_active = false;
+            jComboBox1.setEnabled(true);
+            jComboBox3.setEnabled(true);
         }
 
         @Override
@@ -1415,7 +1421,6 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             int cnt=1;
             String[] v = {"","","","","",""};
             setProgress(0);
-            bgt_active = true;
             for (String[] val1 : val) {
                 try {
                     v[0] = val1[1].trim();
@@ -1477,6 +1482,9 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                     }
                 );
                 jProgressBar1.setVisible(true);
+                bgt_active = true;
+                jComboBox1.setEnabled(false);
+                jComboBox3.setEnabled(false);
                 bi.execute();            
                 //fillClassTable();
             } catch (FileNotFoundException ex) {
