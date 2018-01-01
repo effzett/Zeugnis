@@ -91,6 +91,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private BatchGeneration bg;
     private BatchImport bi;
     
+    private boolean bgt_active;
+    
     /**
      * Creates new form Gui
      */
@@ -103,6 +105,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         sYear = Integer.parseInt(((String) jComboBox1.getSelectedItem()).substring(0, 4));
         hYear = Integer.parseInt((String) jComboBox2.getSelectedItem());
         sClass = (String) jComboBox3.getSelectedItem();
+        bgt_active = false;
         fillClassTable();
         fillKriteriumTable();
         fillLernbereichTable();
@@ -975,11 +978,13 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             JOptionPane.showMessageDialog(null, "Generierte Zeugnisse: " + l.size(), "PDF Ausgabe", JOptionPane.INFORMATION_MESSAGE);
             setProgress(0);
             jProgressBar1.setVisible(false);
+            bgt_active = false;
         }
 
         @Override
         protected Void doInBackground() {
             setProgress(0);
+            bgt_active = true;
             ArrayList<Integer> liste = new ArrayList<>();
             try {
                 liste = connector.listIdSchueler();
@@ -1402,6 +1407,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             JOptionPane.showMessageDialog(null,"Eingelesene Datensätze: "+val.length,"CSV Import",JOptionPane.INFORMATION_MESSAGE);
             setProgress(0);
             jProgressBar1.setVisible(false);
+            bgt_active = false;
         }
 
         @Override
@@ -1409,6 +1415,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             int cnt=1;
             String[] v = {"","","","","",""};
             setProgress(0);
+            bgt_active = true;
             for (String[] val1 : val) {
                 try {
                     v[0] = val1[1].trim();
