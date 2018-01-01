@@ -949,7 +949,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     
     private void createPdfForClass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPdfForClass
         // Zunächst Liste aller Zeugnisse erzeugen
-        
+        int count=0;    
         // Für jedes Zeugnis, Zeugnis in einen definierten Ordner speichern
         ArrayList<Integer> liste = new ArrayList<>();                
         try {
@@ -957,6 +957,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         } catch (SQLException ex) {
             Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         for(Integer idSchueler: liste){
             try {
                 ZeugnisPDF zeugnis = new ZeugnisPDF(idSchueler);    // holt Werte aus DB -> private Variables
@@ -965,6 +966,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        JOptionPane.showMessageDialog(null, "Generierte Zeugnisse: " + liste.size(), "PDF Ausgabe", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_createPdfForClass
 
     private void addSchoolYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSchoolYear
@@ -1252,6 +1254,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         // Hier wird ein Zeugnis generiert, dass ein Mittelwert (Median?) der Klasse darstellt
         // Nennen wir es mal Dieter Durchschnitt, geb. in Median
         // Liste der Schueler generieren...
+        int count=0;
         ArrayList<Integer> liste = new ArrayList<>();                
         try {
             liste = connector.listIdSchueler();
@@ -1268,6 +1271,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        JOptionPane.showMessageDialog(null, "Gemittelte Zeugnisse: " + liste.size(),"Zeugnis-Durchschnitt",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextArea2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextArea2FocusLost
@@ -1356,6 +1360,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                     int idSchueler = connector._insertSchueler();
                     connector._updateSchueler(v, idSchueler);
                 } 
+                JOptionPane.showMessageDialog(null,"Eingelesene Datensätze: "+values.length,"CSV Import",JOptionPane.INFORMATION_MESSAGE);
                 fillClassTable();
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
