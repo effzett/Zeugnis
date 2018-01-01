@@ -21,6 +21,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -51,6 +53,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListCellRenderer;
 import static javax.swing.SwingConstants.CENTER;
+import javax.swing.SwingWorker;
 import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -85,6 +88,9 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private String vendor = this.getClass().getPackage().getImplementationVendor();
     private String title = this.getClass().getPackage().getImplementationTitle();
 
+    private BatchGeneration bg;
+    private BatchImport bi;
+    
     /**
      * Creates new form Gui
      */
@@ -177,6 +183,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         jComboBox2 = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox();
+        jProgressBar1 = new javax.swing.JProgressBar();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -346,7 +353,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             jPanel2Layout.setVerticalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addGap(0, 394, Short.MAX_VALUE)
+                    .addGap(0, 388, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton3)
                         .addComponent(jButton1)
@@ -359,7 +366,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, 0)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
                         .addGap(74, 74, 74)))
             );
 
@@ -586,7 +593,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                                             .addGroup(jPanel3Layout.createSequentialGroup()
                                                 .addComponent(jLabel5)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(jLabel6)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -721,18 +728,18 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(15, 15, 15)
                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(271, Short.MAX_VALUE))
+                                .addContainerGap(265, Short.MAX_VALUE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addComponent(jLabel13)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel14)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE))
+                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
                                     .addComponent(jSeparator1)))
                         );
 
@@ -798,6 +805,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                             }
                         });
 
+                        jProgressBar1.setStringPainted(true);
+
                         jMenu1.setText("Datei");
 
                         jMenuItem1.setText("Sichern und Beenden");
@@ -849,21 +858,25 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                         layout.setHorizontalGroup(
                             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel1)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jLabel2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jLabel3)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, Short.MAX_VALUE)))))
                                 .addContainerGap())
                         );
                         layout.setVerticalGroup(
@@ -879,7 +892,9 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(26, 26, 26))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
                         );
 
                         pack();
@@ -947,24 +962,72 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         fillLernbereichTable();
     }//GEN-LAST:event_changeSClass
     
+    class BatchGeneration extends SwingWorker<Void,Void> {
+        private ArrayList<Integer> l;
+        
+        @Override protected void done(){
+            jButton3.setEnabled(true);
+            setCursor(null);
+            JOptionPane.showMessageDialog(null, "Generierte Zeugnisse: " + l.size(), "PDF Ausgabe", JOptionPane.INFORMATION_MESSAGE);
+            setProgress(0);
+        }
+
+        @Override
+        protected Void doInBackground() {
+            setProgress(0);
+            ArrayList<Integer> liste = new ArrayList<>();
+            try {
+                liste = connector.listIdSchueler();
+            } catch (SQLException ex) {
+                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.l = liste;
+            int cnt=1;
+            for(Integer idSchueler: liste){
+                try {
+                    ZeugnisPDF zeugnis = new ZeugnisPDF(idSchueler);    // holt Werte aus DB -> private Variables
+                    zeugnis.CreatePDF();    // uses private Variables to print pdf
+                } catch (IOException | DocumentException | SQLException | ParseException ex) {
+                    Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                setProgress(100 * cnt / l.size());
+                cnt++;
+            }
+            return null;
+        }
+    }
+    
     private void createPdfForClass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPdfForClass
         // Zunächst Liste aller Zeugnisse erzeugen  
         // Für jedes Zeugnis, Zeugnis in einen definierten Ordner speichern
-        ArrayList<Integer> liste = new ArrayList<>();                
-        try {
-            liste = connector.listIdSchueler();
-        } catch (SQLException ex) {
-            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        for(Integer idSchueler: liste){
-            try {
-                ZeugnisPDF zeugnis = new ZeugnisPDF(idSchueler);    // holt Werte aus DB -> private Variables
-                zeugnis.CreatePDF();    // uses private Variables to print pdf
-            } catch (IOException | DocumentException | SQLException | ParseException ex) {
-                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        JOptionPane.showMessageDialog(null, "Generierte Zeugnisse: " + liste.size(), "PDF Ausgabe", JOptionPane.INFORMATION_MESSAGE);
+        jButton3.setEnabled(false);
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        bg = new BatchGeneration();
+        bg.addPropertyChangeListener(
+                new PropertyChangeListener() {
+                    public  void propertyChange(PropertyChangeEvent evt) {
+                        if ("progress".equals(evt.getPropertyName())) {
+                            jProgressBar1.setValue((Integer)evt.getNewValue());
+                        }
+                    }
+                }
+        );
+        bg.execute();
+//        ArrayList<Integer> liste = new ArrayList<>();                
+//        try {
+//            liste = connector.listIdSchueler();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        for(Integer idSchueler: liste){
+//            try {
+//                ZeugnisPDF zeugnis = new ZeugnisPDF(idSchueler);    // holt Werte aus DB -> private Variables
+//                zeugnis.CreatePDF();    // uses private Variables to print pdf
+//            } catch (IOException | DocumentException | SQLException | ParseException ex) {
+//                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+
     }//GEN-LAST:event_createPdfForClass
 
     private void addSchoolYear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSchoolYear
@@ -1319,13 +1382,55 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         }
     }//GEN-LAST:event_jTextArea3FocusLost
 
+    class BatchImport extends SwingWorker<Void,Void> {
+        private String[][] val;
+        
+        BatchImport(String[][] v){
+            this.val = v;
+        }
+        
+        @Override protected void done(){
+            jButton4.setEnabled(true);
+            setCursor(null);
+            fillClassTable();
+            JOptionPane.showMessageDialog(null,"Eingelesene Datensätze: "+val.length,"CSV Import",JOptionPane.INFORMATION_MESSAGE);
+            setProgress(0);
+        }
+
+        @Override
+        protected Void doInBackground() {
+            int cnt=1;
+            String[] v = {"","","","","",""};
+            setProgress(0);
+            for (String[] val1 : val) {
+                try {
+                    v[0] = val1[1].trim();
+                    v[1] = val1[0].trim();
+                    v[2] = val1[2].trim();
+                    v[3] = val1[3].trim();
+                    v[4] = (String) jComboBox3.getSelectedItem();
+                    v[5] = ((String) jComboBox1.getSelectedItem()).substring(0, 4);
+                    //...import...
+                    // GENAUER CHECK!!!
+                    int idSchueler = connector._insertSchueler();
+                    connector._updateSchueler(v, idSchueler);
+                    setProgress(100 * cnt / val.length);
+                    cnt++;
+                }catch (SQLException ex) {
+                    Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } 
+            return null;
+        }
+    }
+    
+    
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         // importiere aus CSV Datei
         String osName = System.getProperty("os.name").toLowerCase();
         CSVParse parser;
         String[][] values;
-        String v[]={"","","","","",""};
         final JFileChooser fc = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV Dateien", "csv", "txt", "dat");
         fc.setFileFilter(filter);
@@ -1343,28 +1448,25 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 else{
                     parser = new CSVParser(r);
                     //parser.changeDelimiter(';');
-                }
-                
-                values = parser.getAllValues();
-                for(int i=0; i<values.length;i++){
-                    v[1] = values[i][0].trim();
-                    v[0] = values[i][1].trim();
-                    v[2] = values[i][2].trim();
-                    v[3] = values[i][3].trim();
-                    v[4] = (String) jComboBox3.getSelectedItem();
-                    v[5] = ((String) jComboBox1.getSelectedItem()).substring(0, 4);
-                    //...import...
-                    // GENAUER CHECK!!!
-                    int idSchueler = connector._insertSchueler();
-                    connector._updateSchueler(v, idSchueler);
-                } 
-                JOptionPane.showMessageDialog(null,"Eingelesene Datensätze: "+values.length,"CSV Import",JOptionPane.INFORMATION_MESSAGE);
-                fillClassTable();
+                }                
+                values = parser.getAllValues();              
+                jButton4.setEnabled(false);
+                setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                bi = new BatchImport(values);
+                bi.addPropertyChangeListener(
+                    new PropertyChangeListener() {
+                        public  void propertyChange(PropertyChangeEvent evt) {
+                            if ("progress".equals(evt.getPropertyName())) {
+                                jProgressBar1.setValue((Integer)evt.getNewValue());
+                            }
+                        }
+                    }
+                );
+                bi.execute();            
+                //fillClassTable();
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
                 Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -1663,6 +1765,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
