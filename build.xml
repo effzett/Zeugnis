@@ -81,7 +81,7 @@
         </tstamp>
         <property name="store.jar.name" value="Zeugnis"/>
         <property name="project.name" value="Zeugnisverwaltung Grundschule Brelingen" />
-        <property name="version.num" value="1.4.1-alpha" />
+        <property name="version.num" value="1.4.2-alpha" />
         <property name="vendor.name" value="Team Zero" />
         <property name="user.name" value="F. Zimmermann and  J. Derigs" />
         <property name="built.date" value="${NOW}" />
