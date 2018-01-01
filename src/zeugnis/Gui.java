@@ -346,7 +346,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             jPanel2Layout.setVerticalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addGap(0, 414, Short.MAX_VALUE)
+                    .addGap(0, 394, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton3)
                         .addComponent(jButton1)
@@ -359,7 +359,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, 0)
-                        .addComponent(jScrollPane1)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
                         .addGap(74, 74, 74)))
             );
 
@@ -586,7 +586,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                                             .addGroup(jPanel3Layout.createSequentialGroup()
                                                 .addComponent(jLabel5)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(jLabel6)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -721,18 +721,18 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(15, 15, 15)
                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(291, Short.MAX_VALUE))
+                                .addContainerGap(271, Short.MAX_VALUE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addComponent(jLabel13)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel14)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
+                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE))
                                     .addComponent(jSeparator1)))
                         );
 
@@ -879,7 +879,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap())
+                                .addGap(26, 26, 26))
                         );
 
                         pack();
@@ -948,8 +948,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     }//GEN-LAST:event_changeSClass
     
     private void createPdfForClass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPdfForClass
-        // Zunächst Liste aller Zeugnisse erzeugen
-        int count=0;    
+        // Zunächst Liste aller Zeugnisse erzeugen  
         // Für jedes Zeugnis, Zeugnis in einen definierten Ordner speichern
         ArrayList<Integer> liste = new ArrayList<>();                
         try {
@@ -957,7 +956,6 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         } catch (SQLException ex) {
             Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         for(Integer idSchueler: liste){
             try {
                 ZeugnisPDF zeugnis = new ZeugnisPDF(idSchueler);    // holt Werte aus DB -> private Variables
