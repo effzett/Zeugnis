@@ -370,6 +370,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                         .addGap(74, 74, 74)))
             );
 
+            jCheckBox2.setSelected(false);
+
             jTabbedPane1.addTab("Schulklassen", jPanel2);
 
             jLabel4.setText("Schüler");
@@ -897,6 +899,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                                 .addContainerGap())
                         );
 
+                        jProgressBar1.setVisible(false);
+
                         pack();
                     }// </editor-fold>//GEN-END:initComponents
 
@@ -970,6 +974,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             setCursor(null);
             JOptionPane.showMessageDialog(null, "Generierte Zeugnisse: " + l.size(), "PDF Ausgabe", JOptionPane.INFORMATION_MESSAGE);
             setProgress(0);
+            jProgressBar1.setVisible(false);
         }
 
         @Override
@@ -1012,6 +1017,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                     }
                 }
         );
+        jProgressBar1.setVisible(true);
         bg.execute();
 //        ArrayList<Integer> liste = new ArrayList<>();                
 //        try {
@@ -1073,14 +1079,14 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                         Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+                logger.fine(String.valueOf(completeFlag));
+                if (completeFlag == true && liste.size()>0) {
+                    jCheckBox2.setSelected(true);
+                } else {
+                    jCheckBox2.setSelected(false);
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            logger.fine(String.valueOf(completeFlag));
-            if (completeFlag == true) {
-                jCheckBox2.setSelected(true);
-            } else {
-                jCheckBox2.setSelected(false);
             }
         }
         if (jTabbedPane1.getSelectedIndex() == 1) { // Zeugnis
@@ -1395,6 +1401,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             fillClassTable();
             JOptionPane.showMessageDialog(null,"Eingelesene Datensätze: "+val.length,"CSV Import",JOptionPane.INFORMATION_MESSAGE);
             setProgress(0);
+            jProgressBar1.setVisible(false);
         }
 
         @Override
@@ -1462,6 +1469,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                         }
                     }
                 );
+                jProgressBar1.setVisible(true);
                 bi.execute();            
                 //fillClassTable();
             } catch (FileNotFoundException ex) {

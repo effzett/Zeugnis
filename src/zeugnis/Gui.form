@@ -355,6 +355,9 @@
                     <Property name="text" type="java.lang.String" value="vollst&#xe4;ndig"/>
                     <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jCheckBox2.setSelected(false);"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton4">
                   <Properties>
@@ -961,6 +964,9 @@
       <Properties>
         <Property name="stringPainted" type="boolean" value="true"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jProgressBar1.setVisible(false);"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
