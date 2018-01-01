@@ -136,6 +136,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         jButton2 = new javax.swing.JButton();
         jCheckBox2 = new javax.swing.JCheckBox();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox();
@@ -312,6 +313,13 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 }
             });
 
+            jButton5.setText("Hilfe");
+            jButton5.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton5ActionPerformed(evt);
+                }
+            });
+
             javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
             jPanel2.setLayout(jPanel2Layout);
             jPanel2Layout.setHorizontalGroup(
@@ -319,7 +327,9 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton5)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
                     .addComponent(jButton3)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jButton2)
@@ -342,7 +352,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                         .addComponent(jButton3)
                         .addComponent(jButton2)
                         .addComponent(jCheckBox2)
-                        .addComponent(jButton4)))
+                        .addComponent(jButton4)
+                        .addComponent(jButton5)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1320,10 +1331,11 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 r = new FileReader(file);
                 if(osName.contains("win")){  // Windows->Excel
                     parser = new ExcelCSVParser(r);
+                    //parser.changeDelimiter(';');
                 }
                 else{
                     parser = new CSVParser(r);
-                    parser.changeDelimiter(';');
+                    //parser.changeDelimiter(';');
                 }
                 
                 values = parser.getAllValues();
@@ -1349,6 +1361,11 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null,"Formatierungshilfe:\nName,Vorname,Geb.-Datum,Geb.-Ort,..,..\n\nMustermann,Max,2017-12-31,Musterstadt");
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     
     public void fillTabFromTestimony() {
@@ -1597,6 +1614,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox jComboBox1;
