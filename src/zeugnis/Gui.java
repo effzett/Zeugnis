@@ -5,6 +5,9 @@
  */
 package zeugnis;
 
+import com.Ostermiller.util.CSVParse;
+import com.Ostermiller.util.CSVParser;
+import com.Ostermiller.util.ExcelCSVParser;
 import com.itextpdf.text.DocumentException;
 import java.awt.Color;
 import java.awt.Component;
@@ -19,6 +22,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -1299,14 +1304,49 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         // importiere aus CSV Datei
+        String osName = System.getProperty("os.name").toLowerCase();
+        CSVParse parser;
+        String[][] values;
+        String v[]={"","","","","",""};
         final JFileChooser fc = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV Dateien", "csv", "txt", "dat");
         fc.setFileFilter(filter);
         int retVal = fc.showOpenDialog(this);
         
         if(retVal == JFileChooser.APPROVE_OPTION){
-            File file = fc.getSelectedFile();
-            //...import...
+            try {
+                File file = fc.getSelectedFile();
+                FileReader r;
+                r = new FileReader(file);
+                if(osName.contains("win")){  // Windows->Excel
+                    parser = new ExcelCSVParser(r);
+                }
+                else{
+                    parser = new CSVParser(r);
+                    parser.changeDelimiter(';');
+                }
+                
+                values = parser.getAllValues();
+                for(int i=0; i<values.length;i++){
+                    v[1] = values[i][0].trim();
+                    v[0] = values[i][1].trim();
+                    v[2] = values[i][2].trim();
+                    v[3] = values[i][3].trim();
+                    v[4] = (String) jComboBox3.getSelectedItem();
+                    v[5] = ((String) jComboBox1.getSelectedItem()).substring(0, 4);
+                    //...import...
+                    // GENAUER CHECK!!!
+                    int idSchueler = connector._insertSchueler();
+                    connector._updateSchueler(v, idSchueler);
+                } 
+                fillClassTable();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
