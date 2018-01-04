@@ -2191,14 +2191,13 @@ public class ZeugnisPDF  {
          */
         public void onEndPage(PdfWriter writer, Document document) {
             PdfPTable tableFooter = new PdfPTable(3);
-            PdfPTable tableHeader = new PdfPTable(3);
+            PdfPTable tableHeader = new PdfPTable(1);
             
             if (!this.header.isEmpty()) {
                 try {
                     tableFooter.setWidths(new int[]{24, 24, 2});
                     tableFooter.setTotalWidth(527);
                     tableFooter.setLockedWidth(true);
-                    tableHeader.setWidths(new int[]{24, 24, 2});
                     tableHeader.setTotalWidth(527);
                     tableHeader.setLockedWidth(true);
                     
@@ -2209,25 +2208,24 @@ public class ZeugnisPDF  {
                     tableFooter.getDefaultCell().setBorder(Rectangle.NO_BORDER);
                     tableHeader.getDefaultCell().setBorder(Rectangle.NO_BORDER);
                     tableFooter.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
-                    tableHeader.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+                    tableHeader.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
 
                     PdfPCell cellHeader = new PdfPCell(new Phrase(header,SMALL_FONT));
                     cellHeader.setBorder(Rectangle.NO_BORDER);
-                    tableHeader.addCell(cellHeader);
+                    cellHeader.setHorizontalAlignment(Element.ALIGN_RIGHT);
                     tableFooter.addCell("");
                     
                     // Column 2
                     tableFooter.addCell( new Phrase(String.format("Seite %d von ", writer.getPageNumber()) , SMALL_FONT) );
-                    tableHeader.addCell("");
                     
                     // Column 3
                     PdfPCell cell = new PdfPCell(Image.getInstance(total));
                     cell.setBorder(Rectangle.NO_BORDER);
                     tableFooter.addCell(cell);
-                    tableHeader.addCell("");
+                    tableHeader.addCell(cellHeader);
                     
                     tableFooter.writeSelectedRows(0, -1, 54, 30, writer.getDirectContent());
-                    tableHeader.writeSelectedRows(0, -1, 50, 825, writer.getDirectContent());
+                    tableHeader.writeSelectedRows(0, -1, 40, 825, writer.getDirectContent());
                 } catch (DocumentException de) {
                     throw new ExceptionConverter(de);
                 }                
