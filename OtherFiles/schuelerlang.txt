@@ -1,0 +1,43 @@
+Nuna 		,Apun				,2011-02-01,Ebersbach 
+Hepi 		,Mati				,2011-03-02,Lampertswal
+Kimi 		,Nadie				,2011-05-02,Priestewitz
+Wawau 		,Soomsue			,2011-06-02,Schönfeld
+Tawau 		,Weme				,2013-07-03,Tauscha
+Makki 		,Chaki				,2012-04-02,Thiendorf
+Arantxa 	,de Cortez			,2011-02-02,Wildenhain
+Indira 		,Khan				,2011-03-04,Zabeltitz
+Svantje 	,Eckhouw			,2011-05-02,Riesa
+Carl 		,van der Hoemeester	,2013-07-02,Riesa
+Hari 		,Viswanjan			,2013-08-02,Riesa
+Niklas 		,Likpi				,2011-07-07,Hirschstein
+Cara 		,MacMulluly			,2011-05-22,Stauchitz
+Ryan 		,MacConolly			,2012-04-02,Gröditz
+Shiitaoka 	,Hina				,2011-03-02,Nauwalde
+Takebusa 	,Keiji				,2011-07-02,Wälknitz
+Holger 		,Hederer			,2012-04-02,Diesbar-Seu
+Arnold 		,Aretz				,2011-02-24,Glaubitz
+Elena 		,Endres				,2011-05-02,Nönchritz
+Julius 		,Jähnke				,2011-08-02,Strehla
+Silke 		,Saur				,2012-01-04,Räderaue
+Marlis 		,Mantey				,2011-04-02,Zeithain
+Burkhard 	,Bohne				,2011-02-02,Ketzerbacht
+Hans-Peter 	,Holzer				,2012-04-14,Leuben-Schlumm
+Robert 		,Rundkowski			,2011-03-02,Lommatzsch
+Nathalie 	,Neubauer			,2011-03-02,Coswig
+Barbara 	,Blohm				,2011-03-02,Meißen
+Fritz F.	,Fiesep				,2012-07-23,Diera-Zehre
+Jasper 		,Jessel				,2011-08-02,Kabschätz
+Herta 		,Haupt				,2011-03-02,Klipphausen
+Bernd 		,Bunge				,2011-05-02,Taubenheim
+Niklas 		,Netze				,2012-04-02,Triebischta
+Konstantin 	,Kuss				,2011-11-02,Heynitz
+Tanja 		,Tänzer				,2011-12-02,Nossen
+Bruno 		,Bienert			,2011-10-24,Niederau
+Maurice 	,Millner			,2011-12-02,Weinböhla
+Till 		,Theile				,2011-03-02,Freital
+Reinhold 	,Rossi				,2011-10-13,Wilsdruff
+Renate 		,Rietz				,2012-02-02,Bannewitz
+Arnold 		,Artmann			,2011-01-02,Kreischa
+Franz-Josef ,Feucht				,2011-01-02,Rabenau
+Herbert 	,Herzog				,2012-04-02,Tharandt
+Kristine 	,Kerpen				,2011-06-01,Dorfhain

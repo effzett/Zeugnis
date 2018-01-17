@@ -1497,7 +1497,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"Formatierungshilfe:\nName,Vorname,Geb.-Datum,Geb.-Ort,..,..\n\nMustermann,Max,2017-12-31,Musterstadt");
+        JOptionPane.showMessageDialog(null,"Formatierungshilfe:\nVorname,Name,Geb.-Datum,Geb.-Ort,..,..\n\nMax,Mustermann,2017-12-31,Musterstadt");
     }//GEN-LAST:event_jButton5ActionPerformed
 
     
