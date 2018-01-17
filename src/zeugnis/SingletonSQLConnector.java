@@ -1985,7 +1985,7 @@ public class SingletonSQLConnector {
             if (idSchueler != 0) {
                 int idZeugnis = _getIdZeugnis(idSchueler, 1);
                 sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, NOTE_ARBEIT, NOTE_SOZIAL, FEHLTAGE, FEHLTAGEOHNE, ENTWICKLUNG, BEMERKUNG, HALBJAHR, SCHULJAHR) values(" 
-                        + idZeugnis+ ", " + idSchueler + ", "+0+", "+0+", "+0+", "+0+", "+"' '"+", "+"' '"+", "+1+", "+schuljahr+")";
+                        + idZeugnis+ ", " + idSchueler + ", "+0+", "+0+", "+0+", "+0+", "+"''"+", "+"''"+", "+1+", "+schuljahr+")";
                 statement.executeUpdate(sql);
                 logger.fine("Leeres Zeugnis für Halbjahr 1 eingefügt: "+sql);
                 
@@ -1994,7 +1994,7 @@ public class SingletonSQLConnector {
 
                 idZeugnis = _getIdZeugnis(idSchueler, 2);
                 sql = "insert into ZEUGNIS (ID_ZEUGNIS, ID_SCHUELER, NOTE_ARBEIT, NOTE_SOZIAL, FEHLTAGE, FEHLTAGEOHNE, ENTWICKLUNG, BEMERKUNG, HALBJAHR, SCHULJAHR) values(" + idZeugnis
-                        + ", " + idSchueler + ", "+0+", "+0+", "+0+", "+0+", "+"' '"+", "+"' '"+", "+2+", "+schuljahr+")";
+                        + ", " + idSchueler + ", "+0+", "+0+", "+0+", "+0+", "+"''"+", "+"''"+", "+2+", "+schuljahr+")";
                 logger.fine("Leeres Zeugnis für Halbjahr 2 eingefügt: "+sql);
                 statement.executeUpdate(sql);
 
