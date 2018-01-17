@@ -80,6 +80,8 @@
 \parskip1ex
 
 \hyphenation{ge-star-tet}
+% \setcounter{secnumdepth}{5}
+% \setcounter{tocdepth}{5}
 
 \begin{document}
 
@@ -111,7 +113,7 @@
 \noindent
 Diese Dokumentation beschreibt das Programm \z\ .
 
-\noindent Das Programm verwaltet Zeugnisse für die Grundschule und wurde speziell auf spezielle Anforderungen der Grundschule in Brelingen geschrieben.
+\noindent Das Programm verwaltet Zeugnisse für die Grundschule.
 \end{abstract}
 
 %\begin{minipage}{\textwidth}
@@ -192,9 +194,9 @@ Für jeden Schüler in einem Schuljahr und in einer Klasse gibt es zwei Zeugniss
 Um einen Schüler in eine Schülerliste für eine Klasse eintragen zu können, muss zunächst eine neue Zeile mit dem entsprechenden Button erzeugt werden. Anschließend können die Daten für den neuen Schüler eingetragen werden. 
 
 Damit der Schüler in der Datenbank abgespeichert wird und nicht nur in der Liste erscheint (und beim nächsten Aufruf nicht mehr vorhanden ist) müssen folgende Daten ausgefüllt werden: {\ott Nachname}, {\ott Vorname} und {\ott Geburtstag}. Erst dann wird der Datensatz in die Datenbank geschrieben. Die Angabe des Geburtsortes ist optional. Der {\ott Geburtstag} ist immer auf den aktuellen Tag vorselektiert.
-Fehlt eine der 3 notwendigen Angaben, so werden die Daten nicht in die Datenbank übernommen und sind beim nächsten Aufruf dieses Dialogs nicht vorhanden.
+Fehlt eine der 3 notwendigen Angaben\footnote{genauer: fehlt Name oder Vorname, da ein Geburtsdatum immer vorhanden ist.}, so werden die Daten nicht in die Datenbank übernommen und sind beim nächsten Aufruf dieses Dialogs nicht vorhanden.
 
-Weiterhin ist zu beachten, dass eine Eingabe erst dann als vollständig betrachtet wird, wenn aus dem Feld etwas anderes angeklickt wird. Es empfiehlt sich also, nach dem Eingeben von Namen und Vornamen kurz in das Feld für den Geburtsort zu klicken.
+Weiterhin ist zu beachten, dass eine Eingabe erst dann als vollständig betrachtet wird, wenn aus dem Feld etwas anderes angeklickt wird. Es empfiehlt sich also, nach dem Eingeben von Namen und Vornamen kurz in das Feld für den Geburtsort zu klicken oder in irgend ein anderes Feld zu klicken.
 
 Bei der Angabe des Geburtsdatum ist zu beachten, dass es aus einem Kalender gewählt werden muss und es zur Zeit erst nach dem Verlassen des Feldes angezeigt wird.
 Sowohl Name, Vorname und Geburtsort dürfen eine Länge von 30 Zeichen nicht überschreiten, was typischerweise ausreichen sollte. 
@@ -213,6 +215,27 @@ Abbildung~\ref{fig:Schulklassen} auf Seite~\pageref{fig:Schulklassen} zeigt die 
 
 Wenn alle Zeugnisse für diese Klasse vollständig bearbeitet wurden und in keinem mehr der Initialwert vorhanden ist, wird rechts unten angezeigt, ob die Schulklasse vollständig ausgefüllt ist.
 Dann können alle PDF--Zeugnisse und auch das Durchschnittszeugnis sinnvoll generiert werden\footnote{Man kann die PDF--Zeugnisse natürlich auch unvollständig generieren lassen. Die Anzeige dient nur als Hilfestellung.}.
+
+\subsubsection{Batch--Import von Schülern}
+Es besteht die Möglichkeit, Schülerlisten über einen Batch--Import in das Programm einzulesen.
+Dazu dient der Button \framebox{CSV-Import}. Drückt man ihn, kann man eine Datei auswählen, die die Extension {\ott .csv} oder {\ott .txt} besitzen muss und folgende Komma-getrennte Felder besitzen muss:
+
+\begin{lstlisting}
+Vorname, Name, Datum, Geburtsort
+\end{lstlisting}
+
+Also z.B.\footnote{Für die technisch Versierten: Wenn Umlaute in den Namen vorhanden sind, sollte das Encoding in der Datei dem Encoding des Betriebssystems entsprechen. Andernfalls werden die Umlaute nicht richtig dargestellt. Das Encoding auf Windows ist oft Windows1252 und auf OSX meist UTF8.}
+
+\begin{lstlisting}
+Boris, Becker, 2011-12-31, Leimen
+Graf, Steffi, 2012-02-05, Stuttgart
+\end{lstlisting}
+
+
+
+Dabei muss das Datum in folgenden Format gesetzt sein: {\ott JJJJ-MM-TT} also z.B. {\ott 2011-12-31}.
+
+Die Schüler in dieser Datei werden der aktuellen Schulklasse hinzugefügt.
 
 \subsection{Zeugnis}
 Durch Klick auf den Reiter {\ott Zeugnisse} gelangt man in den Eingabemodus für die Zeugnisse.
