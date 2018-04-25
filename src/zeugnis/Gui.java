@@ -76,6 +76,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
     private static int sYear = 0;
     private static int hYear = 0;
+    private static String overwriteDate = null;
+    private static boolean overwriteDateSelected = false;
     private static String selectedSubject = null;
     private static String sClass = null;
     private SingletonSQLConnector connector = null;
@@ -104,6 +106,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         initComponents();
         sYear = Integer.parseInt(((String) jComboBox1.getSelectedItem()).substring(0, 4));
         hYear = Integer.parseInt((String) jComboBox2.getSelectedItem());
+        overwriteDate="";
+        overwriteDateSelected = false;
         sClass = (String) jComboBox3.getSelectedItem();
         bgt_active = false;
         fillClassTable();
@@ -146,6 +150,8 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         jCheckBox2 = new javax.swing.JCheckBox();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jCheckBox3 = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox();
@@ -265,6 +271,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
             }, 7);
             tableModel.addTableModelListener(this);
             jTable1.setModel(tableModel);
+            jTable1.setToolTipText("Übersteuert das Druckdatum");
             jTable1.setCellSelectionEnabled(true);
             jTable1.setRowHeight(25);
             jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -330,6 +337,23 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 }
             });
 
+            jTextField1.setEditable(false);
+            jTextField1.setColumns(12);
+            jTextField1.setToolTipText("überschreibt das Druckdatum");
+            jTextField1.setMinimumSize(new java.awt.Dimension(150, 26));
+            jTextField1.addCaretListener(new javax.swing.event.CaretListener() {
+                public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                    jTextField1CaretUpdate(evt);
+                }
+            });
+
+            jCheckBox3.setText("Druckdatum");
+            jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jCheckBox3ActionPerformed(evt);
+                }
+            });
+
             javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
             jPanel2.setLayout(jPanel2Layout);
             jPanel2Layout.setHorizontalGroup(
@@ -342,6 +366,10 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButton5)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jCheckBox3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
                             .addComponent(jCheckBox2)
                             .addGap(24, 24, 24))
                         .addGroup(jPanel2Layout.createSequentialGroup()
@@ -365,7 +393,9 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jCheckBox2)
                         .addComponent(jButton4)
-                        .addComponent(jButton5)))
+                        .addComponent(jButton5)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCheckBox3)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, 0)
@@ -1500,6 +1530,27 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         JOptionPane.showMessageDialog(null,"Formatierungshilfe:\nVorname,Name,Geb.-Datum,Geb.-Ort,..,..\n\nMax,Mustermann,2017-12-31,Musterstadt");
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
+        // TODO add your handling code here:
+        if(jCheckBox3.isSelected()){
+            jTextField1.setEnabled(true);
+            jTextField1.setFocusable(true);
+            jTextField1.setEditable(true);
+            overwriteDateSelected = true;
+        }
+        else{
+            jTextField1.setEnabled(false);
+            jTextField1.setFocusable(false);
+            jTextField1.setEditable(false);
+            overwriteDateSelected = false;
+        }
+    }//GEN-LAST:event_jCheckBox3ActionPerformed
+
+    private void jTextField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField1CaretUpdate
+        // TODO add your handling code here:
+        overwriteDate = jTextField1.getText();
+    }//GEN-LAST:event_jTextField1CaretUpdate
+
     
     public void fillTabFromTestimony() {
         if (jComboBox4.getSelectedItem() != null) {
@@ -1750,6 +1801,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private javax.swing.JButton jButton5;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox3;
@@ -1807,6 +1859,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -2006,6 +2059,14 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
         return sClass;
     }
 
+    public static boolean isOverwriteDateSelected(){
+        return overwriteDateSelected;
+    }
+    
+    public static String getOverwriteDate() {
+        return overwriteDate;
+    }
+    
     public static String getSelectedSubject() {
         return selectedSubject;
     }

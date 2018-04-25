@@ -47,8 +47,11 @@ public class ZeugnisPDF  {
     private static final Font BIGGER_FONT=new Font(Font.FontFamily.HELVETICA,14,Font.NORMAL);
     private static final Font NAME_FONT=new Font(Font.FontFamily.HELVETICA,26,Font.NORMAL);
     private static final Font SMALL_FONT=new Font(Font.FontFamily.HELVETICA,10,Font.NORMAL);
+    private static final Font SMALL2_FONT=new Font(Font.FontFamily.HELVETICA,11,Font.NORMAL);
     private static final Font SMALLITALIC_FONT=new Font(Font.FontFamily.HELVETICA,10,Font.ITALIC);
+    private static final Font SMALLITALIC2_FONT=new Font(Font.FontFamily.HELVETICA,11,Font.ITALIC);
     private static final Font SMALLBOLDITALIC_FONT=new Font(Font.FontFamily.HELVETICA,10,Font.BOLDITALIC);    
+    private static final Font SMALLBOLDITALIC2_FONT=new Font(Font.FontFamily.HELVETICA,11,Font.BOLDITALIC);    
     private static final Font TINY_FONT=new Font(Font.FontFamily.HELVETICA,9,Font.NORMAL);
     private static final Font TINYITALIC_FONT=new Font(Font.FontFamily.HELVETICA,9,Font.ITALIC);
     private static final Font MICRO_FONT=new Font(Font.FontFamily.HELVETICA,7,Font.NORMAL);    
@@ -1165,7 +1168,7 @@ public class ZeugnisPDF  {
         cell1Geboren = new PdfPCell(new Phrase("geboren am "+gebdatum+" in "+gebort,NORMAL_FONT));
         cell1Geboren.setColspan(3);
         cell1Geboren.setFixedHeight(20f);
-        cell1Geboren.setVerticalAlignment(Element.ALIGN_BOTTOM);
+        cell1Geboren.setVerticalAlignment(Element.ALIGN_TOP);
         cell1Geboren.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell1Geboren.setBorder(Rectangle.NO_BORDER);
 
@@ -1182,10 +1185,10 @@ public class ZeugnisPDF  {
         Paragraph lern = new Paragraph();
         Paragraph bem = new Paragraph();
         PdfPTable table = new PdfPTable(1);
-        Phrase lernTitle = new Phrase(lernentwicklungTitle,SMALLBOLDITALIC_FONT);
-        Phrase bemTitle = new Phrase(bemerkungenTitle,SMALLBOLDITALIC_FONT);
-        Phrase lernText = new Phrase(lernentwicklung,SMALLITALIC_FONT);
-        Phrase bemText = new Phrase(bemerkungen,SMALLITALIC_FONT); 
+        Phrase lernTitle = new Phrase(lernentwicklungTitle,SMALLBOLDITALIC2_FONT);
+        Phrase bemTitle = new Phrase(bemerkungenTitle,SMALLBOLDITALIC2_FONT);
+        Phrase lernText = new Phrase(lernentwicklung,SMALL2_FONT);
+        Phrase bemText = new Phrase(bemerkungen,SMALL2_FONT); 
         if(lernentwicklung.isEmpty()){
             ;
         }else{
@@ -1240,6 +1243,14 @@ public class ZeugnisPDF  {
         cell1Unterschriften2.setBorder(Rectangle.NO_BORDER);
 
         PdfPCell cell1Datum;
+        if(Gui.isOverwriteDateSelected()){
+            if(Gui.getOverwriteDate().isEmpty()){
+                Datum = "     ......................";
+            }
+            else{
+                Datum = Gui.getOverwriteDate();
+            }
+        }
         Phrase p1 = new Phrase("Brelingen, den "+Datum+"\n",SMALL_FONT);
         Phrase p2 = new Phrase(DatumLine,MICRO_FONT);
         Paragraph par1 = new Paragraph(p1);
