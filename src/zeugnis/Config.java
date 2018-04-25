@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
@@ -24,14 +25,15 @@ public class Config extends Properties {
     private final static Logger logger = Logger.getLogger(Config.class.getName());
 
     private Config() {
-        File jarFile = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+        String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath().replace("%20", " ");
+//        File jarFile = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+        File jarFile = new File(path);
         String jarPath = jarFile.getParent();
         File configFile = new File(jarPath + File.separator + "config.properties");
 
         try {
             if (configFile.exists()) {
-                load(new FileReader(configFile));
-
+                load(new FileReader(configFile.getAbsoluteFile()));
             } else {
                 setProperty("installDir", jarPath);
                 setProperty("startDerby", "1");
@@ -43,7 +45,7 @@ public class Config extends Properties {
                 setProperty("sName", "Mustermann");
                 setProperty("sVorname", "Maxi");
 
-                store(new FileWriter(configFile),
+                store(new FileWriter(configFile.getAbsoluteFile()),
                         "Default Config created at " + new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
             }
 
@@ -62,7 +64,9 @@ public class Config extends Properties {
     }
     
     public void storeProperties(){
-        File jarFile = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+        String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath().replace("%20", " ");
+//        File jarFile = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+        File jarFile = new File(path);
         String jarPath = jarFile.getParent();
         File configFile = new File(jarPath + File.separator + "config.properties");
         setProperty("installDir", jarPath);
