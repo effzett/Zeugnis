@@ -37,7 +37,7 @@ public class Config extends Properties {
                 setProperty("startDerby", "1");
                 setProperty("derbyUser", "zeugnis");
                 setProperty("derbyPassword", "zeugnis");
-                setProperty("classes", "1a,1b,2a,2b,3a,3b,4a,4b");
+                setProperty("classes", "1a,1b,1c,2a,2b,2c,3a,3b,3c,4a,4b,4c");
                 setProperty("symbol1", "9");
                 setProperty("symbol2", "6");
                 setProperty("sName", "Mustermann");
