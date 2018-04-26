@@ -216,6 +216,11 @@ Abbildung~\ref{fig:Schulklassen} auf Seite~\pageref{fig:Schulklassen} zeigt die 
 Wenn alle Zeugnisse für diese Klasse vollständig bearbeitet wurden und in keinem mehr der Initialwert vorhanden ist, wird rechts unten angezeigt, ob die Schulklasse vollständig ausgefüllt ist.
 Dann können alle PDF--Zeugnisse und auch das Durchschnittszeugnis sinnvoll generiert werden\footnote{Man kann die PDF--Zeugnisse natürlich auch unvollständig generieren lassen. Die Anzeige dient nur als Hilfestellung.}.
 
+Im unteren rechten Bereich findet man auch eine Checkbox für das Druckdatum und ein Feld für das Druckdatum.
+Wenn diese Checkbox selektiert ist, wird bei der Generierung der PDF--Zeugnisse nicht das aktuelle Datum genommen, sondern das Datum, was in dieses Feld eingetragen wurde.
+Dieses Datum wird nicht in der Datenbank gespeichert und bei einem Neustart des Programmes ist das Feld wieder leer und die Checkbox nicht selektiert.
+Wenn man ein anderes Druckdatum als das Generierungsdatum erzeugen möchte, so muss man also vor der Generierung der Zeugnisse (einzeln oder alle) diese Checkbox selektieren und das Druckdatum dort eintragen\footnote{Bleibt das Datumsfeld bei selektierter Checkbox leer, so wird eine gepunktete Linie für das handschriftlich zu erzeugende Datum gedruckt.}.
+
 \subsubsection{Batch--Import von Schülern}
 Es besteht die Möglichkeit, Schülerlisten über einen Batch--Import in das Programm einzulesen.
 Dazu dient der Button \framebox{CSV-Import}. Drückt man ihn, kann man eine Datei auswählen, die die Extension {\ott .csv} oder {\ott .txt} besitzen muss und folgende Komma-getrennte Felder besitzen muss:
@@ -267,7 +272,7 @@ Abbildung~\ref{fig:Zeugnisse2} auf Seite~\pageref{fig:Zeugnisse2} zeigt die Eing
 
 \begin{figure}[H]
 \centering
-\centerline{\includegraphics[width=1.0\textwidth]{Zeugnisse}}
+\centerline{\includegraphics[width=1.0\textwidth]{Zeugnisse.png}}
 \caption{Ausfüllen der Zeugnisse (Arbeits-- und Sozialverhalten)}
 \label{fig:Zeugnisse}
 \end{figure}
