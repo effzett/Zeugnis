@@ -647,11 +647,11 @@
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="6">
                         <StringItem index="0" value=" "/>
-                        <StringItem index="1" value="entspricht nicht den Erwartungen"/>
-                        <StringItem index="2" value="entspricht den Erwartungen mit Einschr&#xe4;nkungen"/>
-                        <StringItem index="3" value="entspricht den Erwartungen"/>
-                        <StringItem index="4" value="entspricht den Erwartungen in vollem Umfang"/>
-                        <StringItem index="5" value="verdient besondere Anerkennung"/>
+                        <StringItem index="1" value="entspricht nicht den Erwartungen."/>
+                        <StringItem index="2" value="entspricht den Erwartungen mit Einschr&#xe4;nkungen."/>
+                        <StringItem index="3" value="entspricht den Erwartungen."/>
+                        <StringItem index="4" value="entspricht den Erwartungen in vollem Umfang."/>
+                        <StringItem index="5" value="verdient besondere Anerkennung."/>
                       </StringArray>
                     </Property>
                   </Properties>
