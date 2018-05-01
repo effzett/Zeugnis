@@ -518,7 +518,7 @@ public class Gui extends javax.swing.JFrame implements TableModelListener {
                 jCheckBox1.setText("vollständig");
                 jCheckBox1.setEnabled(false);
 
-                jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "entspricht nicht den Erwartungen.", "entspricht den Erwartungen mit Einschränkungen.", "entspricht den Erwartungen.", "entspricht den Erwartungen in vollem Umfang.", "verdient besondere Anerkennung." }));
+                jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "entspricht nicht den Erwartungen", "entspricht den Erwartungen mit Einschränkungen", "entspricht den Erwartungen", "entspricht den Erwartungen in vollem Umfang", "verdient besondere Anerkennung" }));
                 jComboBox6.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         jComboBox6ActionPerformed(evt);
