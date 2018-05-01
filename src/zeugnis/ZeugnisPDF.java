@@ -89,11 +89,11 @@ public class ZeugnisPDF  {
     private String textArbeit;
     private String textSozial;
     
-    private String[] asBewertungen = {  "entspricht nicht den Erwartungen",
-                                        "entspricht den Erwartungen mit Einschränkungen",
-                                        "entspricht den Erwartungen",
-                                        "entspricht den Erwartungen in vollem Umfang",
-                                        "verdient besondere Anerkennung"
+    private String[] asBewertungen = {  "entspricht nicht den Erwartungen.",
+                                        "entspricht den Erwartungen mit Einschränkungen.",
+                                        "entspricht den Erwartungen.",
+                                        "entspricht den Erwartungen in vollem Umfang.",
+                                        "verdient besondere Anerkennung."
                                         }; 
         
     Hashtable<Integer,Integer> zeugnis;
