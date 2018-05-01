@@ -2068,15 +2068,15 @@ public class SingletonSQLConnector {
         switch(note){
             case 0: retVal="";
             break;
-            case 1: retVal="entspricht nicht den Erwartungen";
+            case 1: retVal="entspricht nicht den Erwartungen.";
             break;
-            case 2: retVal="entspricht den Erwartungen mit Einschränkungen";
+            case 2: retVal="entspricht den Erwartungen mit Einschränkungen.";
             break;
-            case 3: retVal="entspricht den Erwartungen";
+            case 3: retVal="entspricht den Erwartungen.";
             break;
-            case 4: retVal="entspricht den Erwartungen in vollem Umfang";
+            case 4: retVal="entspricht den Erwartungen in vollem Umfang.";
             break;
-            case 5: retVal="verdient besondere Anerkennung";
+            case 5: retVal="verdient besondere Anerkennung.";
             break;
             default: retVal="";
             break;
